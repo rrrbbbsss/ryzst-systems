@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+DIR=$(dirname $(realpath $0))
+COMMANDS=$DIR/../commands
+REPO="github:rrrrbbbsss/ryzst-systems"
+
+option_version() {
+    cat <<-_EOF
+
+########################
+### ryzst cli v0.0.1 ###
+########################
+
+_EOF
+}
+
+option_help() {
+    cat <<-_EOF
+
+Usage: ryzst <command> <subcommand>
+    
+Commands:
+    install     --  installation commands
+    test        --  test commands
+    update      --  update commands
+
+_EOF
+}
+
+case "$1" in 
+    --help)
+        option_help
+    ;;
+    --version)
+        option_version
+    ;;
+    install)
+        shift;
+        . $COMMANDS/install.sh $@
+    ;;
+    test)
+        shift;
+        . $COMMANDS/test.sh $@
+    ;;
+    update)
+        shift;
+        . $COMMANDS/update.sh $@
+    ;;
+    *)
+        echo "INVALID INPUT: $1"
+    ;;
+esac
