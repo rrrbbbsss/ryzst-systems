@@ -1,7 +1,7 @@
 set termguicolors
 set showtabline=2
 if exists("g:neovide")
-  set guifont=Hack\ Nerd\ Font:h10
+  set guifont=Monospace:h11
   let g:neovide_cursor_animation_length=0
   let g:neovide_scale_factor=1.0
   function! ChangeScaleFactor(delta)
