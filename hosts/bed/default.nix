@@ -147,6 +147,7 @@
     git
     wget
     age
+    nfs-utils
   ];
 
   ###########
