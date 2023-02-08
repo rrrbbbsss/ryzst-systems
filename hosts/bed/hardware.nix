@@ -22,6 +22,11 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/7fb4c73f-04f2-434b-83cf-3eab9b829e31"; }];
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
   ############
   ### NICS ###
   ############
