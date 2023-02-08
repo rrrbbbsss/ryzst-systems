@@ -8,6 +8,8 @@
   boot.loader.efi.canTouchEfiVariables = true; # change this to false
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.tmpOnTmpfs = true;
+  boot.kernelParams = [ "console=tty1" ];
+
 
   ##################
   ### Networking ### 
