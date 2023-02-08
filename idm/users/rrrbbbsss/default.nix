@@ -83,6 +83,10 @@
       # todo: use nur for firefox addons 
     };
 
+    programs.obs-studio = {
+      enable = true;
+    };
+
     services.flameshot = {
       enable = true;
     };

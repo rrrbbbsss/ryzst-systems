@@ -35,7 +35,6 @@
     shellAliases = {
       "-s pdf" = "zathura --fork";
       "mpp" = "mpv --shuffle --loop-playlist=inf /nfs/Music";
-      "webcam" = "mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg,video_size=1920x1080,framerate=60 av://v4l2:/dev/video0";
     };
 
   };
