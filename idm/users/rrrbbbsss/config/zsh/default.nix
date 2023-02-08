@@ -6,11 +6,6 @@
     defaultKeymap = "viins";
     enableCompletion = true;
     enableSyntaxHighlighting = true;
-    loginExtra = ''
-      if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-        exec sway
-      fi
-    '';
     initExtra = ''
       stty -ixon
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
