@@ -17,11 +17,15 @@
         VIMODE="''${''${KEYMAP/vicmd/$}/(main|viins)/>}"
         zle reset-prompt
       }
+      function get_pwd() {
+        tmp="''${PWD/$HOME/~}"
+        echo "''${tmp%/}/"
+      }
       zle -N zle-keymap-select
       setopt PROMPT_SUBST
       PSPACE='%K{#4e4e4e} %k'
       VIMODE='>'
-      PROMPT='$PSPACE%(?.%K{green} %k.%K{red} %k)$PSPACE%K{#000000} %n $PSPACE%K{#000000} %m $PSPACE%K{#000000} %40<...<%~/%<< $PSPACE''${vcs_info_msg_0_}%k 
+      PROMPT='$PSPACE%(?.%K{green} %k.%K{red} %k)$PSPACE%K{#000000} %n $PSPACE%K{#000000} %m $PSPACE%K{#000000} %40<...<$(get_pwd)%<< $PSPACE''${vcs_info_msg_0_}%k 
       $VIMODE '
 
       function prepend_sudo() {
