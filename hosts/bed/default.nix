@@ -122,7 +122,7 @@
     randomizedDelaySec = "30min";
     dates = "daily";
     allowReboot = false;
-    flake = "git+ssh://git@git.int.ryzst.net:/srv/git/pub/ryzst-systems?=main";
+    flake = "github:rrrbbbsss/ryzst-systems";
   };
   # garbage:
   nix.gc = {
