@@ -42,6 +42,20 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  #####################
+  ### Login Manager ###
+  #####################
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${pkgs.sway}/bin/sway";
+      };
+    };
+    vt = 7;
+  };
+
+
   ###############
   ### Desktop ###
   ###############
@@ -74,6 +88,11 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+  };
+
+  # for cursor to show up with sway in vm
+  environment.variables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   #######################
