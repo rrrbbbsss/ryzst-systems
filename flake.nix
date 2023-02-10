@@ -67,6 +67,16 @@
             ./idm/users/rrrbbbsss
           ];
         };
+        media = nixpkgs.lib.nixosSystem {
+          inherit system pkgs;
+          modules = [
+            (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
+            ./hosts/media
+            ./hosts/bed/vm.nix
+            home-manager.nixosModule
+            ./idm/users/media
+          ];
+        };
       };
 
       images = {
