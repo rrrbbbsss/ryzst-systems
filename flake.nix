@@ -77,6 +77,16 @@
             ./idm/users/media
           ];
         };
+        laptop = nixpkgs.lib.nixosSystem {
+          inherit system pkgs;
+          modules = [
+            (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
+            ./os/base
+            ./hosts/laptop
+            ./hosts/laptop/vm.nix
+            home-manager.nixosModule
+          ];
+        };
       };
 
       images = {

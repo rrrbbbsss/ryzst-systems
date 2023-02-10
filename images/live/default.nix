@@ -63,8 +63,6 @@
     text = "auth include login";
   };
   security.polkit.enable = true;
-  services.xserver.enable = true;
-  services.xserver.autorun = false;
 
   #############
   ### Fonts ###
