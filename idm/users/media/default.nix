@@ -10,6 +10,7 @@
     extraGroups = [ "networkmanager" ];
     initialPassword = "*";
   };
+  networking.networkmanager.enable = true;
 
   #####################
   ### Homes Manager ###

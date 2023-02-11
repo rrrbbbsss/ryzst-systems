@@ -11,6 +11,7 @@
     shell = pkgs.zsh;
     initialPassword = "test";
   };
+  networking.networkmanager.enable = true;
 
   # for zsh shell
   programs.zsh.enable = true;

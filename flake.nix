@@ -44,10 +44,13 @@
         };
       };
 
+      lib = import ./lib;
+
       nixosConfigurations = {
         bed = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
           modules = [
+            ./modules/base
             ./hosts/bed
             ./hosts/bed/hardware.nix
             home-manager.nixosModule
@@ -60,6 +63,7 @@
         bed = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
           modules = [
+            ./modules/base
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
             ./hosts/bed
             ./hosts/bed/vm.nix
@@ -70,9 +74,10 @@
         media = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
           modules = [
+            ./modules/base
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
             ./hosts/media
-            ./hosts/bed/vm.nix
+            ./hosts/media/vm.nix
             home-manager.nixosModule
             ./idm/users/media
           ];
@@ -80,11 +85,10 @@
         laptop = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
           modules = [
+            ./modules/base
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
-            ./os/base
             ./hosts/laptop
             ./hosts/laptop/vm.nix
-            home-manager.nixosModule
           ];
         };
       };

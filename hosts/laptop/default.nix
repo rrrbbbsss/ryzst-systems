@@ -1,15 +1,8 @@
 { config, pkgs, home-manager, lib, ... }:
 
 {
-  os = {
-    base = {
-      hostname = builtins.baseNameOf ./.;
-      locale = "en_US.UTF-8";
-      timezone = "America/Chicago";
-      admins = "todo";
-      stateVersion = "22.11";
-    };
-  };
+  networking.hostName = builtins.baseNameOf ./.;
 
-
+  users.mutableUsers = false;
+  users.users.root.initialPassword = "*";
 }
