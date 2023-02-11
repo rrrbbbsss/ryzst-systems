@@ -44,13 +44,12 @@
         };
       };
 
-      lib = import ./lib;
-
       nixosConfigurations = {
         bed = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
           modules = [
             ./modules/base
+            ./modules/desktops/sway
             ./hosts/bed
             ./hosts/bed/hardware.nix
             home-manager.nixosModule
@@ -64,6 +63,7 @@
           inherit system pkgs;
           modules = [
             ./modules/base
+            ./modules/desktops/sway
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
             ./hosts/bed
             ./hosts/bed/vm.nix
@@ -75,6 +75,7 @@
           inherit system pkgs;
           modules = [
             ./modules/base
+            ./modules/desktops/gnome-kiosk
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
             ./hosts/media
             ./hosts/media/vm.nix
@@ -86,9 +87,12 @@
           inherit system pkgs;
           modules = [
             ./modules/base
+            ./modules/desktops/sway
             (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
             ./hosts/laptop
             ./hosts/laptop/vm.nix
+            home-manager.nixosModule
+            ./idm/users/rrrbbbsss
           ];
         };
       };

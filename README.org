@@ -10,7 +10,7 @@ ryzst-systems
 ├── hosts # machine configurations
 ├── idm # user/group management
 ├── images # custom live/installer iso images
-├── os # organize os declarations 
+├── modules # nix modules
 ├── packages # personal packages
 ├── secrets # todo
 └── templates # todo

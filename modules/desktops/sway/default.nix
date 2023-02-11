@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 {
   # Login Manager
   services.greetd = {
@@ -10,7 +10,6 @@
     };
     vt = 7;
   };
-
   # Desktop
   security.pam.services.swaylock = {
     text = "auth include login";
@@ -25,7 +24,6 @@
       xdg-desktop-portal-gtk
     ];
   };
-
   # use dark themes
   environment.variables = {
     GTK_THEME = "Adwaita:dark";
@@ -35,7 +33,6 @@
     platformTheme = "gnome";
     style = "adwaita-dark";
   };
-
   # Fonts
   fonts = {
     enableDefaultFonts = true;
@@ -46,7 +43,6 @@
       roboto
     ];
   };
-
   # Sound
   sound.enable = true;
   hardware.pulseaudio.enable = false;
