@@ -132,7 +132,8 @@
         #execute
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "exec ${menu}";
-        "${modifier}+p" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+        "${modifier}+p" = "exec ${pkgs.ryzst.pass-fuzzel}/bin/passmenu";
+        "${modifier}+F12" = "exec ${pkgs.flameshot}/bin/flameshot gui";
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
         "${modifier}+Backspace" = "scratchpad show";

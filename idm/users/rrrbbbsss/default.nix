@@ -47,6 +47,7 @@
 
     programs.password-store = {
       enable = true;
+      package = pkgs.ryzst.pass-fuzzel;
     };
 
     programs.tmux = {
