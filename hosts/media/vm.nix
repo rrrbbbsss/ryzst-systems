@@ -1,11 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, modulesPath, ... }:
 
 {
-  ######################
-  ### Virtualization ###
-  ######################
-
-
   # for cursor to show up with sway in vm
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";

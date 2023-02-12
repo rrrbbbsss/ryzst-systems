@@ -1,15 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
-  # BootLoader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.tmpOnTmpfs = true;
-  boot.kernelParams = [ "console=tty1" ];
-
-  users.mutableUsers = false;
-  users.users.root.initialPassword = "*";
-
-  networking.hostName = builtins.baseNameOf ./.;
+  core = [ ../../modules/base ];
+  hardware = [ ./hardware.nix ];
+  user = [ ../../idm/users/media ];
+  desktop = [ ../../modules/desktops/gnome-kiosk ];
+  profiles = [ ];
+  services = [ ];
+  testing = [ ./vm.nix ];
 }

@@ -1,11 +1,9 @@
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, modulesPath, home-manager, ... }:
 
 {
-  ######################
-  ### Virtualization ###
-  ######################
-
-
+  imports = [
+    (modulesPath + "/virtualisation/qemu-vm.nix")
+  ];
   # for cursor to show up with sway in vm
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";

@@ -21,6 +21,8 @@
     {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
 
+      lib = import ./lib { inherit nixpkgs pkgs system home-manager; };
+
       packages.${system} = with pkgs; {
         default = self.packages.${system}.cli;
         cli = callPackage ./packages/cli { };
@@ -44,58 +46,9 @@
         };
       };
 
-      nixosConfigurations = {
-        bed = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [
-            ./modules/base
-            ./modules/desktops/sway
-            ./hosts/bed
-            ./hosts/bed/hardware.nix
-            home-manager.nixosModule
-            ./idm/users/rrrbbbsss
-          ];
-        };
-      };
+      nixosConfigurations = self.lib.mkHosts ./hosts;
 
-      vms = {
-        bed = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [
-            ./modules/base
-            ./modules/desktops/sway
-            (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
-            ./hosts/bed
-            ./hosts/bed/vm.nix
-            home-manager.nixosModule
-            ./idm/users/rrrbbbsss
-          ];
-        };
-        media = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [
-            ./modules/base
-            ./modules/desktops/gnome-kiosk
-            (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
-            ./hosts/media
-            ./hosts/media/vm.nix
-            home-manager.nixosModule
-            ./idm/users/media
-          ];
-        };
-        laptop = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [
-            ./modules/base
-            ./modules/desktops/sway
-            (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix")
-            ./hosts/laptop
-            ./hosts/laptop/vm.nix
-            home-manager.nixosModule
-            ./idm/users/rrrbbbsss
-          ];
-        };
-      };
+      vms = self.lib.mkVMs ./hosts;
 
       images = {
         live = nixpkgs.lib.nixosSystem {

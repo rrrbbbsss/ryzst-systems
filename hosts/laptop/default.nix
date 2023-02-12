@@ -1,8 +1,9 @@
-{ config, pkgs, home-manager, lib, ... }:
-
 {
-  networking.hostName = builtins.baseNameOf ./.;
-
-  users.mutableUsers = false;
-  users.users.root.initialPassword = "*";
+  core = [ ../../modules/base ];
+  hardware = [ ./hardware.nix ];
+  user = [ ../../idm/users/rrrbbbsss ];
+  desktop = [ ../../modules/desktops/sway ];
+  profiles = [ ];
+  services = [ ];
+  testing = [ ./vm.nix ];
 }
