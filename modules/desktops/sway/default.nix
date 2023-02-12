@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${pkgs.sway}/bin/sway";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd 'zsh --login -c ${pkgs.sway}/bin/sway'";
       };
     };
     vt = 7;
