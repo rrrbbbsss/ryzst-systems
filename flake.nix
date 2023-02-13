@@ -30,7 +30,7 @@
         katrain = callPackage ./packages/katrain { };
         katago-model = callPackage ./packages/katago-model { };
         q5go = with libsForQt5; callPackage ./packages/q5go { };
-        pass-fuzzel = callPackage ./packages/pass-fuzzel { };
+        pass-fzf = callPackage ./packages/pass-fzf { };
         python-libs = with python3Packages; {
           kivy = callPackage ./packages/python-libs/kivy {
             inherit (pkgs) mesa;

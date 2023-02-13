@@ -88,6 +88,9 @@
       window = {
         border = 2;
       };
+      floating = {
+        criteria = [{ app_id = "SWAYFLOAT"; }];
+      };
       keybindings = {
         #windows
         "${modifier}+a" = "focus parent";
@@ -132,8 +135,9 @@
         #execute
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "exec ${menu}";
-        "${modifier}+p" = "exec ${pkgs.ryzst.pass-fuzzel}/bin/passmenu";
+        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'PassFZF' --class 'SWAYFLOAT' -e ${pkgs.ryzst.pass-fzf}/bin/pass-fzf";
         "${modifier}+F12" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+  
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
         "${modifier}+Backspace" = "scratchpad show";
