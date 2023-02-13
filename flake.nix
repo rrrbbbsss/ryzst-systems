@@ -23,23 +23,7 @@
 
       lib = import ./lib { inherit nixpkgs pkgs system home-manager; };
 
-      packages.${system} = with pkgs; {
-        default = self.packages.${system}.cli;
-        cli = callPackage ./packages/cli { };
-        sabaki = callPackage ./packages/sabaki { };
-        katrain = callPackage ./packages/katrain { };
-        katago-model = callPackage ./packages/katago-model { };
-        q5go = with libsForQt5; callPackage ./packages/q5go { };
-        pass-fzf = callPackage ./packages/pass-fzf { };
-        python-libs = with python3Packages; {
-          kivy = callPackage ./packages/python-libs/kivy {
-            inherit (pkgs) mesa;
-            inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
-          };
-          kivymd = callPackage ./packages/python-libs/kivymd { };
-          ffpyplayer = callPackage ./packages/python-libs/ffpyplayer { };
-        };
-      };
+      packages.${system} = import ./packages { inherit pkgs; };
 
       overlays = {
         default = final: prev: {
@@ -48,21 +32,7 @@
       };
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
-
       vms = self.lib.mkVMs ./hosts;
-
-      images = {
-        live = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-          modules = [
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/iso-image.nix")
-            (nixpkgs + "/nixos/modules/profiles/all-hardware.nix")
-            (nixpkgs + "/nixos/modules/profiles/base.nix")
-            ./images/live
-            home-manager.nixosModule
-            ./idm/users/rrrbbbsss
-          ];
-        };
-      };
+      images = self.lib.mkHosts ./images;
     };
 }

@@ -1,6 +1,7 @@
 { config, pkgs, lib, home-manager, ... }:
 {
   # Login Manager
+  boot.kernelParams = [ "console=tty1" ];
   services.greetd = {
     enable = true;
     settings = {
