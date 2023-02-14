@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-with pkgs; {
+with pkgs; rec {
   default = cli;
   cli = callPackage ./cli { };
   sabaki = callPackage ./sabaki { };
