@@ -135,7 +135,8 @@
         #execute
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "exec ${menu}";
-        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'PassFZF' --class 'SWAYFLOAT' -e ${pkgs.ryzst.pass-fzf}/bin/pass-fzf";
+        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class 'SWAYFLOAT' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
+        "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class 'SWAYFLOAT' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
         "${modifier}+F12" = "exec ${pkgs.flameshot}/bin/flameshot gui";
   
         #scratchpad

@@ -1,8 +1,8 @@
 { lib, runCommandLocal, makeWrapper, bash, pass-wayland, fzf }:
-runCommandLocal "pass-fzf" {
-  script = ./pass-fzf.sh;
+runCommandLocal "fzf-wifi" {
+  script = ./fzf-wifi.sh;
   nativeBuildInputs = [ makeWrapper ];
 } ''
-  makeWrapper $script $out/bin/pass-fzf \
+  makeWrapper $script $out/bin/fzf-wifi \
   --prefix PATH : ${lib.makeBinPath [ bash pass-wayland fzf]}
 ''
