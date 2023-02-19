@@ -29,7 +29,7 @@
   environment.variables = {
     GTK_THEME = "Adwaita:dark";
   };
-  qt5 = {
+  qt = {
     enable = true;
     platformTheme = "gnome";
     style = "adwaita-dark";

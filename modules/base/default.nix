@@ -30,8 +30,10 @@
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
     openFirewall = true;
+    settings = {
+      passwordAuthentication = false;
+    };
   };
 
   # forgive me
