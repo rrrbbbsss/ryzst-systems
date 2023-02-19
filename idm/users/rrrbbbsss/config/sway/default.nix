@@ -52,7 +52,7 @@
         };
         # trackpoint
         "6127:24814:Lenovo_TrackPoint_Keyboard_II_Mouse" = {
-          natural_scroll = "enabled";
+          natural_scroll = "disabled";
           accel_profile = "adaptive";
           pointer_accel = "0.75";
         };
