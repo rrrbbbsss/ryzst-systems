@@ -81,7 +81,19 @@
 
     programs.firefox = {
       enable = true;
-      # todo: use nur for firefox addons 
+      profiles.default = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "browser.startup.homepage" = "https://google.com";
+          "browser.newtabpage.enabled" = false;
+          "extensions.pocket.enabled" = false;
+        };
+        extensions = with pkgs.firefox-addons; [
+          ublock-origin
+          tridactyl
+        ];
+      };
     };
 
     programs.obs-studio = {
