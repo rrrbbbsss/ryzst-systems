@@ -11,13 +11,13 @@
   # Adds terminus_font for people with HiDPI displays
   console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];
   # ISO naming.
-  isoImage.isoName = "live.iso";
-  # EFI booting
-  isoImage.makeEfiBootable = true;
-  # USB booting
-  isoImage.makeUsbBootable = true;
-  # use faster compression to build faster
-  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+  isoImage = {
+    isoName = "live.iso";
+    volumeID = "ryzst-live-iso";
+    makeEfiBootable = true;
+    makeUsbBootable = true;
+    squashfsCompression = "gzip -Xcompression-level 1";
+  };
   # Add Memtest86+ to the CD.
   boot.loader.grub.memtest86.enable = true;
   # An installation media cannot tolerate a host config defined file
@@ -46,6 +46,9 @@
   # for cursor to show up with sway in vm
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";
+  };
+  hardware.opengl = {
+    enable = true;
   };
 
 

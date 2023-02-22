@@ -5,6 +5,7 @@ set -o pipefail
 DIR=$(dirname $(realpath $0))
 COMMANDS=$DIR/../commands
 REPO="github:rrrbbbsss/ryzst-systems"
+REPO_URL="https://github.com/rrrbbbsss/ryzst-systems"
 
 option_version() {
     cat <<-_EOF
