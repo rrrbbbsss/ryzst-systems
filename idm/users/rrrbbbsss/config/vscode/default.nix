@@ -17,6 +17,7 @@
         };
       };
       "explorer.confirmDragAndDrop" = false;
+      "terminal.integrated.sendKeybindingsToShell" = true;
     };
     extensions = with pkgs.vscode-extensions; [
       # vim keys
