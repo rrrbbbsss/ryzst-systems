@@ -8,6 +8,8 @@
 , ryzst
 , util-linux
 , qemu
+, yubikey-manager
+, pam_u2f
 }:
 
 runCommandLocal "ryzst-cli"
@@ -23,5 +25,6 @@ runCommandLocal "ryzst-cli"
   makeWrapper $src/bin/ryzst $out/bin/ryzst \
   --prefix PATH : ${lib.makeBinPath [ 
     bash coreutils networkmanager fzf ryzst.fzf-wifi util-linux qemu
+    yubikey-manager pam_u2f
     ]}
 ''

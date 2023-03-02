@@ -31,6 +31,8 @@
       tamasfe.even-better-toml
       # python
       ms-python.python
+      # latex
+      james-yu.latex-workshop
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       # prolog
       {

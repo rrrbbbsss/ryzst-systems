@@ -13,7 +13,7 @@
   # ISO naming.
   isoImage = {
     isoName = "live.iso";
-    volumeID = "ryzst-live-iso";
+    volumeID = "ryzst-iso";
     makeEfiBootable = true;
     makeUsbBootable = true;
     squashfsCompression = "gzip -Xcompression-level 1";
@@ -43,15 +43,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # for cursor to show up with sway in vm
-  environment.variables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-  };
-  hardware.opengl = {
-    enable = true;
-  };
-
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim
@@ -71,5 +62,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }

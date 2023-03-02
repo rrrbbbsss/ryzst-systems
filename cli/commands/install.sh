@@ -16,53 +16,51 @@ case "$1" in
         option_help
     ;;
     system)
+        # pre checks
         shift;
-        # confirm installation
-        cat /proc/cmdline | grep " root=LABEL=ryzst-live-iso " &>/dev/null
-        if [[ $? -ne 0 ]]; then
+        if ! cat /proc/cmdline | grep " root=LABEL=ryzst-iso " &>/dev/null; then
             printf "ERROR: Please boot into the installation media first\n\n"
             exit 1
         fi
+        if ! ls /sys/firmware/efi &>/dev/null; then
+            printf "ERROR: UEFI not detected.\n"
+            exit 1
+        fi
+        # confirm installation
         printf "Proceed with system installation:\n"
         CONFIRM=$(printf "yes\nno" | fzf --prompt="Proceed with system installation: $SELECTION > " --reverse)
         printf "$CONFIRM\n\n"
         if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
-            printf "Canceled\n\n"
+            printf "Canceled. Run \"sudo ryzst system intall\" to restart installation\n\n"
             exit 1
         fi
         # setup wifi
-        ls /sys/class/ieee80211/*/device/net &>/dev/null
-        if [[ $? = 0 ]]; then
+        if ls /sys/class/ieee80211/*/device/net &>/dev/null; then
             printf "Connect to wifi:\n"
             fzf-wifi
             printf "\n"
         fi
         # validate network connection
         printf "Validating Internet connection...\n"
-        curl https://cache.nixos.org &>/dev/null 
-        if [[ $? -ne 0 ]]; then
-            printf "ERROR: Cannot connect to Internet\n"
-            exit 1
-        else   
+        if curl https://cache.nixos.org &>/dev/null; then
             printf "success\n\n"
-        fi
-        # select host
-        rm -rf /tmp/ryzst
-        git clone --depth 1 $REPO_URL /tmp/ryzst &>/dev/null
-        HOSTS=$(ls /tmp/ryzst/hosts)
-        HOST=$(printf "%s\n" "${HOSTS[@]}" | fzf --prompt="Select Host to Install: " --reverse)
-        if [[ $HOST = "" ]]; then
-            printf "Invalid selection\n\n"
+        else   
+            printf "ERROR: Cannot connect to Internet\n"
             exit 1
         fi
         # select disk
         DRIVES=$(lsblk -A -o TYPE,PATH,SIZE,MOUNTPOINTS | awk '$1 == "disk" && $4 != "[SWAP]" {print  $2, $3}')
         DRIVE=$(printf "%s\n" "${DRIVES[@]}" | fzf --prompt="Select Drive to use: " --reverse)
         if [[ $DRIVE = "" ]]; then
-            printf "Invalid selection\n\n"
+            printf "ERROR: Invalid selection\n\n"
             exit 1
         fi
         DRIVE=$(echo $DRIVE | awk '{ print $1 }')
+        CHECK_DRIVE=$(lsblk -no MOUNTPOINTS $DRIVE)
+        if [[ $CHECK_DRIVE != "" ]]; then
+            printf "ERROR: Please unmount the drive first\n\n"
+            exit 1
+        fi
         printf "Confirm partition/format to: $DRIVE\n"
         CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm partition/format to: $DRIVE > " --reverse)
         printf "$CONFIRM\n\n"
@@ -70,14 +68,54 @@ case "$1" in
             printf "Canceled\n\n"
             exit 1
         fi
-        # partition disk
-        # boot pool
-        
-        # format disk
-        # mount disk
-
+        # partition
+        printf "Partitioning Disk:\n"
+        sgdisk --zap-all $DRIVE
+        sgdisk -n1:1M:+512M -t1:EF00 -c1:ESP $DRIVE
+        sgdisk -n2:0:0      -t2:BF00 -c2:NIX $DRIVE 
+        sync && udevadm settle && sleep 3
+        # format
+        printf "Formatting Filesystems:\n"
+        DRIVE_PART_1=$(lsblk $DRIVE -no PARTLABEL,PATH | awk '$1 == "ESP" { print $2 }')
+        DRIVE_PART_2=$(lsblk $DRIVE -no PARTLABEL,PATH | awk '$1 == "NIX" { print $2 }')
+        mkfs.vfat -n BOOT $DRIVE_PART_1
+        mkfs.ext4 -L ROOT $DRIVE_PART_2
+        # mount
+        printf "Mounting:\n"
+        mkdir /mnt
+        mount $DISK_PART_2 /mnt
+        mkdir /mnt/boot
+        mount $DISK_PART_1 /mnt/boot
+        printf "success\n\n"
+        # select host
+        printf "Select Host:\n"
+        rm -rf /tmp/ryzst
+        git clone --depth 1 $REPO_URL /tmp/ryzst &>/dev/null
+        HOSTS=$(ls /tmp/ryzst/hosts)
+        HOST=$(printf "%s\n" "${HOSTS[@]}" | fzf --prompt="Select Host to Install: " --reverse)
+        printf "$HOST\n\n"
+        if [[ $HOST = "" ]]; then
+            printf "ERROR: Invalid selection\n\n"
+            exit 1
+        fi
+        CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm host to install: $HOST > " --reverse)
+        if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
+            printf "Canceled\n\n"
+            exit 1
+        fi
         # install nixos from flake
-        
+        printf "Installing system:\n"
+        nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
+        # todo: register devices....
+        # finish
+        CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
+        printf "$CONFIRM\n\n"
+        if [[ $CONFIRM = ""  ]]; then
+            printf "Canceled\n\n"
+            exit 1
+        fi
+        umount -RL /mnt
+        reboot
     ;;
     usb)
         shift;
@@ -107,7 +145,38 @@ case "$1" in
     ;;
     yubikey)
         shift;
-        echo "todo..."
+        # select yubikey
+        YUBIKEYS=$(ykman list)
+        if [[ $YUBIKEYS = "" ]]; then
+            printf "ERROR: No yubikey plugged in\n\n"
+            exit 1
+        fi
+        YUBIKEY=$(printf "$YUBIKEYS" | fzf --prompt="Select USB Device to format: " --reverse)
+        SERIAL=$(printf "$YUBIKEY" | sed -n -e 's/^.*Serial: //p')
+        # enter lock code
+        CODE=$(read -p "Enter Yubikey Lock Code: ")
+        #ykman -d $SERIAL config set-lock-code --lock-code $CODE
+        printf "\n"
+        # enable/disable applications
+        printf "Enabling/Disabling Yubikey Applications:\n"
+        ykman -d $SERIAL config usb --enable FIDO2 -f && sleep 1
+        ykman -d $SERIAL config usb --disable OTP -f && sleep 1
+        ykman -d $SERIAL config usb --disable U2F -f && sleep 1
+        ykman -d $SERIAL config usb --disable OATH -f && sleep 1
+        ykman -d $SERIAL config usb --disable PIV -f && sleep 1
+        # todo again: https://github.com/drduh/YubiKey-Guide
+        ykman -d $SERIAL config usb --disable OPENPGP -f && sleep 1
+        ykman -d $SERIAL config usb --disable HSMAUTH -f && sleep 1
+        ykman -d $SERIAL config nfc --disable-all -f && sleep 1
+        printf "\n"
+        # fido
+        printf "Set FIDO2 Access Pin:\n"
+        ykman fido access change-pin
+        printf "\n"
+        ssh-keygen -t ed25519-sk -O resident -O verify-required
+        pamu2fcfg
+        # set lock code
+        #ykman -d $SERIAL config set-lock-code --generate
     ;;
     *)
         echo "INVALID INPUT: $1"

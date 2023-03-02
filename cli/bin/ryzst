@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o pipefail
+set -eo pipefail
 
 DIR=$(dirname $(realpath $0))
 COMMANDS=$DIR/../commands
