@@ -129,7 +129,6 @@
       pinentry-curses
       qemu
       diffoscope
-      hashcat
       htop
       git
       strace
@@ -170,7 +169,7 @@
       #print/scan
       gnome.simple-scan
 
-      #audio/music
+      #music
       spotify
       pavucontrol
 
@@ -179,14 +178,10 @@
       ffmpeg
 
       #images
-      graphviz
-      xdot
-      imagemagick
       gimp
 
       #games
       steam
-      minecraft
       katago
       ryzst.katrain
       ryzst.sabaki

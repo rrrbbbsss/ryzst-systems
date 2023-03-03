@@ -39,7 +39,7 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       dejavu_fonts
-      nerdfonts
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono"]; })
       font-awesome
       roboto
     ];
