@@ -36,6 +36,10 @@
   hardware.cpu.intel.updateMicrocode = true;
   boot.kernelModules = [ "kvm-intel" ];
 
+  # yubikey
+  services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
