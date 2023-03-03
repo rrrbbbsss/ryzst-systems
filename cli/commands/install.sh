@@ -84,8 +84,8 @@ case "$1" in
         printf "Mounting:\n"
         mkdir /mnt
         mount $DISK_PART_2 /mnt
-        mkdir /mnt/boot
-        mount $DISK_PART_1 /mnt/boot
+        mkdir -p /mnt/boot/efi
+        mount $DISK_PART_1 /mnt/boot/efi
         printf "success\n\n"
         # select host
         printf "Select Host:\n"
@@ -108,13 +108,13 @@ case "$1" in
         nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
         # todo: register devices....
         # finish
+        umount -Rl /mnt
         CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
         printf "$CONFIRM\n\n"
         if [[ $CONFIRM = ""  ]]; then
             printf "Canceled\n\n"
             exit 1
         fi
-        umount -RL /mnt
         reboot
     ;;
     usb)
