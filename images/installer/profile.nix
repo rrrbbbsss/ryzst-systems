@@ -5,14 +5,13 @@
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
   ];
-  ###############
-  ### cd-base ###
+  # cd-base
   ###############
   # Adds terminus_font for people with HiDPI displays
   console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];
   # ISO naming.
   isoImage = {
-    isoName = "live.iso";
+    isoName = "installer.iso";
     volumeID = "ryzst-iso";
     makeEfiBootable = true;
     makeUsbBootable = true;
@@ -25,8 +24,12 @@
   swapDevices = lib.mkImageMediaOverride [ ];
   fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
   # Networking
-  networking.hostName = "live";
   networking.networkmanager.enable = true;
 
   # Locale
@@ -43,15 +46,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # for cursor to show up with sway in vm
-  environment.variables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-  };
-  hardware.opengl = {
-    enable = true;
-  };
-
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim
@@ -59,6 +53,8 @@
     wget
     clinfo
     wireguard-tools
+    ryzst.cli
+    fzf ncurses # remove
   ];
 
   nix = {
@@ -72,4 +68,42 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
+
+  users.users = {
+    installer = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "networkmanager" "video" ];
+      # no password
+      initialHashedPassword = "";
+    };
+    root = {
+      # no password
+      initialHashedPassword = "";
+    };
+  };
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
+  boot.kernelParams = [ "console=tty1" ];
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "sudo ${pkgs.ryzst.cli}/bin/ryzst install system";
+        user = "installer";
+      };
+      default_session = initial_session;
+    };
+    vt = 7;
+  };
+
+  environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
+  boot.kernel.sysctl."vm.overcommit_memory" = "1";
+  environment.etc."systemd/pstore.conf".text = ''
+    [PStore]
+    Unlink=no
+  '';
 }

@@ -22,10 +22,8 @@ case "$1" in
     ;;
     usb)
         shift;
-        qemu-img create -f qcow2 test-drive.qcow2 40G
-        RESULT=$(nix build ".#images.live.config.system.build.isoImage" --print-out-paths) &&
-        qemu-kvm -smp 4 -m 4096 -vga qxl -cdrom $RESULT/iso/live.iso -drive format=qcow2,file='./test-drive.qcow2' &&
-        rm test-drive.qcow2
+        RESULT=$(nix build ".#images.$1.config.system.build.isoImage" --print-out-paths) &&
+        qemu-kvm -smp 4 -m 4096 -vga qxl -cdrom $RESULT/iso/$1.iso 
     ;;
     *)
         echo "INVALID INPUT: $1"

@@ -49,20 +49,20 @@ case "$1" in
             exit 1
         fi
         # select disk
-        DRIVES=$(lsblk -A -o TYPE,PATH,SIZE,MOUNTPOINTS | awk '$1 == "disk" && $4 != "[SWAP]" {print  $2, $3}')
-        DRIVE=$(printf "%s\n" "${DRIVES[@]}" | fzf --prompt="Select Drive to use: " --reverse)
-        if [[ $DRIVE = "" ]]; then
+        DISKS=$(lsblk -A -o TYPE,PATH,SIZE,MOUNTPOINTS | awk '$1 == "disk" && $4 != "[SWAP]" {print  $2, $3}')
+        DISK=$(printf "%s\n" "${DISKS[@]}" | fzf --prompt="Select Disk to use: " --reverse)
+        if [[ $DISK = "" ]]; then
             printf "ERROR: Invalid selection\n\n"
             exit 1
         fi
-        DRIVE=$(echo $DRIVE | awk '{ print $1 }')
-        CHECK_DRIVE=$(lsblk -no MOUNTPOINTS $DRIVE)
-        if [[ $CHECK_DRIVE != "" ]]; then
+        DISK=$(echo $DISK | awk '{ print $1 }')
+        CHECK_DISK=$(lsblk -no MOUNTPOINTS $DISK)
+        if [[ $CHECK_DISK != "" ]]; then
             printf "ERROR: Please unmount the drive first\n\n"
             exit 1
         fi
-        printf "Confirm partition/format to: $DRIVE\n"
-        CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm partition/format to: $DRIVE > " --reverse)
+        printf "Confirm partition/format to: $DISK\n"
+        CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm partition/format to: $DISK > " --reverse)
         printf "$CONFIRM\n\n"
         if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
             printf "Canceled\n\n"
@@ -70,16 +70,16 @@ case "$1" in
         fi
         # partition
         printf "Partitioning Disk:\n"
-        sgdisk --zap-all $DRIVE
-        sgdisk -n1:1M:+512M -t1:EF00 -c1:ESP $DRIVE
-        sgdisk -n2:0:0      -t2:BF00 -c2:NIX $DRIVE 
+        sgdisk --zap-all $DISK
+        sgdisk -n1:1M:+512M -t1:EF00 -c1:ESP $DISK
+        sgdisk -n2:0:0      -t2:BF00 -c2:NIX $DISK 
         sync && udevadm settle && sleep 3
         # format
         printf "Formatting Filesystems:\n"
-        DRIVE_PART_1=$(lsblk $DRIVE -no PARTLABEL,PATH | awk '$1 == "ESP" { print $2 }')
-        DRIVE_PART_2=$(lsblk $DRIVE -no PARTLABEL,PATH | awk '$1 == "NIX" { print $2 }')
-        mkfs.vfat -n BOOT $DRIVE_PART_1
-        mkfs.ext4 -L ROOT $DRIVE_PART_2
+        DISK_PART_1=$(lsblk $DISK -no PARTLABEL,PATH | awk '$1 == "ESP" { print $2 }')
+        DISK_PART_2=$(lsblk $DISK -no PARTLABEL,PATH | awk '$1 == "NIX" { print $2 }')
+        mkfs.vfat -n BOOT $DISK_PART_1
+        mkfs.ext4 -L ROOT $DISK_PART_2
         # mount
         printf "Mounting:\n"
         mkdir /mnt
