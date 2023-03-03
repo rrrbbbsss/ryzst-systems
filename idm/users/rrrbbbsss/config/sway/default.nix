@@ -22,6 +22,22 @@
     glxinfo
   ];
 
+  programs.swaylock = {
+    settings = {
+      color = "180d26ff";
+      line-color = "ae7eedff";
+      indicator-idle-visible = true;
+    };
+  };
+  
+  services.swayidle = {
+    enable = true;
+    events = [
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
+      { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock"; }
+    ];
+  };
+
   wayland.windowManager.sway = {
     enable = true;
     xwayland = true;
@@ -45,7 +61,7 @@
           repeat_rate = "30";
         };
         # trackball
-        "1149:32792:Kensington_Expert_Wireless_TB_Mouse" ={
+        "1149:32792:Kensington_Expert_Wireless_TB_Mouse" = {
           scroll_button = "BTN_SIDE";
           scroll_method = "on_button_down";
           natural_scroll = "enabled";
@@ -150,7 +166,7 @@
         "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class 'SWAYFLOAT' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
         "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class 'SWAYFLOAT' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
         "${modifier}+F12" = "exec ${pkgs.flameshot}/bin/flameshot gui";
-  
+
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
         "${modifier}+Backspace" = "scratchpad show";

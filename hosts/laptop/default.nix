@@ -3,7 +3,7 @@
   hardware = [ ./hardware.nix ];
   user = [ ../../idm/users/rrrbbbsss ];
   desktop = [ ../../modules/desktops/sway ];
-  profiles = [ ];
+  profiles = [ ./profile.nix ];
   services = [ ];
   testing = [ ./vm.nix ];
 }

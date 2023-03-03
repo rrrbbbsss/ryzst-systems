@@ -174,7 +174,7 @@ case "$1" in
         ykman fido access change-pin
         printf "\n"
         ssh-keygen -t ed25519-sk -O resident -O verify-required
-        pamu2fcfg
+        pamu2fcfg -N
         # set lock code
         #ykman -d $SERIAL config set-lock-code --generate
     ;;
