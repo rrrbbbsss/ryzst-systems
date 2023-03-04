@@ -17,7 +17,7 @@ case "$1" in
     vm)
         shift;
         # annoying state can linger, so just throw it away when done testing
-        nix run ".#vms.$(hostname).config.system.build.vm" &&
+        nix run ".#vms.$1.config.system.build.vm" &&
         rm "$(hostname).qcow2"
     ;;
     usb)
