@@ -29,7 +29,7 @@
       indicator-idle-visible = true;
     };
   };
-  
+
   services.swayidle = {
     enable = true;
     events = [

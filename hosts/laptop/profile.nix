@@ -9,8 +9,9 @@
     };
     services = {
       login.u2fAuth = true;
-      sshd.u2fAuth = false; # todo...
       sudo.u2fAuth = true;
+      swaylock.u2fAuth = true;
+      sshd.u2fAuth = false; # todo...
     };
   };
 }
