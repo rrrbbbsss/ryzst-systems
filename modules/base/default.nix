@@ -25,11 +25,6 @@
         u2fAuth = true;
         unixAuth = false;
       };
-      # todo move out
-      swaylock = {
-        u2fAuth = true;
-        unixAuth = false;
-      };
       sshd.u2fAuth = false; # todo...
     };
   };

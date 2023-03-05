@@ -11,9 +11,15 @@
     };
     vt = 7;
   };
-  # Desktop
-  security.pam.services.swaylock = {
-    text = "auth include login";
+  security.pam.services = {
+      swaylock = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      greetd = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
   };
   security.polkit.enable = true;
   programs.dconf.enable = true;
