@@ -1,8 +1,38 @@
 { config, pkgs, lib, home-manager, ... }:
 {
-  # todo: admins...
-  #users.mutableUsers = false;
-  #users.users.root.initialPassword = "*";
+  users = {
+    mutableUsers = false;
+    users.root = {
+      hashedPassword = null;
+      openssh.authorizedKeys.keys = import ../../idm/groups/admins.nix;
+    };
+  };
+
+  security.pam = {
+    u2f = {
+      enable = true;
+      origin = "pam://mek.ryzst.net";
+      authFile = ../../idm/users/rrrbbbsss/pubkeys/u2f_keys;
+      cue = true;
+      debug = false;
+    };
+    services = {
+      login = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      sudo = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      # todo move out
+      swaylock = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
+      sshd.u2fAuth = false; # todo...
+    };
+  };
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -32,7 +62,9 @@
     enable = true;
     openFirewall = true;
     settings = {
-      passwordAuthentication = false;
+      permitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
     };
   };
 

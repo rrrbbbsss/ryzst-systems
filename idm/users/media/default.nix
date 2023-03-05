@@ -8,7 +8,7 @@
     isNormalUser = true;
     description = "media";
     extraGroups = [ "networkmanager" ];
-    initialPassword = "*";
+    hashedPassword = null;
   };
   networking.networkmanager.enable = true;
 

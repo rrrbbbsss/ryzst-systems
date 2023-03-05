@@ -9,7 +9,7 @@
     description = "rrrbbbsss";
     extraGroups = [ "networkmanager" "wheel" "wireshark" "libvirtd" ];
     shell = pkgs.zsh;
-    initialPassword = "test";
+    hashedPassword = null;
   };
   networking.networkmanager.enable = true;
 
