@@ -18,7 +18,7 @@ case "$1" in
         shift;
         # annoying state can linger, so just throw it away when done testing
         nix run ".#vms.$1.config.system.build.vm" &&
-        rm "$(hostname).qcow2"
+        rm "$1.qcow2"
     ;;
     usb)
         shift;
