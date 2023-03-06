@@ -1,11 +1,13 @@
 { config, pkgs, home-manager, lib, ... }:
 {
   # Desktop
-  services.getty.autologinUser = "media";
   services.xserver = {
     enable = true;
     displayManager = {
-      gdm.enable = true;
+      gdm = {
+        enable = true;
+        autoLogin.delay = 5;
+      };
       autoLogin = {
         enable = true;
         user = "media";
