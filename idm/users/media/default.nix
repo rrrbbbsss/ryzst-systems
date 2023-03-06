@@ -24,8 +24,20 @@
 
     programs.firefox = {
       enable = true;
-      # todo: use nur for firefox addons 
+      profiles.default = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "browser.startup.homepage" = "https://google.com";
+          "browser.newtabpage.enabled" = false;
+          "extensions.pocket.enabled" = false;
+        };
+        extensions = with pkgs.firefox-addons; [
+          ublock-origin
+        ];
+      };
     };
+
 
     programs.mpv = {
       enable = true;
@@ -43,8 +55,6 @@
         text-scaling-factor = 1.25;
       };
       "org/gnome/shell" = {
-        enabled-extensions = [ "dash-to-dock@micxgx.gmail.com" ];
-        disable-user-extension = false;
         favorite-apps = [
           "firefox.desktop"
           "spotify.desktop"
@@ -54,14 +64,6 @@
           "org.gnome.Nautilus.desktop"
           "org.gnome.Console.desktop"
         ];
-      };
-      "org/gnome/shell/extensions/dash-to-dock" = {
-        dock-position = "LEFT";
-        extend-height = true;
-        dock-fixed = true;
-        custom-theme-srhink = true;
-        icon-size-fixed = true;
-        dash-max-icon-size = 48;
       };
     };
 

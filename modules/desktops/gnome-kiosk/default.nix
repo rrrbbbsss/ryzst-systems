@@ -1,6 +1,7 @@
 { config, pkgs, home-manager, lib, ... }:
 {
   # Desktop
+  services.getty.autologinUser = "media";
   services.xserver = {
     enable = true;
     displayManager = {
@@ -15,6 +16,8 @@
       extraGSettingsOverrides = ''
         [org.gnome.desktop.lockdown]
         disable-lock-screen = true
+        disable-log-out = true
+        disable-user-switching = true
       '';
     };
   };
@@ -37,7 +40,7 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       dejavu_fonts
-      nerdfonts
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono"]; })
       font-awesome
       roboto
     ];
@@ -52,7 +55,4 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  environment.systemPackages = with pkgs; [
-    gnomeExtensions.dash-to-dock #desktop
-  ];
 }
