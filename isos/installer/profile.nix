@@ -5,8 +5,7 @@
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
   ];
-  # cd-base
-  ###############
+
   # Adds terminus_font for people with HiDPI displays
   console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];
   # ISO naming.
@@ -54,7 +53,6 @@
     clinfo
     wireguard-tools
     ryzst.cli
-    fzf ncurses # remove
   ];
 
   nix = {
@@ -67,7 +65,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 
   users.users = {
     installer = {
@@ -87,18 +84,10 @@
     wheelNeedsPassword = false;
   };
 
-  boot.kernelParams = [ "console=tty1" ];
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "sudo ${pkgs.ryzst.cli}/bin/ryzst install system";
-        user = "installer";
-      };
-      default_session = initial_session;
-    };
-    vt = 7;
-  };
+  services.getty.autologinUser = "installer";
+  programs.bash.loginShellInit = ''
+    sudo ryzst install system > output
+  '';
 
   environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
   boot.kernel.sysctl."vm.overcommit_memory" = "1";

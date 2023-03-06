@@ -1,5 +1,8 @@
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, home-manager, modulesPath, ... }:
 {
+  imports = [
+    (modulesPath + "/virtualisation/qemu-vm.nix")
+  ];
   # sway
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";

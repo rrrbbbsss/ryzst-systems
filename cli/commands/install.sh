@@ -139,9 +139,9 @@ case "$1" in
             printf "Canceled\n\n"
             exit 1
         fi
-        RESULT=$(nix build $REPO"#images.live.config.system.build.isoImage" --print-out-paths) &&
-        printf "\ndd if=$RESULT/iso/live.iso of=$SELECTION\n" &&
-        sudo dd if=$RESULT/iso/live.iso of=$SELECTION bs=4M conv=fsync status=progress
+        RESULT=$(nix build $REPO"#images.$1.config.system.build.isoImage" --print-out-paths) &&
+        printf "\ndd if=$RESULT/iso/$1.iso of=$SELECTION\n" &&
+        sudo dd if=$RESULT/iso/$1.iso of=$SELECTION bs=4M conv=fsync status=progress
     ;;
     yubikey)
         shift;
