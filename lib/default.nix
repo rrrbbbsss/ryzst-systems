@@ -25,9 +25,19 @@ let
   mkHosts = dir: mkMachines { inherit dir; test = false; };
   mkVMs = dir: mkMachines { inherit dir; test = true; };
 
+  mkTemplates = dir:
+    builtins.mapAttrs
+      (name: value:
+        let
+          template = dir + "/${name}";
+        in
+        { path = template + "/files"; } // import template)
+      (builtins.readDir dir);
+
   lib = {
     inherit mkHosts;
     inherit mkVMs;
+    inherit mkTemplates;
   };
 in
 lib

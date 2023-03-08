@@ -48,5 +48,7 @@
       nixosConfigurations = self.lib.mkHosts ./hosts;
       vms = self.lib.mkVMs ./hosts;
       isos = self.lib.mkHosts ./isos;
+
+      templates = self.lib.mkTemplates ./templates;
     };
 }
