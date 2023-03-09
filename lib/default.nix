@@ -6,6 +6,7 @@ let
       modules = [
         { networking.hostName = "${name}"; }
         home-manager.nixosModule
+        ../modules/default.nix
       ]
       ++ core ++ user ++ desktop ++ profiles ++ services ++ (
         if test

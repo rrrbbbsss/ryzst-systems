@@ -107,12 +107,6 @@
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
 
-      # misc utils
-      jq
-      ripgrep
-      fd
-      bat
-
       #browsers 
       chromium
 
@@ -123,12 +117,8 @@
       nil
       nixpkgs-fmt
 
-      #utilities
+      #utils
       ryzst.cli
-      gnupg
-      pinentry-curses
-      qemu
-      diffoscope
       htop
       git
       strace
@@ -136,24 +126,6 @@
       usbutils
       ncdu
       age
-      virt-manager
-
-      #compression
-      zip
-      unzip
-      p7zip
-      zstd
-
-      #file-utils
-      tree
-      file
-      acl
-      attr
-      gptfdisk
-      dosfstools
-      exfat
-
-      #net-utils
       openssh
       openssl
       curl
@@ -165,6 +137,17 @@
       ethtool
       socat
       nftables
+      tree
+      file
+      zip
+      unzip
+      p7zip
+      zstd
+      jq
+      ripgrep
+      fd
+      bat
+      virt-manager
 
       #print/scan
       gnome.simple-scan

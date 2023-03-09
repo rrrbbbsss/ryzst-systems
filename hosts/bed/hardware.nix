@@ -8,6 +8,11 @@
   boot.tmpOnTmpfs = true;
   boot.kernelParams = [ "console=tty1" ];
 
+  ryzst.hardware.monitors = {
+    DP-1 = {
+      mode = "3440x1440@144Hz";
+    };
+  };
 
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;

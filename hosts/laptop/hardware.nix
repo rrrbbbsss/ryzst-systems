@@ -1,6 +1,12 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  ryzst.hardware.monitors = {
+    LVDS-1 = {
+      mode = "1366x768@60Hz";
+    };
+  };
+
   boot = {
     loader = {
       systemd-boot.enable = true;

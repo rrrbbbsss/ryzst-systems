@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, osConfig, ... }:
 {
   home.sessionVariables = {
     GTK_THEME = "Adwaita:dark";
@@ -75,8 +75,7 @@
       };
       output = {
         "*" = { bg = "#180d26 solid_color"; };
-        "DP-1" = { mode = "3440x1440@144Hz"; };
-      };
+      } // osConfig.ryzst.hardware.monitors;
       modes = {
         resize = {
           h = "resize shrink width 10 px";

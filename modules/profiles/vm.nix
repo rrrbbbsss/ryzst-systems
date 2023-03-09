@@ -15,6 +15,13 @@
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
+
+  ryzst.hardware.monitors = {
+    Virtual-1 = {
+      mode = "1024x768@60Hz";
+    };
+  };
+
   virtualisation = {
     cores = 4;
     memorySize = 4096;
