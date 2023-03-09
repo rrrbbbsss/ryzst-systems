@@ -4,7 +4,10 @@
 
   imports = [
     ../../modules/hardware/common/cpu/intel
+    ../../modules/hardware/common/gpu/amd
+    ../../modules/hardware/devices/yubico/yubikey5
     ../../modules/hardware/devices/tex/shinobi
+    ../../modules/hardware/devices/microchip/ir-transceiver
   ];
   
   ryzst.hardware.monitors = {
@@ -56,17 +59,5 @@
     enable = true;
     algorithm = "zstd";
   };
-
-
-  # yubikey
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
 
 }

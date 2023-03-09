@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/hardware/devices/lenovo/x230
+    ../../modules/hardware/devices/yubico/yubikey5
   ];
 
   ryzst.hardware.monitors = {
@@ -38,22 +39,6 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-  };
-
-  # CPU
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = true;
-  boot.kernelModules = [ "kvm-intel" ];
-
-  # yubikey
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
 
 }

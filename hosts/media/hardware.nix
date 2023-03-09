@@ -1,6 +1,12 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  imports = [
+    ../../modules/hardware/common/cpu/intel
+    ../../modules/hardware/common/gpu/intel
+    ../../modules/hardware/devices/yubico/yubikey5
+  ];
+
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -28,17 +34,5 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-  };
-
-  # CPU
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = true;
-  boot.kernelModules = [ "kvm-intel" ];
-
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
 }

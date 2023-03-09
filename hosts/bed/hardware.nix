@@ -2,8 +2,10 @@
 
 {
   imports = [
-    ../../modules/hardware/common/cpu/intel
+    ../../modules/hardware/common/cpu/amd
+    ../../modules/hardware/common/gpu/amd
     ../../modules/hardware/devices/lenovo/trackpoint
+    ../../modules/hardware/devices/yubico/yubikey5
   ];
 
   ryzst.hardware.monitors = {
@@ -14,7 +16,7 @@
 
   # BootLoader
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true; # change this to false
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.tmpOnTmpfs = true;
   boot.kernelParams = [ "console=tty1" ];
@@ -52,34 +54,4 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
-
-
-  # Display
-  # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
-
-  # yubikey
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
-  # GPU
-  boot.initrd.kernelModules = [ "amdgpu" ];
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      amdvlk
-      glxinfo
-      rocm-opencl-icd
-      rocm-opencl-runtime
-      mesa.drivers
-    ];
-  };
-  environment.variables.AMD_VULKAN_ICD = lib.mkDefault "RADV";
-  environment.systemPackages = with pkgs; [
-    rocminfo
-    # IR controller
-    v4l-utils
-  ];
 }

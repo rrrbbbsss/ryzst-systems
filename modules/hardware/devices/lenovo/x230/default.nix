@@ -2,6 +2,7 @@
 {
   imports = [
     ../../../common/cpu/intel
+    ../../../common/gpu/intel
   ];
   services.kanata = {
     enable = true;
