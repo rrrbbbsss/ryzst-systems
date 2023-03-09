@@ -3,6 +3,7 @@
 {
 
   imports = [
+    ../../modules/hardware/common/cpu/intel
     ../../modules/hardware/devices/tex/shinobi
   ];
   
@@ -56,11 +57,6 @@
     algorithm = "zstd";
   };
 
-  # CPU
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = true;
-  boot.kernelModules = [ "kvm-intel" ];
 
   # yubikey
   services.pcscd.enable = true;

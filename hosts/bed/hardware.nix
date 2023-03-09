@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../modules/hardware/common/cpu/intel
     ../../modules/hardware/devices/lenovo/trackpoint
   ];
 
@@ -52,10 +53,6 @@
   # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
-  # CPU
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = true;
-  boot.kernelModules = [ "kvm-amd" ];
 
   # Display
   # high-resolution display

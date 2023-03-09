@@ -1,5 +1,8 @@
 { config, ... }:
 {
+  imports = [
+    ../../../common/cpu/intel
+  ];
   services.kanata = {
     enable = true;
     keyboards = {
