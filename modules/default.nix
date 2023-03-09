@@ -1,6 +1,6 @@
 { config, ... }:
 {
   imports = [
-    ./hardware/monitors.nix
+    ./hardware
   ];
 }

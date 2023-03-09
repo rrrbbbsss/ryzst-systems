@@ -11,7 +11,7 @@ let
       ++ core ++ user ++ desktop ++ profiles ++ services ++ (
         if test
         then
-          testing ++ [ (nixpkgs + "/nixos/modules/virtualisation/qemu-vm.nix") ]
+          testing 
         else
           hardware
       );

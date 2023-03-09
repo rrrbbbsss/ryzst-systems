@@ -6,12 +6,11 @@ learning nix
 ryzst-systems
 ├── artwork # todo
 ├── cli # personal cli commands
-├── hardware # todo
 ├── hosts # machine configurations
 ├── idm # user/group management
 ├── images # custom live/installer iso images
 ├── modules # nix modules
 ├── packages # personal packages
 ├── secrets # todo
-└── templates # todo
+└── templates # templates for projects
 #+END_SRC
