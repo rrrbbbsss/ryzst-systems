@@ -1,30 +1,33 @@
-{ nixpkgs, pkgs, system, home-manager }:
+{ nixpkgs, pkgs, system, home-manager, ... }:
 let
-  mkMachine = { name, test, core, hardware, user, desktop, profiles, services, testing }:
+  mkSystem = { name, path, target }:
+    let
+      hardwares =
+        {
+          host = [ (path + "/hardware.nix") ];
+          vm = [ (path + "/vm.nix") ];
+          iso = [ ];
+        };
+    in
     nixpkgs.lib.nixosSystem {
       inherit system pkgs;
       modules = [
         { networking.hostName = "${name}"; }
         home-manager.nixosModule
+        (path + "/default.nix")
         ../modules/default.nix
-      ]
-      ++ core ++ user ++ desktop ++ profiles ++ services ++ (
-        if test
-        then
-          testing 
-        else
-          hardware
-      );
+      ] ++ hardwares.${target};
     };
 
-  mkMachines = { dir, test }: with builtins;
+  mkSystems = { dir, target }: with builtins;
     mapAttrs
       (name: value:
-        mkMachine ((import (dir + "/${name}")) // { inherit name test; }))
+        mkSystem { inherit name target; path = dir + "/${name}";})
       (readDir dir);
 
-  mkHosts = dir: mkMachines { inherit dir; test = false; };
-  mkVMs = dir: mkMachines { inherit dir; test = true; };
+  mkHosts = dir: mkSystems { inherit dir; target = "host"; };
+  mkVMs = dir: mkSystems { inherit dir; target = "vm"; };
+  mkISOs = dir: mkSystems { inherit dir; target = "iso"; };
 
   mkTemplates = dir:
     builtins.mapAttrs
@@ -38,6 +41,7 @@ let
   lib = {
     inherit mkHosts;
     inherit mkVMs;
+    inherit mkISOs;
     inherit mkTemplates;
   };
 in
