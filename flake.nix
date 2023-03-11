@@ -34,7 +34,7 @@
     {
       devShells.${system}.default = import ./shell.nix { inherit pkgs; };
 
-      lib = import ./lib { inherit nixpkgs pkgs system home-manager; };
+      lib = import ./lib { inherit pkgs system self; };
 
       checks.${system} = self.packages.${system};
 

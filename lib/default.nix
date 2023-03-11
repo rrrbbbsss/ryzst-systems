@@ -1,4 +1,4 @@
-{ nixpkgs, pkgs, system, home-manager, ... }:
+{ self, pkgs, system, ... }:
 let
   mkSystem = { name, path, target }:
     let
@@ -9,11 +9,16 @@ let
           iso = [ ];
         };
     in
-    nixpkgs.lib.nixosSystem {
+    self.inputs.nixpkgs.lib.nixosSystem {
       inherit system pkgs;
       modules = [
-        { networking.hostName = "${name}"; }
-        home-manager.nixosModule
+        {
+          networking.hostName = "${name}";
+          nix.registry = {
+            ryzst.flake = self;
+          } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
+        }
+        self.inputs.home-manager.nixosModule
         (path + "/default.nix")
         ../modules/default.nix
       ] ++ hardwares.${target};
@@ -22,7 +27,7 @@ let
   mkSystems = { dir, target }: with builtins;
     mapAttrs
       (name: value:
-        mkSystem { inherit name target; path = dir + "/${name}";})
+        mkSystem { inherit name target; path = dir + "/${name}"; })
       (readDir dir);
 
   mkHosts = dir: mkSystems { inherit dir; target = "host"; };
