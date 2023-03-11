@@ -6,15 +6,13 @@ with pkgs; rec {
   sabaki = callPackage ./sabaki { };
   katrain = callPackage ./katrain { };
   katago-model = callPackage ./katago-model { };
-  q5go = with libsForQt5; callPackage ./q5go { };
+  q5go = libsForQt5.callPackage ./q5go { };
   fzf-pass = callPackage ./fzf-pass { };
   fzf-wifi = callPackage ./fzf-wifi { };
-  python-libs = with python3Packages; {
-    kivy = callPackage ./python-libs/kivy {
-      inherit (pkgs) mesa;
-      inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
-    };
-    kivymd = callPackage ./python-libs/kivymd { };
-    ffpyplayer = callPackage ./python-libs/ffpyplayer { };
+  kivy = python3Packages.callPackage ./python-libs/kivy {
+    inherit (pkgs) mesa;
+    inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
   };
+  kivymd = python3Packages.callPackage ./python-libs/kivymd { };
+  ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
 }

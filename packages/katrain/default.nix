@@ -37,11 +37,11 @@ pythonPackages.buildPythonApplication {
     certifi
     chardet
     docutils
-    ryzst.python-libs.ffpyplayer
+    ryzst.ffpyplayer
     idna
-    ryzst.python-libs.kivy
+    ryzst.kivy
     kivy-garden
-    ryzst.python-libs.kivymd
+    ryzst.kivymd
     pillow
     pygments
     requests

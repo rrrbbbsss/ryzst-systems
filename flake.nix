@@ -36,6 +36,8 @@
 
       lib = import ./lib { inherit nixpkgs pkgs system home-manager; };
 
+      checks.${system} = self.packages.${system};
+
       packages.${system} = import ./packages { inherit pkgs; };
 
       overlays = {

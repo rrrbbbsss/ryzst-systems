@@ -19,7 +19,7 @@ buildPythonPackage rec {
     sha256 = "sha256-ncvCy4r/3pyCVyGY/dsyyBTN1XJUoOSwDFOILbLI1qY=";
   };
 
-  propagatedBuildInputs = [ requests ryzst.python-libs.kivy ];
+  propagatedBuildInputs = [ requests ryzst.kivy ];
 
   doCheck = false;
   # create ./.kivy for import test
