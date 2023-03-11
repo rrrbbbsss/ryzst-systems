@@ -42,12 +42,20 @@ let
         in
         { path = template + "/files"; } // import template)
       (builtins.readDir dir);
+  
+  mkChecks = {}: with builtins;
+    self.packages.${system} //
+    self.devShells.${system} //
+    (mapAttrs (n: v: self.nixosConfiguration.${n}.config.system.build.toplevel ) self.nixosConfigurations) //
+    (mapAttrs (n: v: self.vms.${n}.config.system.build.vm ) self.vms) //
+    (mapAttrs (n: v: self.isos.${n}.config.system.build.isoImage ) self.isos);
 
   lib = {
     inherit mkHosts;
     inherit mkVMs;
     inherit mkISOs;
     inherit mkTemplates;
+    inherit mkChecks;
   };
 in
 lib

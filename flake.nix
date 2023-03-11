@@ -36,7 +36,7 @@
 
       lib = import ./lib { inherit pkgs system self; };
 
-      checks.${system} = self.packages.${system};
+      checks.${system} = self.lib.mkChecks {};
 
       packages.${system} = import ./packages { inherit pkgs; };
 
