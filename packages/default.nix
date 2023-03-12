@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 with pkgs; rec {
   default = cli;
@@ -16,3 +16,5 @@ with pkgs; rec {
   kivymd = python3Packages.callPackage ./python-libs/kivymd { };
   ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
 }
+// (lib.mkVMs ../hosts)
+// (lib.mkISOs ../isos)

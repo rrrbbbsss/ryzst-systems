@@ -17,12 +17,12 @@ case "$1" in
     vm)
         shift;
         # annoying state can linger, so just throw it away when done testing
-        nix run ".#vms.$1.config.system.build.vm" &&
+        nix run ".#vm-$1" &&
         rm "$1.qcow2"
     ;;
     iso)
         shift;
-        RESULT=$(nix build ".#isos.$1.config.system.build.isoImage" --print-out-paths) &&
+        RESULT=$(nix build ".#iso-$1" --print-out-paths) &&
         qemu-kvm -smp 4 -m 4096 -vga qxl -cdrom $RESULT/iso/$1.iso 
     ;;
     *)

@@ -31,8 +31,26 @@ let
       (readDir dir);
 
   mkHosts = dir: mkSystems { inherit dir; target = "host"; };
-  mkVMs = dir: mkSystems { inherit dir; target = "vm"; };
-  mkISOs = dir: mkSystems { inherit dir; target = "iso"; };
+
+  mkVMs = dir:
+    pkgs.lib.concatMapAttrs
+      (n: v: {
+        "vm-${n}" = v.config.system.build.vm;
+      })
+      (mkSystems {
+        inherit dir;
+        target = "vm";
+      });
+
+  mkISOs = dir:
+    pkgs.lib.concatMapAttrs
+      (n: v: {
+        "iso-${n}" = v.config.system.build.isoImage;
+      })
+      (mkSystems {
+        inherit dir;
+        target = "iso";
+      });
 
   mkTemplates = dir:
     builtins.mapAttrs
@@ -42,13 +60,11 @@ let
         in
         { path = template + "/files"; } // import template)
       (builtins.readDir dir);
-  
+
   mkChecks = {}: with builtins;
     self.packages.${system} //
     self.devShells.${system} //
-    (mapAttrs (n: v: self.nixosConfiguration.${n}.config.system.build.toplevel ) self.nixosConfigurations) //
-    (mapAttrs (n: v: self.vms.${n}.config.system.build.vm ) self.vms) //
-    (mapAttrs (n: v: self.isos.${n}.config.system.build.isoImage ) self.isos);
+    (mapAttrs (n: v: self.nixosConfigurations.${n}.config.system.build.toplevel) self.nixosConfigurations);
 
   lib = {
     inherit mkHosts;

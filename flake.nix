@@ -38,7 +38,7 @@
 
       checks.${system} = self.lib.mkChecks {};
 
-      packages.${system} = import ./packages { inherit pkgs; };
+      packages.${system} = import ./packages { inherit pkgs; lib = self.lib; };
 
       overlays = {
         default = final: prev: {
@@ -48,8 +48,6 @@
       };
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
-      vms = self.lib.mkVMs ./hosts;
-      isos = self.lib.mkISOs ./isos;
 
       templates = self.lib.mkTemplates ./templates;
     };

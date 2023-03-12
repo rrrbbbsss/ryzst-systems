@@ -139,7 +139,7 @@ case "$1" in
             printf "Canceled\n\n"
             exit 1
         fi
-        RESULT=$(nix build $REPO"#isos.$1.config.system.build.isoImage" --print-out-paths) &&
+        RESULT=$(nix build ".#iso-$1" --print-out-paths) &&
         printf "\ndd if=$RESULT/iso/$1.iso of=$SELECTION\n" &&
         sudo dd if=$RESULT/iso/$1.iso of=$SELECTION bs=4M conv=fsync status=progress
     ;;
