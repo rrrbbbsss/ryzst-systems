@@ -8,8 +8,9 @@ ryzst-systems
 ├── cli # personal cli commands
 ├── hosts # machine configurations
 ├── idm # user/group management
-├── images # custom live/installer iso images
-├── modules # nix modules
+├── isos # custom live/installer iso images
+├── lib # misc helper functions
+├── modules # nixos modules
 ├── packages # personal packages
 ├── secrets # todo
 └── templates # templates for projects
