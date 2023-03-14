@@ -32,9 +32,27 @@
 
   services.swayidle = {
     enable = true;
+    extraArgs = [ "-w" ];
+    timeouts = [
+      {
+        timeout = 600;
+        command = "${pkgs.swaylock}/bin/swaylock -f";
+      }
+      {
+        timeout = 630;
+        command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+        resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+      }
+      {
+        timeout = 3600;
+        command = "${pkgs.systemd}/bin/systemctl suspend";
+      }
+    ];
     events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
-      { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock"; }
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
+      { event = "before-sleep"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
+      { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
+      { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
     ];
   };
 
@@ -175,7 +193,16 @@
         #modes
         "${modifier}+r" = "mode resize";
         "${modifier}+Shift+Escape" = "mode vm";
-
+        #mediakeys
+        "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+        "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+        "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+        "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
       };
 
     };
