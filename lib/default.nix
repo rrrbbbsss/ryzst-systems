@@ -13,7 +13,10 @@ let
       inherit system pkgs;
       modules = [
         {
-          networking.hostName = "${name}";
+          networking = {
+            hostName = "${name}";
+            domain = "mek.ryzst.net";
+          };
           nix.registry = {
             ryzst.flake = self;
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
@@ -42,8 +45,8 @@ let
         target = "vm";
       });
 
-  mkISOs = dir:
-    pkgs.lib.concatMapAttrs
+  mkISOs = dir: with pkgs.lib;
+    concatMapAttrs
       (n: v: {
         "iso-${n}" = v.config.system.build.isoImage;
       })
@@ -52,19 +55,19 @@ let
         target = "iso";
       });
 
-  mkTemplates = dir:
-    builtins.mapAttrs
+  mkTemplates = dir: with builtins;
+    mapAttrs
       (name: value:
         let
           template = dir + "/${name}";
         in
         { path = template + "/files"; } // import template)
-      (builtins.readDir dir);
+      (readDir dir);
 
-  mkChecks = {}: with builtins;
-    self.packages.${system} //
-    self.devShells.${system} //
-    (mapAttrs (n: v: self.nixosConfigurations.${n}.config.system.build.toplevel) self.nixosConfigurations);
+  mkChecks = {}: with pkgs.lib;
+    (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
+    (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system}) //
+    (concatMapAttrs (n: v: { "hosts-${n}" = v.config.system.build.toplevel; }) self.nixosConfigurations);
 
   lib = {
     inherit mkHosts;
