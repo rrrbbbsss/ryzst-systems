@@ -88,6 +88,7 @@
           "browser.startup.homepage" = "https://google.com";
           "browser.newtabpage.enabled" = false;
           "extensions.pocket.enabled" = false;
+          "extensions.autoDisableScopes" = 14;
         };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
