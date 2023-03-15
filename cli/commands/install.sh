@@ -42,7 +42,7 @@ case "$1" in
         fi
         # validate network connection
         printf "Validating Internet connection...\n"
-        if curl https://cache.nixos.org &>/dev/null; then
+        if curl --max-time 15 --retry 3 --retry-delay 5 https://cache.nixos.org &>/dev/null; then
             printf "success\n\n"
         else   
             printf "ERROR: Cannot connect to Internet\n"
@@ -108,7 +108,9 @@ case "$1" in
         nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
         # todo: register devices....
         # finish
-        umount -Rl /mnt
+        sync
+        umount -R /mnt
+        swapoff --all
         CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
         printf "$CONFIRM\n\n"
         if [[ $CONFIRM = ""  ]]; then
