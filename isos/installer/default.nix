@@ -72,6 +72,7 @@
       extraGroups = [ "wheel" "networkmanager" "video" ];
       # no password
       initialHashedPassword = "";
+      shell = pkgs.zsh;
     };
     root = {
       # no password
@@ -79,15 +80,42 @@
     };
   };
 
+  programs.zsh.enable = true;
+  environment.pathsToLink = [ "/share/zsh" ];
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.installer = { pkgs, ... }: {
+    imports = [
+      ../../idm/users/rrrbbbsss/config/alacritty
+      ../../idm/users/rrrbbbsss/config/zsh
+    ];
+    programs.zsh.initExtra = ''
+      [[ -v DISPLAY ]] && sudo ryzst install system
+    '';
+    home.stateVersion = "22.11";
+  };
+
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
   };
 
-  services.getty.autologinUser = "installer";
-  programs.bash.loginShellInit = ''
-    sudo ryzst install system > output
-  '';
+  hardware.opengl.enable = true;
+
+  services.cage = {
+    enable = true;
+    program = "${pkgs.alacritty}/bin/alacritty";
+    user = "installer";
+    extraArguments = [ "-d" "-s" ];
+  };
+
+  fonts = {
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      dejavu_fonts
+    ];
+  };
 
   environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
   boot.kernel.sysctl."vm.overcommit_memory" = "1";
