@@ -6,6 +6,7 @@
     defaultKeymap = "viins";
     enableCompletion = true;
     enableSyntaxHighlighting = true;
+    dotDir = ".config/zsh";
     initExtra = ''
       stty -ixon
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
