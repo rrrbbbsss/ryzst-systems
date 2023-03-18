@@ -102,6 +102,7 @@
     git
     wget
     age
+    nftables
   ];
 
 }

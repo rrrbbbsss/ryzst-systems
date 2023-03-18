@@ -1,5 +1,21 @@
 { config, pkgs, ... }:
 let
+  ext = {
+    nts = [
+      "time.cloudflare.com"
+      "oregon.time.system76.com"
+    ];
+    dns = {
+      primary = {
+        name = "cloudflare-dns.com";
+        address = "1.1.1.1";
+      };
+      secondary = {
+        name = "dns.google";
+        address = "8.8.8.8";
+      };
+    };
+  };
   lan = {
     interface = "ens19";
     address = "192.168.0.1";
@@ -91,6 +107,7 @@ in
     git
     wget
     age
+    nftables
   ];
 
   #############
@@ -123,6 +140,11 @@ in
   # firewall
   networking.firewall = {
     enable = true;
+    interfaces = {
+      ${lan.interface} = {
+        allowedTCPPorts = [ 53 ];
+      };
+    };
   };
 
   # NTP server
@@ -130,40 +152,68 @@ in
     enable = true;
     enableNTS = true;
     serverOption = "iburst";
-    servers = [
-      "time.cloudflare.com"
-    ];
+    servers = ext.nts;
     extraConfig = ''
       allow ${lan.subnet}
       bindaddress ${lan.address}
     '';
   };
 
-  # dhcp
-  services.kea.dhcp4 = {
+  # dns server
+  services.coredns = {
     enable = true;
-    settings = {
-      interfaces-config = {
-        interfaces = [ lan.interface ];
-      };
-      lease-database = {
-        name = "/var/lib/kea/dhcp4.leases";
-        persist = true;
-        type = "memfile";
-      };
-      rebind-timer = 2000;
-      renew-timer = 1000;
-      subnet4 = [
-        {
-          pools = [{ pool = lan.pool; }];
-          subnet = lan.subnet;
-          option-data = [
-            { name = "domain-name-servers"; data = "8.8.8.8, 1.1.1.1"; }
-            { name = "routers"; data = lan.address; }
-          ];
+    config = ''
+      .:53 {
+        bind ${lan.interface}
+        forward . 127.0.0.1:5301 127.0.0.1:5302
+        cache 3600
+      }
+      .:5301 { 
+        bind 127.0.0.1
+        forward . tls://${ext.dns.primary.address} {
+          tls_servername ${ext.dns.primary.name}
+          health_check 5s
         }
-      ];
-      valid-lifetime = 4000;
+      }
+      .:5302 {
+        bind 127.0.0.1
+        forward . tls://${ext.dns.secondary.address} {
+          tls_servername ${ext.dns.secondary.name}
+          health_check 5s
+        }
+      }
+    '';
+  };
+
+  # dhcp
+  services.kea = {
+    dhcp4 = {
+      enable = true;
+      settings = {
+        valid-lifetime = 86400;
+        interfaces-config = {
+          interfaces = [ lan.interface ];
+        };
+        lease-database = {
+          name = "/var/lib/kea/dhcp4.leases";
+          persist = true;
+          type = "memfile";
+        };
+        subnet4 = [
+          {
+            pools = [{ pool = lan.pool; }];
+            subnet = lan.subnet;
+            option-data = [
+              {
+                name = "domain-name-servers";
+                data = lan.address;
+                #data = pkgs.lib.strings.concatStringsSep "," ext.dns;
+              }
+              { name = "routers"; data = lan.address; }
+            ];
+          }
+        ];
+      };
     };
   };
 }
