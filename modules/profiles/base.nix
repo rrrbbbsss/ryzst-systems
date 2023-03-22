@@ -103,6 +103,7 @@
     wget
     age
     nftables
+    wireguard-tools
   ];
 
 }

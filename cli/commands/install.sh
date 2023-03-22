@@ -106,7 +106,12 @@ case "$1" in
         # install nixos from flake
         printf "Installing system:\n"
         nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
-        # todo: register devices....
+        # generate keys
+        mkdir -m 600 -p /mnt/keys
+        wg genkey | (umask 0077 && tee /mnt/keys/wg0.key) | wg pubkey > /mnt/keys/wg0.pub
+        # todo: generate ssh keys
+        # todo: generate machineid
+        # todo: register device (wg.pub ssh.pub fs-uuids)....
         # finish
         sync
         umount -R /mnt

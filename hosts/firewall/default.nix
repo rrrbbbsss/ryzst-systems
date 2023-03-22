@@ -8,23 +8,32 @@ let
     dns = {
       primary = {
         name = "cloudflare-dns.com";
-        address = "1.1.1.1";
+        ip = "1.1.1.1";
       };
       secondary = {
         name = "dns.google";
-        address = "8.8.8.8";
+        ip = "8.8.8.8";
       };
     };
   };
   lan = {
     interface = "ens19";
-    address = "192.168.0.1";
+    ip = "192.168.0.1";
+    address = "192.168.0.1/24";
     prefixLength = 24;
     subnet = "192.168.0.0/24";
     pool = "192.168.0.100 - 192.168.0.200";
   };
   wan = {
     interface = "ens18";
+  };
+  wireguard = {
+    interface = "wg0";
+    ip = "10.255.255.1";
+    address = "10.255.255.1/24";
+    prefixLength = 24;
+    subnet = "10.255.255.0/24";
+    port = 51820;
   };
 in
 {
@@ -60,7 +69,7 @@ in
 
   services.openssh = {
     enable = true;
-    openFirewall = true;
+    openFirewall = false;
     settings = {
       permitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
@@ -108,6 +117,7 @@ in
     wget
     age
     nftables
+    wireguard-tools
   ];
 
   #############
@@ -117,23 +127,64 @@ in
     "net.ipv4.conf.allforwarding" = true;
   };
 
-  # interfaces
-  networking.interfaces = {
-    ${lan.interface} = {
-      useDHCP = false;
-      ipv4.addresses = [
-        { address = lan.address; prefixLength = lan.prefixLength; }
-      ];
+  systemd.network = {
+    enable = true;
+    netdevs = {
+      ${wireguard.interface} = {
+        netdevConfig = {
+          Name = wireguard.interface;
+          Kind = "wireguard";
+          Description = "wireguard server";
+        };
+        wireguardConfig = {
+          ListenPort = wireguard.port;
+          PrivateKeyFile = "/secrets/wg0/pri.key"; # todo: gen wireguard key in install script
+        };
+        wireguardPeers = [
+          # todo: generate from registered devices
+          {
+            wireguardPeerConfig = {
+              AllowedIPs = [ "10.255.255.2/32" ];
+              PublicKey = "todo";
+            };
+          }
+        ];
+      };
     };
-    ${wan.interface} = {
-      useDHCP = true;
+    networks = {
+      ${wireguard.interface} = {
+        matchConfig = {
+          Name = wireguard.interface;
+        };
+        networkConfig = {
+          Address = wireguard.address;
+        };
+      };
+      ${lan.interface} = {
+        matchConfig = {
+          Name = lan.interface;
+        };
+        networkConfig = {
+          DHCP = "no";
+          Address = lan.address;
+        };
+      };
+      ${wan.interface} = {
+        matchConfig = {
+          Name = wan.interface;
+        };
+        networkConfig = {
+          DHCP = "yes";
+        };
+      };
+
     };
   };
 
   # nat
   networking.nat = {
     enable = true;
-    internalInterfaces = [ lan.interface ];
+    internalInterfaces = [ lan.interface wireguard.interface ];
     externalInterface = wan.interface;
   };
 
@@ -142,7 +193,11 @@ in
     enable = true;
     interfaces = {
       ${lan.interface} = {
-        allowedTCPPorts = [ 53 ];
+        allowedTCPPorts = [ 22 53 ];
+        allowedUDPPorts = [ 53 wireguard.port ];
+      };
+      ${wan.interface} = {
+        allowedTCPPorts = [ 22 ];
       };
     };
   };
@@ -155,7 +210,7 @@ in
     servers = ext.nts;
     extraConfig = ''
       allow ${lan.subnet}
-      bindaddress ${lan.address}
+      bindaddress ${lan.ip}
     '';
   };
 
@@ -170,14 +225,14 @@ in
       }
       .:5301 { 
         bind 127.0.0.1
-        forward . tls://${ext.dns.primary.address} {
+        forward . tls://${ext.dns.primary.ip} {
           tls_servername ${ext.dns.primary.name}
           health_check 5s
         }
       }
       .:5302 {
         bind 127.0.0.1
-        forward . tls://${ext.dns.secondary.address} {
+        forward . tls://${ext.dns.secondary.ip} {
           tls_servername ${ext.dns.secondary.name}
           health_check 5s
         }
@@ -206,10 +261,10 @@ in
             option-data = [
               {
                 name = "domain-name-servers";
-                data = lan.address;
+                data = lan.ip;
                 #data = pkgs.lib.strings.concatStringsSep "," ext.dns;
               }
-              { name = "routers"; data = lan.address; }
+              { name = "routers"; data = lan.ip; }
             ];
           }
         ];
