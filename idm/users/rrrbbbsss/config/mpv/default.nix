@@ -4,17 +4,13 @@
     enable = true;
     config = {
       profile = "gpu-hq";
-      scale = "spline36";
-      cscale = "spline36";
-      dscale = "mitchell";
-      dither-depth = "auto";
-      correct-downscaling = "yes";
-      linear-downscaling = "yes";
-      sigmoid-upscaling = "yes";
-      deband = "yes";
-      vo = "gpu";
-      gpu-api = "vulkan";
-      hwdec = "no";
+      scale = "ewa_lanczossharp";
+      cscale = "ewa_lanczossharp";
+      video-sync = "display-resample";
+      interpolation = true;
+      tscale = "oversample";
+      gpu-hwdec-interop = "vaapi";
+      hwdec = "auto";
     };
     bindings = {
       "Alt+H" = "add video-rotate 90";
