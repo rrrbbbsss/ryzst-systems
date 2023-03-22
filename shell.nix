@@ -15,7 +15,7 @@ mkShell {
     ryzst.cli
   ];
   shellHook = ''
-    export FLAKE="$(pwd)"
     export PATH="${nixBin}/bin:$PATH"
+    ${git}/bin/git config --local core.hooksPath $PWD/.githooks
   '';
 }
