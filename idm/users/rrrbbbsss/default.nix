@@ -87,6 +87,7 @@
         settings = {
           "browser.startup.homepage" = "https://google.com";
           "browser.newtabpage.enabled" = false;
+          "media.ffmpeg.vaapi.enabled" = true;
           "extensions.pocket.enabled" = false;
           "extensions.autoDisableScopes" = 14;
         };
