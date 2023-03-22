@@ -72,7 +72,7 @@ case "$1" in
         printf "Partitioning Disk:\n"
         sgdisk --zap-all $DISK
         sgdisk -n1:1M:+512M -t1:EF00 -c1:ESP $DISK
-        sgdisk -n2:0:0      -t2:BF00 -c2:NIX $DISK 
+        sgdisk -n2:0:0      -t2:8300 -c2:NIX $DISK 
         sync && udevadm settle && sleep 3
         # format
         printf "Formatting Filesystems:\n"
@@ -107,8 +107,13 @@ case "$1" in
         printf "Installing system:\n"
         nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
         # generate keys
-        mkdir -m 600 -p /mnt/keys
-        wg genkey | (umask 0077 && tee /mnt/keys/wg0.key) | wg pubkey > /mnt/keys/wg0.pub
+        PERSIST=/mnt/persist
+        SECRETS=$PERSIST/secrets
+        mkdir -p $PERSIST $SECRETS
+        wg genkey | (umask 0037 && tee $SECRETS/wg0.key) | wg pubkey > $SECRETS/wg0.pub
+        # ideal: https://github.com/systemd/systemd/issues/9535#issuecomment-403715405 
+        # workaround: let systemd-networkd read the private key
+        chown root:systemd-network $SECRETS/wg0.key
         # todo: generate ssh keys
         # todo: generate machineid
         # todo: register device (wg.pub ssh.pub fs-uuids)....

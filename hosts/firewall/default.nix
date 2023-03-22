@@ -20,7 +20,6 @@ let
     interface = "ens19";
     ip = "192.168.0.1";
     address = "192.168.0.1/24";
-    prefixLength = 24;
     subnet = "192.168.0.0/24";
     pool = "192.168.0.100 - 192.168.0.200";
   };
@@ -31,9 +30,9 @@ let
     interface = "wg0";
     ip = "10.255.255.1";
     address = "10.255.255.1/24";
-    prefixLength = 24;
     subnet = "10.255.255.0/24";
     port = 51820;
+    endpoint = lan.interface;
   };
 in
 {
@@ -45,7 +44,8 @@ in
   users = {
     mutableUsers = false;
     users.root = {
-      hashedPassword = null;
+      initialHashedPassword = "";
+      #hashedPassword = null;
       openssh.authorizedKeys.keys = import ../../idm/groups/admins.nix;
     };
   };
@@ -127,6 +127,12 @@ in
     "net.ipv4.conf.allforwarding" = true;
   };
 
+  # wireguard
+  networking = {
+    useDHCP = false;
+    useNetworkd = true;
+  };
+  services.resolved.enable = false;
   systemd.network = {
     enable = true;
     netdevs = {
@@ -134,18 +140,18 @@ in
         netdevConfig = {
           Name = wireguard.interface;
           Kind = "wireguard";
-          Description = "wireguard server";
+          Description = "wireguard hub";
         };
         wireguardConfig = {
           ListenPort = wireguard.port;
-          PrivateKeyFile = "/secrets/wg0/pri.key"; # todo: gen wireguard key in install script
+          PrivateKeyFile = "/persist/secrets/wg0.key";
         };
         wireguardPeers = [
           # todo: generate from registered devices
           {
             wireguardPeerConfig = {
               AllowedIPs = [ "10.255.255.2/32" ];
-              PublicKey = "todo";
+              PublicKey = "SXd1DyO+Sasb9a2Hl+YHAxrw2JRuE03HzgPmR0jRtB0=";
             };
           }
         ];
@@ -158,6 +164,8 @@ in
         };
         networkConfig = {
           Address = wireguard.address;
+          DHCP = "no";
+          IPv6AcceptRA = "no";
         };
       };
       ${lan.interface} = {
@@ -167,6 +175,8 @@ in
         networkConfig = {
           DHCP = "no";
           Address = lan.address;
+          LinkLocalAddressing = "no";
+          IPv6AcceptRA = "no";
         };
       };
       ${wan.interface} = {
@@ -174,10 +184,11 @@ in
           Name = wan.interface;
         };
         networkConfig = {
-          DHCP = "yes";
+          DHCP = "ipv4";
+          LinkLocalAddressing = "no";
+          IPv6AcceptRA = "no";
         };
       };
-
     };
   };
 
@@ -200,6 +211,9 @@ in
         allowedTCPPorts = [ 22 ];
       };
     };
+    # todo: add wg rules here
+    extraForwardRules = ''
+    '';
   };
 
   # NTP server
@@ -261,8 +275,7 @@ in
             option-data = [
               {
                 name = "domain-name-servers";
-                data = lan.ip;
-                #data = pkgs.lib.strings.concatStringsSep "," ext.dns;
+                data = "${ext.dns.primary.ip}, ${ext.dns.secondary.ip}";
               }
               { name = "routers"; data = lan.ip; }
             ];

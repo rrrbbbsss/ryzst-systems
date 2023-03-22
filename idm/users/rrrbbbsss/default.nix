@@ -11,6 +11,7 @@
     shell = pkgs.zsh;
     hashedPassword = null;
   };
+  #todo: this needs to move out
   networking.networkmanager.enable = true;
 
   # for zsh shell
