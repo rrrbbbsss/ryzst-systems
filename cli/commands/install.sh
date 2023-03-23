@@ -103,20 +103,19 @@ case "$1" in
             printf "Canceled\n\n"
             exit 1
         fi
-        # install nixos from flake
-        printf "Installing system:\n"
-        nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
-        # generate keys
+        # generate wg0/ssh keys and machineid
         PERSIST=/mnt/persist
         SECRETS=$PERSIST/secrets
         mkdir -p $PERSIST $SECRETS
-        wg genkey | (umask 0037 && tee $SECRETS/wg0.key) | wg pubkey > $SECRETS/wg0.pub
-        # ideal: https://github.com/systemd/systemd/issues/9535#issuecomment-403715405 
-        # workaround: let systemd-networkd read the private key
+        wg genkey | (umask 0037 && tee $SECRETS/wg0_key) | wg pubkey > $SECRETS/wg0_key.pub
+        # let systemd-networkd read the private key
         chown root:systemd-network $SECRETS/wg0.key
-        # todo: generate ssh keys
-        # todo: generate machineid
-        # todo: register device (wg.pub ssh.pub fs-uuids)....
+        ssh-keygen -q -N "" -t ed25519 -f $SECRETS/ssh_host_e25519_key
+        (umask 0333 && systemd-machine-id-setup --print > $SECRETS/machineid)
+        # install nixos from flake
+        printf "Installing system:\n"
+        nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
+        # todo: register device (wg0_key.pub ssh_host_e25519_key.pub)...
         # finish
         sync
         umount -R /mnt

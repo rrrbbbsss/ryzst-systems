@@ -28,7 +28,7 @@ in
     ${wireguard.client.interface} = {
       ips = [ wireguard.client.address ];
       listenPort = wireguard.client.port;
-      privateKeyFile = "/persist/secrets/wg0.key";
+      privateKeyFile = "/persist/secrets/wg0_key";
       peers = [
         {
           publicKey = wireguard.hub.publicKey;
