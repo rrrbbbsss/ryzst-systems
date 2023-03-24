@@ -1,18 +1,10 @@
 { config, lib, pkgs, ... }:
 with lib;
 let
-  cfg = config.ryzst.int.dns;
-  mek = with builtins; toFile "mek.ryzst.net"
-    (foldl'
-    (acc: x:
-      (fromJSON
-        (readFile ../../../../hosts/${x}/registration.json)).ip
-      + " " + x + ".mek.ryzst.net\n" + acc)
-    ""
-    (attrNames (readDir ../../../../hosts)));
+  cfg = config.ryzst.int.dns.server;
 in
 {
-  options.ryzst.int.dns = {
+  options.ryzst.int.dns.server = {
     enable = mkEnableOption "Internal Dns service";
     interface = mkOption {
       description = "The interface to bind the service to";
@@ -56,7 +48,7 @@ in
             allow net ${cfg.allow}
             drop
           }
-          hosts ${mek} mek.ryzst.net {
+          hosts ${config.ryzst.mek.hostsFile} ${config.networking.domain} {
             ttl 3600
             fallthrough
           }

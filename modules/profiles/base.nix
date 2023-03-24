@@ -1,5 +1,26 @@
 { config, pkgs, lib, home-manager, ... }:
+
 {
+  #locale
+  time.timeZone = "America/Chicago";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "en_US.UTF-8";
+    };
+  };
+
+  networking.domain = "mek.ryzst.net";
+
+  #auth
   users = {
     mutableUsers = false;
     users.root = {
@@ -7,7 +28,6 @@
       openssh.authorizedKeys.keys = import ../../idm/groups/admins.nix;
     };
   };
-
   security.pam = {
     u2f = {
       enable = true;
@@ -28,31 +48,6 @@
       sshd.u2fAuth = false; # todo...
     };
   };
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_US.UTF-8";
-      LC_IDENTIFICATION = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
-      LC_NAME = "en_US.UTF-8";
-      LC_NUMERIC = "en_US.UTF-8";
-      LC_PAPER = "en_US.UTF-8";
-      LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
-    };
-  };
-
-  time.timeZone = "America/Chicago";
-
-  networking = {
-    useDHCP = lib.mkDefault true;
-    nameservers = [ "10.0.2.1" ];
-    timeServers = [ "ntp.int.ryzst.net" ];
-    firewall.enable = true;
-  };
-
   services.openssh = {
     enable = true;
     openFirewall = true;
@@ -63,8 +58,7 @@
     };
   };
 
-  # forgive me
-  nixpkgs.config.allowUnfree = true;
+  #nix
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -96,7 +90,10 @@
       flake = "github:rrrbbbsss/ryzst-systems";
     };
   };
+  # forgive me
+  nixpkgs.config.allowUnfree = true;
 
+  # packages
   environment.systemPackages = with pkgs; [
     vim
     git
@@ -104,6 +101,6 @@
     age
     nftables
     wireguard-tools
+    bind.dnsutils
   ];
-
 }

@@ -15,7 +15,6 @@ let
         {
           networking = {
             hostName = "${name}";
-            domain = "mek.ryzst.net";
           };
           nix.registry = {
             ryzst.flake = self;

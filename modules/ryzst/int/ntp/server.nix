@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  cfg = config.ryzst.int.ntp;
+  cfg = config.ryzst.int.ntp.server;
 in
 {
-  options.ryzst.int.ntp = {
+  options.ryzst.int.ntp.server = {
     enable = mkEnableOption "Internal Ntp service";
     interface = mkOption {
       description = "The interface to bind the service to";
