@@ -1,8 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../../modules/profiles/base.nix
-    ../../modules/profiles/core.nix
     ../../idm/users/media
   ];
 

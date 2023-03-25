@@ -1,9 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
   hosts = with builtins;
     let dir = ../../../hosts; in
-    mapAttrs (n: v: fromJSON (readFile (dir + "/${n}/registration.json")))
+    mapAttrs
+      (n: v: { name = n; } // fromJSON (readFile (dir + "/${n}/registration.json")))
       (readDir dir);
   hostsFile = with builtins;
     toFile "${config.networking.domain}-hostsFile"
@@ -24,5 +25,4 @@ in
       default = hostsFile;
     };
   };
-
 }

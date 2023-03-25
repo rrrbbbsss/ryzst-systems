@@ -1,20 +1,32 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.ryzst.int.ntp.server;
+  enable = lists.any
+    (x: x.name == config.networking.hostName)
+    cfg.nodes;
+  ip = builtins.getAttr "ip"
+    (lists.findFirst
+      (x: x.name == config.networking.hostName) ""
+      config.ryzst.int.ntp.server.nodes);
 in
 {
   options.ryzst.int.ntp.server = {
     enable = mkEnableOption "Internal Ntp service";
+    nodes = mkOption {
+      description = "Nodes the service is deployed to";
+      type = types.listOf types.attrs;
+      default = [ ];
+    };
     interface = mkOption {
       description = "The interface to bind the service to";
       type = types.str;
       default = "wg0";
     };
-    address = mkOption {
-      description = "The address to bind the service to";
+    ip = mkOption {
+      description = "The ip address to bind the service to";
       type = types.str;
-      example = "10.255.255.1";
+      default = ip;
     };
     port = mkOption {
       description = "The port for the service to listen on";
@@ -32,7 +44,7 @@ in
       default = [ "time.cloudflare.com" "oregon.time.system76.com" ];
     };
   };
-  config = mkIf cfg.enable {
+  config = mkIf enable {
     networking.firewall.interfaces = {
       ${cfg.interface} = {
         allowedUDPPorts = [ cfg.port ];
@@ -46,7 +58,7 @@ in
       servers = cfg.nts-servers;
       extraConfig = ''
         allow ${cfg.allow}
-        bindaddress ${cfg.address}
+        bindaddress ${cfg.ip}
         port ${builtins.toString cfg.port}
       '';
     };

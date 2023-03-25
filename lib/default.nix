@@ -1,5 +1,12 @@
 { self, pkgs, system, ... }:
 let
+  lib-nixpkgs = self.inputs.nixpkgs.lib;
+  getDirs = dir: with lib-nixpkgs.attrsets;
+    foldlAttrs
+      (acc: n: v:
+        if v == "directory" then [ "./${n}" ] ++ acc else acc)
+      [ ]
+      (builtins.readDir dir);
   mkSystem = { name, path, target }:
     let
       hardwares =
@@ -9,7 +16,7 @@ let
           iso = [ ];
         };
     in
-    self.inputs.nixpkgs.lib.nixosSystem {
+    lib-nixpkgs.nixosSystem {
       inherit system pkgs;
       modules = [
         {
@@ -35,7 +42,7 @@ let
   mkHosts = dir: mkSystems { inherit dir; target = "host"; };
 
   mkVMs = dir:
-    pkgs.lib.concatMapAttrs
+    lib-nixpkgs.concatMapAttrs
       (n: v: {
         "vm-${n}" = v.config.system.build.vm;
       })
@@ -44,7 +51,7 @@ let
         target = "vm";
       });
 
-  mkISOs = dir: with pkgs.lib;
+  mkISOs = dir: with lib-nixpkgs;
     concatMapAttrs
       (n: v: {
         "iso-${n}" = v.config.system.build.isoImage;
@@ -63,12 +70,13 @@ let
         { path = template + "/files"; } // import template)
       (readDir dir);
 
-  mkChecks = {}: with pkgs.lib;
+  mkChecks = {}: with lib-nixpkgs;
     (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
     (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system}) //
     (concatMapAttrs (n: v: { "hosts-${n}" = v.config.system.build.toplevel; }) self.nixosConfigurations);
 
   lib = {
+    inherit getDirs;
     inherit mkHosts;
     inherit mkVMs;
     inherit mkISOs;

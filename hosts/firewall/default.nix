@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 let
   lan = {
     interface = "ens19";
@@ -23,22 +23,7 @@ in
 {
   imports = [
     ../../modules/profiles/base.nix
-    ../../modules/ryzst/int/dns/server.nix
-    ../../modules/ryzst/int/ntp/server.nix
-    ../../modules/ryzst/int/wg/server.nix
   ];
-
-  ryzst.int.ntp.server = {
-    enable = true;
-    address = wireguard.ip;
-    interface = wireguard.interface;
-    allow = wireguard.subnet;
-  };
-  ryzst.int.dns.server = {
-    enable = true;
-    interface = wireguard.interface;
-    allow = wireguard.subnet;
-  };
 
 
   # ip forwarding 

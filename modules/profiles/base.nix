@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ pkgs, ... }:
 
 {
   #locale
@@ -18,7 +18,10 @@
     };
   };
 
-  networking.domain = "mek.ryzst.net";
+  networking = {
+    domain = "mek.ryzst.net";
+    firewall.enable = true;
+  };
 
   #auth
   users = {

@@ -44,6 +44,7 @@
         default = final: prev: {
           ryzst = self.packages.${system};
           firefox-addons = self.inputs.firefox-addons.packages.${system};
+          lib = prev.lib // { ryzst = self.lib; };
         };
       };
 

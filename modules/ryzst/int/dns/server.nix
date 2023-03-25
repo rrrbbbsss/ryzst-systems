@@ -1,11 +1,20 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 with lib;
 let
   cfg = config.ryzst.int.dns.server;
+  nameservers =
+    map (x: x.ip) config.ryzst.int.dns.server.nodes;
+  enable = lists.any
+    (x: x.name == config.networking.hostName)
+    cfg.nodes;
 in
 {
   options.ryzst.int.dns.server = {
-    enable = mkEnableOption "Internal Dns service";
+    nodes = mkOption {
+      description = "Nodes the service is deployed to";
+      type = types.listOf types.attrs;
+      default = [ ];
+    };
     interface = mkOption {
       description = "The interface to bind the service to";
       type = types.str;
@@ -29,9 +38,16 @@ in
         secondary = { ip = "8.8.8.8"; name = "dns.google"; };
       };
     };
+    nameservers = mkOption {
+      description = "List of nameserver IPs";
+      type = types.listOf types.str;
+      default = nameservers;
+    };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enable {
+    networking.nameservers = cfg.nameservers;
+
     networking.firewall.interfaces = {
       ${cfg.interface} = {
         allowedUDPPorts = [ cfg.port ];
