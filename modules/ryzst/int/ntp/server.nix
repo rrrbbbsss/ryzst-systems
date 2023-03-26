@@ -2,20 +2,14 @@
 with lib;
 let
   cfg = config.ryzst.int.ntp.server;
-  enable = lists.any
-    (x: x.name == config.networking.hostName)
-    cfg.nodes;
-  ip = builtins.getAttr "ip"
-    (lists.findFirst
-      (x: x.name == config.networking.hostName) ""
-      config.ryzst.int.ntp.server.nodes);
+  enable = cfg.nodes?${config.networking.hostName};
 in
 {
   options.ryzst.int.ntp.server = {
     enable = mkEnableOption "Internal Ntp service";
     nodes = mkOption {
       description = "Nodes the service is deployed to";
-      type = types.listOf types.attrs;
+      type = types.attrs;
       default = [ ];
     };
     interface = mkOption {
@@ -26,7 +20,7 @@ in
     ip = mkOption {
       description = "The ip address to bind the service to";
       type = types.str;
-      default = ip;
+      default = "no";
     };
     port = mkOption {
       description = "The port for the service to listen on";
@@ -58,7 +52,7 @@ in
       servers = cfg.nts-servers;
       extraConfig = ''
         allow ${cfg.allow}
-        bindaddress ${cfg.ip}
+        bindaddress ${cfg.nodes.${config.networking.hostName}.ip}
         port ${builtins.toString cfg.port}
       '';
     };

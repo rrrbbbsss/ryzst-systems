@@ -2,35 +2,25 @@
 with lib;
 let
   cfg = config.ryzst.int.wg.server;
-  enable = lists.any
-    (x: x.name == config.networking.hostName)
-    cfg.nodes;
-  #todo: fix
-  ip = (builtins.head cfg.nodes).ip;
-  publicKey = (builtins.head cfg.nodes).keys.wg0;
-  #todo: fix
-  clients = attrsets.foldlAttrs
+  enable = cfg.nodes?${config.networking.hostName};
+  configs = attrsets.foldlAttrs
     (acc: n: v:
-      [{ publicKey = v.keys.wg0; allowedIPs = [ "${v.ip}/32" ]; }] ++ acc)
+      [{
+        publicKey = v.keys.wg0;
+        allowedIPs = [ cfg.subnet ];
+        endpoint = "${v.endpoint}:${builtins.toString cfg.port}";
+        persistentKeepalive = 10;
+      }] ++ acc
+    )
     [ ]
-    config.ryzst.mek.hosts;
+    cfg.nodes;
 in
 {
   options.ryzst.int.wg.server = {
     nodes = mkOption {
       description = "Nodes the server is deployed to";
-      type = types.listOf types.attrs;
+      type = types.attrs;
       default = [ ];
-    };
-    ip = mkOption {
-      description = "The ip address to bind the service to";
-      type = types.str;
-      default = ip;
-    };
-    publicKey = mkOption {
-      description = "The publicKey of the interface";
-      type = types.str;
-      default = publicKey;
     };
     subnet = mkOption {
       description = "The subnet of the wireguard network";
@@ -42,21 +32,20 @@ in
       type = types.int;
       default = 51820;
     };
-    endpoint = mkOption {
-      description = "The ip address to bind the service to";
-      type = types.str;
-      # todo: don't set this here
-      default = "192.168.0.1";
+    configs = mkOption {
+      description = "The configs of the service endpoints";
+      type = types.listOf types.attrs;
+      default = configs;
     };
   };
 
   config = mkIf enable {
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "${cfg.ip}/24" ];
+        ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/24" ];
         listenPort = cfg.port;
         privateKeyFile = "/persist/secrets/wg0_key";
-        peers = clients;
+        peers = config.ryzst.int.wg.client.configs;
       };
     };
   };

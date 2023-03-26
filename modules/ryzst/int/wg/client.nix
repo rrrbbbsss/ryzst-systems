@@ -2,18 +2,24 @@
 with lib;
 let
   cfg = config.ryzst.int.wg.client;
+  enable = cfg.nodes?${config.networking.hostName};
   ip = config.ryzst.mek.hosts.${config.networking.hostName}.ip;
-
-  server = config.ryzst.int.wg.server;
-  enable = lists.any
-    (x: x.name == config.networking.hostName)
+  configs = attrsets.foldlAttrs
+    (acc: n: v:
+      [{
+        publicKey = v.keys.wg0;
+        allowedIPs = [ "${v.ip}/32" ];
+      }] ++ acc
+    )
+    [ ]
     cfg.nodes;
+  server = config.ryzst.int.wg.server;
 in
 {
   options.ryzst.int.wg.client = {
     nodes = mkOption {
       description = "Nodes the client is deployed to";
-      type = types.listOf types.attrs;
+      type = types.attrs;
       default = [ ];
     };
     port = mkOption {
@@ -31,6 +37,11 @@ in
       type = types.str;
       default = "${cfg.ip}/24";
     };
+    configs = mkOption {
+      description = "The configs of the service endpoints";
+      type = types.listOf types.attrs;
+      default = configs;
+    };
   };
 
   config = mkIf enable {
@@ -39,14 +50,15 @@ in
         ips = [ "${cfg.address}" ];
         listenPort = cfg.port;
         privateKeyFile = "/persist/secrets/wg0_key";
-        peers = [
-          {
-            publicKey = server.publicKey;
-            allowedIPs = [ server.subnet ];
-            endpoint = "${server.endpoint}:${builtins.toString server.port}";
-            persistentKeepalive = 10;
-          }
-        ];
+        peers = server.configs;
+        #peers = [
+        #  {
+        #    publicKey = server.publicKey;
+        #    allowedIPs = [ server.subnet ];
+        #    endpoint = "${server.endpoint}:${builtins.toString server.port}";
+        #    persistentKeepalive = 10;
+        #  }
+        #];
       };
     };
   };

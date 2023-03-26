@@ -2,17 +2,15 @@
 with lib;
 let
   cfg = config.ryzst.int.dns.server;
+  enable = cfg.nodes?${config.networking.hostName};
   nameservers =
-    map (x: x.ip) config.ryzst.int.dns.server.nodes;
-  enable = lists.any
-    (x: x.name == config.networking.hostName)
-    cfg.nodes;
+    attrsets.foldlAttrs (acc: n: v: [ v.ip ] ++ acc) [ ] config.ryzst.int.dns.server.nodes;
 in
 {
   options.ryzst.int.dns.server = {
     nodes = mkOption {
       description = "Nodes the service is deployed to";
-      type = types.listOf types.attrs;
+      type = types.attrs;
       default = [ ];
     };
     interface = mkOption {
