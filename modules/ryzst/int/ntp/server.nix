@@ -1,8 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.ryzst.int.ntp.server;
   enable = cfg.nodes?${config.networking.hostName};
+  clientsIps = 
+    attrsets.foldlAttrs (acc: n: v: "${v.ip}, ${acc}") "" config.ryzst.int.dns.client.nodes;
 in
 {
   options.ryzst.int.ntp.server = {
@@ -39,11 +41,11 @@ in
     };
   };
   config = mkIf enable {
-    networking.firewall.interfaces = {
-      ${cfg.interface} = {
-        allowedUDPPorts = [ cfg.port ];
-      };
-    };
+
+    networking.firewall.extraCommands = ''
+      ${pkgs.nftables}/bin/nft add rule ip filter nixos-fw iifname "wg0" counter ip saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+    '';
+
     # NTP server
     services.chrony = {
       enable = true;

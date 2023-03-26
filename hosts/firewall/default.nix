@@ -13,11 +13,6 @@ let
   };
   wireguard = {
     interface = "wg0";
-    ip = "10.255.255.1";
-    address = "10.255.255.1/24";
-    subnet = "10.255.255.0/24";
-    port = 51820;
-    endpoint = lan.interface;
   };
 in
 {
@@ -54,11 +49,6 @@ in
   # firewall
   networking.firewall = {
     enable = true;
-    interfaces = {
-      ${lan.interface} = {
-        allowedUDPPorts = [ wireguard.port ];
-      };
-    };
   };
 
   # dhcp

@@ -40,6 +40,9 @@ in
   };
 
   config = mkIf enable {
+
+    networking.firewall.allowedUDPPorts = [ cfg.port ];
+
     networking.wireguard.interfaces = {
       wg0 = {
         ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/24" ];

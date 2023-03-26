@@ -1,10 +1,13 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.ryzst.int.dns.server;
   enable = cfg.nodes?${config.networking.hostName};
   nameservers =
     attrsets.foldlAttrs (acc: n: v: [ v.ip ] ++ acc) [ ] config.ryzst.int.dns.server.nodes;
+  clientsIps = 
+    attrsets.foldlAttrs (acc: n: v: "${v.ip}, ${acc}") "" config.ryzst.int.dns.client.nodes;
+
 in
 {
   options.ryzst.int.dns.server = {
@@ -46,12 +49,10 @@ in
   config = mkIf enable {
     networking.nameservers = cfg.nameservers;
 
-    networking.firewall.interfaces = {
-      ${cfg.interface} = {
-        allowedUDPPorts = [ cfg.port ];
-        allowedTCPPorts = [ cfg.port ];
-      };
-    };
+    networking.firewall.extraCommands = ''
+      ${pkgs.nftables}/bin/nft add rule ip filter nixos-fw iifname "wg0" counter ip saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+      ${pkgs.nftables}/bin/nft add rule ip filter nixos-fw iifname "wg0" counter ip saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+    '';
 
     services.coredns = {
       enable = true;
