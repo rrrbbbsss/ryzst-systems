@@ -9,7 +9,7 @@ in
     nodes = mkOption {
       description = "Nodes the client is deployed to";
       type = types.attrs;
-      default = [ ];
+      default = { };
     };
   };
 

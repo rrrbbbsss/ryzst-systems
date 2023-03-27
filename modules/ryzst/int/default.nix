@@ -5,6 +5,4 @@
     ./ntp
     ./wg
   ];
-
-  # todo: dns info
 }

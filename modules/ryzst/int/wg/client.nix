@@ -3,7 +3,7 @@ with lib;
 let
   cfg = config.ryzst.int.wg.client;
   enable = cfg.nodes?${config.networking.hostName};
-  ip = config.ryzst.mek.hosts.${config.networking.hostName}.ip;
+  ip = config.ryzst.mek.${config.networking.hostName}.ip;
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
@@ -51,14 +51,6 @@ in
         listenPort = cfg.port;
         privateKeyFile = "/persist/secrets/wg0_key";
         peers = server.configs;
-        #peers = [
-        #  {
-        #    publicKey = server.publicKey;
-        #    allowedIPs = [ server.subnet ];
-        #    endpoint = "${server.endpoint}:${builtins.toString server.port}";
-        #    persistentKeepalive = 10;
-        #  }
-        #];
       };
     };
   };

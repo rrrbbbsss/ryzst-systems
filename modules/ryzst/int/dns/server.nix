@@ -5,16 +5,31 @@ let
   enable = cfg.nodes?${config.networking.hostName};
   nameservers =
     attrsets.foldlAttrs (acc: n: v: [ v.ip ] ++ acc) [ ] config.ryzst.int.dns.server.nodes;
-  clientsIps = 
+  clientsIps =
     attrsets.foldlAttrs (acc: n: v: "${v.ip}, ${acc}") "" config.ryzst.int.dns.client.nodes;
-
+  hostsFiles =
+    let
+      entries = x: y: attrsets.foldlAttrs (acc: n: v: "${v.ip} ${x}.int.ryzst.net\n${acc}") "" y;
+    in
+    {
+      int = with builtins;
+        toFile "int-hostsFile"
+          (attrsets.foldlAttrs
+            (acc: n: v: "${entries n v.server.nodes}\n${acc}") ""
+            config.ryzst.int);
+      mek = with builtins;
+        toFile "mek-hostsFile"
+          (attrsets.foldlAttrs
+            (acc: n: v: "${v.ip} ${n}.mek.ryzst.net\n${acc}") ""
+            config.ryzst.mek);
+    };
 in
 {
   options.ryzst.int.dns.server = {
     nodes = mkOption {
       description = "Nodes the service is deployed to";
       type = types.attrs;
-      default = [ ];
+      default = { };
     };
     interface = mkOption {
       description = "The interface to bind the service to";
@@ -63,7 +78,11 @@ in
             allow net ${cfg.allow}
             drop
           }
-          hosts ${config.ryzst.mek.hostsFile} ${config.networking.domain} {
+          hosts ${hostsFiles.int} "int.ryzst.net" {
+            ttl 3600
+            fallthrough
+          }
+          hosts ${hostsFiles.mek} "mek.ryzst.net" {
             ttl 3600
             fallthrough
           }

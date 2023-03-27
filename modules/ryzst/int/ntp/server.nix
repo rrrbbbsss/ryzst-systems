@@ -12,7 +12,7 @@ in
     nodes = mkOption {
       description = "Nodes the service is deployed to";
       type = types.attrs;
-      default = [ ];
+      default = { };
     };
     interface = mkOption {
       description = "The interface to bind the service to";

@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  hosts = config.ryzst.mek.hosts;
+  hosts = config.ryzst.mek;
 in
 {
   imports = [ ./mek ./int ];

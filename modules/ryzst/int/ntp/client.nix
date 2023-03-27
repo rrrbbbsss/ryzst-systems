@@ -9,12 +9,11 @@ in
     nodes = mkOption {
       description = "Nodes the client is deployed to";
       type = types.attrs;
-      default = [ ];
+      default = { };
     };
   };
 
   config = mkIf enable {
-    #todo: would rather look up fqdn
     networking.timeServers = [ "ntp.int.ryzst.net" ];
   };
 }
