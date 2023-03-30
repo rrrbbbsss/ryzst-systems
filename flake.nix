@@ -22,28 +22,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ self.overlays.default ];
-      };
-    in
+  outputs = { self, nixpkgs, flake-utils, ... }:
     {
-      devShells.${system}.default = import ./shell.nix { inherit pkgs; };
-
-      lib = import ./lib { inherit pkgs system self; };
-
-      checks.${system} = self.lib.mkChecks {};
-
-      packages.${system} = import ./packages { inherit pkgs; lib = self.lib; };
+      lib = import ./lib { inherit self; };
 
       overlays = {
         default = final: prev: {
-          ryzst = self.packages.${system};
-          firefox-addons = self.inputs.firefox-addons.packages.${system};
+          ryzst = self.packages.${prev.system};
+          firefox-addons = self.inputs.firefox-addons.packages.${prev.system};
           lib = prev.lib // { ryzst = self.lib; };
         };
       };
@@ -51,5 +37,23 @@
       nixosConfigurations = self.lib.mkHosts ./hosts;
 
       templates = self.lib.mkTemplates ./templates;
-    };
+    } //
+    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
+      (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            config.allowUnsupportedSystem = true;
+            overlays = [ self.overlays.default ];
+          };
+        in
+        {
+          devShells.default = import ./shell.nix { inherit pkgs; };
+
+          checks = self.lib.mkChecks { inherit system; };
+
+          packages = import ./packages { inherit pkgs system; lib = self.lib; };
+        }
+      );
 }

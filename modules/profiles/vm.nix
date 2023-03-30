@@ -1,8 +1,11 @@
-{ config, pkgs, home-manager, modulesPath, ... }:
+{ pkgs, modulesPath, ... }:
 {
   imports = [
     (modulesPath + "/virtualisation/qemu-vm.nix")
   ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
+
   # sway
   environment.variables = {
     WLR_NO_HARDWARE_CURSORS = "1";

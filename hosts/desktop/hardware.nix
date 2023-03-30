@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ ... }:
 
 {
 
@@ -9,7 +9,11 @@
     ../../modules/hardware/devices/tex/shinobi
     ../../modules/hardware/devices/microchip/ir-transceiver
   ];
-  
+
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   ryzst.hardware.monitors = {
     DP-1 = {
       mode = "2560x1440@75Hz";
@@ -40,6 +44,7 @@
       };
     };
     tmpOnTmpfs = true;
+    tmpOnTmpfsSize = "80%";
     kernelParams = [ "console=tty1" ];
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   };

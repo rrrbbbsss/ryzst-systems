@@ -11,7 +11,7 @@ in
         inherit firewall;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media;
+        inherit bed desktop laptop media wap;
       };
     };
 
@@ -20,7 +20,7 @@ in
         inherit firewall;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media;
+        inherit bed desktop laptop media wap;
       };
     };
 
@@ -29,7 +29,7 @@ in
         inherit firewall;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media;
+        inherit bed desktop laptop media wap;
       };
     };
   };

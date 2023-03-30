@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ ... }:
 
 {
   imports = [
@@ -6,6 +6,8 @@
     ../../modules/hardware/common/gpu/intel
     ../../modules/hardware/devices/yubico/yubikey5
   ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
 
   boot = {
     loader = {

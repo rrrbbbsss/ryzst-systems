@@ -1,10 +1,12 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ ... }:
 
 {
   imports = [
     ../../modules/hardware/devices/lenovo/x230
     ../../modules/hardware/devices/yubico/yubikey5
   ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
 
   ryzst.hardware.monitors = {
     LVDS-1 = {

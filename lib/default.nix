@@ -1,4 +1,4 @@
-{ self, pkgs, system, ... }:
+{ self, ... }:
 let
   lib-nixpkgs = self.inputs.nixpkgs.lib;
   getDirs = dir: with lib-nixpkgs.attrsets;
@@ -17,7 +17,7 @@ let
         };
     in
     lib-nixpkgs.nixosSystem {
-      inherit system pkgs;
+      #inherit pkgs; #system 
       modules = [
         {
           networking = {
@@ -26,6 +26,7 @@ let
           nix.registry = {
             ryzst.flake = self;
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
+          nixpkgs.overlays = [ self.outputs.overlays.default ];
         }
         self.inputs.home-manager.nixosModule
         (path + "/default.nix")
@@ -70,10 +71,12 @@ let
         { path = template + "/files"; } // import template)
       (readDir dir);
 
-  mkChecks = {}: with lib-nixpkgs;
+  mkChecks = { system }: with lib-nixpkgs;
     (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
     (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system}) //
-    (concatMapAttrs (n: v: { "hosts-${n}" = v.config.system.build.toplevel; }) self.nixosConfigurations);
+    (if system == "x86_64-linux" then
+      concatMapAttrs (n: v: { "hosts-${n}" = v.config.system.build.toplevel; }) self.nixosConfigurations
+    else { });
 
   lib = {
     inherit getDirs;

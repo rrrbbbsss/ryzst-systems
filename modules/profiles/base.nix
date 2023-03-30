@@ -98,6 +98,7 @@
 
   # packages
   environment.systemPackages = with pkgs; [
+    ryzst.cli
     vim
     git
     wget

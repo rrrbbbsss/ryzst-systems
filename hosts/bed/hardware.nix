@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -13,6 +13,8 @@
       mode = "3440x1440@144Hz";
     };
   };
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
 
   # BootLoader
   boot.loader.systemd-boot.enable = true;

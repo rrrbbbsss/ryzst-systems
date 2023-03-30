@@ -1,10 +1,12 @@
-{ config, pkgs, options, lib, home-manager, modulesPath, ... }:
+{ config, pkgs, options, lib, modulesPath, ... }:
 {
   imports = [
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
   ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
 
   # Adds terminus_font for people with HiDPI displays
   console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];

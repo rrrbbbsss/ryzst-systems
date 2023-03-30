@@ -43,6 +43,11 @@ in
 
     networking.firewall.allowedUDPPorts = [ cfg.port ];
 
+    # ip forwarding 
+    boot.kernel.sysctl = {
+      "net.ipv4.conf.allforwarding" = true;
+    };
+
     networking.wireguard.interfaces = {
       wg0 = {
         ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/24" ];

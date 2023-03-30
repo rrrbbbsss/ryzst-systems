@@ -21,11 +21,6 @@ in
   ];
 
 
-  # ip forwarding 
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.allforwarding" = true;
-  };
-
   # interfaces
   networking.interfaces = {
     ${lan.interface} = {
