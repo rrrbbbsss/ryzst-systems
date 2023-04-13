@@ -91,6 +91,7 @@
           "media.ffmpeg.vaapi.enabled" = true;
           "extensions.pocket.enabled" = false;
           "extensions.autoDisableScopes" = 14;
+          "signon.rememberSignons" = false;
         };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
