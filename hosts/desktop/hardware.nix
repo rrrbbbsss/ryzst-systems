@@ -65,4 +65,6 @@
     algorithm = "zstd";
   };
 
+  #sanner
+  hardware.sane.enable = true;
 }
