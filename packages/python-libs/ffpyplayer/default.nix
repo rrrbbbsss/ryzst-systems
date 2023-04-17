@@ -7,7 +7,7 @@
 
 let
   pname = "ffpyplayer";
-  version = "4.3.2";
+  version = "4.3.5";
 in
 
 buildPythonPackage rec {
@@ -16,7 +16,7 @@ buildPythonPackage rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-DnrxcejY+XviGASEYeiMTGRJPSvQBouINcBcsxNhSto=";
+    sha256 = "sha256-vmsJLjFEaDD7EHOVXQQgplEJUtBo2nDmFjrXRCDw5DQ=";
   };
 
   nativeBuildInputs = [ cython pkg-config pytest ];

@@ -17,7 +17,10 @@
         canTouchEfiVariables = true;
       };
     };
-    tmpOnTmpfs = true;
+    tmp = {
+      useTmpfs = true;
+      tmpfsSize = "80%";
+    };
     kernelParams = [ "console=tty1" ];
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   };
