@@ -1,13 +1,14 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.zathura = {
     enable = true;
     options = {
       recolor = true;
-      recolor-darkcolor = "#eeeeec";
-      recolor-lightcolor = "#2e3436";
       guioptions = "";
       adjust-open = "best-fit";
     };
+    extraConfig = ''
+      include ${pkgs.ryzst.catppuccin-zathura}/catppuccin-mocha
+    '';
   };
 }

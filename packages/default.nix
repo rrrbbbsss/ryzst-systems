@@ -16,6 +16,7 @@ let
     };
     kivymd = python3Packages.callPackage ./python-libs/kivymd { };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
+    catppuccin-zathura = callPackage ./catppuccin/zathura { };
   };
   target = {
     x86_64-linux = packages
