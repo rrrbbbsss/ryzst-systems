@@ -19,9 +19,17 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, nix-vscode-extensions, ... }:
     {
       lib = import ./lib { inherit self; };
 
@@ -44,7 +52,7 @@
             inherit system;
             config.allowUnfree = true;
             config.allowUnsupportedSystem = true;
-            overlays = [ self.overlays.default ];
+            overlays = [ self.overlays.default nix-vscode-extensions.overlays.default ];
           };
         in
         {

@@ -18,8 +18,9 @@
       };
       "explorer.confirmDragAndDrop" = false;
       "terminal.integrated.sendKeybindingsToShell" = true;
+      "workbench.colorTheme" = "Catppuccin Mocha";
     };
-    extensions = with pkgs.vscode-extensions; [
+    extensions = with pkgs.vscode-marketplace; [
       # vim keys
       vscodevim.vim
       # dir env
@@ -27,27 +28,18 @@
       # nix
       jnoortheen.nix-ide
       # rust
-      matklad.rust-analyzer
+      rust-lang.rust-analyzer
       tamasfe.even-better-toml
       # python
       ms-python.python
       # latex
       james-yu.latex-workshop
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      # prolog
-      {
-        publisher = "arthurwang";
-        name = "vsc-prolog";
-        version = "0.8.23";
-        sha256 = "sha256-Da2dCpruVqzP3g1hH0+TyvvEa1wEwGXgvcmIq9B/2cQ=";
-      }
-      # org
-      {
-        publisher = "tootone";
-        name = "org-mode";
-        version = "0.5.0";
-        sha256 = "sha256-vXwo3oFLwK/wY7XEph9lGvXYIxjZsxeIE4TVAROmV2o=";
-      }
+      #prolog
+      arthurwang.vsc-prolog
+      #org
+      tootone.org-mode
+      #theme
+      catppuccin.catppuccin-vsc
     ];
   };
 }
