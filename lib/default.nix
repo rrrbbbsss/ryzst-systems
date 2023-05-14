@@ -17,7 +17,6 @@ let
         };
     in
     lib-nixpkgs.nixosSystem {
-      #inherit pkgs; #system 
       modules = [
         {
           networking = {
@@ -28,7 +27,9 @@ let
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
           nixpkgs.overlays = [ self.outputs.overlays.default self.inputs.nix-vscode-extensions.overlays.default ];
         }
-        self.inputs.home-manager.nixosModule
+        self.inputs.home-manager.nixosModules.home-manager
+        self.inputs.disko.nixosModules.disko
+        self.inputs.impermanence.nixosModules.impermanence
         (path + "/default.nix")
         ../modules/default.nix
       ] ++ hardwares.${target};
@@ -73,10 +74,7 @@ let
 
   mkChecks = { system }: with lib-nixpkgs;
     (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
-    (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system}) //
-    (if system == "x86_64-linux" then
-      concatMapAttrs (n: v: { "hosts-${n}" = v.config.system.build.toplevel; }) self.nixosConfigurations
-    else { });
+    (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system});
 
   lib = {
     inherit getDirs;

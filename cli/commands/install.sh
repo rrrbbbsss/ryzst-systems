@@ -48,45 +48,6 @@ case "$1" in
             printf "ERROR: Cannot connect to Internet\n"
             exit 1
         fi
-        # select disk
-        DISKS=$(lsblk -A -o TYPE,PATH,SIZE,MOUNTPOINTS | awk '$1 == "disk" && $4 != "[SWAP]" {print  $2, $3}')
-        DISK=$(printf "%s\n" "${DISKS[@]}" | fzf --prompt="Select Disk to use: " --reverse)
-        if [[ $DISK = "" ]]; then
-            printf "ERROR: Invalid selection\n\n"
-            exit 1
-        fi
-        DISK=$(echo $DISK | awk '{ print $1 }')
-        CHECK_DISK=$(lsblk -no MOUNTPOINTS $DISK)
-        if [[ $CHECK_DISK != "" ]]; then
-            printf "ERROR: Please unmount the drive first\n\n"
-            exit 1
-        fi
-        printf "Confirm partition/format to: $DISK\n"
-        CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm partition/format to: $DISK > " --reverse)
-        printf "$CONFIRM\n\n"
-        if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
-            printf "Canceled\n\n"
-            exit 1
-        fi
-        # partition
-        printf "Partitioning Disk:\n"
-        sgdisk --zap-all $DISK
-        sgdisk -n1:1M:+512M -t1:EF00 -c1:ESP $DISK
-        sgdisk -n2:0:0      -t2:8300 -c2:NIX $DISK 
-        sync && udevadm settle && sleep 3
-        # format
-        printf "Formatting Filesystems:\n"
-        DISK_PART_1=$(lsblk $DISK -no PARTLABEL,PATH | awk '$1 == "ESP" { print $2 }')
-        DISK_PART_2=$(lsblk $DISK -no PARTLABEL,PATH | awk '$1 == "NIX" { print $2 }')
-        mkfs.vfat -n BOOT $DISK_PART_1
-        mkfs.ext4 -L ROOT $DISK_PART_2
-        # mount
-        printf "Mounting:\n"
-        mkdir /mnt
-        mount $DISK_PART_2 /mnt
-        mkdir -p /mnt/boot/efi
-        mount $DISK_PART_1 /mnt/boot/efi
-        printf "success\n\n"
         # select host
         printf "Select Host:\n"
         rm -rf /tmp/ryzst
@@ -103,14 +64,17 @@ case "$1" in
             printf "Canceled\n\n"
             exit 1
         fi
-        # generate wg0/ssh keys and machineid
+        # disco (zap_create_mount)
+        nix run .#nixosConfigurations.$HOST.config.system.build.disko
+        # generate keys
         PERSIST=/mnt/persist
         SECRETS=$PERSIST/secrets
         mkdir -p $PERSIST $SECRETS
+        # generate wireguard keys
         wg genkey | (umask 0037 && tee $SECRETS/wg0_key) | wg pubkey > $SECRETS/wg0_key.pub
-        # let systemd-networkd read the private key
-        chown root:systemd-network $SECRETS/wg0.key
+        # generate ssh key
         ssh-keygen -q -N "" -t ed25519 -f $SECRETS/ssh_host_e25519_key
+        # generate machineid
         (umask 0333 && systemd-machine-id-setup --print > $SECRETS/machineid)
         # install nixos from flake
         printf "Installing system:\n"

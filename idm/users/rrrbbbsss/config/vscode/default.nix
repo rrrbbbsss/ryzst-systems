@@ -18,7 +18,6 @@
       };
       "explorer.confirmDragAndDrop" = false;
       "terminal.integrated.sendKeybindingsToShell" = true;
-      "workbench.colorTheme" = "Catppuccin Mocha";
     };
     extensions = with pkgs.vscode-marketplace; [
       # vim keys
@@ -28,7 +27,8 @@
       # nix
       jnoortheen.nix-ide
       # rust
-      rust-lang.rust-analyzer
+      #https://github.com/nix-community/nix-vscode-extensions/issues/5
+      pkgs.vscode-extensions.matklad.rust-analyzer
       tamasfe.even-better-toml
       # python
       ms-python.python
@@ -38,8 +38,6 @@
       arthurwang.vsc-prolog
       #org
       tootone.org-mode
-      #theme
-      catppuccin.catppuccin-vsc
     ];
   };
 }

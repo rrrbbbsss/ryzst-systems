@@ -4,9 +4,17 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    impermanence.url = "github:nix-community/impermanence";
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -29,14 +37,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-vscode-extensions, ... }:
+  outputs =
+    { self
+    , nixpkgs
+    , flake-utils
+    , firefox-addons
+    , nix-vscode-extensions
+    , disko
+    , ...
+    }:
     {
       lib = import ./lib { inherit self; };
 
       overlays = {
         default = final: prev: {
           ryzst = self.packages.${prev.system};
-          firefox-addons = self.inputs.firefox-addons.packages.${prev.system};
+          firefox-addons = firefox-addons.packages.${prev.system};
+          disko = disko.packages.${prev.system};
           lib = prev.lib // { ryzst = self.lib; };
         };
       };
@@ -47,20 +64,23 @@
     } //
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
       (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            config.allowUnsupportedSystem = true;
-            overlays = [ self.overlays.default nix-vscode-extensions.overlays.default ];
-          };
-        in
-        {
-          devShells.default = import ./shell.nix { inherit pkgs; };
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          config.allowUnsupportedSystem = true;
+          overlays = [
+            self.overlays.default
+            nix-vscode-extensions.overlays.default
+          ];
+        };
+      in
+      {
+        devShells.default = import ./shell.nix { inherit pkgs; };
 
-          checks = self.lib.mkChecks { inherit system; };
+        checks = self.lib.mkChecks { inherit system; };
 
-          packages = import ./packages { inherit pkgs system; lib = self.lib; };
-        }
+        packages = import ./packages { inherit pkgs system; lib = self.lib; };
+      }
       );
 }

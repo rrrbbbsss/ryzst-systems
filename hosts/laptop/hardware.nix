@@ -30,20 +30,46 @@
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   };
 
-  fileSystems = {
-    "/boot/efi" = {
-      label = "BOOT";
-      fsType = "vfat";
-    };
-    "/" = {
-      label = "ROOT";
-      fsType = "ext4";
-    };
-  };
-
   zramSwap = {
     enable = true;
     algorithm = "zstd";
   };
 
+  disko.devices = {
+    disk = {
+      sda = {
+        device = "/dev/sda";
+        type = "disk";
+        content = {
+          type = "table";
+          format = "gpt";
+          partitions = [
+            {
+              name = "BOOT";
+              start = "1MiB";
+              end = "100MiB";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            }
+            {
+              name = "ROOT";
+              start = "100MiB";
+              end = "100%";
+              part-type = "primary";
+              bootable = true;
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
+            }
+          ];
+        };
+      };
+    };
+  };
 }
