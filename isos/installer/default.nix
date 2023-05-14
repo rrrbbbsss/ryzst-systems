@@ -15,6 +15,7 @@
     isoName = "installer.iso";
     volumeID = "ryzst-iso";
     makeEfiBootable = true;
+    makeBiosBootable = true;
     makeUsbBootable = true;
     squashfsCompression = "gzip -Xcompression-level 1";
   };

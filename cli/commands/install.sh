@@ -65,7 +65,7 @@ case "$1" in
             exit 1
         fi
         # disco (zap_create_mount)
-        nix run .#nixosConfigurations.$HOST.config.system.build.disko
+        $(nix build --print-out-paths $REPO\#nixosConfigurations.$HOST.config.system.build.disko)
         # generate keys
         PERSIST=/mnt/persist
         SECRETS=$PERSIST/secrets
