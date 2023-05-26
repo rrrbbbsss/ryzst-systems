@@ -92,6 +92,7 @@
           "extensions.pocket.enabled" = false;
           "extensions.autoDisableScopes" = 14;
           "signon.rememberSignons" = false;
+          "network.IDN_show_punycode" = true;
         };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
