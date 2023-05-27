@@ -93,6 +93,7 @@
           "extensions.autoDisableScopes" = 14;
           "signon.rememberSignons" = false;
           "network.IDN_show_punycode" = true;
+          "geo.enabled" = false;
         };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
