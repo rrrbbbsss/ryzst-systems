@@ -48,6 +48,10 @@
         u2fAuth = true;
         unixAuth = false;
       };
+      polkit-1 = {
+        u2fAuth = true;
+        unixAuth = false;
+      };
       sshd.u2fAuth = false; # todo...
     };
   };
