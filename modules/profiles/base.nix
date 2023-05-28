@@ -59,7 +59,7 @@
     enable = true;
     openFirewall = true;
     settings = {
-      permitRootLogin = "prohibit-password";
+      PermitRootLogin = "prohibit-password";
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
     };
