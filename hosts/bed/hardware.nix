@@ -4,6 +4,7 @@
   imports = [
     ../../modules/hardware/common/cpu/amd
     ../../modules/hardware/common/gpu/amd
+    ../../modules/hardware/common/tpm/2-0
     ../../modules/hardware/devices/lenovo/trackpoint
     ../../modules/hardware/devices/yubico/yubikey5
   ];

@@ -3,14 +3,7 @@
   imports = [
     ../../../common/cpu/intel
     ../../../common/gpu/intel
-  ];
-
-  services.tcsd = {
-    enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    tpm-tools
+    ../../../common/tpm/1-2
   ];
 
   services.kanata = {
