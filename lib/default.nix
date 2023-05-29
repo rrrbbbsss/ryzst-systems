@@ -30,6 +30,8 @@ let
         self.inputs.home-manager.nixosModules.home-manager
         self.inputs.disko.nixosModules.disko
         self.inputs.impermanence.nixosModules.impermanence
+        self.inputs.nix-index-database.nixosModules.nix-index
+        { programs.command-not-found.enable = false; }
         (path + "/default.nix")
         ../modules/default.nix
       ] ++ hardwares.${target};
