@@ -3,6 +3,7 @@
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;
+    mutableExtensionsDir = false;
     package = pkgs.vscodium;
     userSettings = {
       "nix.enableLanguageServer" = true;
@@ -27,8 +28,7 @@
       # nix
       jnoortheen.nix-ide
       # rust
-      #https://github.com/nix-community/nix-vscode-extensions/issues/5
-      pkgs.vscode-extensions.matklad.rust-analyzer
+      rust-lang.rust-analyzer
       tamasfe.even-better-toml
       # python
       ms-python.python
