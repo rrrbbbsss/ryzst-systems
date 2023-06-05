@@ -10,7 +10,10 @@
   # VMS
   virtualisation.libvirtd = {
     enable = true;
-    qemu.runAsRoot = false;
+    qemu = {
+      runAsRoot = false;
+      swtpm.enable = true;
+    };
     onShutdown = "shutdown";
   };
 
