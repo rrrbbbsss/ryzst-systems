@@ -14,6 +14,7 @@ in
       [
         ryzst
         self.inputs.nix-vscode-extensions.overlays.default
+        self.inputs.emacs-overlay.overlays.default
         good-old-packages
       ];
 }

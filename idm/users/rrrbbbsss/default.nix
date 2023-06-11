@@ -33,6 +33,7 @@
   home-manager.users.rrrbbbsss = { pkgs, ... }: {
     imports = [
       ./config/alacritty
+      ./config/emacs
       ./config/gpg
       ./config/mpv
       ./config/nvim
