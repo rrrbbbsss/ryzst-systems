@@ -25,7 +25,7 @@ let
           nix.registry = {
             ryzst.flake = self;
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
-          nixpkgs.overlays = [ self.outputs.overlays.default self.inputs.nix-vscode-extensions.overlays.default ];
+          nixpkgs.overlays = [ self.outputs.overlays.default ];
         }
         self.inputs.home-manager.nixosModules.home-manager
         self.inputs.disko.nixosModules.disko

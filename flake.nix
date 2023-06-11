@@ -48,22 +48,12 @@
     { self
     , nixpkgs
     , flake-utils
-    , firefox-addons
-    , nix-vscode-extensions
-    , disko
     , ...
     }:
     {
       lib = import ./lib { inherit self; };
 
-      overlays = {
-        default = final: prev: {
-          ryzst = self.packages.${prev.system};
-          firefox-addons = firefox-addons.packages.${prev.system};
-          disko = disko.packages.${prev.system};
-          lib = prev.lib // { ryzst = self.lib; };
-        };
-      };
+      overlays = import ./overlays { inherit self; };
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
 
@@ -78,7 +68,6 @@
           config.allowUnsupportedSystem = true;
           overlays = [
             self.overlays.default
-            nix-vscode-extensions.overlays.default
           ];
         };
       in
