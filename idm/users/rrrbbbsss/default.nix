@@ -96,7 +96,7 @@
           "geo.enabled" = false;
           "datareporting.healthreport.uploadEnabled" = false;
           "privacy.firstparty.isolate" = true;
-          "privacy.resistFingerprinting" = true;
+          "privacy.resistFingerprinting" = false;
           "browser.cache.offline.enable" = false;
           "dom.battery.enabled" = false;
           "dom.event.clipboardevents.enabled" = false;
@@ -108,6 +108,7 @@
           "extensions.formautofill.creditCards.enabled" = false;
           "privacy.clearOnShutdown.offlineApps" = true;
           "privacy.clearOnShutdown.cookies" = true;
+          "layout.css.prefers-color-scheme.content-override" = 0;
         };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
