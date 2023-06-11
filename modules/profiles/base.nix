@@ -93,7 +93,7 @@
       persistent = true;
       randomizedDelaySec = "30min";
       dates = "daily";
-      allowReboot = false;
+      allowReboot = true;
       flake = "github:rrrbbbsss/ryzst-systems";
     };
   };
