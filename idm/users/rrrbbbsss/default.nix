@@ -111,6 +111,14 @@
           "privacy.clearOnShutdown.cookies" = true;
           "layout.css.prefers-color-scheme.content-override" = 0;
         };
+        search = {
+          force = true;
+          engines = {
+            "Bing".metaData.hidden = true;
+            "Amazon.com".metaData.hidden = true;
+            "eBay".metaData.hidden = true;
+          };
+        };
         extensions = with pkgs.firefox-addons; [
           ublock-origin
           tridactyl
