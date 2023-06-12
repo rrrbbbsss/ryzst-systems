@@ -3,7 +3,7 @@ with lib;
 let
   cfg = config.ryzst.int.ntp.server;
   enable = cfg.nodes?${config.networking.hostName};
-  clientsIps = 
+  clientsIps =
     attrsets.foldlAttrs (acc: n: v: "${v.ip}, ${acc}") "" config.ryzst.int.dns.client.nodes;
 in
 {

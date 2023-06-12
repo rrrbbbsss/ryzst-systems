@@ -1,8 +1,12 @@
 { lib
 , buildPythonPackage
 , fetchPypi
-, cython, pkg-config, pytest
-, SDL2, SDL2_mixer, ffmpeg
+, cython
+, pkg-config
+, pytest
+, SDL2
+, SDL2_mixer
+, ffmpeg
 }:
 
 let

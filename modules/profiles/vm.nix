@@ -30,11 +30,12 @@
     memorySize = 4096;
     qemu = {
       guestAgent.enable = true;
-      options = [ 
+      options = [
         # sway
-        "-device qxl-vga,vgamem_mb=32" 
+        "-device qxl-vga,vgamem_mb=32"
         # yubikey
-        "-usb -device usb-host,vendorid=0x1050,productid=0x0406" ];
+        "-usb -device usb-host,vendorid=0x1050,productid=0x0406"
+      ];
     };
   };
 }

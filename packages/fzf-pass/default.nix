@@ -1,5 +1,6 @@
 { lib, runCommandLocal, makeWrapper, bash, pass-wayland, fzf }:
-runCommandLocal "fzf-pass" {
+runCommandLocal "fzf-pass"
+{
   script = ./fzf-pass.sh;
   nativeBuildInputs = [ makeWrapper ];
 } ''

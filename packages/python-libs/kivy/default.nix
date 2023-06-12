@@ -1,13 +1,27 @@
 #https://github.com/NixOS/nixpkgs/blob/216fbe09999764469066b1ccf05dcff45cf078e7/pkgs/development/python-modules/kivy/default.nix
-{ lib, stdenv
-, buildPythonPackage, fetchFromGitHub, fetchpatch
-, pkg-config, cython, docutils
+{ lib
+, stdenv
+, buildPythonPackage
+, fetchFromGitHub
+, fetchpatch
+, pkg-config
+, cython
+, docutils
 , kivy-garden
-, mesa, mtdev, SDL2, SDL2_image, SDL2_ttf, SDL2_mixer
-, ApplicationServices, AVFoundation, libcxx
+, mesa
+, mtdev
+, SDL2
+, SDL2_image
+, SDL2_ttf
+, SDL2_mixer
+, ApplicationServices
+, AVFoundation
+, libcxx
 , withGstreamer ? true
 , gst_all_1
-, pillow, requests, pygments
+, pillow
+, requests
+, pygments
 }:
 
 buildPythonPackage rec {

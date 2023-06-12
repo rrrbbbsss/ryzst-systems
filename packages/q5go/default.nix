@@ -2,8 +2,12 @@
 , stdenv
 , fetchFromGitHub
 , makeDesktopItem
-, pkg-config, iconConvTools, wrapQtAppsHook, qmake
-, qtbase, qtmultimedia
+, pkg-config
+, iconConvTools
+, wrapQtAppsHook
+, qmake
+, qtbase
+, qtmultimedia
 }:
 
 let

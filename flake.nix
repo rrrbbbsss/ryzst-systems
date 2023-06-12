@@ -84,6 +84,8 @@
 
         checks = self.lib.mkChecks { inherit system; };
 
+        formatter = pkgs.nixpkgs-fmt;
+
         packages = import ./packages { inherit pkgs system; lib = self.lib; };
       }
       );

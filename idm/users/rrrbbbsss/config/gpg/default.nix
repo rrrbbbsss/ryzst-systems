@@ -3,7 +3,7 @@ rec {
   programs.gpg = {
     enable = true;
     package = pkgs.gnupg;
-    publicKeys = [ { source = ../../pubkeys/gpg.pub; trust = "ultimate"; } ];
+    publicKeys = [{ source = ../../pubkeys/gpg.pub; trust = "ultimate"; }];
     scdaemonSettings = {
       disable-ccid = true;
     };

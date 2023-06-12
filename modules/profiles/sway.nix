@@ -12,14 +12,14 @@
     vt = 7;
   };
   security.pam.services = {
-      swaylock = {
-        u2fAuth = true;
-        unixAuth = false;
-      };
-      greetd = {
-        u2fAuth = true;
-        unixAuth = false;
-      };
+    swaylock = {
+      u2fAuth = true;
+      unixAuth = false;
+    };
+    greetd = {
+      u2fAuth = true;
+      unixAuth = false;
+    };
   };
   security.polkit.enable = true;
   programs.dconf.enable = true;
@@ -45,7 +45,7 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono"]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
       font-awesome
       roboto
     ];
