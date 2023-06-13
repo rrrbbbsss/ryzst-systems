@@ -2,6 +2,10 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-pgtk;
+    package = (pkgs.emacsWithPackagesFromUsePackage {
+      package = pkgs.emacs-pgtk;
+      config = ./init.el;
+      defaultInitFile = true;
+    });
   };
 }
