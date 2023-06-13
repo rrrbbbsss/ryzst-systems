@@ -86,3 +86,11 @@
   :custom-face
   (form-feed-line
    ((t :foreground "#ffffff"))))
+
+(use-package magit
+  :ensure t
+  :init
+  (setq transient-display-buffer-action '(display-buffer-below-selected))
+  :bind
+  ("s-C-M-G" . magit-status)
+  ("s-C-M-L" . magit-log-buffer-file))
