@@ -103,6 +103,13 @@
   ("s-C-M-G" . magit-status)
   ("s-C-M-L" . magit-log-buffer-file))
 
+(use-package pinentry
+  :ensure t
+  :init
+  (setq epg-pinentry-mode 'loopback)
+  :config
+  (pinentry-start))
+
 (use-package flycheck
   :ensure t
   :config)
