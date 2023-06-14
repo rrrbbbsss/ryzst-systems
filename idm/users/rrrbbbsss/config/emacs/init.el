@@ -20,6 +20,10 @@
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 (setq delete-old-versions t)
 
+;; misc
+(defalias 'yes-or-no-p 'y-or-n-p)
+(global-auto-revert-mode t)
+
 ;; sticky buffers
 (customize-set-variable
  'display-buffer-alist
@@ -125,7 +129,27 @@
 
 (use-package helm
   :ensure t
-  :config)
+  :init
+  (setq helm-split-window-inside-p t
+	helm-echo-input-in-header-line t
+	helm-mode-fuzzy-match t)
+  :config
+  (helm-mode 1)
+  :bind
+  ("s-C-M-F" . helm-find-files)
+  ("s-C-M-B" . helm-buffers-list)
+  ("M-y" . helm-show-kill-ring)
+  ("M-x" . helm-M-x))
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on)
+  :bind
+  ("s-C-M-R" . helm-projectile-rg))
+
+(use-package helm-rg
+  :ensure t)
 
 (use-package helm-descbinds
   :ensure t
