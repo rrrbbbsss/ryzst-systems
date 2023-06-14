@@ -20,13 +20,18 @@
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 (setq delete-old-versions t)
 
-;; custom functions
+;; sticky buffers
+(customize-set-variable
+ 'display-buffer-alist
+ '(("\\*Help\\*" display-buffer-same-window)))
+
+;; misc functions
 (defun backward-kill-line (arg)
   "Kill ARG lines backward."
   (interactive "p")
   (kill-line (- 1 arg)))
 
-;; packages
+;; core packages
 (use-package evil
   :ensure t
   :demand t
@@ -34,6 +39,7 @@
   (setq evil-insert-state-message nil
         evil-visual-state-message nil)
   (setq evil-insert-state-map (make-sparse-keymap))
+  (setq evil-undo-system 'undo-redo)
   :config
   (evil-mode 1)
   :bind
@@ -43,15 +49,17 @@
         ("k" . evil-previous-visual-line)
         ("M-." . nil)
         ("M-," . nil)
-        ("C-n" . nil) 
+        ("C-n" . nil)
         ("C-p" . nil)
         ("C-f" . nil)
         ("C-b" . nil))
   (:map evil-insert-state-map
         ("<escape>" . evil-normal-state)
+	("C-w" . evil-window-map)
         ("C-k" . backward-kill-line)
         ("C-S-k" . kill-visual-line))
-
+  (:map evil-emacs-state-map
+	("C-w" . evil-window-map))
   (:map evil-motion-state-map
         ("SPC" . nil)
         ("TAB" . nil)
@@ -94,3 +102,68 @@
   :bind
   ("s-C-M-G" . magit-status)
   ("s-C-M-L" . magit-log-buffer-file))
+
+(use-package flycheck
+  :ensure t
+  :config)
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1))
+
+(use-package elec-pair
+  :config
+  (electric-pair-mode 1))
+
+(use-package helm
+  :ensure t
+  :config)
+
+(use-package helm-descbinds
+  :ensure t
+  :config
+  (helm-descbinds-mode 1))
+
+(use-package helm-flyspell
+  :ensure t
+  :after flyspell
+  :bind
+  (:map flyspell-mode-map
+	("C-M-i" . helm-flyspell-correct)))
+
+(use-package projectile
+  :ensure t
+  :config)
+
+(use-package direnv
+  :ensure t)
+
+;; org mode
+(use-package org
+  :init
+  (setq org-src-fontify-natively t
+        org-catch-invisible-edits 'show-and-error
+        org-footnote-auto-adjust t)
+  :hook
+  ((org-mode . turn-on-font-lock)
+   (org-mode . org-indent-mode)
+   (org-mode . flyspell-mode)))
+
+(use-package org-bullets
+  :ensure t
+  :after org
+  :hook (org-mode . org-bullets-mode))
+
+;; languages: nix
+(use-package nix-mode
+  :ensure t
+  :mode "\\.nix\\'")
+
+;; misc packages
+(use-package nov
+  :ensure t
+  :init
+  (setq nov-text-width 120)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))

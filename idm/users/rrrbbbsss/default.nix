@@ -143,6 +143,10 @@
       #terminal
       alacritty
 
+      #spelling
+      aspell
+      aspellDicts.en
+
       #nix
       nil
       nixpkgs-fmt
