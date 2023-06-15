@@ -140,7 +140,8 @@
   :init
   (setq helm-split-window-inside-p t
 	helm-echo-input-in-header-line t
-	helm-mode-fuzzy-match t)
+	helm-mode-fuzzy-match t
+	helm-completion-style 'helm-fuzzy)
   :config
   (helm-mode 1)
   :bind
