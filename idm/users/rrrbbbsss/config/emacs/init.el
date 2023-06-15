@@ -2,7 +2,6 @@
 
 ;; gui settings
 (set-frame-font "DejaVu Sans Mono-12" nil t)
-(load-theme 'wombat)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -35,7 +34,16 @@
   (interactive "p")
   (kill-line (- 1 arg)))
 
-;; core packages
+;; theme
+(use-package doom-themes
+  :ensure t
+  :init
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  :config
+  (load-theme 'doom-tomorrow-night))
+
+;; Core packages
 (use-package evil
   :ensure t
   :demand t
