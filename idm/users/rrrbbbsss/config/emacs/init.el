@@ -2,7 +2,7 @@
 
 ;; gui settings
 (setq rrrbbbsss/font "DejaVu Sans M Nerd Font")
-(set-frame-font (concat rrrbbbsss/font "-12") nil t)
+(setq default-frame-alist `((font . ,(concat rrrbbbsss/font "-12"))))
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
