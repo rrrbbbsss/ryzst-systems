@@ -181,6 +181,16 @@
 (use-package direnv
   :ensure t)
 
+(use-package treemacs
+  :ensure t
+  :init
+  (setq treemacs-width 30)
+  :bind
+  ("<f2>" . treemacs))
+
+(use-package treemacs-evil
+  :ensure t)
+
 ;; org mode
 (use-package org
   :init
