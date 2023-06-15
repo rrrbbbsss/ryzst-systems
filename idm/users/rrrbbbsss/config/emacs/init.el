@@ -235,3 +235,9 @@
   (setq nov-text-width 120)
   :config
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+
+(use-package beacon
+  :ensure t
+  :config
+  (beacon-mode 1))
+
