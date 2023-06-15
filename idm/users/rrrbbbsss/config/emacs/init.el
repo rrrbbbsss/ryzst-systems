@@ -10,7 +10,9 @@
       window-divider-default-right-width 4)
 (window-divider-mode)
 (set-face-attribute 'window-divider nil :foreground "#212526" )
-(fringe-mode '(8 . 8))
+(fringe-mode '(12 . 12))
+(add-hook 'prog-mode-hook
+	  (lambda () (setq indicate-empty-lines t)))
 
 ;; auto-save & backup directories
 (defconst backup-dir (expand-file-name "~/.local/share/emacs/backup/"))
