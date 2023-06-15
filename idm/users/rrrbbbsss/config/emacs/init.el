@@ -139,7 +139,9 @@
   ("s-C-M-F" . helm-find-files)
   ("s-C-M-B" . helm-buffers-list)
   ("M-y" . helm-show-kill-ring)
-  ("M-x" . helm-M-x))
+  ("M-x" . helm-M-x)
+  (:map helm-map
+	("<tab>" . 'helm-execute-persistent-action)))
 
 (use-package helm-projectile
   :ensure t
