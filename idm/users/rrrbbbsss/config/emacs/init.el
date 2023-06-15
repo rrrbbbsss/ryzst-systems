@@ -1,7 +1,8 @@
 (require 'use-package)
 
 ;; gui settings
-(set-frame-font "DejaVu Sans Mono-12" nil t)
+(setq rrrbbbsss/font "DejaVu Sans M Nerd Font")
+(set-frame-font (concat rrrbbbsss/font "-12") nil t)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -190,6 +191,16 @@
 
 (use-package treemacs-evil
   :ensure t)
+
+(use-package doom-modeline
+  :ensure t
+  :config
+  (doom-modeline-mode 1))
+
+(use-package nerd-icons
+  :ensure t
+  :init
+  (setq nerd-icons-font-family rrrbbbsss/font))
 
 ;; org mode
 (use-package org
