@@ -6,8 +6,8 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(setq window-divider-default-bottom-width 2
-      window-divider-default-right-width 2)
+(setq window-divider-default-bottom-width 4
+      window-divider-default-right-width 4)
 (window-divider-mode)
 (set-face-attribute 'window-divider nil :foreground "#212526" )
 (fringe-mode '(8 . 8))
@@ -42,7 +42,10 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
   :config
-  (load-theme 'doom-tomorrow-night))
+  (load-theme 'doom-tomorrow-night)
+  (set-face-attribute
+   'mode-line-inactive t
+   :background "#0f1011" :foreground "#5a5b5a" :box nil))
 
 ;; Core packages
 (use-package evil
@@ -194,7 +197,9 @@
 
 (use-package doom-modeline
   :ensure t
+  :init
   :config
+  (column-number-mode 1)
   (doom-modeline-mode 1))
 
 (use-package nerd-icons
