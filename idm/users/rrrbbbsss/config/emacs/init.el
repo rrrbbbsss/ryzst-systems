@@ -100,7 +100,11 @@
   :init
   (setq vterm-min-window-width 80)
   :config
-  (evil-set-initial-state 'vterm-mode 'emacs))
+  (evil-set-initial-state 'vterm-mode 'emacs)
+  :bind
+  (:map vterm-mode-map
+	("<f2>" . nil)
+	("C-q" . vterm-send-next-key)))
 
 (use-package form-feed
   :ensure t
