@@ -24,8 +24,26 @@ in
     ${pkgs.zsh}/bin/zsh -l -c "${emacspkg}/bin/emacs --fg-daemon"
   '';
 
-
-  programs.zsh.shellAliases = {
-    "emacs" = "${emacspkg}/bin/emacsclient -c";
+  programs.zsh = {
+    #vterm directory tracking
+    initExtra = ''
+      vterm_printf() {
+        if [ -n "$TMUX" ] && { [ "''${TERM%%-*}" = "tmux" ] || [ "''${TERM%%-*}" = "screen" ] ; }  then
+            printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+        elif [ "''${TERM%%-*}" = "screen" ]; then
+            printf "\eP\e]%s\007\e\\" "$1"
+        else
+            printf "\e]%s\e\\" "$1"
+        fi
+      }
+      vterm_prompt_end() {
+        vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+      }
+      setopt PROMPT_SUBST
+      PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+    '';
+    shellAliases = {
+      "emacs" = "${emacspkg}/bin/emacsclient -c";
+    };
   };
 }
