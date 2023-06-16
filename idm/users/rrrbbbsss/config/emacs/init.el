@@ -102,6 +102,7 @@
   :config
   (evil-set-initial-state 'vterm-mode 'emacs)
   :bind
+  ("s-C-M-T" . vterm-other-window)
   (:map vterm-mode-map
 	("<f2>" . nil)
 	("C-q" . vterm-send-next-key)))
