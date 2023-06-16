@@ -9,7 +9,6 @@
 (setq window-divider-default-bottom-width 4
       window-divider-default-right-width 4)
 (window-divider-mode)
-(set-face-attribute 'window-divider nil :foreground "#212526" )
 (fringe-mode '(12 . 12))
 (add-hook 'prog-mode-hook
 	  (lambda () (setq indicate-empty-lines t)))
@@ -43,11 +42,11 @@
   :init
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
+  :custom-face
+  (mode-line-inactive ((t (:background "#0f1011" :foreground "#5a5b5a"))))
+  (window-divider ((t (:background "black"))))
   :config
-  (load-theme 'doom-tomorrow-night t)
-  (set-face-attribute
-   'mode-line-inactive nil
-   :background "#0f1011" :foreground "#5a5b5a"))
+  (load-theme 'doom-tomorrow-night t))
 
 ;; Core packages
 (use-package evil
