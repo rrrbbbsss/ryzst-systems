@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, ... }:
 let
   emacspkg = (pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs-pgtk;
@@ -19,8 +19,11 @@ in
     startWithUserSession = "graphical";
   };
 
-  #needed for emacs daemon to launch with wayland
-  systemd.user.services.emacs.Unit.Environemnt = "GDK_BACKEND=wayland";
+  # to make sure user env vars get loaded
+  systemd.user.services.emacs.Service.ExecStart = lib.mkForce ''
+    ${pkgs.zsh}/bin/zsh -l -c "${emacspkg}/bin/emacs --fg-daemon"
+  '';
+
 
   programs.zsh.shellAliases = {
     "emacs" = "${emacspkg}/bin/emacsclient -c";
