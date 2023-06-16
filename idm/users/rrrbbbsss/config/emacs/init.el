@@ -15,8 +15,8 @@
 	  (lambda () (setq indicate-empty-lines t)))
 
 ;; auto-save & backup directories
-(defconst backup-dir (expand-file-name "~/.local/share/emacs/backup/"))
-(defconst autosave-dir (expand-file-name "~/.local/share/emacs/autosave/"))
+(defconst backup-dir (expand-file-name "~/.local/state/emacs/backup/"))
+(defconst autosave-dir (expand-file-name "~/.local/state/emacs/autosave/"))
 (setq backup-directory-alist `((".*" . ,backup-dir)))
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
