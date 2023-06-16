@@ -44,7 +44,7 @@
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
   :config
-  (load-theme 'doom-tomorrow-night)
+  (load-theme 'doom-tomorrow-night t)
   (set-face-attribute
    'mode-line-inactive t
    :background "#0f1011" :foreground "#5a5b5a" :box nil))
