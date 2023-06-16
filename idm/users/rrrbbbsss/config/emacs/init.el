@@ -46,8 +46,8 @@
   :config
   (load-theme 'doom-tomorrow-night t)
   (set-face-attribute
-   'mode-line-inactive t
-   :background "#0f1011" :foreground "#5a5b5a" :box nil))
+   'mode-line-inactive nil
+   :background "#0f1011" :foreground "#5a5b5a"))
 
 ;; Core packages
 (use-package evil
@@ -247,7 +247,7 @@
   :ensure t
   :init
   (setq beacon-size 20)
-  (setq beacon-color (face-attribute 'cursor :background))
+  (setq beacon-color "#81a2be")
   :config
   (beacon-mode 1))
 
