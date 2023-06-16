@@ -147,6 +147,7 @@
 
 (use-package helm
   :ensure t
+  :demand t
   :init
   (setq helm-split-window-inside-p t
 	helm-echo-input-in-header-line t
