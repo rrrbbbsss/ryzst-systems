@@ -244,6 +244,9 @@
 
 (use-package beacon
   :ensure t
+  :init
+  (setq beacon-size 20)
+  (setq beacon-color (face-attribute 'cursor :background))
   :config
   (beacon-mode 1))
 
