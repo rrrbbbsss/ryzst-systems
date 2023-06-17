@@ -1,11 +1,11 @@
-{ pkgs, lib, system, ... }:
+{ pkgs, ryzst, lib, system, ... }:
 
 let
   packages = with pkgs; rec {
     default = cli;
-    cli = callPackage ./cli { };
+    cli = callPackage ./cli { inherit ryzst; };
     sabaki = callPackage ./sabaki { };
-    katrain = callPackage ./katrain { };
+    katrain = callPackage ./katrain { inherit ryzst; };
     katago-model = callPackage ./katago-model { };
     q5go = libsForQt5.callPackage ./q5go { };
     fzf-pass = callPackage ./fzf-pass { };
@@ -14,7 +14,7 @@ let
       inherit (pkgs) mesa;
       inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
     };
-    kivymd = python3Packages.callPackage ./python-libs/kivymd { };
+    kivymd = python3Packages.callPackage ./python-libs/kivymd { inherit ryzst; };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
     catppuccin-zathura = callPackage ./catppuccin/zathura { };
     catppuccin-alacritty = callPackage ./catppuccin/alacritty { };
