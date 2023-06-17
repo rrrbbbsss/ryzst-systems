@@ -1,45 +1,10 @@
 { pkgs, lib, ... }:
 let
-  mkEmacsPackage = { emacs, config, packages }:
-    (pkgs.emacsPackagesFor emacs).emacsWithPackages
-      (epkgs: [
-        (epkgs.trivialBuild {
-          pname = "default-init-file";
-          src = pkgs.writeText "default.el" (builtins.readFile config);
-        })
-      ] ++ (packages epkgs));
-
-  emacspkg = mkEmacsPackage {
-    emacs = pkgs.emacs-pgtk;
+  emacspkg = (pkgs.emacsWithPackagesFromUsePackage {
+    package = pkgs.emacs-pgtk;
     config = ./init.el;
-    packages = epkgs: with epkgs; [
-      doom-themes
-      evil
-      avy
-      vterm
-      form-feed
-      magit
-      pinentry
-      flycheck
-      company
-      helm
-      helm-projectile
-      helm-rg
-      helm-descbinds
-      helm-flyspell
-      projectile
-      direnv
-      treemacs
-      treemacs-evil
-      doom-modeline
-      nerd-icons
-      org-bullets
-      nix-mode
-      nov
-      beacon
-    ];
-  };
-
+    defaultInitFile = true;
+  });
 in
 {
   programs.emacs = {
