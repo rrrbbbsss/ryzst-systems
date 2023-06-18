@@ -1,8 +1,8 @@
 { pkgs, ryzst, lib, system, ... }:
 
 let
-  packages = with pkgs; rec {
-    default = cli;
+  packages = with pkgs; {
+    default = ryzst.cli;
     cli = callPackage ./cli { inherit ryzst; };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };
@@ -23,8 +23,8 @@ let
     x86_64-linux = packages
       // (lib.mkVMs ../hosts)
       // (lib.mkISOs ../isos);
-    aarch64-linux = with packages; {
-      inherit cli fzf-pass fzf-wifi;
+    aarch64-linux = {
+      inherit (packages) cli fzf-pass fzf-wifi;
     };
   };
 in
