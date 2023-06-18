@@ -215,6 +215,20 @@
   :init
   (setq nerd-icons-font-family rrrbbbsss/font))
 
+(use-package lsp-mode
+  :ensure t
+  :init
+  ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max (* 1024 1024))
+  (setq lsp-keymap-prefix "C-c l"))
+
+(use-package helm-lsp
+  :ensure t)
+
+(use-package dap-mode
+  :ensure t)
+
 ;; org mode
 (use-package org
   :init
@@ -234,7 +248,9 @@
 ;; languages: nix
 (use-package nix-mode
   :ensure t
-  :mode "\\.nix\\'")
+  :requires lsp-mode
+  :mode "\\.nix\\'"
+  :hook ((nix-mode . lsp)))
 
 ;; misc packages
 (use-package nov
