@@ -81,7 +81,7 @@
       randomizedDelaySec = "30min";
       dates = "weekly";
       options = ''
-        --delete-older-than 30d;
+        --delete-older-than 21d;
       '';
     };
   };
