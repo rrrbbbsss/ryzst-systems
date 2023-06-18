@@ -123,7 +123,7 @@
   (setq transient-display-buffer-action '(display-buffer-below-selected))
   :bind
   ("s-C-M-G" . magit-status)
-  ("s-C-M-L" . magit-log-buffer-file))
+  ("s-C-M-H" . magit-log-buffer-file))
 
 (use-package pinentry
   :ensure t
@@ -215,13 +215,22 @@
   :init
   (setq nerd-icons-font-family rrrbbbsss/font))
 
+(use-package which-key
+  :ensure t
+  :init
+  (setq which-key-idle-delay 2.0)
+  :config
+  (which-key-mode 1))
+
 (use-package lsp-mode
   :ensure t
   :init
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024))
-  (setq lsp-keymap-prefix "C-c l"))
+  (setq max-lisp-eval-depth 5000)
+  (setq lsp-keymap-prefix "s-C-M-L")
+  :hook ((lsp-mode . lsp-enable-which-key-integration)))
 
 (use-package helm-lsp
   :ensure t)
