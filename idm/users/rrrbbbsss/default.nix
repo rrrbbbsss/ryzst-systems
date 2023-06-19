@@ -32,6 +32,7 @@
   home-manager.useUserPackages = true;
   home-manager.users.rrrbbbsss = { pkgs, ... }: {
     imports = [
+      ../../../modules/home
       ./config/alacritty
       ./config/emacs
       ./config/gpg
@@ -128,6 +129,15 @@
 
     programs.obs-studio = {
       enable = true;
+    };
+
+    programs.swappy = {
+      enable = true;
+      settings = {
+        save_dir = "$HOME/Pictures/screenshots";
+        show_panel = true;
+        early_exit = true;
+      };
     };
 
     home.stateVersion = "22.11";
