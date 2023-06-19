@@ -132,6 +132,14 @@
       };
       window = {
         border = 2;
+        commands = [
+          {
+            command = "move scratchpad; scratchpad show";
+            criteria = {
+              title = "__scratchpad__";
+            };
+          }
+        ];
       };
       floating = {
         criteria = [{ app_id = "SWAYFLOAT"; }];
@@ -187,7 +195,7 @@
 
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
-        "${modifier}+Backspace" = "scratchpad show";
+        "${modifier}+Backspace" = ''exec [ "swaymsg -t get_tree | ${pkgs.jq.bin}/bin/jq '.. | .name? | select(. == "__scratchpad__")'" ] && swaymsg "scratchpad show" || ${config.services.emacs.package}/bin/emacsclient -F '(quote (name . "__scratchpad__"))' -c /nfs/Notes/todos.org'';
         #sway
         "${modifier}+Shift+c" = "reload";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
