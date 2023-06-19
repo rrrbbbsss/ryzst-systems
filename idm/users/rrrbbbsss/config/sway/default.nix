@@ -182,7 +182,7 @@
         "${modifier}+d" = "exec ${menu}";
         "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class 'SWAYFLOAT' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
         "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class 'SWAYFLOAT' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
-        "${modifier}+F12" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+        "${modifier}+F12" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -'';
         "${modifier}+backslash" = "exec ${config.services.emacs.package}/bin/emacsclient -c";
 
         #scratchpad
