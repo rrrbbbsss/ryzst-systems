@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  font = "DejaVu Sans Mono";
+in
 {
   programs.alacritty = {
     enable = true;
@@ -16,19 +19,19 @@
       };
       font = {
         normal = {
-          family = "monospace";
+          family = font;
           style = "regular";
         };
         bold = {
-          family = "monospace";
+          family = font;
           style = "regular";
         };
         italic = {
-          family = "monospace";
+          family = font;
           style = "regular";
         };
         bold_italic = {
-          family = "monospace";
+          family = font;
           style = "regular";
         };
         size = 11.00;
