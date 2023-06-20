@@ -15,6 +15,7 @@ in
   services.emacs = {
     enable = true;
     package = emacspkg;
+    defaultEditor = true;
     client.enable = true;
     startWithUserSession = "graphical";
   };
