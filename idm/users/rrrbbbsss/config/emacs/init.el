@@ -290,6 +290,14 @@
   :mode "\\.nix\\'"
   :hook ((nix-mode . lsp)))
 
+;; languages: rust
+(use-package rustic
+  :ensure t
+  :init
+  (setq lsp-rust-server 'rust-analyzer
+	lsp-inlay-hint-enable t)
+  :hook ((rustic-mode . lsp)))
+
 ;; misc packages
 (use-package nov
   :ensure t
