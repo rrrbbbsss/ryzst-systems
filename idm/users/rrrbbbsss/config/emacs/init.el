@@ -294,7 +294,7 @@
 (use-package rustic
   :ensure t
   :init
-  (setq lsp-rust-server 'rust-analyzer
+  (setq rustic-lsp-server 'rust-analyzer
 	lsp-inlay-hint-enable t)
   :hook ((rustic-mode . lsp)))
 
