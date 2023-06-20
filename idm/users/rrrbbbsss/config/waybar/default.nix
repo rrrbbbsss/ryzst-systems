@@ -21,7 +21,18 @@
         clock = {
           timezone = "America/Chicago";
           format = "{:%H:%M %D}";
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          tooltip-format = "{calendar}";
+          calendar = {
+            mode = "month";
+            on-scroll = 1;
+            format = {
+              today = "<span color='#ffffff'><b><u>{}</u></b></span>";
+            };
+          };
+          actions = {
+            on-scroll-up = "shift_up";
+            on-scroll-down = "shift_down";
+          };
         };
         cpu = {
           format = "{usage}% ";
