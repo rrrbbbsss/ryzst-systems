@@ -142,7 +142,7 @@
         ];
       };
       floating = {
-        criteria = [{ app_id = "SWAYFLOAT"; }];
+        criteria = [{ app_id = "__float__"; }];
       };
       keybindings = {
         #windows
@@ -188,8 +188,8 @@
         #execute
         "${modifier}+Return" = "exec ${terminal}";
         "${modifier}+d" = "exec ${menu}";
-        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class 'SWAYFLOAT' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
-        "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class 'SWAYFLOAT' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
+        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class '__float__' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
+        "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
         "${modifier}+F12" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -'';
         "${modifier}+backslash" = "exec ${config.services.emacs.package}/bin/emacsclient -c";
 
