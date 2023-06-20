@@ -244,6 +244,11 @@
   ((prog-mode . format-all-mode)
    (format-all-mode . format-all-ensure-formatter)))
 
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 ;; org mode
 (use-package org
   :init
