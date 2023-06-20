@@ -243,6 +243,9 @@
 (use-package helm-lsp
   :ensure t)
 
+(use-package helm-xref
+  :ensure t)
+
 (use-package dap-mode
   :ensure t)
 
