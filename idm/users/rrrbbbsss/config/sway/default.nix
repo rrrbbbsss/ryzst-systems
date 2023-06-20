@@ -6,20 +6,14 @@
   };
 
   home.packages = with pkgs; [
-    xorg.xwininfo
     swaylock
     swayidle
     swaybg
     waybar
     wl-clipboard
     wlr-randr
-    mako
-    fuzzel
-    #do i really need all this stuff?
-    glib
     gnome.adwaita-icon-theme
-    gsettings-desktop-schemas
-    glxinfo
+    fuzzel
   ];
 
   programs.swaylock = {
