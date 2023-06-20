@@ -160,8 +160,11 @@
   ("s-C-M-B" . helm-buffers-list)
   ("M-y" . helm-show-kill-ring)
   ("M-x" . helm-M-x)
+  ("C-s" . helm-occur)
   (:map helm-map
-	("<tab>" . 'helm-execute-persistent-action)))
+	("<tab>" . helm-execute-persistent-action))
+  (:map evil-normal-state-map
+	("/" . helm-occur)))
 
 (use-package helm-projectile
   :ensure t
