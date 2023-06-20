@@ -238,6 +238,12 @@
 (use-package dap-mode
   :ensure t)
 
+(use-package format-all
+  :ensure t
+  :hook
+  ((prog-mode . format-all-mode)
+   (format-all-mode . format-all-ensure-formatter)))
+
 ;; org mode
 (use-package org
   :init
@@ -276,4 +282,3 @@
   (setq beacon-color "#81a2be")
   :config
   (beacon-mode 1))
-
