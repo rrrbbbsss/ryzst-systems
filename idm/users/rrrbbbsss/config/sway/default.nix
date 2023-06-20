@@ -57,8 +57,11 @@
       modifier = "Mod4";
       terminal = "alacritty";
       menu = "${config.programs.fuzzel.package}/bin/fuzzel";
+      fonts = {
+        names = [ "DejaVu Sans Mono" ];
+        size = 8.0;
+      };
       bars = [{
-        fonts.size = 15.0;
         command = "waybar";
         position = "bottom";
       }];
