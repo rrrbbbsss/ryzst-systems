@@ -125,6 +125,11 @@
   ("s-C-M-G" . magit-status)
   ("s-C-M-H" . magit-log-buffer-file))
 
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode 1))
+
 (use-package pinentry
   :ensure t
   :init
