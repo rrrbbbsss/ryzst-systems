@@ -131,6 +131,22 @@
       enable = true;
     };
 
+    programs.fuzzel = {
+      enable = true;
+      settings = {
+        border = {
+          width = 3;
+        };
+        colors = {
+          text = "ae7eedff";
+          background = "180d26ff";
+          border = "ae7eedff";
+          selection = "ae7eedff";
+          selection-text = "180d26ff";
+        };
+      };
+    };
+
     programs.swappy = {
       enable = true;
       settings = {

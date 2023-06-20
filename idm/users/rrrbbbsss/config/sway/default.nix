@@ -13,7 +13,6 @@
     wl-clipboard
     wlr-randr
     gnome.adwaita-icon-theme
-    fuzzel
   ];
 
   programs.swaylock = {
@@ -57,7 +56,7 @@
     config = rec {
       modifier = "Mod4";
       terminal = "alacritty";
-      menu = "fuzzel --text-color=ae7eedff --background-color=180d26ff --border-color=ae7eedff --selection-color=ae7eedff --selection-text-color=180d26ff --border-width=3";
+      menu = "${config.programs.fuzzel.package}/bin/fuzzel";
       bars = [{
         fonts.size = 15.0;
         command = "waybar";
