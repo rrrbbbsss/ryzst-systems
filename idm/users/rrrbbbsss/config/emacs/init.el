@@ -199,7 +199,14 @@
   :config)
 
 (use-package direnv
-  :ensure t)
+  :ensure t
+  :init
+  (setq direnv-always-show-summary nil)
+  (add-to-list 'direnv-non-file-modes 'vterm-mode)
+  :config
+  (direnv-mode 1)
+  :hook
+  (prog-mode . direnv-update-environment))
 
 (use-package treemacs
   :ensure t
