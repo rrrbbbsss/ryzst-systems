@@ -283,14 +283,14 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
-;; languages: nix
+;; nix
 (use-package nix-mode
   :ensure t
   :requires lsp-mode
   :mode "\\.nix\\'"
   :hook ((nix-mode . lsp)))
 
-;; languages: rust
+;; rust
 (use-package rustic
   :ensure t
   :init
