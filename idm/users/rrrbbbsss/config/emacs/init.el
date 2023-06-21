@@ -298,6 +298,13 @@
 	lsp-inlay-hint-enable t)
   :hook ((rustic-mode . lsp)))
 
+;; prolog
+(use-package prolog-mode
+  :ensure t
+  :init
+  (setq prolog-system 'swi)
+  :mode "\\.pl\\'")
+
 ;; misc packages
 (use-package nov
   :ensure t
