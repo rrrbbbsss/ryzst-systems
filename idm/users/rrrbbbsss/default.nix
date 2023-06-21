@@ -173,6 +173,9 @@
       nil
       nixpkgs-fmt
 
+      #prolog
+      swiProlog
+
       #utils
       ryzst.cli
       htop
