@@ -202,8 +202,8 @@
   :ensure t
   :init
   (setq direnv-always-show-summary nil)
-  (add-to-list 'direnv-non-file-modes 'vterm-mode)
   :config
+  (add-to-list 'direnv-non-file-modes 'vterm-mode)
   (direnv-mode 1)
   :hook
   (prog-mode . direnv-update-environment))
