@@ -1,0 +1,3 @@
+{
+  description = "basic prolog template";
+}
