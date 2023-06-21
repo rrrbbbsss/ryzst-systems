@@ -6,6 +6,7 @@ let
     lib = prev.lib // { ryzst = self.lib; };
   };
   good-old-packages = import ./good-old-packages.nix;
+  new-fixes = import ./new-fixes.nix;
 in
 {
   inherit ryzst good-old-packages;
@@ -16,5 +17,6 @@ in
         self.inputs.nix-vscode-extensions.overlays.default
         self.inputs.emacs-overlay.overlays.default
         good-old-packages
+        new-fixes
       ];
 }
