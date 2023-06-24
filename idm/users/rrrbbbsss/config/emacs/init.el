@@ -166,7 +166,9 @@
   ("M-y" . helm-show-kill-ring)
   ("M-x" . helm-M-x)
   ("C-s" . helm-occur)
+  ("C-h a" . helm-apropos)
   (:map helm-map
+	("C-z" . helm-select-action)
 	("<tab>" . helm-execute-persistent-action))
   (:map evil-normal-state-map
 	("/" . helm-occur)))
