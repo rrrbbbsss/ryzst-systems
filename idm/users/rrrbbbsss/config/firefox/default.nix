@@ -3,6 +3,9 @@
 {
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox.override {
+      cfg = { enableTridactylNative = true; };
+    };
     profiles.default = {
       id = 0;
       isDefault = true;
@@ -51,4 +54,6 @@
     source = ./ublock.json;
     target = ".mozilla/managed-storage/uBlock0@raymondhill.net.json";
   };
+
+  xdg.configFile."tridactyl/tridactylrc".source = ./tridactylrc;
 }
