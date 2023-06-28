@@ -213,7 +213,8 @@
 (use-package treemacs
   :ensure t
   :init
-  (setq treemacs-width 30)
+  (setq treemacs-width 30
+	treemacs-read-string-input 'from-minibuffer)
   :bind
   ("<f2>" . treemacs))
 
