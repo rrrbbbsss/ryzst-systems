@@ -38,7 +38,6 @@
       ./config/firefox
       ./config/gpg
       ./config/mpv
-      ./config/nvim
       ./config/sway
       ./config/vscode
       ./config/waybar
