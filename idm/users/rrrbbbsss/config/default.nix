@@ -1,6 +1,0 @@
-{ ... }:
-
-{
-  system = "todo";
-  home = "todo";
-}
