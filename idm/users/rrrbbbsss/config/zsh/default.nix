@@ -9,8 +9,9 @@
     dotDir = ".config/zsh";
     initExtra = ''
       stty -ixon
-      source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+      ZVM_INIT_MODE=sourcing
       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+      source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
       autoload -Uz vcs_info
       precmd() { vcs_info }
       zstyle ':vcs_info:git:*' formats '%K{#000000} %b %K{#4e4e4e} %k'
