@@ -1,6 +1,7 @@
 { pkgs, osConfig, config, ... }:
 
 let
+  modifier = "Mod4";
   commands = {
     terminal = ''${pkgs.alacritty}/bin/alacritty'';
     applancher = "${config.programs.fuzzel.package}/bin/fuzzel";
@@ -93,8 +94,8 @@ in
     enable = true;
     xwayland = true;
     wrapperFeatures.gtk = true;
-    config = rec {
-      modifier = "Mod4";
+    config = {
+      inherit modifier;
       terminal = commands.terminal;
       menu = commands.applancher;
       fonts = {
