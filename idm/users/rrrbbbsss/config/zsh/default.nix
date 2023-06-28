@@ -30,14 +30,16 @@
       PROMPT='$PSPACE%(?.%K{green} %k.%K{red} %k)$PSPACE%K{#000000} %n $PSPACE%K{#000000} %m $PSPACE%K{#000000} %40<...<$(get_pwd)%<< $PSPACE''${vcs_info_msg_0_}%k 
       $VIMODE '
 
-      function prepend_sudo() {
-        if [[ $BUFFER != "sudo "* ]]; then
-          BUFFER="sudo $BUFFER"; CURSOR+=5
+      function toggle_sudo() {
+        if [[ $BUFFER == "sudo "* ]]; then
+          LBUFFER="''${LBUFFER#sudo }"
+        else
+          LBUFFER="sudo $LBUFFER"
         fi
       }
-      zle -N prepend_sudo
-      bindkey -M vicmd "\C-s" prepend_sudo
-      bindkey -M viins "\C-s" prepend_sudo
+      zle -N toggle_sudo
+      bindkey -M vicmd "\C-s" toggle_sudo
+      bindkey -M viins "\C-s" toggle_sudo
       bindkey -M viins "\C-r" fzf-history-widget
     '';
     shellAliases = {
