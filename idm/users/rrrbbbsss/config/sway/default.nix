@@ -1,4 +1,44 @@
 { pkgs, osConfig, config, ... }:
+
+let
+  commands = {
+    terminal = ''${pkgs.alacritty}/bin/alacritty'';
+    applancher = "${config.programs.fuzzel.package}/bin/fuzzel";
+    passwords = ''
+      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class '__float__' -e \
+      ${pkgs.ryzst.fzf-pass}/bin/fzf-pass
+    '';
+    wifi = ''
+      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e \
+      bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
+    '';
+    screenshot = ''
+      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
+      | ${pkgs.swappy}/bin/swappy -f -
+    '';
+    editor = "${config.services.emacs.package}/bin/emacsclient -c";
+    scratchpad = ''
+      [ "swaymsg -t get_tree | ${pkgs.jq.bin}/bin/jq '.. | .name? | select(. == "__scratchpad__")'" ] \
+      && swaymsg "scratchpad show" \
+      || ${commands.editor} -F '(quote (name . "__scratchpad__"))' /nfs/Notes/todos.org
+    '';
+    exit = "swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
+    media = {
+      raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+      lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+      mute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      micMute = "${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+      play = "${pkgs.playerctl}/bin/playerctl play-pause";
+      next = "${pkgs.playerctl}/bin/playerctl next";
+      prev = "${pkgs.playerctl}/bin/playerctl previous";
+    };
+    screen = {
+      raiseBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+      lowerBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+    };
+  };
+in
+
 {
   home.sessionVariables = {
     GTK_THEME = "Adwaita:dark";
@@ -55,8 +95,8 @@
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = "Mod4";
-      terminal = "alacritty";
-      menu = "${config.programs.fuzzel.package}/bin/fuzzel";
+      terminal = commands.terminal;
+      menu = commands.applancher;
       fonts = {
         names = [ "DejaVu Sans Mono" ];
         size = 8.0;
@@ -182,34 +222,33 @@
         "${modifier}+Shift+8" = "move container to workspace number 8; workspace number 8";
         "${modifier}+Shift+9" = "move container to workspace number 9; workspace number 9";
         #execute
-        "${modifier}+Return" = "exec ${terminal}";
-        "${modifier}+d" = "exec ${menu}";
-        "${modifier}+p" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class '__float__' -e ${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
-        "${modifier}+n" = "exec ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'";
-        "${modifier}+F12" = ''exec ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -'';
-        "${modifier}+backslash" = "exec ${config.services.emacs.package}/bin/emacsclient -c";
+        "${modifier}+Return" = "exec ${commands.terminal}";
+        "${modifier}+d" = "exec ${commands.applancher}";
+        "${modifier}+p" = "exec ${commands.passwords}";
+        "${modifier}+n" = "exec ${commands.wifi}";
+        "${modifier}+F12" = "exec ${commands.screenshot}";
+        "${modifier}+backslash" = "exec ${commands.editor}";
 
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
-        "${modifier}+Backspace" = ''exec [ "swaymsg -t get_tree | ${pkgs.jq.bin}/bin/jq '.. | .name? | select(. == "__scratchpad__")'" ] && swaymsg "scratchpad show" || ${config.services.emacs.package}/bin/emacsclient -F '(quote (name . "__scratchpad__"))' -c /nfs/Notes/todos.org'';
+        "${modifier}+Backspace" = "exec ${commands.scratchpad}";
         #sway
         "${modifier}+Shift+c" = "reload";
-        "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
+        "${modifier}+Shift+e" = "exec ${commands.exit}";
         #modes
         "${modifier}+r" = "mode resize";
         "${modifier}+Shift+Escape" = "mode vm";
         #mediakeys
-        "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-        "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-        "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-        "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
-        "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-        "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-        "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+        "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
+        "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
+        "XF86AudioMute" = "exec ${commands.media.mute}";
+        "XF86AudioMicMute" = "exec ${commands.media.micMute}";
+        "XF86AudioPlay" = "exec ${commands.media.play}";
+        "XF86AudioNext" = "exec ${commands.media.next}";
+        "XF86AudioPrev" = "exec ${commands.media.prev}";
+        "XF86MonBrightnessUp" = "exec ${commands.screen.raiseBrightness}";
+        "XF86MonBrightnessDown" = "exec ${commands.screen.lowerBrightness}";
       };
-
     };
   };
 }
