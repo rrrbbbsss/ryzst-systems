@@ -26,7 +26,7 @@
             mode = "month";
             on-scroll = 1;
             format = {
-              today = "<span color='#ffffff'><b><u>{}</u></b></span>";
+              today = "<b><u>{}</u></b>";
             };
           };
           actions = {
