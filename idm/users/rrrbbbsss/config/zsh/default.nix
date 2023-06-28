@@ -37,6 +37,8 @@
       }
       zle -N prepend_sudo
       bindkey -M vicmd "\C-s" prepend_sudo
+      bindkey -M viins "\C-s" prepend_sudo
+      bindkey -M viins "\C-r" fzf-history-widget
     '';
     shellAliases = {
       "-s pdf" = "zathura --fork";
