@@ -1,5 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  motdFile = pkgs.runCommandLocal "motd.txt"
+    { inherit (pkgs) figlet boxes; } ''
+    printf "Ryzst Systems\n${config.networking.hostName}" \
+    | $figlet/bin/figlet \
+    | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config \
+    > $out
+  '';
+in
 {
   #locale
   time.timeZone = "America/Chicago";
@@ -25,6 +34,7 @@
 
   #auth
   users = {
+    inherit motdFile;
     mutableUsers = false;
     users.root = {
       hashedPassword = null;
@@ -52,7 +62,10 @@
         u2fAuth = true;
         unixAuth = false;
       };
-      sshd.u2fAuth = false; # todo...
+      sshd = {
+        u2fAuth = false; # todo...
+        showMotd = true;
+      };
     };
   };
   services.openssh = {
