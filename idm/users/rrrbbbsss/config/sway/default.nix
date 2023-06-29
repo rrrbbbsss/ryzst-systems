@@ -193,6 +193,14 @@ in
         "${modifier}+Shift+j" = "move down";
         "${modifier}+Shift+k" = "move up";
         "${modifier}+Shift+l" = "move right";
+        "${modifier}+Ctrl+h" = "focus output left";
+        "${modifier}+Ctrl+j" = "focus output down";
+        "${modifier}+Ctrl+k" = "focus output up";
+        "${modifier}+Ctrl+l" = "focus output right";
+        "${modifier}+Ctrl+Shift+h" = "move output left; focus output left";
+        "${modifier}+Ctrl+Shift+j" = "move output down; focus output down";
+        "${modifier}+Ctrl+Shift+k" = "move output up; focus output up";
+        "${modifier}+Ctrl+Shift+l" = "move output right; focus output right";
         "${modifier}+Shift+q" = "kill";
         #splits/layouts
         "${modifier}+s" = "splitv";
