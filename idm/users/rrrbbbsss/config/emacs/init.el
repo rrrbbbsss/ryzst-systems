@@ -45,6 +45,8 @@
   :custom-face
   (mode-line-inactive ((t (:background "#0f1011" :foreground "#5a5b5a"))))
   (window-divider ((t (:background "black"))))
+  (org-block-begin-line ((t (:background "black"))))
+  (org-block-end-line ((t (:background "black"))))
   :config
   (load-theme 'doom-tomorrow-night t))
 
