@@ -80,6 +80,8 @@
 
         formatter = pkgs.nixpkgs-fmt;
 
+        apps = import ./apps { inherit ryzst; };
+
         packages = import ./packages { inherit pkgs ryzst system; lib = self.lib; };
       }
       );

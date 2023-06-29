@@ -4,6 +4,7 @@ let
   packages = with pkgs; {
     default = ryzst.cli;
     cli = callPackage ./cli { inherit ryzst; };
+    apps = callPackage ./apps { inherit pkgs; };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };
     katago-model = callPackage ./katago-model { };
