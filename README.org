@@ -4,7 +4,6 @@ learning nix
 ** Structure
 #+BEGIN_SRC
 ryzst-systems
-├── artwork # todo
 ├── cli # personal cli commands
 ├── hosts # machine configurations
 ├── idm # user/group management
@@ -12,6 +11,5 @@ ryzst-systems
 ├── lib # misc helper functions
 ├── modules # nixos modules
 ├── packages # personal packages
-├── secrets # todo
 └── templates # templates for projects
 #+END_SRC
