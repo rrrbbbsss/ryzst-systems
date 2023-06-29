@@ -129,6 +129,8 @@
 
 (use-package git-gutter
   :ensure t
+  :init
+  (setq-default left-margin-width 1)
   :config
   (global-git-gutter-mode 1))
 
