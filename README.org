@@ -4,6 +4,7 @@ learning nix
 ** Structure
 #+BEGIN_SRC
 ryzst-systems
+├── apps # flake apps
 ├── cli # personal cli commands
 ├── hosts # machine configurations
 ├── idm # user/group management
