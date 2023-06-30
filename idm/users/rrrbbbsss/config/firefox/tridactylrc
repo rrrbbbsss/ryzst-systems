@@ -14,6 +14,7 @@ set searchurls.wk https://en.wikipedia.org/wiki/
 set searchurls.yt https://youtube.com/results?search_query=
 set searchurls.no https://search.nixos.org/options?query=
 set searchurls.np https://search.nixos.org/packages?query=
+set searchurls.nh https://mipmip.github.io/home-manager-option-search/?query=
 
 " disable on sites
 " blacklistadd ...
