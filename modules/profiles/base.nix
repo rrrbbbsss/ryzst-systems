@@ -115,7 +115,7 @@ in
 
   # packages
   environment.systemPackages = with pkgs; [
-    ryzst.cli
+    ryzst.apps
     vim
     git
     wget

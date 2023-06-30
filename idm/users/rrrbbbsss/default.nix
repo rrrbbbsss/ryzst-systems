@@ -133,7 +133,6 @@
       swiProlog
 
       #utils
-      ryzst.cli
       htop
       git
       strace

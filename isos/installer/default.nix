@@ -55,7 +55,7 @@
     wget
     clinfo
     wireguard-tools
-    ryzst.cli
+    ryzst.apps
   ];
 
   nix = {

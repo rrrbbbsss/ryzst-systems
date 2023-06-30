@@ -5,7 +5,6 @@ learning nix
 #+BEGIN_SRC
 ryzst-systems
 ├── apps # flake apps
-├── cli # personal cli commands
 ├── hosts # machine configurations
 ├── idm # user/group management
 ├── isos # custom live/installer iso images

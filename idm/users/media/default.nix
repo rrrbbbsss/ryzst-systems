@@ -69,10 +69,6 @@
 
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
-
-      #utilities
-      ryzst.cli
-
       #audio/music
       spotify
 

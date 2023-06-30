@@ -12,7 +12,7 @@ mkShell {
     nil
     nixpkgs-fmt
     direnv
-    ryzst.cli
+    ryzst.apps
   ];
   shellHook = ''
     export PATH="${nixBin}/bin:$PATH"
