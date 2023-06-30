@@ -30,7 +30,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, home-manager, ... }:
     {
       lib = import ./lib { inherit self; };
 
@@ -45,6 +45,7 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           ryzst = self.packages.${system};
+          hm = home-manager.packages.${system};
         in
         {
           devShells.default = import ./shell.nix { inherit pkgs ryzst; };
@@ -56,7 +57,7 @@
           apps = import ./apps { inherit ryzst; };
 
           packages = import ./packages {
-            inherit pkgs ryzst system; lib = self.lib;
+            inherit pkgs ryzst hm system; lib = self.lib;
           };
         }
       );

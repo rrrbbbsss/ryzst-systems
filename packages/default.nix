@@ -1,4 +1,4 @@
-{ pkgs, ryzst, lib, system, ... }:
+{ pkgs, ryzst, hm, lib, system, ... }:
 
 let
   packages = with pkgs; {
@@ -10,6 +10,7 @@ let
     q5go = libsForQt5.callPackage ./q5go { };
     fzf-pass = callPackage ./fzf-pass { };
     fzf-wifi = callPackage ./fzf-wifi { };
+    fzf-nix-options = callPackage ./fzf-nix-options { inherit hm; };
     kivy = python3Packages.callPackage ./python-libs/kivy {
       inherit (pkgs) mesa;
       inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
@@ -24,7 +25,7 @@ let
       // (lib.mkVMs ../hosts)
       // (lib.mkISOs ../isos);
     aarch64-linux = {
-      inherit (packages) apps fzf-pass fzf-wifi;
+      inherit (packages) apps fzf-pass fzf-wifi fzf-nix-options;
     };
   };
 in
