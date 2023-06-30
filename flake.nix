@@ -52,12 +52,7 @@
     };
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , flake-utils
-    , ...
-    }:
+  outputs = { self, nixpkgs, flake-utils, ... }:
     {
       lib = import ./lib { inherit self; };
 
@@ -69,20 +64,22 @@
     } //
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
       (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        ryzst = self.packages.${system};
-      in
-      {
-        devShells.default = import ./shell.nix { inherit pkgs ryzst; };
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          ryzst = self.packages.${system};
+        in
+        {
+          devShells.default = import ./shell.nix { inherit pkgs ryzst; };
 
-        checks = self.lib.mkChecks { inherit system; };
+          checks = self.lib.mkChecks { inherit system; };
 
-        formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixpkgs-fmt;
 
-        apps = import ./apps { inherit ryzst; };
+          apps = import ./apps { inherit ryzst; };
 
-        packages = import ./packages { inherit pkgs ryzst system; lib = self.lib; };
-      }
+          packages = import ./packages {
+            inherit pkgs ryzst system; lib = self.lib;
+          };
+        }
       );
 }
