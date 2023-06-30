@@ -60,7 +60,7 @@
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
 
-      templates = self.lib.mkTemplates ./templates;
+      templates = import ./templates { inherit self; };
     } //
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
       (system:

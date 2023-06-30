@@ -4,8 +4,8 @@ let
   getDirs = dir: with lib-nixpkgs.attrsets;
     foldlAttrs
       (acc: n: v:
-        if v == "directory" then [ "./${n}" ] ++ acc else acc)
-      [ ]
+        if v == "directory" then { ${n} = dir + "/${n}"; } // acc else acc)
+      { }
       (builtins.readDir dir);
   mkSystem = { name, path, target }:
     let
@@ -65,14 +65,6 @@ let
         target = "iso";
       });
 
-  mkTemplates = dir: with builtins;
-    mapAttrs
-      (name: value:
-        let
-          template = dir + "/${name}";
-        in
-        { path = template + "/files"; } // import template)
-      (readDir dir);
 
   mkChecks = { system }: with lib-nixpkgs;
     (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
@@ -83,7 +75,6 @@ let
     inherit mkHosts;
     inherit mkVMs;
     inherit mkISOs;
-    inherit mkTemplates;
     inherit mkChecks;
   };
 in
