@@ -114,6 +114,10 @@
 
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
+      #fzf scripts
+      ryzst.fzf-wifi
+      ryzst.fzf-pass
+      ryzst.fzf-nix-options
 
       #browsers 
       chromium
