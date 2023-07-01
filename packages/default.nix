@@ -8,9 +8,9 @@ let
     katrain = callPackage ./katrain { inherit ryzst; };
     katago-model = callPackage ./katago-model { };
     q5go = libsForQt5.callPackage ./q5go { };
-    fzf-pass = callPackage ./fzf-pass { };
-    fzf-wifi = callPackage ./fzf-wifi { };
-    fzf-nix-options = callPackage ./fzf-nix-options { inherit hm; };
+    fzf-pass = callPackage ./fzf/fzf-pass { };
+    fzf-wifi = callPackage ./fzf/fzf-wifi { };
+    fzf-nix-options = callPackage ./fzf/fzf-nix-options { inherit hm; };
     kivy = python3Packages.callPackage ./python-libs/kivy {
       inherit (pkgs) mesa;
       inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
