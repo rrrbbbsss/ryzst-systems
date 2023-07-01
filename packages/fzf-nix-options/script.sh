@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -euo pipefail
+
 function Preview() {
   RESULT=$(jq --arg a $1 '.[$a]' $OPTION_FILE)
   NAME=$1
@@ -16,8 +18,10 @@ function Preview() {
 
 if [[ $1 == "nixos" ]]; then
     OPTION_FILE=$NIXOS_OPTIONS
+    PROMPT="NixOS"
 elif [[ $1 == "home" ]]; then
     OPTION_FILE=$HOME_OPTIONS
+    PROMPT="Home Manager"
 else
     printf "Error: please specify 'nixos' or 'home' options"
     exit 1
@@ -28,7 +32,7 @@ export OPTION_FILE
 
 jq -r 'keys[]' $OPTION_FILE \
     | fzf --reverse \
-	--prompt="Home Manager Options> " \
+	--prompt="$PROMPT Options> " \
 	--preview-window=up,wrap \
 	--preview='bash -c "Preview {}"' \
     | wl-copy --trim-newline
