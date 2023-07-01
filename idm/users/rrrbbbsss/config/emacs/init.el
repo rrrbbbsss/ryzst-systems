@@ -122,13 +122,7 @@
 (use-package form-feed
   :ensure t
   :config
-  (set-face-attribute 'form-feed-line nil
-                      :stipple (list 1 1 (string 1))
-                      :foreground "#212526")
-  (global-form-feed-mode)
-  :custom-face
-  (form-feed-line
-   ((t :foreground "#ffffff"))))
+  (global-form-feed-mode))
 
 (use-package magit
   :ensure t
