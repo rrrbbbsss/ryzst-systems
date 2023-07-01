@@ -47,5 +47,5 @@ jq -r 'keys[]' $OPTION_FILE \
 	--prompt="$PROMPT Options> " \
 	--preview-window=up,wrap \
 	--preview='bash -c "Preview {}"' \
-    | wl-copy --trim-newline
+    | wl-copy --primary --trim-newline
 
