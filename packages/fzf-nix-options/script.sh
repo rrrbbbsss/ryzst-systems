@@ -5,7 +5,13 @@ set -euo pipefail
 function Preview() {
   RESULT=$(jq --arg a $1 '.[$a]' $OPTION_FILE)
   NAME=$1
-  DESCRIPTION=$(echo $RESULT | jq -r '.description' | pandoc -f docbook -t plain)
+  DESCRIPTION_DOC="
+   <xml xmlns:xlink=\"http://www.w3.org/1999/xlink\">
+   <para>
+   $(echo $RESULT | jq -r '.description')
+   </para>
+   </xml>"
+  DESCRIPTION=$(echo $DESCRIPTION_DOC | pandoc -f docbook -t plain)
   TYPE=$(echo $RESULT | jq -r '.type')
   DEFAULT=$(echo $RESULT | jq -r '.default.text')
   EXAMPLE=$(echo $RESULT | jq -r '.example.text')
