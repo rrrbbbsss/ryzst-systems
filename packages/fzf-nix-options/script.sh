@@ -26,9 +26,10 @@ fi
 export -f Preview
 export OPTION_FILE
 
-jq -r 'keys[]' $OPTION_FILE |
-    fzf --reverse \
+jq -r 'keys[]' $OPTION_FILE \
+    | fzf --reverse \
 	--prompt="Home Manager Options> " \
 	--preview-window=up,wrap \
-	--preview='bash -c "Preview {}"'
+	--preview='bash -c "Preview {}"' \
+    | wl-copy --trim-newline
 
