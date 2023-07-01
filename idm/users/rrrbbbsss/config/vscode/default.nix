@@ -6,6 +6,7 @@
     mutableExtensionsDir = false;
     package = pkgs.vscodium;
     userSettings = {
+      "workbench.colorTheme" = "Tomorrow Night";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
       "nix.serverSettings" = {
@@ -21,6 +22,8 @@
       "terminal.integrated.sendKeybindingsToShell" = true;
     };
     extensions = with pkgs.vscode-marketplace; [
+      # theme
+      ms-vscode.theme-tomorrowkit
       # vim keys
       vscodevim.vim
       # dir env
