@@ -42,24 +42,35 @@
   :init
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  :custom-face
-  (helm-ff-file-extension ((t (:foreground ,(doom-color 'magenta)))))
-  (helm-header-line-left-margin ((t (:background ,(doom-color 'yellow)))))
-  (helm-ff-invalid-symlink ((t (:background ,(doom-color 'red)))))
-  (helm-ff-suid ((t (:background ,(doom-color 'red)))))
-  (helm-ff-pipe ((t (:foreground ,(doom-color 'yellow)))))
-  (helm-delete-async-message ((t (:foreground ,(doom-color 'yellow)))))
-  (helm-ff-denied ((t (:foreground ,(doom-color 'red)))))
-  (helm-ff-dotted-symlink-directory
-   ((t (:foreground ,(doom-color 'orange) :background ,(doom-color 'base4)))))
-  (helm-ff-socket ((t (:foreground ,(doom-color 'dark-cyan)))))
-  (mode-line-inactive
-   ((t (:background ,(doom-color 'modeline-bg) :foreground ,(doom-color 'grey)))))
-  (window-divider ((t (:foreground ,(doom-color 'modeline-bg)))))
-  (org-block-begin-line ((t (:background "black"))))
-  (org-block-end-line ((t (:background "black"))))
+  (load-theme 'doom-tomorrow-night t)
   :config
-  (load-theme 'doom-tomorrow-night t))
+  (custom-set-faces
+   `(helm-ff-file-extension
+     ((t (:foreground ,(doom-color 'magenta)))))
+   `(helm-header-line-left-margin
+     ((t (:background ,(doom-color 'yellow)))))
+   `(helm-ff-invalid-symlink
+     ((t (:background ,(doom-color 'red)))))
+   `(helm-ff-suid
+     ((t (:background ,(doom-color 'red)))))
+   `(helm-ff-pipe
+     ((t (:foreground ,(doom-color 'yellow)))))
+   `(helm-delete-async-message
+     ((t (:foreground ,(doom-color 'yellow)))))
+   `(helm-ff-denied
+     ((t (:foreground ,(doom-color 'red)))))
+   `(helm-ff-dotted-symlink-directory
+     ((t (:foreground ,(doom-color 'orange) :background ,(doom-color 'base4)))))
+   `(helm-ff-socket
+     ((t (:foreground ,(doom-color 'dark-cyan)))))
+   `(mode-line-inactive
+     ((t (:background ,(doom-color 'modeline-bg) :foreground ,(doom-color 'grey)))))
+   `(window-divider
+     ((t (:foreground ,(doom-color 'modeline-bg)))))
+   `(org-block-begin-line
+     ((t (:background "black"))))
+   `(org-block-end-line
+     ((t (:background "black"))))))
 
 ;; Core packages
 (use-package evil
