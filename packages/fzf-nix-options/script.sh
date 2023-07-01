@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+function Error() {
+    printf "Error: $1\n"
+    exit 1
+}
+
 function Preview() {
   RESULT=$(jq --arg a $1 '.[$a]' $OPTION_FILE)
   NAME=$1
@@ -22,15 +27,16 @@ function Preview() {
   printf "Example:\n$EXAMPLE"
 }
 
-if [[ $1 == "nixos" ]]; then
+
+INPUT=${1:-}
+if [[ "$INPUT" == "nixos" ]]; then
     OPTION_FILE=$NIXOS_OPTIONS
     PROMPT="NixOS"
-elif [[ $1 == "home" ]]; then
+elif [[ "$INPUT" == "home" ]]; then
     OPTION_FILE=$HOME_OPTIONS
     PROMPT="Home Manager"
 else
-    printf "Error: please specify 'nixos' or 'home' options"
-    exit 1
+    Error "please specify 'nixos' or 'home' options"
 fi
 
 export -f Preview
