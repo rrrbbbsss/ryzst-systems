@@ -131,6 +131,7 @@
   :ensure t
   :init
   (setq-default left-margin-width 1)
+  (setq git-gutter:update-interval 2)
   :config
   (global-git-gutter-mode 1))
 
