@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, ... }:
 {
   # Login Manager
   boot.kernelParams = [ "console=tty1" ];
@@ -45,9 +45,7 @@
     enableDefaultFonts = true;
     fonts = with pkgs; [
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "DejaVuSansMono" ]; })
-      font-awesome
-      roboto
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
     ];
   };
   # Sound

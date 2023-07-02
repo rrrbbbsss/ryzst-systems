@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./config/sway
     ./config/wireshark
     ./config/zsh
   ];
@@ -24,7 +25,6 @@ in
       ./config/firefox
       ./config/gpg
       ./config/mpv
-      ./config/sway
       ./config/vscode
       ./config/waybar
       ./config/zathura
