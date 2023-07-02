@@ -5,6 +5,12 @@
 with lib;
 {
   options.device = {
+    user = mkOption {
+      type = types.str;
+      description = ''
+        User assigned to device.
+      '';
+    };
     monitors = mkOption {
       type = types.attrsOf (types.attrsOf types.str);
       description = ''
