@@ -37,14 +37,6 @@ in
       enable = true;
     };
 
-    programs.tmux = {
-      enable = true;
-    };
-
-    programs.mbsync = {
-      enable = true;
-    };
-
     programs.git = {
       enable = true;
       userName = "Royce Strange";
