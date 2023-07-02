@@ -5,9 +5,6 @@ in
 {
   device.user = "media";
 
-  #############
-  ### Users ###
-  #############
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -16,9 +13,6 @@ in
   };
   networking.networkmanager.enable = true;
 
-  #####################
-  ### Homes Manager ###
-  #####################
   home-manager.users.${username} = { pkgs, ... }: {
     programs.home-manager = {
       enable = true;
