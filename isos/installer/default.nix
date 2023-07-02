@@ -96,7 +96,7 @@ in
       ../../idm/users/rrrbbbsss/config/alacritty
     ];
     programs.zsh.initExtra = ''
-      [[ -v DISPLAY ]] && sudo ryzst install system
+      [[ -v DISPLAY ]] && sudo ${pkgs.ryzst.apps}/bin/ryzst-installer
     '';
     home.stateVersion = "22.11";
   };
