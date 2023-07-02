@@ -38,6 +38,8 @@
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
 
+      homeManagerModules.default = import ./modules/home { };
+
       templates = import ./templates { inherit self; };
     } //
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]

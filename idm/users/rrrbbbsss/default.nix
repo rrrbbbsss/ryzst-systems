@@ -32,7 +32,6 @@
   home-manager.useUserPackages = true;
   home-manager.users.rrrbbbsss = { pkgs, ... }: {
     imports = [
-      ../../../modules/home
       ./config/alacritty
       ./config/emacs
       ./config/firefox
