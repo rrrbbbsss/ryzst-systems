@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./config/wireshark
+    ./config/zsh
   ];
 
   device.user = "rrrbbbsss";
@@ -16,15 +17,11 @@ in
     isNormalUser = true;
     description = username;
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    shell = pkgs.zsh;
     hashedPassword = null;
   };
   #todo: this needs to move out
   networking.networkmanager.enable = true;
 
-  # for zsh shell
-  programs.zsh.enable = true;
-  environment.pathsToLink = [ "/share/zsh" ];
 
   #####################
   ### Homes Manager ###
@@ -42,7 +39,6 @@ in
       ./config/vscode
       ./config/waybar
       ./config/zathura
-      ./config/zsh
     ];
     programs.home-manager = {
       enable = true;

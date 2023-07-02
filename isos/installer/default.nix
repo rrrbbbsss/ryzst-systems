@@ -7,6 +7,8 @@ in
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
+    #todo: clean this up
+    ../../idm/users/rrrbbbsss/config/zsh
   ];
 
   device.user = "installer";
@@ -80,7 +82,6 @@ in
       extraGroups = [ "wheel" "networkmanager" "video" ];
       # no password
       initialHashedPassword = "";
-      shell = pkgs.zsh;
     };
     root = {
       # no password
@@ -88,15 +89,11 @@ in
     };
   };
 
-  programs.zsh.enable = true;
-  environment.pathsToLink = [ "/share/zsh" ];
-
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.${username} = { pkgs, ... }: {
     imports = [
       ../../idm/users/rrrbbbsss/config/alacritty
-      ../../idm/users/rrrbbbsss/config/zsh
     ];
     programs.zsh.initExtra = ''
       [[ -v DISPLAY ]] && sudo ryzst install system
