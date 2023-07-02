@@ -14,10 +14,6 @@ in
   networking.networkmanager.enable = true;
 
   home-manager.users.${username} = { pkgs, ... }: {
-    programs.home-manager = {
-      enable = true;
-    };
-
     programs.firefox = {
       enable = true;
       profiles.default = {
