@@ -130,7 +130,7 @@ in
       };
       output = {
         "*" = { bg = "#180d26 solid_color"; };
-      } // osConfig.ryzst.hardware.monitors;
+      } // osConfig.device.monitors;
       modes = {
         resize = {
           h = "resize shrink width 10 px";

@@ -8,7 +8,7 @@
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
-  ryzst.hardware.monitors = {
+  device.monitors = {
     LVDS-1 = {
       mode = "1366x768@60Hz";
     };

@@ -9,7 +9,7 @@
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
-  ryzst.hardware.monitors = {
+  device.monitors = {
     DP-1 = {
       mode = "3440x1440@144Hz";
     };

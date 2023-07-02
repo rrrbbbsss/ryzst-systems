@@ -19,7 +19,7 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
 
-  ryzst.hardware.monitors = {
+  device.monitors = {
     Virtual-1 = {
       mode = "1024x768@60Hz";
     };

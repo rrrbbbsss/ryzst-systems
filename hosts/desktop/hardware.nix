@@ -14,7 +14,7 @@
   nixpkgs.hostPlatform.system = "x86_64-linux";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  ryzst.hardware.monitors = {
+  device.monitors = {
     DP-1 = {
       mode = "2560x1440@75Hz";
       position = "1200 2160";
