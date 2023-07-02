@@ -122,6 +122,7 @@
   :requires evil
   :init
   (setq vterm-min-window-width 80)
+  (setq vterm-timer-delay nil)
   :config
   (evil-set-initial-state 'vterm-mode 'emacs)
   :bind
