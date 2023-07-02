@@ -19,5 +19,12 @@ with lib;
         Monitor layout of deivce (sway-output).
       '';
     };
+    rats = mkOption {
+      type = types.attrsOf (types.attrsOf types.str);
+      description = ''
+        Rat setup (sway-input).
+      '';
+      default = { };
+    };
   };
 }

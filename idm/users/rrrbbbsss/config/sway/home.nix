@@ -115,19 +115,7 @@ in
           repeat_delay = "300";
           repeat_rate = "30";
         };
-        # trackball
-        "1149:32792:Kensington_Expert_Wireless_TB_Mouse" = {
-          scroll_button = "BTN_SIDE";
-          scroll_method = "on_button_down";
-          natural_scroll = "enabled";
-        };
-        # trackpoint
-        "6127:24814:Lenovo_TrackPoint_Keyboard_II_Mouse" = {
-          natural_scroll = "disabled";
-          accel_profile = "adaptive";
-          pointer_accel = "0.75";
-        };
-      };
+      } // osConfig.device.rats;
       output = {
         "*" = { bg = "#180d26 solid_color"; };
       } // osConfig.device.monitors;
