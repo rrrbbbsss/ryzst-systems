@@ -3,6 +3,10 @@ let
   username = config.device.user;
 in
 {
+  imports = [
+    ./config/wireshark
+  ];
+
   device.user = "rrrbbbsss";
 
   #############
@@ -11,7 +15,7 @@ in
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" "wireshark" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     shell = pkgs.zsh;
     hashedPassword = null;
   };
@@ -21,13 +25,6 @@ in
   # for zsh shell
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
-
-  # for wireshark
-  programs.wireshark = {
-    enable = true;
-    package = pkgs.wireshark;
-  };
-
 
   #####################
   ### Homes Manager ###
