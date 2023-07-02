@@ -1,10 +1,15 @@
 { config, pkgs, options, lib, modulesPath, ... }:
+let
+  username = config.device.user;
+in
 {
   imports = [
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
   ];
+
+  device.user = "installer";
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
@@ -70,7 +75,7 @@
   system.stateVersion = "22.11"; # Did you read the comment?
 
   users.users = {
-    installer = {
+    ${username} = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "video" ];
       # no password
@@ -88,7 +93,7 @@
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.installer = { pkgs, ... }: {
+  home-manager.users.${username} = { pkgs, ... }: {
     imports = [
       ../../idm/users/rrrbbbsss/config/alacritty
       ../../idm/users/rrrbbbsss/config/zsh
@@ -109,7 +114,7 @@
   services.cage = {
     enable = true;
     program = "${pkgs.alacritty}/bin/alacritty";
-    user = "installer";
+    user = username;
     extraArguments = [ "-d" "-s" ];
   };
 
