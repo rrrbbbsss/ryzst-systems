@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     ../../../common/cpu/intel
@@ -6,14 +6,9 @@
     ../../../common/tpm/1-2
   ];
 
-  services.kanata = {
-    enable = true;
-    keyboards = {
-      "lenovo-x230" = {
-        devices = [ "/dev/input/by-path/platform-i8042-serio-0-event-kbd" ];
-        port = null;
-        config = builtins.readFile ../../../common/keyboards/kanata.scm;
-      };
-    };
+  device.keyboard = {
+    remap.enable = true;
+    name = "lenovo-x230";
+    path = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
   };
 }
