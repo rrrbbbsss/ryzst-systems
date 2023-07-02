@@ -1,12 +1,16 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  username = config.device.user;
+in
 {
+  device.user = "rrrbbbsss";
 
   #############
   ### Users ###
   #############
-  users.users.rrrbbbsss = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "rrrbbbsss";
+    description = username;
     extraGroups = [ "networkmanager" "wheel" "wireshark" "libvirtd" ];
     shell = pkgs.zsh;
     hashedPassword = null;
@@ -30,7 +34,7 @@
   #####################
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.rrrbbbsss = { pkgs, ... }: {
+  home-manager.users.${username} = { pkgs, ... }: {
     imports = [
       ./config/alacritty
       ./config/emacs

@@ -1,12 +1,16 @@
 { config, pkgs, home-manager, ... }:
+let
+  username = config.device.user;
+in
 {
+  device.user = "media";
 
   #############
   ### Users ###
   #############
-  users.users.media = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "media";
+    description = username;
     extraGroups = [ "networkmanager" ];
     hashedPassword = null;
   };
@@ -17,7 +21,7 @@
   #####################
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.media = { pkgs, ... }: {
+  home-manager.users.${username} = { pkgs, ... }: {
     programs.home-manager = {
       enable = true;
     };
