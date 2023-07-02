@@ -96,16 +96,9 @@ in
       #browsers 
       chromium
 
-      #terminal
-      alacritty
-
       #spelling
       aspell
       aspellDicts.en
-
-      #nix
-      nil
-      nixpkgs-fmt
 
       #utils
       htop
