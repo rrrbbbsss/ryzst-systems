@@ -61,4 +61,7 @@
     pulse.enable = true;
     jack.enable = true;
   };
+  #todo: find a better place for this
+  users.users.${config.device.user}.extraGroups = [ "networkmanager" ];
+  networking.networkmanager.enable = true;
 }

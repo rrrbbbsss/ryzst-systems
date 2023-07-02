@@ -16,11 +16,9 @@ in
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "wheel" ];
     hashedPassword = null;
   };
-  #todo: this needs to move out
-  networking.networkmanager.enable = true;
 
 
   #####################
