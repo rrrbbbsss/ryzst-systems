@@ -107,9 +107,6 @@ in
       nil
       nixpkgs-fmt
 
-      #prolog
-      swiProlog
-
       #utils
       htop
       git

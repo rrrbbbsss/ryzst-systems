@@ -14,7 +14,7 @@ in
         autocd = true;
         defaultKeymap = "viins";
         enableCompletion = true;
-        enableSyntaxHighlighting = true;
+        syntaxHighlighting.enable = true;
         dotDir = ".config/zsh";
         initExtra = ''
           stty -ixon
