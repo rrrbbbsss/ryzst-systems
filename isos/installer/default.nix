@@ -89,8 +89,6 @@ in
     };
   };
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
   home-manager.users.${username} = { pkgs, ... }: {
     imports = [
       ../../idm/users/rrrbbbsss/config/alacritty

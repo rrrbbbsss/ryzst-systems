@@ -10,9 +10,6 @@ in
 
   device.user = "rrrbbbsss";
 
-  #############
-  ### Users ###
-  #############
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -20,12 +17,6 @@ in
     hashedPassword = null;
   };
 
-
-  #####################
-  ### Homes Manager ###
-  #####################
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
   home-manager.users.${username} = { pkgs, ... }: {
     imports = [
       ./config/alacritty

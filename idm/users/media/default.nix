@@ -19,8 +19,6 @@ in
   #####################
   ### Homes Manager ###
   #####################
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
   home-manager.users.${username} = { pkgs, ... }: {
     programs.home-manager = {
       enable = true;

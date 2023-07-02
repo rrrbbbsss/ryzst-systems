@@ -26,9 +26,15 @@ let
             ryzst.flake = self;
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
           nixpkgs.overlays = [ self.outputs.overlays.default ];
-          home-manager.sharedModules = [ self.outputs.homeManagerModules.default ];
         }
         self.inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            sharedModules = [ self.outputs.homeManagerModules.default ];
+          };
+        }
         self.inputs.disko.nixosModules.disko
         self.inputs.impermanence.nixosModules.impermanence
         self.inputs.nix-index-database.nixosModules.nix-index
