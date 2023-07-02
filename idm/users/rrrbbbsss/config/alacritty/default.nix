@@ -6,7 +6,6 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
-      import = [ "${pkgs.ryzst.catppuccin-alacritty}/catppuccin-mocha.yml" ];
       env.TERM = "alacritty";
       window = {
         decorations = "full";

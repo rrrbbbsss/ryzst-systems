@@ -17,8 +17,6 @@ let
     };
     kivymd = python3Packages.callPackage ./python-libs/kivymd { inherit ryzst; };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
-    catppuccin-zathura = callPackage ./catppuccin/zathura { };
-    catppuccin-alacritty = callPackage ./catppuccin/alacritty { };
   };
   target = {
     x86_64-linux = packages
