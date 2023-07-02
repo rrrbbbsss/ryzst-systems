@@ -45,6 +45,8 @@
   (load-theme 'doom-tomorrow-night t)
   :config
   (custom-set-faces
+   `(helm-buffer-saved-out
+     ((t (:foreground ,(doom-color 'red)))))
    `(helm-ff-file-extension
      ((t (:foreground ,(doom-color 'magenta)))))
    `(helm-header-line-left-margin
