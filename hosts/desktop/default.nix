@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   imports = [
     ../../modules/profiles/base.nix
@@ -8,6 +8,7 @@
   ];
 
   # VMS
+  users.users.${config.device.user}.extraGroups = [ "libvirtd" ];
   virtualisation.libvirtd = {
     enable = true;
     qemu.runAsRoot = false;
