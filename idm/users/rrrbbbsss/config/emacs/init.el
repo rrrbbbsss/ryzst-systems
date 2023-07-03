@@ -268,10 +268,11 @@
   :ensure t
   :init
   ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024))
-  (setq max-lisp-eval-depth 5000)
-  (setq lsp-keymap-prefix "s-C-M-L")
+  (setq gc-cons-threshold 100000000
+	read-process-output-max (* 1024 1024)
+	max-lisp-eval-depth 5000)
+  (setq lsp-keymap-prefix "s-C-M-L"
+	lsp-headerline-breadcrumb-enable nil)
   :hook ((lsp-mode . lsp-enable-which-key-integration)))
 
 (use-package helm-lsp
