@@ -1,5 +1,13 @@
 { ... }:
 {
+  device.rats = {
+    "1241:1031:USB-HID_Keyboard_Mouse" = {
+      natural_scroll = "disabled";
+      accel_profile = "adaptive";
+      pointer_accel = "0.75";
+    };
+  };
+
   device.keyboard = {
     remap.enable = true;
     name = "tex-shinobi";

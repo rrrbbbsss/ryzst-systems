@@ -6,6 +6,7 @@
     ../../modules/hardware/common/cpu/intel
     ../../modules/hardware/common/gpu/amd
     ../../modules/hardware/devices/yubico/yubikey5
+    ../../modules/hardware/devices/kensington/expert-trackball
     ../../modules/hardware/devices/tex/shinobi
     ../../modules/hardware/devices/microchip/ir-transceiver
   ];
