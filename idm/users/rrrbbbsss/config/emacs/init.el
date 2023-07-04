@@ -129,6 +129,29 @@
   (setq vterm-timer-delay nil)
   :config
   (evil-set-initial-state 'vterm-mode 'emacs)
+  (add-to-list 'beacon-dont-blink-major-modes 'vterm-mode)
+  ;; todo: use general
+  (evil-define-key 'emacs 'vterm-mode-map (kbd "C-z")
+    '(lambda ()
+       (interactive)
+       (progn
+	 (vterm-send-escape)
+	 (evil-motion-state))))
+  (evil-define-key 'motion 'vterm-mode-map (kbd "<escape>")
+    '(lambda ()
+       (interactive)
+       (progn (evil-emacs-state)
+	      (vterm--self-insert))))
+  (evil-define-key 'motion 'vterm-mode-map (kbd "i")
+    '(lambda ()
+       (interactive)
+       (progn (evil-emacs-state)
+	      (vterm--self-insert))))
+  (evil-define-key 'motion 'vterm-mode-map (kbd "p")
+    '(lambda ()
+       (interactive)
+       (progn (evil-emacs-state)
+	      (vterm-send-string (concat "ddi" (current-kill 0))))))
   :bind
   ("s-C-M-T" . vterm-other-window)
   (:map vterm-mode-map
