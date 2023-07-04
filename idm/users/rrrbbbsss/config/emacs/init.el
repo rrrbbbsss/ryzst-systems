@@ -220,6 +220,8 @@
 	("C-z" . helm-select-action)
 	("<tab>" . helm-execute-persistent-action))
   (:map evil-normal-state-map
+	("/" . helm-occur))
+  (:map evil-motion-state-map
 	("/" . helm-occur)))
 
 (use-package helm-projectile

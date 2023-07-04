@@ -47,4 +47,9 @@ in
       "emacs" = "${emacspkg}/bin/emacsclient -c";
     };
   };
+
+  home.packages = with pkgs; [
+    #treemacs
+    python3
+  ];
 }
