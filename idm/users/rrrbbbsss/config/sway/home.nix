@@ -2,19 +2,20 @@
 
 let
   modifier = "Mod4";
+  wrap-float-window = window-name: command: ''
+    ${commands.terminal} --title '${window-name}' --class '__float__' -e \
+    ${command}
+  '';
   commands = {
     terminal = ''${pkgs.alacritty}/bin/alacritty'';
     applancher = "${config.programs.fuzzel.package}/bin/fuzzel";
-    passwords = ''
-      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Pass' --class '__float__' -e \
+    passwords = wrap-float-window "FZF-Pass" ''
       ${pkgs.ryzst.fzf-pass}/bin/fzf-pass
     '';
-    wifi = ''
-      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e \
+    wifi = wrap-float-window "FZF-Wifi" ''
       bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
     '';
-    windows = ''
-      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e \
+    windows = wrap-float-window "FZF-Windows" ''
       ${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows
     '';
     screenshot = ''
