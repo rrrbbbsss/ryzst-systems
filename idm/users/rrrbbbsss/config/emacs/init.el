@@ -12,6 +12,8 @@
 (fringe-mode '(12 . 12))
 (add-hook 'prog-mode-hook
 	  (lambda () (setq indicate-empty-lines t)))
+(setq select-enable-clipboard t
+      select-enable-primary t)
 
 ;; auto-save & backup directories
 (defconst backup-dir (expand-file-name "~/.local/state/emacs/backup/"))
@@ -219,6 +221,15 @@
   :bind
   (:map flyspell-mode-map
 	("C-M-i" . helm-flyspell-correct)))
+
+(use-package helm-pass
+  :ensure t
+  :config
+  (advice-add
+   'password-store-clear :after
+   (lambda (x)
+     (call-process "wl-copy" nil nil nil "--clear")
+     (call-process "wl-copy" nil nil nil "--clear" "--primary"))))
 
 (use-package projectile
   :ensure t
