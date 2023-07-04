@@ -1,7 +1,7 @@
 { lib, runCommandLocal, makeWrapper, bash, networkmanager, fzf, ncurses }:
 runCommandLocal "fzf-wifi"
 {
-  script = ./fzf-wifi.sh;
+  script = ./script.sh;
   nativeBuildInputs = [ makeWrapper ];
 } ''
   makeWrapper $script $out/bin/fzf-wifi \
