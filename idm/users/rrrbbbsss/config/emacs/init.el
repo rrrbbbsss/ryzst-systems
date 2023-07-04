@@ -235,6 +235,8 @@
 
 (use-package helm-descbinds
   :ensure t
+  :init
+  (setq helm-descbinds-window-style 'split-window)
   :config
   (helm-descbinds-mode 1))
 
