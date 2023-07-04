@@ -10,6 +10,7 @@ let
     q5go = libsForQt5.callPackage ./q5go { };
     fzf-pass = callPackage ./fzf/fzf-pass { };
     fzf-wifi = callPackage ./fzf/fzf-wifi { };
+    fzf-sway-windows = callPackage ./fzf/fzf-sway-windows { };
     fzf-nix-options = callPackage ./fzf/fzf-nix-options { inherit hm; };
     kivy = python3Packages.callPackage ./python-libs/kivy {
       inherit (pkgs) mesa;

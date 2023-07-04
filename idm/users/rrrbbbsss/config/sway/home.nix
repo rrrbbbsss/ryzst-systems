@@ -13,6 +13,10 @@ let
       ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e \
       bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
     '';
+    windows = ''
+      ${pkgs.alacritty}/bin/alacritty --title 'FZF-Wifi' --class '__float__' -e \
+      ${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows
+    '';
     screenshot = ''
       ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
       | ${pkgs.swappy}/bin/swappy -f -
@@ -225,6 +229,7 @@ in
         "${modifier}+n" = "exec ${commands.wifi}";
         "${modifier}+F12" = "exec ${commands.screenshot}";
         "${modifier}+backslash" = "exec ${commands.editor}";
+        "${modifier}+tab" = "exec ${commands.windows}";
 
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
