@@ -8,7 +8,14 @@ let
   '';
   commands = {
     terminal = ''${pkgs.alacritty}/bin/alacritty'';
-    applancher = "${config.programs.fuzzel.package}/bin/fuzzel";
+    applancher = wrap-float-window "FZF-Launcher" ''
+      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
+      --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
+      --wrapper='swaymsg exec' \
+      --term="${commands.terminal}" \
+      --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
+      --no-generic
+    '';
     passwords = wrap-float-window "FZF-Pass" ''
       ${pkgs.ryzst.fzf-pass}/bin/fzf-pass
     '';
