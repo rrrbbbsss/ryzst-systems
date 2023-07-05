@@ -197,10 +197,16 @@ in
         "${modifier}+Ctrl+j" = "focus output down";
         "${modifier}+Ctrl+k" = "focus output up";
         "${modifier}+Ctrl+l" = "focus output right";
+        "${modifier}+Ctrl+i" = "workspace prev_on_output";
+        "${modifier}+Ctrl+o" = "workspace next_on_output";
         "${modifier}+Ctrl+Shift+h" = "move output left; focus output left";
         "${modifier}+Ctrl+Shift+j" = "move output down; focus output down";
         "${modifier}+Ctrl+Shift+k" = "move output up; focus output up";
         "${modifier}+Ctrl+Shift+l" = "move output right; focus output right";
+        "${modifier}+Ctrl+Shift+i" =
+          "move workspace prev_on_output; workspace prev_on_output";
+        "${modifier}+Ctrl+Shift+o" =
+          "move workspace next_on_output; workspace next_on_output";
         "${modifier}+Shift+q" = "kill";
         #splits/layouts
         "${modifier}+s" = "splitv";
@@ -221,7 +227,8 @@ in
         "${modifier}+8" = "workspace number 8";
         "${modifier}+9" = "workspace number 9";
         #move workspaces
-        "${modifier}+Shift+1" = "move container to workspace number 1; workspace number 1";
+        "${modifier}+Shift+1" = "move container to workspace number 1;
+        workspace number 1";
         "${modifier}+Shift+2" = "move container to workspace number 2; workspace number 2";
         "${modifier}+Shift+3" = "move container to workspace number 3; workspace number 3";
         "${modifier}+Shift+4" = "move container to workspace number 4; workspace number 4";
