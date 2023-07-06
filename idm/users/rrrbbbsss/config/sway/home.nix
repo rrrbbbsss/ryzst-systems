@@ -32,31 +32,29 @@ let
           esac
         '';
       });
-    terminal = ''${pkgs.alacritty}/bin/alacritty'';
+    terminal = getExe pkgs.alacritty;
     applancher = wrap-float-window "FZF-Launcher" ''
-      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
-      --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
+      ${getExe pkgs.j4-dmenu-desktop} \
+      --dmenu="${getExe pkgs.fzf} --reverse --prompt 'Launch > '" \
       --wrapper='swaymsg exec' \
       --term="${commands.terminal}" \
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic
     '';
-    passwords = wrap-float-window "FZF-Pass" ''
-      ${pkgs.ryzst.fzf-pass}/bin/fzf-pass
-    '';
+    passwords = wrap-float-window "FZF-Pass"
+      (getExe pkgs.ryzst.fzf-pass);
     wifi = wrap-float-window "FZF-Wifi" ''
-      bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
+      bash -c '${getExe pkgs.ryzst.fzf-wifi} && sleep 1'
     '';
-    windows = wrap-float-window "FZF-Windows" ''
-      ${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows
-    '';
+    windows = wrap-float-window "FZF-Windows"
+      (getExe pkgs.ryzst.fzf-sway-windows);
     screenshot = ''
-      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
-      | ${pkgs.swappy}/bin/swappy -f -
+      ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - \
+      | ${getExe pkgs.swappy} -f -
     '';
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
-      [ "swaymsg -t get_tree | ${pkgs.jq.bin}/bin/jq '.. | .name? | select(. == "__scratchpad__")'" ] \
+      [ "swaymsg -t get_tree | ${getExe pkgs.jq.bin} '.. | .name? | select(. == "__scratchpad__")'" ] \
       && swaymsg "scratchpad show" \
       || ${commands.editor} -F '(quote (name . "__scratchpad__"))' /nfs/Notes/todos.org
     '';
@@ -66,13 +64,13 @@ let
       lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
       mute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
       micMute = "${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-      play = "${pkgs.playerctl}/bin/playerctl play-pause";
-      next = "${pkgs.playerctl}/bin/playerctl next";
-      prev = "${pkgs.playerctl}/bin/playerctl previous";
+      play = "${getExe pkgs.playerctl} play-pause";
+      next = "${getExe pkgs.playerctl} next";
+      prev = "${getExe pkgs.playerctl} previous";
     };
     screen = {
-      raiseBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
-      lowerBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+      raiseBrightness = "${getExe pkgs.brightnessctl} set 5%+";
+      lowerBrightness = "${getExe pkgs.brightnessctl} set 5%-";
     };
   };
 in
@@ -107,7 +105,7 @@ in
     timeouts = [
       {
         timeout = 600;
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "${getExe pkgs.swaylock} -f";
       }
       {
         timeout = 630;
@@ -120,10 +118,10 @@ in
       }
     ];
     events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-      { event = "before-sleep"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
-      { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-      { event = "lock"; command = "${pkgs.playerctl}/bin/playerctl pause"; }
+      { event = "before-sleep"; command = "${getExe pkgs.swaylock} -f"; }
+      { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
+      { event = "lock"; command = "${getExe pkgs.swaylock} -f"; }
+      { event = "lock"; command = "${getExe pkgs.playerctl} pause"; }
     ];
   };
 
@@ -158,7 +156,6 @@ in
         "*" = { bg = "#180d26 solid_color"; };
       } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
         osConfig.device.monitors);
-      defaultWorkspace = "exec ${commands.workspace-cmd}/bin/workspace-cmd 1";
       workspaceOutputAssign =
         (lib.attrsets.foldlAttrs
           (acc: n: v:
