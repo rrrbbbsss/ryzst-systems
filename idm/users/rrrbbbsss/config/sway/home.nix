@@ -1,23 +1,37 @@
 { pkgs, osConfig, config, lib, ... }:
 
 let
+  inherit (lib.meta) getExe;
   modifier = "Mod4";
   wrap-float-window = window-name: command: ''
     ${commands.terminal} --title '${window-name}' --class '__float__' -e \
     ${command}
   '';
   commands = {
-    workspace-cmd = pkgs.writeShellApplication {
-      name = "workspace-cmd";
-      runtimeInputs = [ pkgs.sway pkgs.jq ];
-      text = ''
-        monitors="${pkgs.writeText "device-monitors.json"
-          (builtins.toJSON osConfig.device.monitors)}"
-        focused=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused == true) | .name')
-        prefix=$(jq -r '."'"$focused"'".number' $monitors)
-        swaymsg workspace "$prefix""$1"
-      '';
-    };
+    workspace-cmd = getExe
+      (pkgs.writeShellApplication {
+        name = "workspace-cmd";
+        runtimeInputs = [ pkgs.sway pkgs.jq ];
+        text = ''
+          monitors="${pkgs.writeText "device-monitors.json"
+            (builtins.toJSON osConfig.device.monitors)}"
+          focused=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused == true) | .name')
+          prefix=$(jq -r '."'"$focused"'".number' $monitors)
+          name="$prefix""$2"
+          case $1 in
+            "focus")
+              swaymsg workspace "$name"
+            ;;
+            "move")
+              swaymsg move container to workspace "$name" 
+              swaymsg workspace "$name"
+            ;;
+            *)
+              exit 1
+            ;;
+          esac
+        '';
+      });
     terminal = ''${pkgs.alacritty}/bin/alacritty'';
     applancher = wrap-float-window "FZF-Launcher" ''
       ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
@@ -242,26 +256,25 @@ in
         #fullscreen
         "${modifier}+f" = "fullscreen toggle";
         #workspaces
-        "${modifier}+1" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 1";
-        "${modifier}+2" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 2";
-        "${modifier}+3" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 3";
-        "${modifier}+4" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 4";
-        "${modifier}+5" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 5";
-        "${modifier}+6" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 6";
-        "${modifier}+7" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 7";
-        "${modifier}+8" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 8";
-        "${modifier}+9" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 9";
+        "${modifier}+1" = "exec ${commands.workspace-cmd} focus 1";
+        "${modifier}+2" = "exec ${commands.workspace-cmd} focus 2";
+        "${modifier}+3" = "exec ${commands.workspace-cmd} focus 3";
+        "${modifier}+4" = "exec ${commands.workspace-cmd} focus 4";
+        "${modifier}+5" = "exec ${commands.workspace-cmd} focus 5";
+        "${modifier}+6" = "exec ${commands.workspace-cmd} focus 6";
+        "${modifier}+7" = "exec ${commands.workspace-cmd} focus 7";
+        "${modifier}+8" = "exec ${commands.workspace-cmd} focus 8";
+        "${modifier}+9" = "exec ${commands.workspace-cmd} focus 9";
         #move workspaces
-        "${modifier}+Shift+1" = "move container to workspace number 1;
-        workspace number 1";
-        "${modifier}+Shift+2" = "move container to workspace number 2; workspace number 2";
-        "${modifier}+Shift+3" = "move container to workspace number 3; workspace number 3";
-        "${modifier}+Shift+4" = "move container to workspace number 4; workspace number 4";
-        "${modifier}+Shift+5" = "move container to workspace number 5; workspace number 5";
-        "${modifier}+Shift+6" = "move container to workspace number 6; workspace number 6";
-        "${modifier}+Shift+7" = "move container to workspace number 7; workspace number 7";
-        "${modifier}+Shift+8" = "move container to workspace number 8; workspace number 8";
-        "${modifier}+Shift+9" = "move container to workspace number 9; workspace number 9";
+        "${modifier}+Shift+1" = "exec ${commands.workspace-cmd} move 1";
+        "${modifier}+Shift+2" = "exec ${commands.workspace-cmd} move 2";
+        "${modifier}+Shift+3" = "exec ${commands.workspace-cmd} move 3";
+        "${modifier}+Shift+4" = "exec ${commands.workspace-cmd} move 4";
+        "${modifier}+Shift+5" = "exec ${commands.workspace-cmd} move 5";
+        "${modifier}+Shift+6" = "exec ${commands.workspace-cmd} move 6";
+        "${modifier}+Shift+7" = "exec ${commands.workspace-cmd} move 7";
+        "${modifier}+Shift+8" = "exec ${commands.workspace-cmd} move 8";
+        "${modifier}+Shift+9" = "exec ${commands.workspace-cmd} move 9";
         #execute
         "${modifier}+Return" = "exec ${commands.terminal}";
         "${modifier}+d" = "exec ${commands.applancher}";
