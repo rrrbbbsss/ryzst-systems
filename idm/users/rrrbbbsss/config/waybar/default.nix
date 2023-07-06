@@ -6,15 +6,24 @@
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
         spacing = 4;
-        modules-left = [ "sway/workspaces" "sway/mode" "sway/scratchpad" "custom/media" ];
+        margin-top = 0;
+        margin-bottom = 0;
+        modules-left = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
         modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "network" "cpu" "memory" "disk" "temperature" "tray" "inhibitor" ];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "disk"
+          "temperature"
+          "idle_inhibitor"
+        ];
         "sway/scratchpad" = {
           format = "{icon} {count}";
           show-empty = false;
-          format-icons = [ "" "" ];
+          format-icons = [ "" " " ];
           tooltip = true;
           tooltip-format = "{app}: {title}";
         };
@@ -35,14 +44,14 @@
           };
         };
         cpu = {
-          format = "{usage}% ";
+          format = "{usage}%  ";
           tooltip = true;
         };
         memory = {
-          format = "{}% ";
+          format = "{}%  ";
         };
         disk = {
-          format = "{percentage_used}% ";
+          format = "{percentage_used}%  ";
         };
         temperature = {
           critical-threshold = 80;
@@ -50,7 +59,7 @@
           format-icons = [ "" "" "" ];
         };
         network = {
-          format-wifi = "{essid} ({signalStrength}%) ";
+          format-wifi = "{essid} ({signalStrength}%)  ";
           format-ethernet = "{ipaddr}/{cidr} ";
           tooltip-format = "{ifname} via {gwaddr} ";
           format-linked = "{ifname} (No IP) ";
@@ -63,7 +72,7 @@
           format-bluetooth-muted = " {icon} {format_source}";
           format-muted = " {format_source}";
           format-source = "{volume}% ";
-          format-source-muted = "";
+          format-source-muted = " ";
           format-icons = {
             headphone = "";
             hands-free = "";
@@ -75,12 +84,11 @@
           };
           on-click = "pavucontrol";
         };
-        inhibitor = {
-          what = "idle";
-          format = "{icon}    ";
+        idle_inhibitor = {
+          format = "{icon}";
           format-icons = {
-            activated = "";
-            deactivated = "";
+            activated = " ";
+            deactivated = " ";
           };
         };
       };

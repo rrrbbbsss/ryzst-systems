@@ -1,164 +1,111 @@
+@define-color background #1d1f21;
+@define-color text #c5c8c6;
+@define-color border #a16bed;
+@define-color focus #cc6666;
+
 * {
     font-family: DejaVu Sans Mono;
     font-size: 13px;
+    margin: 0px;
+    padding: 0px 10px;
+    border-radius: 0px;
 }
 
 window#waybar {
-    background-color: rgba(43, 48, 59, 0.5);
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
-    color: #ffffff;
-    transition-property: background-color;
-    transition-duration: .5s;
-}
-
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-
-button {
-    /* Use box-shadow instead of border so the text isn't offset */
-    box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
-    border: none;
-    border-radius: 0;
-}
-
-button:hover {
-    background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
-}
-
-#workspaces button {
-    padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    border-radius: 0px;
 }
 
-#workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
+/* left */
+#workspaces {
+    background-color: @background;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid @border;
+}
+
+/* todo: disable border on last button */
+#workspaces button {
+    color: @text;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 0px;
+    border-right: 1px solid @border;
 }
 
 #workspaces button.focused {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
+    color: @focus;
 }
 
 #mode {
-    padding: 0 5px;
-    background-color: #64727D;
-    border-bottom: 3px solid #ffffff;
+    color: @text;
+    background-color: @focus;
+    border: 1px solid @border;
 }
 
-#clock,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#network,
-#pulseaudio,
-#tray,
-#scratchpad,
-#window,
-#workspaces {
-    margin: 0 10px;
-}
-
-#clock label:hover {
-    background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
-}
-
-
-
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
-}
-
-
+/* middle */
 #clock {
-    background-color: transparent;
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
 
-
-label:focus {
-    background-color: #000000;
+/* right */
+#pulseaudio {
+    color: @text;
+    background: @background;
+    border: 1px solid @border;
 }
 
-#cpu {
-    background-color: transparent;
-}
-
-#cpu:hover {
-    background-color: transparent;
-}
-
-#memory {
-    background-color: transparent;
-}
-
-#disk {
-    background-color: transparent;
-}
-
-#backlight {
-    background-color: transparent;
+#pulseaudio.muted {
+    color: #2a5c45;
+    background-color: #90b1b1;
+    border: 1px solid @border;
 }
 
 #network {
-    background-color: transparent;
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
 
 #network.disconnected {
     background-color: transparent;
 }
 
-#pulseaudio {
-    background-color: transparent;
+#cpu {
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
 
-#pulseaudio.muted {
-    background-color: transparent;
+#memory {
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
 
+#disk {
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
+}
 
 #temperature {
-    background-color: transparent;
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
 
 #temperature.critical {
-    background-color: #eb4d4b;
+    background-color: @focus;
 }
 
-#tray {
-    background-color: transparent;
+#idle_inhibitor {
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
 }
-
-#tray>.passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray>.needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
-}
-
-
-#scratchpad {
-    background: rgba(0, 0, 0, 0.0);
-}
-
-#scratchpad.empty {
-    background-color: transparent;
+#idle_inhibitor.activated {
+    background-color: @focus;
 }
