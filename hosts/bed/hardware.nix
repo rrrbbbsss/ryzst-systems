@@ -12,6 +12,7 @@
 
   device.monitors = {
     DP-1 = {
+      number = "0";
       mode = "3440x1440@144Hz";
     };
   };

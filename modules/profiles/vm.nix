@@ -21,6 +21,7 @@
 
   device.monitors = {
     Virtual-1 = {
+      number = "0";
       mode = "1024x768@60Hz";
     };
   };

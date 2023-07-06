@@ -1,4 +1,4 @@
-{ pkgs, osConfig, config, ... }:
+{ pkgs, osConfig, config, lib, ... }:
 
 let
   modifier = "Mod4";
@@ -7,6 +7,17 @@ let
     ${command}
   '';
   commands = {
+    workspace-cmd = pkgs.writeShellApplication {
+      name = "workspace-cmd";
+      runtimeInputs = [ pkgs.sway pkgs.jq ];
+      text = ''
+        monitors="${pkgs.writeText "device-monitors.json"
+          (builtins.toJSON osConfig.device.monitors)}"
+        focused=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused == true) | .name')
+        prefix=$(jq -r '."'"$focused"'".number' $monitors)
+        swaymsg workspace "$prefix""$1"
+      '';
+    };
     terminal = ''${pkgs.alacritty}/bin/alacritty'';
     applancher = wrap-float-window "FZF-Launcher" ''
       ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
@@ -106,6 +117,7 @@ in
     enable = true;
     xwayland = true;
     wrapperFeatures.gtk = true;
+    extraConfigEarly = "exec swaymsg rename workspace 1 to 01";
     config = {
       inherit modifier;
       terminal = commands.terminal;
@@ -130,7 +142,20 @@ in
       } // osConfig.device.rats;
       output = {
         "*" = { bg = "#180d26 solid_color"; };
-      } // osConfig.device.monitors;
+      } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
+        osConfig.device.monitors);
+      defaultWorkspace = "exec ${commands.workspace-cmd}/bin/workspace-cmd 1";
+      workspaceOutputAssign =
+        (lib.attrsets.foldlAttrs
+          (acc: n: v:
+            (builtins.map
+              (x: {
+                output = n;
+                workspace = v.number + (builtins.toString x);
+              })
+              (builtins.genList (x: x + 1) 9)) ++ acc)
+          [ ]
+          osConfig.device.monitors);
       modes = {
         resize = {
           h = "resize shrink width 10 px";
@@ -217,15 +242,15 @@ in
         #fullscreen
         "${modifier}+f" = "fullscreen toggle";
         #workspaces
-        "${modifier}+1" = "workspace number 1";
-        "${modifier}+2" = "workspace number 2";
-        "${modifier}+3" = "workspace number 3";
-        "${modifier}+4" = "workspace number 4";
-        "${modifier}+5" = "workspace number 5";
-        "${modifier}+6" = "workspace number 6";
-        "${modifier}+7" = "workspace number 7";
-        "${modifier}+8" = "workspace number 8";
-        "${modifier}+9" = "workspace number 9";
+        "${modifier}+1" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 1";
+        "${modifier}+2" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 2";
+        "${modifier}+3" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 3";
+        "${modifier}+4" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 4";
+        "${modifier}+5" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 5";
+        "${modifier}+6" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 6";
+        "${modifier}+7" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 7";
+        "${modifier}+8" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 8";
+        "${modifier}+9" = "exec ${commands.workspace-cmd}/bin/workspace-cmd 9";
         #move workspaces
         "${modifier}+Shift+1" = "move container to workspace number 1;
         workspace number 1";

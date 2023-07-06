@@ -6,6 +6,19 @@
     ../../../common/tpm/1-2
   ];
 
+  device.monitors = {
+    LVDS-1 = {
+      number = "0";
+      mode = "1366x768@60Hz";
+    };
+    VGA-1 = {
+      number = "1";
+    };
+    DP-1 = {
+      number = "2";
+    };
+  };
+
   device.keyboard = {
     remap.enable = true;
     name = "lenovo-x230";
