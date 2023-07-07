@@ -6,11 +6,14 @@
       mainBar = {
         layer = "top";
         position = "top";
-        spacing = 4;
+        spacing = 0;
         margin-top = 0;
         margin-bottom = 0;
-        modules-left = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
-        modules-center = [ "clock" ];
+        modules-left = [
+          "clock"
+          "sway/mode"
+        ];
+        modules-center = [ "sway/workspaces" ];
         modules-right = [
           "pulseaudio"
           "network"
@@ -20,6 +23,9 @@
           "temperature"
           "idle_inhibitor"
         ];
+        "sway/mode" = {
+          format = "{}";
+        };
         "sway/scratchpad" = {
           format = "{icon} {count}";
           show-empty = false;
@@ -29,7 +35,7 @@
         };
         clock = {
           timezone = "America/Chicago";
-          format = "{:%H:%M %D}";
+          format = "{:%D %H:%M}";
           tooltip-format = "{calendar}";
           calendar = {
             mode = "month";
@@ -44,22 +50,31 @@
           };
         };
         cpu = {
-          format = "{usage}%  ";
+          format = "{usage:3}%  ";
           tooltip = true;
+          states = {
+            critical = 90;
+          };
         };
         memory = {
-          format = "{}%  ";
+          format = "{percentage:3}%  ";
+          states = {
+            critical = 90;
+          };
         };
         disk = {
-          format = "{percentage_used}%  ";
+          format = "{percentage_used:3}%  ";
+          states = {
+            critical = 90;
+          };
         };
         temperature = {
           critical-threshold = 80;
-          format = "{temperatureC}°C {icon}";
+          format = "{temperatureC:2}°C {icon}";
           format-icons = [ "" "" "" ];
         };
         network = {
-          format-wifi = "{essid} ({signalStrength}%)  ";
+          format-wifi = "{essid} {signalStrength:3}%  ";
           format-ethernet = "{ipaddr}/{cidr} ";
           tooltip-format = "{ifname} via {gwaddr} ";
           format-linked = "{ifname} (No IP) ";
@@ -67,11 +82,11 @@
           format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
         pulseaudio = {
-          format = "{volume}% {icon} {format_source}";
-          format-bluetooth = "{volume}% {icon} {format_source}";
+          format = "{volume:3}% {icon} {format_source}";
+          format-bluetooth = "{volume:3}% {icon} {format_source}";
           format-bluetooth-muted = " {icon} {format_source}";
           format-muted = " {format_source}";
-          format-source = "{volume}% ";
+          format-source = "{volume:3}% ";
           format-source-muted = " ";
           format-icons = {
             headphone = "";

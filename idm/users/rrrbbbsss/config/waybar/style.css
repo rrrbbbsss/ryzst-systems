@@ -1,111 +1,106 @@
-@define-color background #1d1f21;
+@define-color bar #000000;
 @define-color text #c5c8c6;
-@define-color border #a16bed;
-@define-color focus #cc6666;
+@define-color background #1d1f21;
+@define-color border #3f4040;
+@define-color focus-color #ffffff;
+@define-color focus-background #a16bed;
+@define-color warning-color #ffffff;
+@define-color warning-background #cc6666;
 
 * {
     font-family: DejaVu Sans Mono;
     font-size: 13px;
     margin: 0px;
-    padding: 0px 10px;
+    padding: 0px;
     border-radius: 0px;
 }
 
 window#waybar {
-    background-color: transparent;
-    border-radius: 0px;
+    background-color: @bar;
+    border: 2px solid @border;
 }
 
 /* left */
-#workspaces {
+.modules-left {
+    color: @text;
     background-color: @background;
-    padding-left: 0px;
-    padding-right: 0px;
+    border: 2px solid @border;
+}
+.modules-left>widget>label {
+    padding: 0px 10px;
+}
+.modules-left>widget:not(:last-child)>label {
+    border-right: 2px solid @border;
+}
+
+/* center */
+#workspaces {
+    color: @text;
+    background-color: @background;
     border: 1px solid @border;
 }
 
-/* todo: disable border on last button */
 #workspaces button {
     color: @text;
-    padding-left: 0px;
-    padding-right: 0px;
-    border-radius: 0px;
-    border-right: 1px solid @border;
+    padding: 0px 10px;
+    border: 1px solid @border;
 }
 
 #workspaces button.focused {
-    color: @focus;
-}
-
-#mode {
-    color: @text;
-    background-color: @focus;
-    border: 1px solid @border;
-}
-
-/* middle */
-#clock {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
+    color: @focus-color;
+    background-color: @focus-background;
 }
 
 /* right */
-#pulseaudio {
+.modules-right {
     color: @text;
-    background: @background;
-    border: 1px solid @border;
+    background-color: @background;
+    border: 2px solid @border;
+}
+.modules-right>widget>label {
+    padding: 0px 10px;
+}
+.modules-right>widget:not(:last-child)>label {
+    border-right: 2px solid @border;
+}
+
+/* widgets */
+#mode {
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
 #pulseaudio.muted {
-    color: #2a5c45;
-    background-color: #90b1b1;
-    border: 1px solid @border;
-}
-
-#network {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
 #network.disconnected {
-    background-color: transparent;
+    color: @background;
+    background-color: @warning-background;
 }
 
-#cpu {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
+#cpu.critical {
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
-#memory {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
+#memory.critical {
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
-#disk {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
-}
-
-#temperature {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
+#disk.critical {
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
 #temperature.critical {
-    background-color: @focus;
+    color: @warning-color;
+    background-color: @warning-background;
 }
 
-#idle_inhibitor {
-    color: @text;
-    background-color: @background;
-    border: 1px solid @border;
-}
 #idle_inhibitor.activated {
-    background-color: @focus;
+    color: @warning-color;
+    background-color: @warning-background;
 }
