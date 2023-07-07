@@ -138,10 +138,7 @@ in
         names = [ "DejaVu Sans Mono" ];
         size = 8.0;
       };
-      bars = [{
-        command = "waybar";
-        position = "bottom";
-      }];
+      bars = [ ];
       workspaceLayout = "tabbed";
       gaps = {
         inner = 7;
