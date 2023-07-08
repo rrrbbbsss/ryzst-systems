@@ -83,6 +83,7 @@ in
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
+      flake-registry = "";
     };
     extraOptions = ''
       keep-outputs = true
