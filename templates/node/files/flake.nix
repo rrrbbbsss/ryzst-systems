@@ -1,5 +1,5 @@
 {
-  description = "learning rust";
+  description = "###+++PROJECT+++###";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
