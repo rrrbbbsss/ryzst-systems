@@ -34,6 +34,10 @@ window#waybar {
 }
 
 /* center */
+.modules-center {
+    margin: 0px 40px;
+}
+
 #workspaces {
     color: @text;
     background-color: @background;
@@ -49,6 +53,11 @@ window#waybar {
 #workspaces button.focused {
     color: @focus-color;
     background-color: @focus-background;
+}
+
+#workspaces button:hover {
+    color: @focus-background;
+    background-color: @focus-color;
 }
 
 /* right */

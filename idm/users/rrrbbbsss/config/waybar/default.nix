@@ -14,7 +14,9 @@
           "clock"
           "sway/mode"
         ];
-        modules-center = [ "sway/workspaces" ];
+        modules-center = [
+          "sway/workspaces"
+        ];
         modules-right = [
           "pulseaudio"
           "network"
