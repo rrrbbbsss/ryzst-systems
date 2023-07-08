@@ -11,11 +11,11 @@
         margin-top = 0;
         margin-bottom = 0;
         modules-left = [
-          "clock"
+          "sway/workspaces"
           "sway/mode"
         ];
         modules-center = [
-          "sway/workspaces"
+          "clock"
         ];
         modules-right = [
           "pulseaudio"

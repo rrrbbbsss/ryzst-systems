@@ -24,18 +24,12 @@ window#waybar {
 .modules-left {
     color: @text;
     background-color: @background;
-    border: 2px solid @border;
-}
-.modules-left>widget>label {
-    padding: 0px 10px;
-}
-.modules-left>widget:not(:last-child)>label {
-    border-right: 2px solid @border;
 }
 
-/* center */
-.modules-center {
-    margin: 0px 40px;
+.modules-left>widget:not(#workspace)>label {
+    padding: 0px 10px;
+    border: 2px solid @border;
+    border-left: 0px;
 }
 
 #workspaces {
@@ -58,6 +52,20 @@ window#waybar {
 #workspaces button:hover {
     color: @focus-background;
     background-color: @focus-color;
+}
+
+/* center */
+.modules-center {
+    margin: 0px 40px;
+    color: @text;
+    background-color: @background;
+    border: 2px solid @border;
+}
+.modules-center>widget>label {
+    padding: 0px 10px;
+}
+.modules-center>widget:not(:last-child)>label {
+    border-right: 2px solid @border;
 }
 
 /* right */
