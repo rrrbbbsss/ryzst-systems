@@ -17,8 +17,6 @@
     };
   };
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
   # BootLoader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

@@ -6,8 +6,6 @@
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
   boot = {
     loader = {
       systemd-boot.enable = true;

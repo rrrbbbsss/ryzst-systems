@@ -11,8 +11,6 @@
     ../../modules/hardware/devices/microchip/ir-transceiver
   ];
 
-
-  nixpkgs.hostPlatform.system = "x86_64-linux";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   device.monitors = {
