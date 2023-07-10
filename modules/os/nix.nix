@@ -12,40 +12,46 @@ in
       description = "whether to enable default nix options";
     };
   };
-  config = mkIf cfg.enable {
-    nix = {
-      settings = {
-        experimental-features = [ "nix-command" "flakes" ];
-        auto-optimise-store = true;
-        flake-registry = "";
-      };
-      extraOptions = ''
-        keep-outputs = true
-        keep-derivations = true
-      '';
-      gc = {
-        automatic = true;
-        persistent = true;
-        randomizedDelaySec = "30min";
-        dates = "weekly";
-        options = ''
-          --delete-older-than 21d;
+  config = mkMerge [
+    {
+      # read manual:
+      system.stateVersion = "22.11";
+      # forgive me
+      nixpkgs.config.allowUnfree = true;
+      nix = {
+        settings = {
+          experimental-features = [ "nix-command" "flakes" ];
+          auto-optimise-store = true;
+          flake-registry = "";
+        };
+        extraOptions = ''
+          keep-outputs = true
+          keep-derivations = true
         '';
       };
-    };
-    system = {
-      # read manual:
-      stateVersion = "22.11";
-      autoUpgrade = {
-        enable = true;
-        persistent = true;
-        randomizedDelaySec = "30min";
-        dates = "daily";
-        allowReboot = true;
-        flake = config.os.flake;
+    }
+    (mkIf cfg.enable {
+      nix = {
+        gc = {
+          automatic = true;
+          persistent = true;
+          randomizedDelaySec = "30min";
+          dates = "weekly";
+          options = ''
+            --delete-older-than 21d;
+          '';
+        };
       };
-    };
-    # forgive me
-    nixpkgs.config.allowUnfree = true;
-  };
+      system = {
+        autoUpgrade = {
+          enable = true;
+          persistent = true;
+          randomizedDelaySec = "30min";
+          dates = "daily";
+          allowReboot = true;
+          flake = config.os.flake;
+        };
+      };
+    })
+  ];
 }
