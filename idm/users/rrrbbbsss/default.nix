@@ -70,6 +70,11 @@ in
       };
     };
 
+    systemd.user.tmpfiles.rules = [
+      "e %h/.local/share/Trash - - - 3w"
+      "e %h/.cache - - - 3w"
+    ];
+
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
       #fzf scripts
