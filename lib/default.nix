@@ -19,8 +19,12 @@ let
     lib-nixpkgs.nixosSystem {
       modules = [
         {
-          networking = {
-            hostName = "${name}";
+          os = {
+            hostname = name;
+            locale = "en_US.UTF-8";
+            timezone = "America/Chicago";
+            domain = "mek.ryzst.net";
+            flake = "github:rrrbbbsss/ryzst";
           };
           nix.registry = {
             ryzst.flake = self;

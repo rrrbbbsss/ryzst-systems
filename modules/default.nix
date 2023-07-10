@@ -3,5 +3,6 @@
   imports = [
     ./hardware
     ./ryzst
+    ./os
   ];
 }

@@ -6,9 +6,7 @@ let
 in
 {
 
-  imports = [
-    ../../modules/profiles/base.nix
-  ];
+  imports = [ ];
 
   services.hostapd = {
     enable = true;

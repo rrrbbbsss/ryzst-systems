@@ -12,6 +12,10 @@ in
   ];
 
   device.user = "installer";
+  os = {
+    auth.enable = false;
+    nix.enable = false;
+  };
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
