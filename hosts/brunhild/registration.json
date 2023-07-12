@@ -1,7 +1,8 @@
 {
-    "ip": "10.255.255.30",
+    "endpoint": "10.0.2.20",
+    "ip": "10.255.255.1",
     "keys": {
         "ssh": "todo",
-        "wg0": "25o3/I0MWQJMzEJ9+6ipCFaSZtCkETblvhGnivDu0Q0="
+        "wg0": "KbOsKRj36IbCxPV8pRpgzKOfnGXb0fOLROcp5duZvV4="
     }
 }
