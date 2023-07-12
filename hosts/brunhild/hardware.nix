@@ -26,6 +26,7 @@
       "usb_storage"
       "sd_mod"
       "scsi_mod"
+      "virtio_scsi"
     ];
   };
 
