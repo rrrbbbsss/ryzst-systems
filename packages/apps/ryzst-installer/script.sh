@@ -57,8 +57,8 @@ if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
     exit 1
 fi
 
-# disco (zap_create_mount)
-$(nix build --print-out-paths $REPO\#nixosConfigurations.$HOST.config.system.build.disko)
+# disko (zap_create_mount)
+$(nix build --print-out-paths $REPO\#nixosConfigurations.$HOST.config.system.build.diskoScript)
 
 # generate keys
 PERSIST=/mnt/persist
