@@ -15,6 +15,6 @@ in
 
   config = mkIf enable {
     # todo: remove once old fw is replaced
-    networking.nameservers = [ "10.0.2.1" ] ++ config.ryzst.int.dns.server.nameservers;
+    networking.nameservers = config.ryzst.int.dns.server.nameservers;
   };
 }

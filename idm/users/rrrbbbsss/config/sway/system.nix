@@ -62,4 +62,5 @@
   #todo: find a better place for this
   users.users.${config.device.user}.extraGroups = [ "networkmanager" ];
   networking.networkmanager.enable = true;
+  networking.networkmanager.dns = "none";
 }

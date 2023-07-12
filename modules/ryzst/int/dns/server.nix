@@ -69,41 +69,57 @@ in
       ${pkgs.nftables}/bin/nft add rule ip filter nixos-fw iifname "wg0" counter ip saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
     '';
 
-    services.coredns = {
-      enable = true;
-      config = ''
-        .:${builtins.toString cfg.port} {
-          bind ${cfg.interface}
-          acl {
-            allow net ${cfg.allow}
-            drop
+    services.coredns =
+      let
+        port = builtins.toString cfg.port;
+      in
+      {
+        enable = true;
+        config = ''
+          int.ryzst.net {
+            bind ${cfg.interface}
+            acl {
+              allow net ${cfg.allow}
+              drop
+            }
+            hosts ${hostsFiles.int} {
+              ttl 3600
+            }
           }
-          hosts ${hostsFiles.int} "int.ryzst.net" {
-            ttl 3600
-            fallthrough
+          mek.ryzst.net {
+            bind ${cfg.interface}
+            acl {
+              allow net ${cfg.allow}
+              drop
+            }
+            hosts ${hostsFiles.mek} {
+              ttl 3600
+            }
           }
-          hosts ${hostsFiles.mek} "mek.ryzst.net" {
-            ttl 3600
-            fallthrough
+          .:${port} {
+            bind ${cfg.interface}
+            acl {
+              allow net ${cfg.allow}
+              drop
+            }
+            forward . 127.0.0.1:5301 127.0.0.1:5302
+            cache 3600
           }
-          forward . 127.0.0.1:5301 127.0.0.1:5302
-          cache 3600
-        }
-        .:5301 { 
-          bind 127.0.0.1
-          forward . tls://${cfg.resolvers.primary.ip} {
-            tls_servername ${cfg.resolvers.primary.name}
-            health_check 5s
+          .:5301 { 
+            bind 127.0.0.1
+            forward . tls://${cfg.resolvers.primary.ip} {
+              tls_servername ${cfg.resolvers.primary.name}
+              health_check 5s
+            }
           }
-        }
-        .:5302 {
-          bind 127.0.0.1
-          forward . tls://${cfg.resolvers.secondary.ip} {
-            tls_servername ${cfg.resolvers.secondary.name}
-            health_check 5s
+          .:5302 {
+            bind 127.0.0.1
+            forward . tls://${cfg.resolvers.secondary.ip} {
+              tls_servername ${cfg.resolvers.secondary.name}
+              health_check 5s
+            }
           }
-        }
-      '';
-    };
+        '';
+      };
   };
 }
