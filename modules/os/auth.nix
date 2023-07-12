@@ -4,9 +4,10 @@ let
   cfg = config.os.auth;
   motdFile = pkgs.runCommandLocal "motd.txt"
     { inherit (pkgs) figlet boxes; } ''
-    printf "Ryzst Systems\n${config.networking.hostName}" \
+    printf $'\e[31m%s\e[0m\n' \
+    "$(printf 'Ryzst Systems\n${config.networking.hostName}' \
     | $figlet/bin/figlet \
-    | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config \
+    | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config)" \
     > $out
   '';
 in
