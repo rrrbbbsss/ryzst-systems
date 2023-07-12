@@ -15,5 +15,8 @@ in
 
   config = mkIf enable {
     networking.timeServers = [ "ntp.int.ryzst.net" ];
+    services.timesyncd.extraConfig = ''
+      FallbackNTP=""
+    '';
   };
 }
