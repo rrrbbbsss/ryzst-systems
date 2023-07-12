@@ -71,8 +71,8 @@ in
     };
 
     systemd.user.tmpfiles.rules = [
-      "e %h/.local/share/Trash - - - 3w"
-      "e %h/.cache - - - 3w"
+      "e /home/${username}/.local/share/Trash - - - 3w"
+      "e /home/${username}/.cache             - - - 3w"
     ];
 
     home.stateVersion = "22.11";
