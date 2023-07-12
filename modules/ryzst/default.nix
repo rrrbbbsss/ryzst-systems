@@ -8,7 +8,7 @@ in
   ryzst.int = {
     dns = {
       server.nodes = with hosts; {
-        inherit firewall;
+        inherit brunhild;
       };
       client.nodes = with hosts; {
         inherit bed desktop laptop media wap;
@@ -17,7 +17,7 @@ in
 
     ntp = {
       server.nodes = with hosts; {
-        inherit firewall;
+        inherit brunhild;
       };
       client.nodes = with hosts; {
         inherit bed desktop laptop media wap;
@@ -26,7 +26,7 @@ in
 
     wg = {
       server.nodes = with hosts; {
-        inherit firewall;
+        inherit brunhild;
       };
       client.nodes = with hosts; {
         inherit bed desktop laptop media wap;
