@@ -43,11 +43,17 @@ in
     services.nfs.server = {
       enable = true;
       hostName = cfg.ip;
+      extraNfsdConfig = ''
+        vers3=no
+      '';
       # cheat
       exports = ''
         /srv/nfs      ${cfg.allow}(rw,fsid=0,no_subtree_check)
         /srv/nfs/dump ${cfg.allow}(rw,nohide,insecure,no_subtree_check)
       '';
     };
+
+    services.rpcbind.enable = mkForce false;
+    systemd.services.rpc-statd.enable = mkForce false;
   };
 }
