@@ -1,7 +1,6 @@
 { config, ... }:
 {
   imports = [
-    ../../modules/profiles/nfs.nix
     ../../idm/users/rrrbbbsss
   ];
 

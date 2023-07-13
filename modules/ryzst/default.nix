@@ -15,6 +15,15 @@ in
       };
     };
 
+    nfs = {
+      server.nodes = with hosts; {
+        inherit brunhild;
+      };
+      client.nodes = with hosts; {
+        inherit bed desktop;
+      };
+    };
+
     ntp = {
       server.nodes = with hosts; {
         inherit brunhild;
