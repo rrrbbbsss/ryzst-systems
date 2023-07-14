@@ -77,12 +77,12 @@
           format-icons = [ "" "" "" ];
         };
         network = {
-          format-wifi = "{essid} {signalStrength:3}%  ";
-          format-ethernet = "{ipaddr}/{cidr} ";
-          tooltip-format = "{ifname} via {gwaddr} ";
-          format-linked = "{ifname} (No IP) ";
-          format-disconnected = "Disconnected ⚠";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
+          format-wifi = "{bandwidthDownBits:>} {bandwidthUpBits:>}   ";
+          format-ethernet = "{bandwidthDownBits:>} {bandwidthUpBits:>}  󰈀 ";
+          format-linked = "{ifname} (No IP) 󰌙 ";
+          format-disconnected = "Disconnected  ";
+          tooltip-format = "{ifname}: {ipaddr}/{cidr} via {gwaddr} 󱇢 ";
+          interval = 5;
         };
         pulseaudio = {
           format = "{volume:3}% {icon} {format_source}";

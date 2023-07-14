@@ -96,6 +96,10 @@ window#waybar {
     color: @background;
     background-color: @warning-background;
 }
+#network.linked {
+    color: @background;
+    background-color: @warning-background;
+}
 
 #cpu.critical {
     color: @warning-color;
