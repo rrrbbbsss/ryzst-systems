@@ -31,6 +31,6 @@ selection=$(fzf --reverse --prompt 'Select template > ' \
 
 git init "$project"
 pushd "$project"
-nix flake init -t "../"\#"$selection"
+nix flake init -t "$flake"\#"$selection"
 git grep -Frl "$text" | xargs sed -i "s/$text/$project/g"
 popd
