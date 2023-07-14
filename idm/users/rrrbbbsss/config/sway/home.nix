@@ -85,7 +85,6 @@ in
     swaylock
     swayidle
     swaybg
-    waybar
     wl-clipboard
     wlr-randr
     gnome.adwaita-icon-theme
@@ -138,7 +137,9 @@ in
         names = [ "DejaVu Sans Mono" ];
         size = 8.0;
       };
-      bars = [ ];
+      bars = [
+        { command = "${getExe config.programs.waybar.package}"; }
+      ];
       workspaceLayout = "tabbed";
       gaps = {
         inner = 7;

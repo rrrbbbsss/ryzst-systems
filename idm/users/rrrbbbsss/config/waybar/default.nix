@@ -1,8 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";
@@ -100,7 +99,7 @@
             car = "";
             default = [ "" "" "" ];
           };
-          on-click = "pavucontrol";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         idle_inhibitor = {
           format = "{icon}";
