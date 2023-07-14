@@ -102,6 +102,11 @@ in
               allow net ${cfg.allow}
               drop
             }
+            hosts ${pkgs.stevenblack-blocklist}/hosts {
+              ttl 3600
+              no-reverse
+              fallthrough
+            }
             forward . 127.0.0.1:5301 127.0.0.1:5302
             cache 3600
           }
