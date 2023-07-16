@@ -8,16 +8,9 @@ in
 
   imports = [ ];
 
+  #todo: redo
   services.hostapd = {
-    enable = true;
-    interface = wifi;
-    ssid = "test";
-    wpaPassphrase = "testeroni";
-    hwMode = "g";
-    countryCode = "US";
-    extraConfig = ''
-      bridge=${bridge}
-    '';
+    enable = false;
   };
 
   networking.useDHCP = false;
