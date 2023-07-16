@@ -3,8 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
 
     impermanence.url = "github:nix-community/impermanence";
 
@@ -21,13 +25,21 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
+    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     emacs-overlay.inputs.flake-utils.follows = "flake-utils";
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    pre-commit-hooks.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    pre-commit-hooks.inputs.flake-utils.follows = "flake-utils";
+    pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
   };
 
   outputs = { self, nixpkgs, flake-utils, home-manager, ... }:

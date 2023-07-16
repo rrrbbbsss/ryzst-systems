@@ -28,7 +28,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "nixpkgs-stable": "nixpkgs-stable"
+        "nixpkgs-stable": [
+          "nixpkgs-stable"
+        ]
       },
       "locked": {
         "lastModified": 1689507145,
@@ -103,6 +105,27 @@
         "type": "github"
       }
     },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1660459072,
+        "narHash": "sha256-8DFJjXG8zqoONA1vXtgeKXy68KdJL5UaXR8NtVMUbx8=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "a20de23b925fd8264fd7fad6454652e142fd7f73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -160,7 +183,9 @@
     },
     "nix-vscode-extensions": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
@@ -200,11 +225,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1689326639,
-        "narHash": "sha256-79zi0t83Dcc2dE0NuYZ+2hqtKXZN1yWVq5mtx8D2d7Y=",
+        "lastModified": 1689431009,
+        "narHash": "sha256-hPgQCRWP5q/Xc4qOIP3c2krR9nQua78+t9EDiuey5nc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9fdfaeb7b96f05e869f838c73cde8d98c640c649",
+        "rev": "af8279f65fe71ce5a448408034a8c06e2b4b2c66",
         "type": "github"
       },
       "original": {
@@ -214,17 +239,50 @@
         "type": "github"
       }
     },
+    "pre-commit-hooks": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "gitignore": "gitignore",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1689328505,
+        "narHash": "sha256-9B3+OeUn1a/CvzE3GW6nWNwS5J7PDHTyHGlpL3wV5oA=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "5e28316db471d1ac234beb70031b635437421dd6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
         "emacs-overlay": "emacs-overlay",
         "firefox-addons": "firefox-addons",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
         "nix-vscode-extensions": "nix-vscode-extensions",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
+        "pre-commit-hooks": "pre-commit-hooks"
       }
     },
     "systems": {
