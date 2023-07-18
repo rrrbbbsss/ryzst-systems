@@ -38,6 +38,7 @@
   boot = {
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
+    zfs.devNodes = "/dev/disk/by-partuuid";
   };
 
   services.zfs = {
