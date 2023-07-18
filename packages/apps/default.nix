@@ -1,10 +1,10 @@
-{ pkgs }:
+{ pkgs, ... }@args:
 
 with pkgs;
 let
   ryzst = callPackage ./ryzst { };
+  ryzst-installer = callPackage ./ryzst-installer { ryzst = args.ryzst; };
   burn-iso = callPackage ./burn-iso { };
-  ryzst-installer = callPackage ./ryzst-installer { };
   template-picker = callPackage ./template-picker { };
   yubikey-setup = callPackage ./yubikey-setup { };
 in

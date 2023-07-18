@@ -3,7 +3,7 @@
 let
   packages = with pkgs; {
     default = ryzst.apps;
-    apps = callPackage ./apps { inherit pkgs; };
+    apps = callPackage ./apps { inherit pkgs ryzst; };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };
     katago-model = callPackage ./katago-model { };
