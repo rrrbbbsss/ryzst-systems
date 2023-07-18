@@ -50,7 +50,7 @@
       useTmpfs = true;
       tmpfsSize = "80%";
     };
-    kernelParams = [ "console=tty1" ];
+    kernelParams = [ "mem_sleep_default=shallow" ];
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   };
 
