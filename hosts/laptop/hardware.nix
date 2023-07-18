@@ -19,7 +19,6 @@
         canTouchEfiVariables = true;
       };
     };
-    kernelParams = [ "console=tty1" ];
     initrd.availableKernelModules = [
       "xhci_pci"
       "ahci"
@@ -36,6 +35,7 @@
   #zfs
   networking.hostId = "79468924";
   boot = {
+    kernelParams = [ "nohibernate" ];
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
     zfs.devNodes = "/dev/disk/by-partuuid";
@@ -136,12 +136,14 @@
             type = "zfs_fs";
             options = {
               atime = "off";
+              canmount = "on";
               mountpoint = "/nix";
             };
           };
           "local/secrets" = {
             type = "zfs_fs";
             options = {
+              canmount = "on";
               mountpoint = "/secrets";
             };
           };
@@ -157,6 +159,7 @@
             type = "zfs_fs";
             options = {
               xattr = "sa";
+              canmount = "on";
               mountpoint = "/persist";
             };
           };
