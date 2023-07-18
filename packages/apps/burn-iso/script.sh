@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
+
+flake="github:rrrbbbsss/ryzst-systems"
 
 # check for usb drives
 USBSTORAGE=$(lsblk -A -o TRAN,PATH,VENDOR,SIZE | awk '$1 == "usb" {print $2, $3, $4}')
@@ -29,6 +31,6 @@ if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
 fi
 
 # dd iso to drive
-RESULT=$(nix build ".#iso-$1" --print-out-paths) &&
-printf "\ndd if=$RESULT/iso/$1.iso of=$SELECTION\n" &&
-sudo dd if=$RESULT/iso/$1.iso of=$SELECTION bs=4M conv=fsync status=progress
+RESULT=$(nix build "$flake#iso-installer" --print-out-paths) &&
+printf "\ndd if=$RESULT/iso/installer.iso of=$SELECTION\n" &&
+sudo dd if=$RESULT/iso/installer.iso of=$SELECTION bs=4M conv=fsync status=progress
