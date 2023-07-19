@@ -126,7 +126,7 @@
           "local/root" = {
             type = "zfs_fs";
             options = {
-              canmount = "noauto";
+              canmount = "on";
               mountpoint = "/";
             };
             mountpoint = "/";

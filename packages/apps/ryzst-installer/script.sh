@@ -79,6 +79,7 @@ nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
 # finish
 sync
 umount -R /mnt
+zfs export -a
 swapoff --all
 CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
 printf "$CONFIRM\n\n"
