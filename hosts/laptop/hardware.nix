@@ -39,6 +39,7 @@
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
     zfs.devNodes = "/dev/disk/by-partuuid";
+    supportedFilesystems = [ "zfs" ];
   };
 
   services.zfs = {
