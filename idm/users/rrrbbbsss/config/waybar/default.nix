@@ -74,8 +74,7 @@
         };
         temperature = {
           critical-threshold = 80;
-          format = "{temperatureC:2}°C {icon}";
-          format-icons = [ "" "" "" ];
+          format = "{temperatureC:2}°C ";
         };
         network = {
           format-wifi = "{bandwidthDownBits:>} {bandwidthUpBits:>}   ";
