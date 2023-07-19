@@ -2,6 +2,7 @@
 {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";
@@ -111,5 +112,11 @@
       };
     };
     style = builtins.readFile ./style.css;
+  };
+
+  systemd.user.services.waybar.Service = {
+    Environment = [
+      "GTK_THEME=Adwaita:dark"
+    ];
   };
 }

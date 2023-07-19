@@ -137,9 +137,7 @@ in
         names = [ "DejaVu Sans Mono" ];
         size = 8.0;
       };
-      bars = [
-        { command = "${getExe config.programs.waybar.package}"; }
-      ];
+      bars = [ ];
       workspaceLayout = "tabbed";
       gaps = {
         inner = 7;
