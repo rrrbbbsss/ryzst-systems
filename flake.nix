@@ -62,9 +62,9 @@
           hm = home-manager.packages.${system};
         in
         {
-          devShells.default = import ./shell.nix { inherit pkgs ryzst; };
+          devShells.default = import ./shell.nix { inherit self system pkgs ryzst; };
 
-          checks = self.lib.mkChecks { inherit system; };
+          checks = import ./checks { inherit self system; };
 
           formatter = pkgs.nixpkgs-fmt;
 

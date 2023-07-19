@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# Redirect output to stderr.
-exec 1>&2
-
-# run flake checks
-nix flake check --no-build --no-warn-dirty
