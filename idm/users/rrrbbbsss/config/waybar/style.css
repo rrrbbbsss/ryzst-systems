@@ -121,6 +121,11 @@ window#waybar {
     background-color: @warning-background;
 }
 
+#battery.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
 #idle_inhibitor.activated {
     color: @warning-color;
     background-color: @warning-background;

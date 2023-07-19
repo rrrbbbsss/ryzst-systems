@@ -24,6 +24,7 @@
           "memory"
           "disk"
           "temperature"
+          "battery"
           "idle_inhibitor"
         ];
         "sway/mode" = {
@@ -101,6 +102,17 @@
             default = [ "" "" "" ];
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        };
+        battery = {
+          format = "{capacity:3}% {icon}";
+          format-charging = "{capacity:3}% 󰂄";
+          format-full = "{capacity:3}% 󰁹";
+          format-icons = [ "󱊡" "󱊢" "󱊣" ];
+          design-capacity = true;
+          states = {
+            critical = 15;
+          };
+          interval = 30;
         };
         idle_inhibitor = {
           format = "{icon}";
