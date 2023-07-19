@@ -160,7 +160,7 @@
             type = "zfs_fs";
             options = {
               xattr = "sa";
-              mountpoint = "/legacy";
+              mountpoint = "legacy";
             };
             mountpoint = "/persist";
           };
