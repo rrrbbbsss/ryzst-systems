@@ -12,10 +12,9 @@ if [[ $USBSTORAGE = "" ]]; then
 fi
 
 # select usb drive
-SELECTION=$(echo $USBSTORAGE | fzf --prompt="Select USB Device to format: " --reverse)
+SELECTION=$(fzf --prompt="Select USB Device to format: " --reverse <<< "$USBSTORAGE")
 printf "\nSelect USB Device to format:\n"
 printf "$SELECTION\n\n"
-SELECTION=$(echo $SELECTION | awk '{ print $1 }')
 if [[ $SELECTION = "" ]]; then
     printf "Invalid selection\n\n"
     exit 1
@@ -29,6 +28,7 @@ if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
     printf "Canceled\n\n"
     exit 1
 fi
+SELECTION=$(echo $SELECTION | awk '{ print $1 }')
 
 # dd iso to drive
 RESULT=$(nix build "$flake#iso-installer" --print-out-paths) &&

@@ -116,7 +116,6 @@
           relatime = "on";
           canmount = "off";
           devices = "off";
-          xattr = "sa";
           mountpoint = "none";
         };
         mountRoot = "/mnt";
@@ -128,8 +127,8 @@
           "local/root" = {
             type = "zfs_fs";
             options = {
-              canmount = "noauto";
-              mountpoint = "/";
+              mountpoint = "legacy";
+              xattr = "sa";
             };
             mountpoint = "/";
             postCreateHook = "zfs snapshot tank/local/root@blank";
@@ -138,16 +137,16 @@
             type = "zfs_fs";
             options = {
               atime = "off";
-              canmount = "on";
-              mountpoint = "/nix";
+              mountpoint = "legacy";
             };
+            mountpoint = "/nix";
           };
           "local/secrets" = {
             type = "zfs_fs";
             options = {
-              canmount = "on";
-              mountpoint = "/secrets";
+              mountpoint = "legacy";
             };
+            mountpoint = "/secrets";
           };
           "local/reserve" = {
             type = "zfs_fs";
@@ -161,9 +160,9 @@
             type = "zfs_fs";
             options = {
               xattr = "sa";
-              canmount = "on";
-              mountpoint = "/persist";
+              mountpoint = "/legacy";
             };
+            mountpoint = "/persist";
           };
         };
       };
