@@ -56,4 +56,26 @@
   };
 
   xdg.configFile."tridactyl/tridactylrc".source = ./tridactylrc;
+
+  xdg.mimeApps =
+    let
+      app = "firefox.desktop";
+      mimeapps = {
+        "text/html" = [ app ];
+        "x-scheme-handler/http" = [ app ];
+        "x-scheme-handler/https" = [ app ];
+        "x-scheme-handler/chrome" = [ app ];
+        "application/x-extension-htm" = [ app ];
+        "application/x-extension-html" = [ app ];
+        "application/x-extension-shtml" = [ app ];
+        "application/xhtml+xml" = [ app ];
+        "application/x-extension-xhtml" = [ app ];
+        "application/x-extension-xht" = [ app ];
+      };
+    in
+    {
+      enable = true;
+      associations.added = mimeapps;
+      defaultApplications = mimeapps;
+    };
 }
