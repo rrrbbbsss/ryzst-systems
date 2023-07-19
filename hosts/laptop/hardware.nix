@@ -115,6 +115,7 @@
           relatime = "on";
           canmount = "off";
           devices = "off";
+          xattr = "sa";
           mountpoint = "none";
         };
         mountRoot = "/mnt";
@@ -126,7 +127,7 @@
           "local/root" = {
             type = "zfs_fs";
             options = {
-              canmount = "on";
+              canmount = "noauto";
               mountpoint = "/";
             };
             mountpoint = "/";
