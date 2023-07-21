@@ -1,6 +1,13 @@
 { pkgs, osConfig, config, lib, ... }:
 
 let
+  colors = {
+    desktop = "#0d0d0d";
+    border = "#3f4040";
+    background = "#1d1f21";
+    focus = "#a16bed";
+    text = "#c5c8c6";
+  };
   inherit (lib.meta) getExe;
   modifier = "Mod4";
   wrap-float-window = window-name: command: ''
@@ -92,9 +99,9 @@ in
 
   programs.swaylock = {
     settings = {
-      color = "180d26ff";
-      line-color = "ae7eedff";
       indicator-idle-visible = true;
+      color = colors.desktop;
+      line-color = "ae7eedff";
     };
   };
 
@@ -128,7 +135,10 @@ in
     enable = true;
     xwayland = true;
     wrapperFeatures.gtk = true;
-    extraConfigEarly = "exec swaymsg rename workspace 1 to 01";
+    extraConfigEarly = ''
+      exec swaymsg rename workspace 1 to 01
+      titlebar_border_thickness 2
+    '';
     config = {
       inherit modifier;
       terminal = commands.terminal;
@@ -149,7 +159,7 @@ in
         };
       } // osConfig.device.rats;
       output = {
-        "*" = { bg = "#180d26 solid_color"; };
+        "*" = { bg = "${colors.desktop} solid_color"; };
       } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
         osConfig.device.monitors);
       workspaceOutputAssign =
@@ -183,20 +193,27 @@ in
         };
       };
       colors = {
-        background = "#ffffff";
+        background = colors.desktop;
         focused = {
-          background = "#a16bed";
-          border = "#a16bed";
-          childBorder = "#a16bed";
-          indicator = "#a16bed";
+          background = colors.focus;
+          border = colors.focus;
+          childBorder = colors.focus;
+          indicator = colors.focus;
           text = "#ffffff";
         };
         focusedInactive = {
-          background = "#333333";
-          border = "#333333";
-          childBorder = "#333333";
-          indicator = "#333333";
-          text = "#888888";
+          background = colors.border;
+          border = colors.border;
+          childBorder = colors.border;
+          indicator = colors.border;
+          text = "#ffffff";
+        };
+        unfocused = {
+          background = colors.background;
+          border = colors.border;
+          childBorder = colors.border;
+          indicator = colors.border;
+          text = colors.text;
         };
       };
       window = {
