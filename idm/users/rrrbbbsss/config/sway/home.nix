@@ -6,6 +6,7 @@ let
     border = "#3f4040";
     background = "#1d1f21";
     focus = "#a16bed";
+    focus-text = "#ffffff";
     text = "#c5c8c6";
   };
   inherit (lib.meta) getExe;
@@ -188,7 +189,7 @@ in
           "${modifier}+k" = "focus up";
           "${modifier}+l" = "focus right";
         };
-        vm = {
+        passthrough = {
           "${modifier}+Escape" = "mode default";
         };
       };
@@ -199,14 +200,14 @@ in
           border = colors.focus;
           childBorder = colors.focus;
           indicator = colors.focus;
-          text = "#ffffff";
+          text = colors.focus-text;
         };
         focusedInactive = {
           background = colors.border;
           border = colors.border;
           childBorder = colors.border;
           indicator = colors.border;
-          text = "#ffffff";
+          text = colors.text;
         };
         unfocused = {
           background = colors.background;
@@ -302,7 +303,7 @@ in
         "${modifier}+Shift+e" = "exec ${commands.exit}";
         #modes
         "${modifier}+r" = "mode resize";
-        "${modifier}+Shift+Escape" = "mode vm";
+        "${modifier}+Shift+Escape" = "mode passthrough";
         #mediakeys
         "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
         "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
