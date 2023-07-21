@@ -3,13 +3,12 @@
 let
   colors = {
     desktop = "#0d0d0d";
-    border = "#3f4040";
-    background = "#1d1f21";
-    background-text = "#5a5b5a";
-    focus = "#a16bed";
-    focus-text = "#ffffff";
     text = "#c5c8c6";
-
+    border = "#3f4040";
+    unfocus-background = "#000000";
+    unfocus-text = "#5a5b5a";
+    focus-background = "#a16bed";
+    focus-text = "#ffffff";
   };
   inherit (lib.meta) getExe;
   modifier = "Mod4";
@@ -148,7 +147,7 @@ in
       menu = commands.applancher;
       fonts = {
         names = [ "DejaVu Sans Mono" ];
-        size = 9.5;
+        size = 9.0;
       };
       bars = [ ];
       workspaceLayout = "tabbed";
@@ -198,10 +197,10 @@ in
       colors = {
         background = colors.desktop;
         focused = {
-          background = colors.focus;
-          border = colors.focus;
-          childBorder = colors.focus;
-          indicator = colors.focus;
+          background = colors.border;
+          border = colors.focus-background;
+          childBorder = colors.focus-background;
+          indicator = colors.focus-background;
           text = colors.focus-text;
         };
         focusedInactive = {
@@ -212,11 +211,11 @@ in
           text = colors.text;
         };
         unfocused = {
-          background = colors.background;
+          background = colors.unfocus-background;
           border = colors.border;
           childBorder = colors.border;
           indicator = colors.border;
-          text = colors.background-text;
+          text = colors.unfocus-text;
         };
       };
       window = {
