@@ -19,6 +19,14 @@
     };
   };
 
+  device.rats = {
+    "2:10:TPPS/2_IBM_TrackPoint" = {
+      natural_scroll = "disabled";
+      accel_profile = "adaptive";
+      pointer_accel = "1";
+    };
+  };
+
   device.keyboard = {
     remap.enable = true;
     name = "lenovo-x230";
