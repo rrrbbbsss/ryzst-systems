@@ -148,6 +148,15 @@
             };
             mountpoint = "/secrets";
           };
+          "local/logs" = {
+            type = "zfs_fs";
+            options = {
+              xattr = "sa";
+              quota = "10G";
+              mountpoint = "legacy";
+            };
+            mountpoint = "/var/log";
+          };
           "local/reserve" = {
             type = "zfs_fs";
             options = {
