@@ -9,7 +9,8 @@
 
 * {
     font-family: DejaVu Sans Mono;
-    font-size: 13px;
+    /*font-size: 13px;*/
+    font-size: 9.5pt;
     margin: 0px;
     padding: 0px;
     border-radius: 0px;
@@ -53,6 +54,11 @@ window#waybar {
     color: @focus-background;
     background-color: @focus-color;
 }
+
+#workspaces button.visible:not(.focused) {
+    background-color: @border;
+}
+
 
 /* center */
 .modules-center {

@@ -5,9 +5,11 @@ let
     desktop = "#0d0d0d";
     border = "#3f4040";
     background = "#1d1f21";
+    background-text = "#5a5b5a";
     focus = "#a16bed";
     focus-text = "#ffffff";
     text = "#c5c8c6";
+
   };
   inherit (lib.meta) getExe;
   modifier = "Mod4";
@@ -105,7 +107,6 @@ in
       line-color = "ae7eedff";
     };
   };
-
   services.swayidle = {
     enable = true;
     extraArgs = [ "-w" ];
@@ -139,6 +140,7 @@ in
     extraConfigEarly = ''
       exec swaymsg rename workspace 1 to 01
       titlebar_border_thickness 2
+      titlebar_padding 5 3
     '';
     config = {
       inherit modifier;
@@ -146,7 +148,7 @@ in
       menu = commands.applancher;
       fonts = {
         names = [ "DejaVu Sans Mono" ];
-        size = 8.0;
+        size = 9.5;
       };
       bars = [ ];
       workspaceLayout = "tabbed";
@@ -214,7 +216,7 @@ in
           border = colors.border;
           childBorder = colors.border;
           indicator = colors.border;
-          text = colors.text;
+          text = colors.background-text;
         };
       };
       window = {

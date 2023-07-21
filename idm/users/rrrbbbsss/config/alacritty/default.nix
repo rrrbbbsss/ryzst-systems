@@ -33,7 +33,7 @@ in
           family = font;
           style = "regular";
         };
-        size = 11.00;
+        size = 12.00;
       };
     };
   };
