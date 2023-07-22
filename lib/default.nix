@@ -24,10 +24,10 @@ let
             locale = "en_US.UTF-8";
             timezone = "America/Chicago";
             domain = "mek.ryzst.net";
-            flake = "github:rrrbbbsss/ryzst";
+            flake = "github:rrrbbbsss/ryzst-systems";
           };
           nix.registry = {
-            ryzst.flake = self;
+            ryzst-systems.flake = self;
           } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
           nixpkgs.overlays = [ self.outputs.overlays.default ];
         }
