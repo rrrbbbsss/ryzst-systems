@@ -29,7 +29,7 @@ rec {
     '';
   };
 
-  # weirdness on fresh new systems: have to look at card status before gpg can be used...
+  # creates the key stubs
   systemd.user.services.gpg-card = {
     Unit = {
       Description = "gpg check card";
