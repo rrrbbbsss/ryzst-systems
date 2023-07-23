@@ -118,7 +118,6 @@
           devices = "off";
           mountpoint = "none";
         };
-        mountRoot = "/mnt";
 
         datasets = {
           "local" = {
