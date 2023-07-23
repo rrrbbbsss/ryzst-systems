@@ -1,5 +1,13 @@
 { pkgs, osConfig, config, lib, ... }:
 
+#@define-color bar #000000;
+#@define-color text #c5c8c6;
+#@define-color background #1d1f21;
+#@define-color border #3f4040;
+#@define-color focus-color #ffffff;
+#@define-color focus-background #a16bed;
+#@define-color warning-color #ffffff;
+#@define-color warning-background #cc6666;
 let
   colors = {
     desktop = "#0d0d0d";
@@ -9,6 +17,11 @@ let
     unfocus-text = "#5a5b5a";
     focus-background = "#a16bed";
     focus-text = "#ffffff";
+    yellow = "#f0c674";
+    red = "#cc6666";
+    green = "#b5bd68";
+    black = "#000000";
+    transparent = "#00000000";
   };
   inherit (lib.meta) getExe;
   modifier = "Mod4";
@@ -101,9 +114,45 @@ in
 
   programs.swaylock = {
     settings = {
+      image = "${./rosenritter.png}";
+      scaling = "center";
+      font = "DejaVu Sans Mono";
+      font-size = 0.0;
       indicator-idle-visible = true;
+      indicator-radius = 275;
+      indicator-thickness = 20;
+      #default
       color = colors.desktop;
-      line-color = "ae7eedff";
+      bs-hl-color = colors.border;
+      inside-color = colors.transparent;
+      key-hl-color = colors.yellow;
+      ring-color = colors.black;
+      line-color = colors.yellow;
+      text-color = colors.transparent;
+      #caps-lock
+      disable-caps-lock-text = true;
+      indicator-caps-lock = true;
+      caps-lock-bs-hl-color = colors.border;
+      caps-lock-key-hl-color = colors.red;
+      inside-caps-lock-color = colors.transparent;
+      ring-caps-lock-color = colors.black;
+      line-caps-lock-color = colors.red;
+      text-caps-lock-color = colors.transparent;
+      #clear
+      inside-clear-color = colors.yellow + "33";
+      ring-clear-color = colors.black;
+      line-clear-color = colors.yellow;
+      text-clear-color = colors.transparent;
+      #verify
+      inside-ver-color = colors.green + "33";
+      ring-ver-color = colors.black;
+      line-ver-color = colors.green;
+      text-ver-color = colors.transparent;
+      #wrong
+      inside-wrong-color = colors.red + "33";
+      ring-wrong-color = colors.black;
+      line-wrong-color = colors.red;
+      text-wrong-color = colors.transparent;
     };
   };
   services.swayidle = {
