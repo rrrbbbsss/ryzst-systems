@@ -9,12 +9,7 @@ in
   options.programs.swappy = {
     enable = mkEnableOption "swappy snapshot editor tool";
 
-    package = mkOption {
-      type = types.package;
-      default = pkgs.swappy;
-      defaultText = literalExpression "pkgs.swappy";
-      description = "swappy package to install";
-    };
+    package = mkPackageOption pkgs "swappy" { };
 
     settings = mkOption {
       type = with types; attrsOf (oneOf [ bool int str ]);
@@ -30,8 +25,8 @@ in
       '';
       description = ''
         Configuration written to
-        <filename>$XDG_CONFIG_HOME/swappy/config</filename>.
-        See <literal>swappy(1)</literal> man page for supported values.
+        {file}`$XDG_CONFIG_HOME/swayypy/config`
+        See {manpage}`swappy(1)` for supported values.
       '';
     };
   };
