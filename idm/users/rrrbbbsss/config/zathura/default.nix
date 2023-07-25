@@ -18,4 +18,19 @@ in
       include ${colorscheme}
     '';
   };
+
+  xdg.mimeApps =
+    let
+      app = "org.pwmt.zathura.desktop";
+      mimeapps = {
+        "image/vnd.djvu" = [ app ];
+        "application/pdf" = [ app ];
+        "application/postscript" = [ app ];
+      };
+    in
+    {
+      enable = true;
+      associations.added = mimeapps;
+      defaultApplications = mimeapps;
+    };
 }
