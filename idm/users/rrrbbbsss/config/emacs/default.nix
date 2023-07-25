@@ -48,6 +48,19 @@ in
     };
   };
 
+  xdg.mimeApps =
+    let
+      app = "emacsclient.desktop";
+      mimeapps = {
+        "text/plain" = [ app ];
+      };
+    in
+    {
+      enable = true;
+      associations.added = mimeapps;
+      defaultApplications = mimeapps;
+    };
+
   home.packages = with pkgs; [
     #treemacs
     python3
