@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, ... }:
 {
   programs.mpv = {
     enable = true;
@@ -26,5 +26,9 @@
       "Alt+BS" = "set video-zoom 0; set video-pan-x 0; set video-pan-y 0; set video-rotate no;";
     };
     defaultProfiles = [ "gpu-hq" ];
+  };
+
+  programs.zsh.shellAliases = {
+    "mpp" = "${config.programs.mpv.package}/bin/mpv --shuffle --loop-playlist=inf /nfs/Music";
   };
 }

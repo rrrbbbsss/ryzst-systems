@@ -50,10 +50,13 @@ in
           bindkey -M vicmd "\C-s" toggle_sudo
           bindkey -M viins "\C-s" toggle_sudo
           bindkey -M viins "\C-r" fzf-history-widget
+
+          function followlink() {
+            ${pkgs.coreutils}/bin/readlink -f $(which "$1")
+          }
         '';
         shellAliases = {
-          "-s pdf" = "zathura --fork";
-          "mpp" = "mpv --shuffle --loop-playlist=inf /nfs/Music";
+          "open" = "${pkgs.util-linux}/bin/setsid -f ${pkgs.xdg-utils}/bin/xdg-open";
         };
 
       };
