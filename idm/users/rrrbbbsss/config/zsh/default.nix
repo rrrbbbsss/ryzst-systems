@@ -56,7 +56,7 @@ in
           }
         '';
         shellAliases = {
-          "open" = "${pkgs.util-linux}/bin/setsid -f ${pkgs.xdg-utils}/bin/xdg-open";
+          "open" = "${pkgs.util-linux}/bin/setsid &>/dev/null -f ${pkgs.xdg-utils}/bin/xdg-open";
         };
 
       };
