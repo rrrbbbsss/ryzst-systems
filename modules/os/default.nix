@@ -56,8 +56,8 @@ in
     time.timeZone = cfg.timezone;
 
     networking = {
+      inherit (cfg) domain;
       hostName = cfg.hostname;
-      domain = cfg.domain;
     };
 
     # base-packages

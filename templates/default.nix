@@ -1,4 +1,4 @@
 { self }:
 
-builtins.mapAttrs (name: value: import value)
+builtins.mapAttrs (name: import)
   (self.lib.getDirs ./.)

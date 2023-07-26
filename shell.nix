@@ -7,5 +7,6 @@ mkShell {
     nil
     nixpkgs-fmt
     direnv
+    statix
   ];
 }

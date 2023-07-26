@@ -3,7 +3,7 @@
 with pkgs;
 let
   ryzst = callPackage ./ryzst { };
-  ryzst-installer = callPackage ./ryzst-installer { ryzst = args.ryzst; };
+  ryzst-installer = callPackage ./ryzst-installer { inherit (args) ryzst; };
   burn-iso = callPackage ./burn-iso { };
   template-picker = callPackage ./template-picker { };
   yubikey-setup = callPackage ./yubikey-setup { };

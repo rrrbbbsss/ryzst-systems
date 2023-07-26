@@ -9,7 +9,7 @@ let
     attrsets.foldlAttrs (acc: n: v: "${v.ip}, ${acc}") "" config.ryzst.int.dns.client.nodes;
   hostsFiles =
     let
-      entries = x: y: attrsets.foldlAttrs (acc: n: v: "${v.ip} ${x}.int.ryzst.net\n${acc}") "" y;
+      entries = x: attrsets.foldlAttrs (acc: n: v: "${v.ip} ${x}.int.ryzst.net\n${acc}") "";
     in
     {
       int = with builtins;

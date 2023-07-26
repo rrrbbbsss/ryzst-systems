@@ -1,18 +1,10 @@
 { pkgs, osConfig, config, lib, ... }:
 
-#@define-color bar #000000;
-#@define-color text #c5c8c6;
-#@define-color background #1d1f21;
-#@define-color border #3f4040;
-#@define-color focus-color #ffffff;
-#@define-color focus-background #a16bed;
-#@define-color warning-color #ffffff;
-#@define-color warning-background #cc6666;
 let
   colors = {
     desktop = "#0d0d0d";
     text = "#c5c8c6";
-    border = "#3f4040";
+    borders = "#3f4040";
     unfocus-background = "#000000";
     unfocus-text = "#5a5b5a";
     focus-background = "#a16bed";
@@ -124,7 +116,7 @@ in
       indicator-thickness = 20;
       #default
       color = colors.desktop;
-      bs-hl-color = colors.border;
+      bs-hl-color = colors.borders;
       inside-color = colors.transparent;
       key-hl-color = colors.yellow;
       ring-color = colors.black;
@@ -133,7 +125,7 @@ in
       #caps-lock
       disable-caps-lock-text = true;
       indicator-caps-lock = true;
-      caps-lock-bs-hl-color = colors.border;
+      caps-lock-bs-hl-color = colors.borders;
       caps-lock-key-hl-color = colors.red;
       inside-caps-lock-color = colors.transparent;
       ring-caps-lock-color = colors.black;
@@ -193,7 +185,7 @@ in
     '';
     config = {
       inherit modifier;
-      terminal = commands.terminal;
+      inherit (commands) terminal;
       menu = commands.applancher;
       fonts = {
         names = [ "DejaVu Sans Mono" ];
@@ -214,17 +206,16 @@ in
         "*" = { bg = "${colors.desktop} solid_color"; };
       } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
         osConfig.device.monitors);
-      workspaceOutputAssign =
-        (lib.attrsets.foldlAttrs
-          (acc: n: v:
-            (builtins.map
-              (x: {
-                output = n;
-                workspace = v.number + (builtins.toString x);
-              })
-              (builtins.genList (x: x + 1) 9)) ++ acc)
-          [ ]
-          osConfig.device.monitors);
+      workspaceOutputAssign = lib.attrsets.foldlAttrs
+        (acc: n: v:
+          (builtins.map
+            (x: {
+              output = n;
+              workspace = v.number + (builtins.toString x);
+            })
+            (builtins.genList (x: x + 1) 9)) ++ acc)
+        [ ]
+        osConfig.device.monitors;
       modes = {
         resize = {
           h = "resize shrink width 10 px";
@@ -247,24 +238,24 @@ in
       colors = {
         background = colors.desktop;
         focused = {
-          background = colors.border;
+          background = colors.borders;
           border = colors.focus-background;
           childBorder = colors.focus-background;
           indicator = colors.focus-background;
           text = colors.focus-text;
         };
         focusedInactive = {
-          background = colors.border;
-          border = colors.border;
-          childBorder = colors.border;
-          indicator = colors.border;
-          text = colors.text;
+          background = colors.borders;
+          border = colors.borders;
+          childBorder = colors.borders;
+          indicator = colors.borders;
+          inherit (colors) text;
         };
         unfocused = {
           background = colors.unfocus-background;
-          border = colors.border;
-          childBorder = colors.border;
-          indicator = colors.border;
+          border = colors.borders;
+          childBorder = colors.borders;
+          indicator = colors.borders;
           text = colors.unfocus-text;
         };
       };

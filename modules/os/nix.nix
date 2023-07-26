@@ -49,7 +49,7 @@ in
           randomizedDelaySec = "30min";
           dates = "daily";
           allowReboot = true;
-          flake = config.os.flake;
+          inherit (config.os) flake;
         };
       };
     })

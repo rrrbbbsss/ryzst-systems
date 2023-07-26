@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
-  emacspkg = (pkgs.emacsWithPackagesFromUsePackage {
+  emacspkg = pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs-pgtk;
     config = ./init.el;
     defaultInitFile = true;
-  });
+  };
 in
 {
   programs.emacs = {

@@ -71,7 +71,8 @@
           apps = import ./apps { inherit ryzst; };
 
           packages = import ./packages {
-            inherit pkgs ryzst hm system; lib = self.lib;
+            inherit pkgs ryzst hm system;
+            inherit (self) lib;
           };
         }
       );

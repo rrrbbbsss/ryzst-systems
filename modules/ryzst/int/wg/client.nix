@@ -3,7 +3,7 @@ with lib;
 let
   cfg = config.ryzst.int.wg.client;
   enable = cfg.nodes?${config.networking.hostName};
-  ip = config.ryzst.mek.${config.networking.hostName}.ip;
+  inherit (config.ryzst.mek.${config.networking.hostName}) ip;
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
@@ -13,7 +13,7 @@ let
     )
     [ ]
     cfg.nodes;
-  server = config.ryzst.int.wg.server;
+  inherit (config.ryzst.int.wg) server;
 in
 {
   options.ryzst.int.wg.client = {
