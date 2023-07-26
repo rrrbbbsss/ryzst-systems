@@ -8,6 +8,7 @@ in
     hooks = {
       #format
       nixpkgs-fmt.enable = true;
+      shfmt.enable = true;
     };
   };
 }
