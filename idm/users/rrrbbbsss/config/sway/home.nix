@@ -57,6 +57,7 @@ let
     terminal = getExe pkgs.alacritty;
     applancher = wrap-float-window "FZF-Launcher" ''
       ${getExe pkgs.j4-dmenu-desktop} \
+      &> /dev/null \
       --dmenu="${getExe pkgs.fzf} --reverse --prompt 'Launch > '" \
       --wrapper='swaymsg exec' \
       --term="${commands.terminal}" \
