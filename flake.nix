@@ -62,7 +62,7 @@
           hm = home-manager.packages.${system};
         in
         {
-          devShells.default = import ./shell.nix { inherit self system pkgs ryzst; };
+          devShells.default = import ./shell.nix { inherit self system pkgs; };
 
           checks = import ./checks { inherit self system; };
 

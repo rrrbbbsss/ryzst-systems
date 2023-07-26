@@ -1,4 +1,4 @@
-{ self, system, pkgs, ryzst, ... }:
+{ self, system, pkgs, ... }:
 
 with pkgs;
 mkShell {
@@ -7,6 +7,5 @@ mkShell {
     nil
     nixpkgs-fmt
     direnv
-    ryzst.apps
   ];
 }
