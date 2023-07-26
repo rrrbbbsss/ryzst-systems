@@ -19,7 +19,7 @@ fi
 printf "Proceed with system installation:\n"
 CONFIRM=$(printf "yes\nno" | fzf --prompt="Proceed with system installation: $SELECTION > " --reverse)
 printf "$CONFIRM\n\n"
-if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
+if [[ $CONFIRM == "" || $CONFIRM == "no" ]]; then
     printf "Canceled. Run \"sudo ryzst system intall\" to restart installation\n\n"
     exit 1
 fi
@@ -35,7 +35,7 @@ fi
 printf "Validating Internet connection...\n"
 if curl --max-time 15 --retry 3 --retry-delay 5 https://cache.nixos.org &>/dev/null; then
     printf "success\n\n"
-else   
+else
     printf "ERROR: Cannot connect to Internet\n"
     exit 1
 fi
@@ -47,12 +47,12 @@ git clone --depth 1 $REPO_URL /tmp/ryzst &>/dev/null
 HOSTS=$(ls /tmp/ryzst/hosts)
 HOST=$(printf "%s\n" "${HOSTS[@]}" | fzf --prompt="Select Host to Install: " --reverse)
 printf "$HOST\n\n"
-if [[ $HOST = "" ]]; then
+if [[ $HOST == "" ]]; then
     printf "ERROR: Invalid selection\n\n"
     exit 1
 fi
 CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm host to install: $HOST > " --reverse)
-if [[ $CONFIRM = "" || $CONFIRM = "no" ]]; then
+if [[ $CONFIRM == "" || $CONFIRM == "no" ]]; then
     printf "Canceled\n\n"
     exit 1
 fi
@@ -65,11 +65,11 @@ PERSIST=/mnt/persist
 SECRETS=$PERSIST/secrets
 mkdir -p $PERSIST $SECRETS
 # generate wireguard keys
-wg genkey | (umask 0037 && tee $SECRETS/wg0_key) | wg pubkey > $SECRETS/wg0_key.pub
+wg genkey | (umask 0037 && tee $SECRETS/wg0_key) | wg pubkey >$SECRETS/wg0_key.pub
 # generate ssh key
 ssh-keygen -q -N "" -t ed25519 -f $SECRETS/ssh_host_e25519_key
 # generate machineid
-(umask 0333 && systemd-machine-id-setup --print > $SECRETS/machineid)
+(umask 0333 && systemd-machine-id-setup --print >$SECRETS/machineid)
 
 # install nixos from flake
 printf "Installing system:\n"
@@ -83,7 +83,7 @@ zpool export -a
 swapoff --all
 CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
 printf "$CONFIRM\n\n"
-if [[ $CONFIRM = ""  ]]; then
+if [[ $CONFIRM == "" ]]; then
     printf "Canceled\n\n"
     exit 1
 fi

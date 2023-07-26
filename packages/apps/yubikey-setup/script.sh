@@ -4,7 +4,7 @@ set -eo pipefail
 
 # select yubikey
 YUBIKEYS=$(ykman list)
-if [[ $YUBIKEYS = "" ]]; then
+if [[ $YUBIKEYS == "" ]]; then
     printf "ERROR: No yubikey plugged in\n\n"
     exit 1
 fi

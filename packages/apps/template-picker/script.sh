@@ -20,14 +20,14 @@ fi
 flake="github:rrrbbbsss/ryzst-systems"
 nix='nix --option experimental-features "nix-command flakes"'
 templates=$(nix flake show "$flake" --json 2>/dev/null | jq '.templates')
-choices=$(jq -r 'keys[]' <<< "$templates")
+choices=$(jq -r 'keys[]' <<<"$templates")
 query="jq -r --arg a {} '.[\$a].description' <<< '$templates'"
 text='###+++PROJECT+++###'
 
 selection=$(fzf --reverse --prompt 'Select template > ' \
-		--preview-window=bottom,wrap \
-		--preview "$query" \
-		<<< "$choices")
+    --preview-window=bottom,wrap \
+    --preview "$query" \
+    <<<"$choices")
 
 git init "$project"
 pushd "$project"
