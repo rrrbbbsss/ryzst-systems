@@ -11,6 +11,7 @@ in
       shfmt.enable = true;
       #lint
       statix.enable = true;
+      shellcheck.enable = true;
     };
   };
 }

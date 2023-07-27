@@ -8,5 +8,6 @@ mkShell {
     nixpkgs-fmt
     direnv
     statix
+    shellcheck
   ];
 }
