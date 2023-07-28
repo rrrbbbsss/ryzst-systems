@@ -11,7 +11,10 @@ in
       shfmt.enable = true;
       #lint
       statix.enable = true;
-      shellcheck.enable = true;
+      shellcheck = {
+        enable = true;
+        types_or = [ "shell" ];
+      };
     };
   };
 }
