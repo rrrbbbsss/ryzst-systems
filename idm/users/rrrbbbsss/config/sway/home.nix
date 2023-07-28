@@ -56,6 +56,7 @@ let
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic
     '';
+    browser = getExe config.programs.firefox.package;
     passwords = wrap-float-window "FZF-Pass"
       (getExe pkgs.ryzst.fzf-pass);
     wifi = wrap-float-window "FZF-Wifi" ''
@@ -336,6 +337,7 @@ in
         "${modifier}+F12" = "exec ${commands.screenshot}";
         "${modifier}+backslash" = "exec ${commands.editor}";
         "${modifier}+tab" = "exec ${commands.windows}";
+        "${modifier}+apostrophe" = "exec ${commands.browser}";
 
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
