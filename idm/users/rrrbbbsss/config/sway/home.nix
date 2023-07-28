@@ -353,6 +353,7 @@ in
         "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
         "XF86AudioMute" = "exec ${commands.media.mute}";
         "XF86AudioMicMute" = "exec ${commands.media.micMute}";
+        "${modifier}+XF86AudioMute" = "exec ${commands.media.micMute}";
         "XF86AudioPlay" = "exec ${commands.media.play}";
         "XF86AudioNext" = "exec ${commands.media.next}";
         "XF86AudioPrev" = "exec ${commands.media.prev}";
