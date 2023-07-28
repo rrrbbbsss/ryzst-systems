@@ -4,6 +4,8 @@
 shopt -s nullglob globstar
 
 GPG_TTY=$(tty)
+export GPG_TTY
+
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
 password_files=("$prefix"/**/*.gpg)
 password_files=("${password_files[@]#"$prefix"/}")

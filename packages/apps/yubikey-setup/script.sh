@@ -8,25 +8,25 @@ if [[ $YUBIKEYS == "" ]]; then
     printf "ERROR: No yubikey plugged in\n\n"
     exit 1
 fi
-YUBIKEY=$(printf "$YUBIKEYS" | fzf --prompt="Select USB Device to format: " --reverse)
-SERIAL=$(printf "$YUBIKEY" | sed -n -e 's/^.*Serial: //p')
+YUBIKEY=$(printf '%s' "$YUBIKEYS" | fzf --prompt="Select USB Device to format: " --reverse)
+SERIAL=$(printf '%s' "$YUBIKEY" | sed -n -e 's/^.*Serial: //p')
 
 # enter lock code
-CODE=$(read -p "Enter Yubikey Lock Code: ")
+#CODE=$(read -rp "Enter Yubikey Lock Code: ")
 #ykman -d $SERIAL config set-lock-code --lock-code $CODE
 printf "\n"
 
 # enable/disable applications
 printf "Enabling/Disabling Yubikey Applications:\n"
-ykman -d $SERIAL config usb --enable FIDO2 -f && sleep 1
-ykman -d $SERIAL config usb --disable OTP -f && sleep 1
-ykman -d $SERIAL config usb --disable U2F -f && sleep 1
-ykman -d $SERIAL config usb --disable OATH -f && sleep 1
-ykman -d $SERIAL config usb --disable PIV -f && sleep 1
+ykman -d "$SERIAL" config usb --enable FIDO2 -f && sleep 1
+ykman -d "$SERIAL" config usb --disable OTP -f && sleep 1
+ykman -d "$SERIAL" config usb --disable U2F -f && sleep 1
+ykman -d "$SERIAL" config usb --disable OATH -f && sleep 1
+ykman -d "$SERIAL" config usb --disable PIV -f && sleep 1
 # todo again: https://github.com/drduh/YubiKey-Guide
-ykman -d $SERIAL config usb --disable OPENPGP -f && sleep 1
-ykman -d $SERIAL config usb --disable HSMAUTH -f && sleep 1
-ykman -d $SERIAL config nfc --disable-all -f && sleep 1
+ykman -d "$SERIAL" config usb --disable OPENPGP -f && sleep 1
+ykman -d "$SERIAL" config usb --disable HSMAUTH -f && sleep 1
+ykman -d "$SERIAL" config nfc --disable-all -f && sleep 1
 printf "\n"
 
 # fido

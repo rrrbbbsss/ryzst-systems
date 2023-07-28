@@ -6,7 +6,7 @@ REPO="github:rrrbbbsss/ryzst-systems"
 REPO_URL="https://github.com/rrrbbbsss/ryzst-systems"
 
 #checks
-if ! cat /proc/cmdline | grep " root=LABEL=ryzst-iso " &>/dev/null; then
+if ! grep "root=LABEL=ryzst-iso" /proc/cmdline &>/dev/null; then
     printf "ERROR: Please boot into the installation media first\n\n"
     exit 1
 fi
@@ -18,9 +18,9 @@ fi
 # confirm installation
 printf "Proceed with system installation:\n"
 CONFIRM=$(printf "yes\nno" | fzf --prompt="Proceed with system installation: $SELECTION > " --reverse)
-printf "$CONFIRM\n\n"
+printf '%s\n\n' "$CONFIRM"
 if [[ $CONFIRM == "" || $CONFIRM == "no" ]]; then
-    printf "Canceled. Run \"sudo ryzst system intall\" to restart installation\n\n"
+    printf 'Canceled. Run "sudo ryzst-installer" to restart installation\n\n'
     exit 1
 fi
 
@@ -46,7 +46,7 @@ rm -rf /tmp/ryzst
 git clone --depth 1 $REPO_URL /tmp/ryzst &>/dev/null
 HOSTS=$(ls /tmp/ryzst/hosts)
 HOST=$(printf "%s\n" "${HOSTS[@]}" | fzf --prompt="Select Host to Install: " --reverse)
-printf "$HOST\n\n"
+printf "%s\n\n" "$HOST"
 if [[ $HOST == "" ]]; then
     printf "ERROR: Invalid selection\n\n"
     exit 1
@@ -58,7 +58,7 @@ if [[ $CONFIRM == "" || $CONFIRM == "no" ]]; then
 fi
 
 # disko (zap_create_mount)
-$(nix build --print-out-paths $REPO\#nixosConfigurations.$HOST.config.system.build.diskoScript)
+nix build --print-out-paths "$REPO"\#nixosConfigurations."$HOST".config.system.build.diskoScript
 
 # generate keys
 PERSIST=/mnt/persist
@@ -73,7 +73,7 @@ ssh-keygen -q -N "" -t ed25519 -f $SECRETS/ssh_host_e25519_key
 
 # install nixos from flake
 printf "Installing system:\n"
-nixos-install --flake $REPO\#$HOST --root /mnt --no-root-password
+nixos-install --flake "$REPO"\#"$HOST" --root /mnt --no-root-password
 # todo: register device (wg0_key.pub ssh_host_e25519_key.pub)...
 
 # finish
@@ -82,7 +82,7 @@ umount -R /mnt
 zpool export -a
 swapoff --all
 CONFIRM=$(printf "reboot" | fzf --prompt="Remove installation media and finish installation: > " --reverse)
-printf "$CONFIRM\n\n"
+printf '%s\n\n' "$CONFIRM"
 if [[ $CONFIRM == "" ]]; then
     printf "Canceled\n\n"
     exit 1

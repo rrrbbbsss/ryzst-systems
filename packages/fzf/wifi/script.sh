@@ -9,5 +9,5 @@ tput cuu1
 tput el
 [[ -n $selection ]] || { printf "Canceled\n" && exit 1; }
 
-ssid=$(printf "$selection" | awk '{ print $2 }')
+ssid=$(printf '%s' "$selection" | awk '{ print $2 }')
 nmcli --ask device wifi connect "$ssid"

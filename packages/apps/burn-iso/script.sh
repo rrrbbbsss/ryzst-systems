@@ -14,23 +14,23 @@ fi
 # select usb drive
 SELECTION=$(fzf --prompt="Select USB Device to format: " --reverse <<<"$USBSTORAGE")
 printf "\nSelect USB Device to format:\n"
-printf "$SELECTION\n\n"
+printf '%s\n\n' "$SELECTION"
 if [[ $SELECTION == "" ]]; then
     printf "Invalid selection\n\n"
     exit 1
 fi
 
 # confirm correct usb drive
-printf "Confirm to write to: $SELECTION\n"
+printf 'Confirm to write to: %s\n' "$SELECTION"
 CONFIRM=$(printf "yes\nno" | fzf --prompt="Confirm to write to: $SELECTION > " --reverse)
-printf "$CONFIRM\n\n"
+printf '%s\n\n' "$CONFIRM"
 if [[ $CONFIRM == "" || $CONFIRM == "no" ]]; then
     printf "Canceled\n\n"
     exit 1
 fi
-SELECTION=$(echo $SELECTION | awk '{ print $1 }')
+SELECTION=$(echo "$SELECTION" | awk '{ print $1 }')
 
 # dd iso to drive
 RESULT=$(nix build "$flake#iso-installer" --print-out-paths) &&
-    printf "\ndd if=$RESULT/iso/installer.iso of=$SELECTION\n" &&
-    sudo dd if=$RESULT/iso/installer.iso of=$SELECTION bs=4M conv=fsync status=progress
+    printf '\ndd if=%s/iso/installer.iso of=%s\n' "$RESULT" "$SELECTION" &&
+    sudo dd if="$RESULT"/iso/installer.iso of="$SELECTION" bs=4M conv=fsync status=progress

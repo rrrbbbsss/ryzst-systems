@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+# shellcheck disable=SC2016
 WINDOW_QUERY='
 .nodes[].nodes[]
 | . as $workspace
@@ -16,9 +17,8 @@ WINDOW_DATA=$(swaymsg -t get_tree | jq "$WINDOW_QUERY")
 ITEMS_QUERY='
 .[] | .window.id, " [", .window.app, "] ", .window.name, " (", .workspace.name, ")\n"
 '
-ITEMS_DATA=$(jq -j "$ITEMS_QUERY" <<<$WINDOW_DATA)
+ITEMS_DATA=$(jq -j "$ITEMS_QUERY" <<<"$WINDOW_DATA")
 
 SELECTION=$(fzf --reverse --with-nth 2.. --prompt='Windows > ' <<<"$ITEMS_DATA")
 SELECTION_ID=$(cut -d " " -f 1 <<<"$SELECTION")
-echo $SELECTION_ID
 swaymsg "[con_id=$SELECTION_ID]" focus

@@ -3,14 +3,14 @@
 set -euo pipefail
 
 function Error() {
-    printf "Error: $1\n"
+    printf 'Error: %s\n' "$1"
     exit 1
 }
 
 project=${1:-}
 while [ -z "$project" ]; do
     printf "\n"
-    read -p $'\e[1;34mEnter Project Name:\e[0m ' project
+    read -rp $'\e[1;34mEnter Project Name:\e[0m ' project
 done
 
 if [ -d "$project" ]; then
@@ -18,7 +18,6 @@ if [ -d "$project" ]; then
 fi
 
 flake="github:rrrbbbsss/ryzst-systems"
-nix='nix --option experimental-features "nix-command flakes"'
 templates=$(nix flake show "$flake" --json 2>/dev/null | jq '.templates')
 choices=$(jq -r 'keys[]' <<<"$templates")
 query="jq -r --arg a {} '.[\$a].description' <<< '$templates'"
