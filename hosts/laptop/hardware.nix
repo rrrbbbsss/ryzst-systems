@@ -1,5 +1,11 @@
 { config, lib, pkgs, ... }:
 
+
+let
+  disk-size = 120;
+  reserved-space = with builtins;
+    toString (ceil (disk-size * .15)) + "G";
+in
 {
   imports = [
     ../../modules/hardware/devices/lenovo/x230
@@ -54,23 +60,23 @@
   };
 
   #https://discourse.nixos.org/t/impermanence-vs-systemd-initrd-w-tpm-unlocking/25167/2
-  #boot.initrd.systemd.services.rollback = {
-  #  description = "Rollback ZFS datasets to a pristine state";
-  #  wantedBy = [
-  #    "initrd.target"
-  #  ];
-  #  after = [
-  #    "zfs-import-tank.service"
-  #  ];
-  #  before = [
-  #    "sysroot.mount"
-  #  ];
-  #  unitConfig.DefaultDependencies = "no";
-  #  serviceConfig.Type = "oneshot";
-  #  script = ''
-  #    ${pkgs.zfs}/bin/zfs rollback -r tank/local/root@blank"
-  #  '';
-  #};
+  boot.initrd.systemd.services.rollback = {
+    description = "Rollback ZFS datasets to a pristine state";
+    wantedBy = [
+      "initrd.target"
+    ];
+    after = [
+      "zfs-import-tank.service"
+    ];
+    before = [
+      "sysroot.mount"
+    ];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ${pkgs.zfs}/bin/zfs rollback -r "tank/local/root@blank"
+    '';
+  };
 
   disko.devices = {
     disk = {
@@ -84,7 +90,7 @@
             {
               name = "ESP";
               start = "0";
-              end = "128MiB";
+              end = "512MiB";
               bootable = true;
               content = {
                 type = "filesystem";
@@ -94,7 +100,7 @@
             }
             {
               name = "TANK";
-              start = "128MiB";
+              start = "512MiB";
               end = "100%";
               part-type = "primary";
               bootable = true;
@@ -140,9 +146,11 @@
             };
             mountpoint = "/nix";
           };
+          #todo: move mointpoint
           "local/secrets" = {
             type = "zfs_fs";
             options = {
+              quota = "128M";
               mountpoint = "legacy";
             };
             mountpoint = "/secrets";
@@ -159,11 +167,13 @@
           "local/reserve" = {
             type = "zfs_fs";
             options = {
-              refreservation = "20G";
-              refquota = "20G";
+              reservation = reserved-space;
+              quota = reserved-space;
+
             };
           };
 
+          #todo: move mointpoint
           "persist" = {
             type = "zfs_fs";
             options = {
@@ -175,5 +185,28 @@
         };
       };
     };
+  };
+
+  fileSystems."/persist" = {
+    neededForBoot = true;
+  };
+
+  #todo: update installtion script (secrets):
+
+  #todo: break apart
+  #impermanence
+  environment.persistence."/persist" = {
+    directories = [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/systemd/timers"
+      "/var/lib/systemd/coredump"
+      "/var/lib/nixos"
+      #todo: comb through home...
+      "/home"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/adjtime"
+    ];
   };
 }
