@@ -68,6 +68,23 @@ let
       ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - \
       | ${getExe pkgs.swappy} -f -
     '';
+    colorpicker =
+      getExe
+        (pkgs.writeShellApplication {
+          name = "colorpicker";
+          runtimeInputs = with pkgs; [
+            imagemagick
+            grim
+            slurp
+            wl-clipboard
+          ];
+          #https://github.com/swaywm/sway/wiki/Tricks#html-color-picker
+          text = ''
+            grim -g "$(slurp -p)" -t ppm - |
+            convert - -format '%[pixel:p{0,0}]' txt:- |
+            tail -n 1 | cut -d ' ' -f 4 | wl-copy -n
+          '';
+        });
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
       [ "swaymsg -t get_tree | ${getExe pkgs.jq.bin} '.. | .name? | select(. == "__scratchpad__")'" ] \
@@ -352,6 +369,7 @@ in
         "${modifier}+d" = "exec ${commands.applancher}";
         "${modifier}+p" = "exec ${commands.passwords}";
         "${modifier}+n" = "exec ${commands.wifi}";
+        "${modifier}+F11" = "exec ${commands.colorpicker}";
         "${modifier}+F12" = "exec ${commands.screenshot}";
         "${modifier}+backslash" = "exec ${commands.editor}";
         "${modifier}+tab" = "exec ${commands.windows}";
