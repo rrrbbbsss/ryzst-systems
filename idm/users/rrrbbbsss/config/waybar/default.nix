@@ -85,19 +85,14 @@
           interval = 5;
         };
         pulseaudio = {
-          format = "{volume:3}% {icon} {format_source}";
+          format = "{volume:3}% {icon}  {format_source}";
           format-bluetooth = "{volume:3}% {icon} {format_source}";
           format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
+          format-muted = "  0% 󰝟  {format_source}";
           format-source = "{volume:3}% ";
-          format-source-muted = " ";
+          format-source-muted = "  0% ";
           format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
+            headphone = " ";
             default = [ "" "" "" ];
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
