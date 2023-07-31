@@ -9,6 +9,7 @@
     profiles.default = {
       id = 0;
       isDefault = true;
+      userChrome = builtins.readFile ./userChrome.css;
       settings = {
         "browser.startup.homepage" = "https://google.com";
         "browser.newtabpage.enabled" = false;
@@ -33,6 +34,7 @@
         "privacy.clearOnShutdown.offlineApps" = true;
         "privacy.clearOnShutdown.cookies" = true;
         "layout.css.prefers-color-scheme.content-override" = 0;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
       search = {
         force = true;
@@ -45,6 +47,7 @@
       extensions = with pkgs.firefox-addons; [
         ublock-origin
         tridactyl
+        adsum-notabs
       ];
     };
   };
