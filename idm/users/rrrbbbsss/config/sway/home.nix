@@ -74,6 +74,7 @@ let
       && swaymsg "scratchpad show" \
       || ${commands.editor} -F '(quote (name . "__scratchpad__"))' /nfs/Notes/todos.org
     '';
+    lockscreen = "${getExe pkgs.playerctl} -a pause; ${getExe config.programs.swaylock.package} -f";
     exit = "swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
     media = {
       raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
@@ -155,7 +156,7 @@ in
     timeouts = [
       {
         timeout = 600;
-        command = "${getExe pkgs.swaylock} -f";
+        command = commands.lockscreen;
       }
       {
         timeout = 630;
@@ -168,10 +169,14 @@ in
       }
     ];
     events = [
-      { event = "before-sleep"; command = "${getExe pkgs.swaylock} -f"; }
-      { event = "before-sleep"; command = "${getExe pkgs.playerctl} pause"; }
-      { event = "lock"; command = "${getExe pkgs.swaylock} -f"; }
-      { event = "lock"; command = "${getExe pkgs.playerctl} pause"; }
+      {
+        event = "before-sleep";
+        command = commands.lockscreen;
+      }
+      {
+        event = "lock";
+        command = commands.lockscreen;
+      }
     ];
   };
 
