@@ -1,7 +1,10 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   programs.mpv = {
     enable = true;
+    scripts = with pkgs.mpvScripts; [
+      mpris
+    ];
     config = {
       profile = "gpu-hq";
       scale = "ewa_lanczossharp";
