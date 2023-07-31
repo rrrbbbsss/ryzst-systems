@@ -74,7 +74,20 @@ let
       && swaymsg "scratchpad show" \
       || ${commands.editor} -F '(quote (name . "__scratchpad__"))' /nfs/Notes/todos.org
     '';
-    lockscreen = "${getExe pkgs.playerctl} -a pause; ${getExe config.programs.swaylock.package} -f";
+    lockscreen = getExe
+      (pkgs.writeShellApplication {
+        name = "lockscreen";
+        runtimeInputs = [
+          pkgs.pulseaudio
+          pkgs.playerctl
+          config.programs.swaylock.package
+        ];
+        text = ''
+          swaylock -f
+          pactl set-sink-mute @DEFAULT_SINK@ 1
+          playerctl -a pause
+        '';
+      });
     exit = "swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
     media = {
       raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
