@@ -73,16 +73,11 @@ let
         (pkgs.writeShellApplication {
           name = "colorpicker";
           runtimeInputs = with pkgs; [
-            imagemagick
-            grim
-            slurp
+            hyprpicker
             wl-clipboard
           ];
-          #https://github.com/swaywm/sway/wiki/Tricks#html-color-picker
           text = ''
-            grim -g "$(slurp -p)" -t ppm - |
-            convert - -format '%[pixel:p{0,0}]' txt:- |
-            tail -n 1 | cut -d ' ' -f 4 | wl-copy -n
+            hyprpicker --no-fancy --render-inactive --autocopy
           '';
         });
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
