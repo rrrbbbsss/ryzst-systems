@@ -101,7 +101,32 @@ let
           playerctl -a pause
         '';
       });
-    exit = "swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes' 'swaymsg exit'";
+    exit =
+      let
+        app = pkgs.writeShellApplication {
+          name = "exit";
+          runtimeInputs = [
+            config.programs.fzf.package
+            config.wayland.windowManager.sway.package
+            pkgs.systemd
+          ];
+          text = ''
+            actions="${pkgs.writeText "exit-actions.json"
+              (builtins.toJSON {
+                exit = "swaymsg exit";
+                lock = commands.lockscreen;
+                suspend = "systemctl suspend";
+                reboot = "systemctl reboot";
+                shutdown = "systemctl poweroff";
+              })}"
+            options=$(jq -r 'keys[]' "$actions")
+            selection=$(fzf --reverse --prompt 'Exit > ' <<<"$options")
+            action=$(jq -r ".$selection" "$actions")
+            swaymsg exec "$action"
+          '';
+        };
+      in
+      wrap-float-window "FZF-Launcher" (getExe app);
     media = {
       raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
       lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
