@@ -1,6 +1,7 @@
 { pkgs, osConfig, config, lib, ... }:
 
 let
+  font = "DejaVu Sans Mono";
   colors = {
     desktop = "#0d0d0d";
     text = "#c5c8c6";
@@ -132,11 +133,20 @@ in
     gnome.adwaita-icon-theme
   ];
 
+  #cursor
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Original-Classic";
+    size = 20;
+  };
+  gtk.enable = true;
+
   programs.swaylock = {
     settings = {
       image = "${./rosenritter.png}";
       scaling = "center";
-      font = "DejaVu Sans Mono";
+      inherit font;
       font-size = 0.0;
       indicator-idle-visible = true;
       indicator-radius = 275;
@@ -219,13 +229,20 @@ in
       inherit (commands) terminal;
       menu = commands.applancher;
       fonts = {
-        names = [ "DejaVu Sans Mono" ];
+        names = [ font ];
         size = 9.0;
       };
       bars = [ ];
       workspaceLayout = "tabbed";
       gaps = {
         inner = 7;
+      };
+      seat = {
+        "*" = {
+          xcursor_theme = with config.home.pointerCursor;
+            "${name} ${builtins.toString size}";
+          hide_cursor = "when-typing enable";
+        };
       };
       input = {
         "*" = {
