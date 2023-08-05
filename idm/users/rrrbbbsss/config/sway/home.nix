@@ -83,9 +83,11 @@ let
         });
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
-      [ "swaymsg -t get_tree | ${getExe pkgs.jq.bin} '.. | .name? | select(. == "__scratchpad__")'" ] \
-      && swaymsg "scratchpad show" \
-      || ${commands.editor} -F '(quote (name . "__scratchpad__"))' /nfs/Notes/todos.org
+      swaymsg [title="TODO"] scratchpad show \
+      || ${commands.editor} -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
+    '';
+    music = ''
+      swaymsg [title="Spotify"] scratchpad show || exec ${getExe pkgs.spotify}
     '';
     lockscreen = getExe
       (pkgs.writeShellApplication {
@@ -338,7 +340,7 @@ in
           {
             command = "move scratchpad; scratchpad show";
             criteria = {
-              title = "__scratchpad__";
+              title = "(TODO|Spotify)";
             };
           }
         ];
@@ -406,6 +408,7 @@ in
         "${modifier}+d" = "exec ${commands.applancher}";
         "${modifier}+p" = "exec ${commands.passwords}";
         "${modifier}+n" = "exec ${commands.wifi}";
+        "${modifier}+m" = "exec ${commands.music}";
         "${modifier}+F11" = "exec ${commands.colorpicker}";
         "${modifier}+F12" = "exec ${commands.screenshot}";
         "${modifier}+backslash" = "exec ${commands.editor}";
