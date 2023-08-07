@@ -16,62 +16,58 @@ let
     black = "#000000";
     transparent = "#00000000";
   };
-  inherit (lib.meta) getExe;
   modifier = "Mod4";
   wrap-float-window = window-name: command: ''
     ${commands.terminal} --title '${window-name}' --class '__float__' -e \
     ${command}
   '';
   commands = {
-    workspace-cmd = getExe
-      (pkgs.writeShellApplication {
-        name = "workspace-cmd";
-        runtimeInputs = [ pkgs.sway pkgs.jq ];
-        text = ''
-          monitors="${pkgs.writeText "device-monitors.json"
-            (builtins.toJSON osConfig.device.monitors)}"
-          focused=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused == true) | .name')
-          prefix=$(jq -r '."'"$focused"'".number' $monitors)
-          name="$prefix""$2"
-          case $1 in
-            "focus")
-              swaymsg workspace "$name"
-            ;;
-            "move")
-              swaymsg move container to workspace "$name" 
-              swaymsg workspace "$name"
-            ;;
-            *)
-              exit 1
-            ;;
-          esac
-        '';
-      });
-    terminal = getExe pkgs.alacritty;
+    workspace-cmd = "${pkgs.writeShellApplication {
+      name = "workspace-cmd";
+      runtimeInputs = [ pkgs.sway pkgs.jq ];
+      text = ''
+        monitors="${pkgs.writeText "device-monitors.json"
+          (builtins.toJSON osConfig.device.monitors)}"
+        focused=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused == true) | .name')
+        prefix=$(jq -r '."'"$focused"'".number' $monitors)
+        name="$prefix""$2"
+        case $1 in
+          "focus")
+            swaymsg workspace "$name"
+          ;;
+          "move")
+            swaymsg move container to workspace "$name"
+            swaymsg workspace "$name"
+          ;;
+          *)
+            exit 1
+          ;;
+        esac
+      '';
+    }}/bin/workspace-cmd";
+    terminal = "${pkgs.alacritty}/bin/alacritty";
     applancher = wrap-float-window "FZF-Launcher" ''
-      ${getExe pkgs.j4-dmenu-desktop} \
+      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-dekstop \
       &> /dev/null \
-      --dmenu="${getExe pkgs.fzf} --reverse --prompt 'Launch > '" \
+      --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
       --wrapper='swaymsg exec' \
       --term="${commands.terminal}" \
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic
     '';
-    browser = getExe config.programs.firefox.package;
+    browser = "${config.programs.firefox.package}/bin/firefox";
     passwords = wrap-float-window "FZF-Pass"
-      (getExe pkgs.ryzst.fzf-pass);
+      "${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
     wifi = wrap-float-window "FZF-Wifi" ''
-      bash -c '${getExe pkgs.ryzst.fzf-wifi} && sleep 1'
+      bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
     '';
     windows = wrap-float-window "FZF-Windows"
-      (getExe pkgs.ryzst.fzf-sway-windows);
+      "${pkgs.ryzst.fzf-sway-windows}/fzf-sway-windows";
     screenshot = ''
-      ${getExe pkgs.grim} -g "$(${getExe pkgs.slurp})" - \
-      | ${getExe pkgs.swappy} -f -
+      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
+      | ${config.programs.swappy.package}/bin/swappy -f -
     '';
-    colorpicker =
-      getExe
-        (pkgs.writeShellApplication {
+    colorpicker = "${pkgs.writeShellApplication {
           name = "colorpicker";
           runtimeInputs = with pkgs; [
             hyprpicker
@@ -80,17 +76,16 @@ let
           text = ''
             hyprpicker --no-fancy --render-inactive --autocopy
           '';
-        });
+        }}/bin/colorpicker";
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
       swaymsg [title="TODO"] scratchpad show \
       || ${commands.editor} -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
     '';
     music = ''
-      swaymsg [title="Spotify"] scratchpad show || exec ${getExe pkgs.spotify}
+      swaymsg [title="Spotify"] scratchpad show || exec ${pkgs.spotify}/bin/spotify
     '';
-    lockscreen = getExe
-      (pkgs.writeShellApplication {
+    lockscreen = "${pkgs.writeShellApplication {
         name = "lockscreen";
         runtimeInputs = [
           pkgs.pulseaudio
@@ -102,7 +97,7 @@ let
           pactl set-sink-mute @DEFAULT_SINK@ 1
           playerctl -a pause
         '';
-      });
+    }}/bin/lockscreen";
     exit =
       let
         app = pkgs.writeShellApplication {
@@ -128,19 +123,19 @@ let
           '';
         };
       in
-      wrap-float-window "FZF-Launcher" (getExe app);
+      wrap-float-window "FZF-Launcher" "${app}/bin/exit";
     media = {
       raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
       lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
       mute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
       micMute = "${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-      play = "${getExe pkgs.playerctl} play-pause";
-      next = "${getExe pkgs.playerctl} next";
-      prev = "${getExe pkgs.playerctl} previous";
+      play = "${pkgs.playerctl}/bin/playerctl play-pause";
+      next = "${pkgs.playerctl}/bin/playerctl next";
+      prev = "${pkgs.playerctl}/bin/playerctl previous";
     };
     screen = {
-      raiseBrightness = "${getExe pkgs.brightnessctl} set 5%+";
-      lowerBrightness = "${getExe pkgs.brightnessctl} set 5%-";
+      raiseBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%+";
+      lowerBrightness = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
     };
   };
 in
