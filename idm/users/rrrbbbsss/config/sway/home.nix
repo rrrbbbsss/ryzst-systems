@@ -47,7 +47,7 @@ let
     }}/bin/workspace-cmd";
     terminal = "${pkgs.alacritty}/bin/alacritty";
     applancher = wrap-float-window "FZF-Launcher" ''
-      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-dekstop \
+      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
       &> /dev/null \
       --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
       --wrapper='swaymsg exec' \
@@ -62,7 +62,7 @@ let
       bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
     '';
     windows = wrap-float-window "FZF-Windows"
-      "${pkgs.ryzst.fzf-sway-windows}/fzf-sway-windows";
+      "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows";
     screenshot = ''
       ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
       | ${config.programs.swappy.package}/bin/swappy -f -
