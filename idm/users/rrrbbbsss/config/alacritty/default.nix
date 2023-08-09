@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  font = "DejaVu Sans Mono";
+  font = "DejaVu Sans M Nerd Font";
 in
 {
   programs.alacritty = {

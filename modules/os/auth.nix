@@ -10,6 +10,10 @@ let
     | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config)" \
     > $out
   '';
+  lecture = pkgs.runCommandLocal "lecture" { } ''
+    printf $'\e[31m%s\e[0m\n' "$(cat ${./lecture.txt})" \
+    > $out
+  '';
 in
 {
   options.os.auth = {
@@ -30,6 +34,9 @@ in
         openssh.authorizedKeys.keys = import ../../idm/groups/admins.nix;
       };
     };
+    security.sudo.extraConfig = ''
+      Defaults lecture_file  = ${lecture}
+    '';
     security.pam = {
       u2f = {
         enable = true;
