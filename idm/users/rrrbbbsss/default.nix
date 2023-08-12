@@ -90,6 +90,7 @@ in
       aspellDicts.en
 
       #utils
+      nix-tree
       htop
       git
       strace
