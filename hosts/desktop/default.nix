@@ -12,8 +12,4 @@
     onShutdown = "shutdown";
   };
 
-  # Printer
-  services.printing = {
-    enable = true;
-  };
 }
