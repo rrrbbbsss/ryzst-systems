@@ -4,6 +4,12 @@ set -euo pipefail
 
 flake="github:rrrbbbsss/ryzst-systems"
 
+# run as sudo
+if [[ $EUID -ne 0 ]]; then
+    printf "ERROR: Please run as root\n\n"
+    exit 1
+fi
+
 # check for usb drives
 USBSTORAGE=$(lsblk -A -o TRAN,PATH,VENDOR,SIZE | awk '$1 == "usb" {print $2, $3, $4}')
 if [[ $USBSTORAGE == "" ]]; then
