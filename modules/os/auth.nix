@@ -11,7 +11,7 @@ let
     > $out
   '';
   lecture = pkgs.runCommandLocal "lecture" { } ''
-    printf $'\e[31m%s\e[0m\n' "$(cat ${./lecture.txt})" \
+    printf $'\e[31m%s\e[0m\n' "You'll shoot your eye out" \
     > $out
   '';
 in
