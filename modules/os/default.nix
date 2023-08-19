@@ -27,7 +27,7 @@ in
     };
     domain = mkOption {
       type = types.str;
-      example = "mek.ryzst.net";
+      default = "mek.ryzst.net";
       description = "domain";
     };
     flake = mkOption {
