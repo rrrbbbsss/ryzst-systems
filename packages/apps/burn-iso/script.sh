@@ -37,6 +37,6 @@ fi
 SELECTION=$(echo "$SELECTION" | awk '{ print $1 }')
 
 # dd iso to drive
-RESULT=$(nix build "$flake#iso-installer" --print-out-paths) &&
-    printf '\ndd if=%s/iso/installer.iso of=%s\n' "$RESULT" "$SELECTION" &&
-    sudo dd if="$RESULT"/iso/installer.iso of="$SELECTION" bs=4M conv=fsync status=progress
+printf 'Burning ISO to %s:\n' "$SELECTION"
+dd if="$(nix build "$flake#iso-installer" --print-out-paths)"/iso/installer.iso \
+    of="$SELECTION" bs=4M conv=fsync oflag=direct status=progress
