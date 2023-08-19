@@ -166,13 +166,10 @@ in
 
   programs.swaylock = {
     settings = {
-      image = "${./rosenritter.png}";
       scaling = "center";
       inherit font;
       font-size = 0.0;
       indicator-idle-visible = true;
-      indicator-radius = 275;
-      indicator-thickness = 20;
       #default
       color = colors.desktop;
       bs-hl-color = colors.borders;
