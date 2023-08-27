@@ -8,7 +8,7 @@
 
 let
   pname = "katrain";
-  version = "1.12.3";
+  version = "1.14.0";
   pythonPackages = python3Packages;
   desktopItem = makeDesktopItem {
     name = pname;
@@ -28,7 +28,7 @@ pythonPackages.buildPythonApplication {
   src = pythonPackages.fetchPypi {
     pname = "KaTrain";
     inherit version;
-    sha256 = "sha256-Mnv6Ij3hEXiPr/ru94MZioWea7Gza13IwAbI0pNOGpE=";
+    sha256 = "sha256-gMZ8b3oB/WReaK6aN7yLU+ZegGHi/sJpgvshXuxqcf4=";
   };
 
   nativeBuildInputs = [ iconConvTools ];
@@ -39,7 +39,7 @@ pythonPackages.buildPythonApplication {
     docutils
     ryzst.ffpyplayer
     idna
-    ryzst.kivy
+    kivy
     kivy-garden
     ryzst.kivymd
     pillow

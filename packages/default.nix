@@ -12,11 +12,7 @@ let
     fzf-wifi = callPackage ./fzf/wifi { };
     fzf-sway-windows = callPackage ./fzf/sway-windows { };
     fzf-nix-options = callPackage ./fzf/nix-options { inherit hm; };
-    kivy = python3Packages.callPackage ./python-libs/kivy {
-      inherit (pkgs) mesa;
-      inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices AVFoundation;
-    };
-    kivymd = python3Packages.callPackage ./python-libs/kivymd { inherit ryzst; };
+    kivymd = python3Packages.callPackage ./python-libs/kivymd { };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
   };
   target = {

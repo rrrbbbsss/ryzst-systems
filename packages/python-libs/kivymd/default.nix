@@ -2,7 +2,8 @@
 , buildPythonPackage
 , fetchPypi
 , requests
-, ryzst
+, docutils
+, kivy
 }:
 
 let
@@ -19,7 +20,8 @@ buildPythonPackage rec {
     sha256 = "sha256-ncvCy4r/3pyCVyGY/dsyyBTN1XJUoOSwDFOILbLI1qY=";
   };
 
-  propagatedBuildInputs = [ requests ryzst.kivy ];
+  nativeBuildInputs = [ docutils ];
+  propagatedBuildInputs = [ requests kivy ];
 
   doCheck = false;
   # create ./.kivy for import test
