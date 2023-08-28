@@ -4,6 +4,17 @@ let
     package = pkgs.emacs-pgtk;
     config = ./init.el;
     defaultInitFile = true;
+    override = epkgs: epkgs // {
+      treemacs = epkgs.melpaPackages.treemacs.overrideAttrs
+        (old: {
+          src = pkgs.fetchFromGitHub {
+            owner = "Alexander-Miller";
+            repo = "treemacs";
+            rev = "aa0944a29eee48302fd76b6c3a59c5aece114fa6";
+            hash = "sha256-sSJFST7sri/qEQ7Re14YzXrdRVwhoayKE4fJ4YO30SU=";
+          };
+        });
+    };
   };
 in
 {
