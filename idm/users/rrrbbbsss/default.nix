@@ -120,13 +120,10 @@ in
       fd
       bat
       virt-manager
+      pavucontrol
 
       #print/scan
       gnome.simple-scan
-
-      #music
-      spotify
-      pavucontrol
 
       #video
       yt-dlp

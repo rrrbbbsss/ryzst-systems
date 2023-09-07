@@ -83,7 +83,8 @@ let
       || ${commands.editor} -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
     '';
     music = ''
-      swaymsg [title="Spotify"] scratchpad show || exec ${pkgs.spotify}/bin/spotify
+      swaymsg [title="MUSIC"] scratchpad show \
+      || exec ${wrap-float-window "MUSIC" "${pkgs.ncspot}/bin/ncspot"}
     '';
     lockscreen = "${pkgs.writeShellApplication {
         name = "lockscreen";
@@ -332,7 +333,7 @@ in
           {
             command = "move scratchpad; scratchpad show";
             criteria = {
-              title = "(TODO|Spotify)";
+              title = "(TODO|MUSIC)";
             };
           }
         ];
