@@ -1,15 +1,7 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ../../idm/users/rrrbbbsss
+    ../../modules/profiles/libvirtd.nix
   ];
-
-  # VMS
-  users.users.${config.device.user}.extraGroups = [ "libvirtd" ];
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu.runAsRoot = false;
-    onShutdown = "shutdown";
-  };
-
 }
