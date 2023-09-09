@@ -7,6 +7,7 @@ in
     ./config/sway
     ./config/wireshark
     ./config/zsh
+    ./config/ncspot
   ];
 
   device.user = "rrrbbbsss";
@@ -121,6 +122,7 @@ in
       bat
       virt-manager
       pavucontrol
+      qpwgraph
 
       #print/scan
       gnome.simple-scan
