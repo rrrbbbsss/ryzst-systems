@@ -84,7 +84,7 @@ let
     '';
     music = ''
       swaymsg [title="MUSIC"] scratchpad show \
-      || exec ${wrap-float-window "MUSIC" "${pkgs.ncspot}/bin/ncspot"}
+      || exec ${wrap-float-window "MUSIC" "${config.programs.ncspot.package}/bin/ncspot"}
     '';
     lockscreen = "${pkgs.writeShellApplication {
         name = "lockscreen";
