@@ -39,7 +39,7 @@ in
   };
 
   #zfs
-  networking.hostId = "79468924";
+  networking.hostId = lib.mkForce "79468924";
   boot = {
     kernelParams = [ "nohibernate" ];
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;

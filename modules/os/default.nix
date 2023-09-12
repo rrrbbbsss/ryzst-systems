@@ -58,6 +58,8 @@ in
     networking = {
       inherit (cfg) domain;
       hostName = cfg.hostname;
+      hostId = with builtins;
+        substring 0 8 (hashString "sha256" cfg.hostname);
     };
 
     # base-packages
