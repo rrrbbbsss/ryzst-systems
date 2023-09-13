@@ -38,7 +38,9 @@ rec {
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${programs.gpg.package}/bin/gpg --card-status";
+      ExecStart = ''
+        ${programs.gpg.package}/bin/gpg-connect-agent "scd serialno" "learn --force" /bye
+      '';
       RemainAfterExit = "yes";
     };
     Install = {
