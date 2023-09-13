@@ -68,10 +68,15 @@ in
       enable = true;
       openFirewall = true;
       settings = {
+        LogLevel = "VERBOSE";
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
       };
+      sftpFlags = [
+        "-f AUTHPRIV"
+        "-l INFO"
+      ];
       hostKeys = [
         {
           path = "/persist/secrets/ssh_host_ed25519_key";
