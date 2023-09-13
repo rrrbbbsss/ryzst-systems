@@ -92,13 +92,24 @@ let
           pkgs.pulseaudio
           pkgs.playerctl
           config.programs.swaylock.package
+          pkgs.gawk
+          pkgs.systemd
         ];
         text = ''
-          swaylock -f
-          pactl set-sink-mute @DEFAULT_SINK@ 1
-          playerctl -a pause
+          pactl set-sink-mute @DEFAULT_SINK@ 1 || true
+          playerctl -a pause || true
+          swaylock && loginctl unlock-session
         '';
     }}/bin/lockscreen";
+    lockscreen-unlock = "${pkgs.writeShellApplication {
+        name = "lockscreen-unlock";
+        runtimeInputs = [
+          pkgs.pulseaudio
+        ];
+        text = ''
+          pactl set-sink-mute @DEFAULT_SINK@ 0
+        '';
+    }}/bin/lockscreen-unlock";
     exit =
       let
         app = pkgs.writeShellApplication {
@@ -148,9 +159,6 @@ in
   };
 
   home.packages = with pkgs; [
-    swaylock
-    swayidle
-    swaybg
     wl-clipboard
     wlr-randr
     gnome.adwaita-icon-theme
@@ -231,6 +239,10 @@ in
       {
         event = "lock";
         command = commands.lockscreen;
+      }
+      {
+        event = "unlock";
+        command = commands.lockscreen-unlock;
       }
     ];
   };
