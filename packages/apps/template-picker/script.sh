@@ -3,18 +3,18 @@
 set -euo pipefail
 
 function Error() {
-    printf 'Error: %s\n' "$1"
-    exit 1
+  printf 'Error: %s\n' "$1"
+  exit 1
 }
 
 project=${1:-}
 while [ -z "$project" ]; do
-    printf "\n"
-    read -rp $'\e[1;34mEnter Project Name:\e[0m ' project
+  printf "\n"
+  read -rp $'\e[1;34mEnter Project Name:\e[0m ' project
 done
 
 if [ -d "$project" ]; then
-    Error "project folder already exists"
+  Error "project folder already exists"
 fi
 
 flake="github:rrrbbbsss/ryzst-systems"
@@ -24,9 +24,9 @@ query="jq -r --arg a {} '.[\$a].description' <<< '$templates'"
 text='###+++PROJECT+++###'
 
 selection=$(fzf --reverse --prompt 'Select template > ' \
-    --preview-window=bottom,wrap \
-    --preview "$query" \
-    <<<"$choices")
+  --preview-window=bottom,wrap \
+  --preview "$query" \
+  <<<"$choices")
 
 git init "$project"
 pushd "$project"

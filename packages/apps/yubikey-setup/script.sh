@@ -5,8 +5,8 @@ set -eo pipefail
 # select yubikey
 YUBIKEYS=$(ykman list)
 if [[ $YUBIKEYS == "" ]]; then
-    printf "ERROR: No yubikey plugged in\n\n"
-    exit 1
+  printf "ERROR: No yubikey plugged in\n\n"
+  exit 1
 fi
 YUBIKEY=$(printf '%s' "$YUBIKEYS" | fzf --prompt="Select USB Device to format: " --reverse)
 SERIAL=$(printf '%s' "$YUBIKEY" | sed -n -e 's/^.*Serial: //p')
