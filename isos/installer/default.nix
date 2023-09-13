@@ -9,6 +9,7 @@ in
     (modulesPath + "/profiles/all-hardware.nix")
     #todo: clean this up
     ../../idm/users/rrrbbbsss/config/zsh
+    ../../modules/hardware/common/wifi
   ];
 
   device.user = "installer";
@@ -16,6 +17,7 @@ in
     auth.enable = false;
     nix.enable = false;
   };
+  networking.networkmanager.dns = lib.mkForce "default";
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
@@ -42,13 +44,10 @@ in
     algorithm = "zstd";
   };
 
-  # Networking
-  networking.networkmanager.enable = true;
-
   users.users = {
     ${username} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "video" ];
+      extraGroups = [ "wheel" "video" ];
       # no password
       initialHashedPassword = "";
     };

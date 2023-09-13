@@ -8,10 +8,8 @@ in
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "networkmanager" ];
     hashedPassword = null;
   };
-  networking.networkmanager.enable = true;
 
   home-manager.users.${username} = { pkgs, ... }: {
     programs.firefox = {

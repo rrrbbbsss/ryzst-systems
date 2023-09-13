@@ -5,6 +5,7 @@
     ../../modules/hardware/common/cpu/intel
     ../../modules/hardware/common/gpu/intel
     ../../modules/hardware/common/tpm/2-0
+    ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
