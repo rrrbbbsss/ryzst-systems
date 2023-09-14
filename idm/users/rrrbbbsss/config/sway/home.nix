@@ -98,7 +98,7 @@ let
         text = ''
           pactl set-sink-mute @DEFAULT_SINK@ 1 || true
           playerctl -a pause || true
-          swaylock && loginctl unlock-session
+          (swaylock && loginctl unlock-session) &
         '';
     }}/bin/lockscreen";
     lockscreen-unlock = "${pkgs.writeShellApplication {
