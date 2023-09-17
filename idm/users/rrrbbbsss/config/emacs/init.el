@@ -324,6 +324,9 @@
 
 (use-package format-all
   :ensure t
+  :config
+  (setf (alist-get "TOML" format-all-default-formatters nil nil #'equal)
+	'(taplo-fmt))
   :hook
   ((prog-mode . format-all-mode)
    (format-all-mode . format-all-ensure-formatter)))
