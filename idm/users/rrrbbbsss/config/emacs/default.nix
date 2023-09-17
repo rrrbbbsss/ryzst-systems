@@ -75,5 +75,7 @@ in
   home.packages = with pkgs; [
     #treemacs
     python3
+    #formatters
+    taplo-lsp
   ];
 }

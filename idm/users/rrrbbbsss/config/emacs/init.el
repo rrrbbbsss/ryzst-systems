@@ -349,6 +349,10 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
+(use-package conf-mode
+  :requires lsp-mode
+  :hook ((conf-toml-mode . lsp)))
+
 ;; nix
 (use-package nix-mode
   :ensure t
