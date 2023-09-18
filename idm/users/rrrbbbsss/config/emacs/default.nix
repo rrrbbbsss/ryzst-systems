@@ -77,5 +77,7 @@ in
     python3
     #formatters
     taplo-lsp
+    nodePackages.prettier
+    nodePackages.vscode-json-languageserver
   ];
 }

@@ -357,7 +357,11 @@
 
 (use-package conf-mode
   :requires lsp-mode
-  :hook ((conf-toml-mode . lsp)))
+  :hook (conf-toml-mode . lsp))
+
+(use-package js-json-mode
+  :requires lsp-mode
+  :hook (js-json-mode . lsp))
 
 ;; nix
 (use-package nix-mode
