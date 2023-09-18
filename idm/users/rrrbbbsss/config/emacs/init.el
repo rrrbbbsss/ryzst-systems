@@ -288,7 +288,10 @@
   :init
   :config
   (column-number-mode 1)
-  (doom-modeline-mode 1))
+  (doom-modeline-mode 1)
+  (doom-modeline-def-modeline 'main
+    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs "  ")))
 
 (use-package nerd-icons
   :ensure t
