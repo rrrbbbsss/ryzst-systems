@@ -86,8 +86,8 @@ function GenerateInstanceData() {
     (umask 0077 && tee $SECRETS_DIR/wg0_key) |
     (umask 0033 wg pubkey >$SECRETS_DIR/wg0_key.pub)
   WGPUB=$(cat $SECRETS_DIR/wg0_key.pug)
-  # copy over nm connection
-  cp --parents -r /etc/NetworkManager/system-connections/ $STATE_DIR
+  # copy over wifi connection
+  cp --parents -r /var/lib/iwd $STATE_DIR
 
   jq -n \
     --arg endpoint "$ENDPOINT" \

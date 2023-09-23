@@ -17,7 +17,6 @@ in
     auth.enable = false;
     nix.enable = false;
   };
-  networking.networkmanager.dns = lib.mkForce "default";
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
