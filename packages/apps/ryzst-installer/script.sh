@@ -35,8 +35,9 @@ function PreChecks() {
 }
 
 function SetupNetwork() {
-  CONNECTIVITY=$(nmcli -g CONNECTIVITY general status)
-  while ls /sys/class/ieee80211/*/device/net &>/dev/null && [[ $CONNECTIVITY != "full" ]]; do
+  LINKS=$(cat /sys/class/net/*/carrier |
+    awk '/1/{a++}END{ print (a>1)?"up":"down" }')
+  while ls /sys/class/ieee80211/*/device/net &>/dev/null && [[ $LINKS == "down" ]]; do
     printf "Connect to wifi:\n"
     fzf-wifi
     printf "\n"
