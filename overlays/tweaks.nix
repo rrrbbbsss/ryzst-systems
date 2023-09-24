@@ -9,4 +9,8 @@ final: prev:
       hash = "sha256-3n0HJgo+3YCuo56a+efzcrh5UsfXi5jPU4tjqzJVm7g=";
     };
   });
+
+  ryzst = prev.ryzst // {
+    overrides.emacs = epkgs: epkgs // { };
+  };
 }
