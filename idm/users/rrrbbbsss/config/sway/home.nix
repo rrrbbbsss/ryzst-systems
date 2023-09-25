@@ -181,7 +181,7 @@ in
       indicator-idle-visible = true;
       #default
       color = colors.desktop;
-      bs-hl-color = colors.borders;
+      bs-hl-color = colors.red;
       inside-color = colors.transparent;
       key-hl-color = colors.yellow;
       ring-color = colors.black;
