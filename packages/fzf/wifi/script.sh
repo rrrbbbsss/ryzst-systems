@@ -1,13 +1,36 @@
 #!/usr/bin/env bash
 
-echo "Scanning..."
+function cleanup() {
+  tail -n +5 |
+    head -n -1 |
+    sed -e "s:\[1;30m::g" |
+    sed -e "s:\[0m::g" |
+    sed -e "s:\*\x1b.*:\*:g" |
+    sed -e "s:\x1b::g" |
+    sed 's/[ ]*//'
+}
 
-fields="BSSID,SSID,BARS,SECURITY,IN-USE"
-ssids=$(nmcli -f $fields dev wifi list | tail -n +2)
-selection="$(printf '%s\n' "${ssids[@]}" | fzf --reverse --prompt='wifi > ')"
-tput cuu1
-tput el
-[[ -n $selection ]] || { printf "Canceled\n" && exit 1; }
+function selector() {
+  SELECTION=$(printf '%s' "$1" | fzf --prompt="$2 > " --reverse)
+  printf '%s' "$SELECTION"
+}
 
-ssid=$(printf '%s' "$selection" | awk '{ print $2 }')
-nmcli --ask device wifi connect "$ssid"
+#get device
+DEVICES=$(iwctl device list | cleanup | awk '{ print $1}')
+if [[ $(wc -l <<<"$DEVICES") -gt 1 ]]; then
+  DEVICE=$(selector "$DEVICES" "Select Device")
+else
+  DEVICE=$DEVICES
+fi
+
+#scan
+printf 'Scanning...\n'
+iwctl station "$DEVICE" scan
+sleep 3
+
+#select network
+NETWORKS=$(iwctl station "$DEVICE" get-networks | cleanup)
+NETWORK=$(selector "$NETWORKS" "Select Network" | awk '{ print $1 }')
+
+#connect
+iwctl station "$DEVICE" connect "$NETWORK"
