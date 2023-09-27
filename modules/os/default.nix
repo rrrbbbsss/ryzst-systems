@@ -60,6 +60,29 @@ in
       hostName = cfg.hostname;
       hostId = with builtins;
         substring 0 8 (hashString "sha256" cfg.hostname);
+      useDHCP = false;
+    };
+
+    services.resolved.enable = false;
+    systemd.network = {
+      enable = true;
+      networks = {
+        wired = {
+          matchConfig = {
+            Name = "en*";
+          };
+          networkConfig = {
+            DHCP = "ipv4";
+          };
+          dhcpV4Config = {
+            UseDNS = false;
+            UseHostname = false;
+            UseDomains = false;
+            UseTimezone = false;
+            RouteMetric = 100;
+          };
+        };
+      };
     };
 
     # base-packages
