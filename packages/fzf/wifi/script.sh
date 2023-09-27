@@ -3,6 +3,7 @@
 function cleanup() {
   tail -n +5 |
     head -n -1 |
+    sed -e "s:\[1;90m>::g" |
     sed -e "s:\[1;30m::g" |
     sed -e "s:\[0m::g" |
     sed -e "s:\*\x1b.*:\*:g" |
@@ -27,6 +28,7 @@ fi
 printf 'Scanning...\n'
 iwctl station "$DEVICE" scan
 sleep 3
+clear
 
 #select network
 NETWORKS=$(iwctl station "$DEVICE" get-networks | cleanup)
