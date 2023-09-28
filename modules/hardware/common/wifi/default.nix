@@ -1,21 +1,18 @@
 { ... }:
 {
-  networking = {
-    wireless.iwd.enable = true;
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      General = {
+        UseDefaultInterface = false;
+        AddressRandomization = "once";
+        AddressRandomizationRange = "full";
+      };
+    };
   };
 
   systemd.network = {
     enable = true;
-    links = {
-      wireless = {
-        matchConfig = {
-          name = "wl*";
-        };
-        linkConfig = {
-          MACAddressPolicy = "random";
-        };
-      };
-    };
     networks = {
       wireless = {
         matchConfig = {
