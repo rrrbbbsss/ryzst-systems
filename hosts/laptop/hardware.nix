@@ -199,7 +199,7 @@ in
   #impermanence
   environment.persistence."/persist" = {
     directories = [
-      "/etc/NetworkManager/system-connections"
+      "/var/lib/iwd"
       "/var/lib/systemd/timers"
       "/var/lib/systemd/coredump"
       "/var/lib/nixos"

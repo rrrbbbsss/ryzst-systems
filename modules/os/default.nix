@@ -66,6 +66,7 @@ in
     services.resolved.enable = false;
     systemd.network = {
       enable = true;
+      wait-online.enable = false;
       networks = {
         wired = {
           matchConfig = {

@@ -23,6 +23,7 @@
         };
         networkConfig = {
           DHCP = "ipv4";
+          IgnoreCarrierLoss = "3s";
         };
         dhcpV4Config = {
           UseDNS = false;
