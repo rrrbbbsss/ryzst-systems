@@ -393,6 +393,10 @@
   (setq prolog-system 'swi)
   :mode "\\.pl\\'")
 
+;; yuck
+(use-package yuck-mode
+  :ensure t)
+
 ;; misc packages
 (use-package nov
   :ensure t
