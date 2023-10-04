@@ -1,0 +1,19 @@
+(defwindow bar
+    :monitor 0
+    :geometry (geometry :x "0%"
+			:y "20px"
+			:width "50px"
+			:height "30px"
+			:anchor "left center")
+    :stacking "fg"
+    :exclusive "true"
+    :focusable "false"
+    (greeter :text "Say Hello!"
+	     :name "Tim"))
+
+(defwidget greeter [?text name]
+	   (box :orientation "horizontal"
+		:halign "center"
+		text
+		(button :onclick "notify-send 'hello' 'hello, ${name}'"
+			"Greet")))
