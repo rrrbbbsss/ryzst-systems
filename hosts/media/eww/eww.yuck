@@ -1,19 +1,32 @@
+(include "vars.yuck")
+
+(defvar img-size 50)
+
 (defwindow bar
     :monitor 0
-    :geometry (geometry :x "0%"
-			:y "20px"
-			:width "50px"
-			:height "30px"
+    :geometry (geometry :x "0"
+			:y "0"
+			:width "100px"
+			:height "100%"
 			:anchor "left center")
     :stacking "fg"
     :exclusive "true"
     :focusable "false"
-    (greeter :text "Say Hello!"
-	     :name "Tim"))
+    (bar))
 
-(defwidget greeter [?text name]
-	   (box :orientation "horizontal"
-		:halign "center"
-		text
-		(button :onclick "notify-send 'hello' 'hello, ${name}'"
-			"Greet")))
+(defwidget icon [img exe]
+ (eventbox
+  :class "icon"
+  :onclick "${launcher} ${exe}"
+  :cursor "pointer"
+  (image :path img
+	 :image-width img-size
+	 :image-height img-size)))
+
+(defwidget bar []
+ (box
+  :orientation "vertical"
+  :class "bar"
+  (for entry in icons
+       (icon :img "${entry.image}"
+	     :exe "${entry.exe}"))))

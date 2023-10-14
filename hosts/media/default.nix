@@ -19,6 +19,7 @@ let
   modifier = "Mod4";
 in
 {
+
   device.user = config.networking.hostName;
 
   users.users.${username} = {
@@ -28,6 +29,10 @@ in
   };
 
   home-manager.users.${username} = { pkgs, config, osConfig, ... }: {
+    imports = [
+      ./eww
+    ];
+
     programs.firefox = {
       enable = true;
       profiles.default = {
@@ -44,70 +49,13 @@ in
       };
     };
 
-    programs.mpv = {
-      enable = true;
-    };
-
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
-      alacritty
-      #audio/music
-      spotify
-
-      #games
-      steam
-      ryzst.sabaki
-
-      #desktop
-      wl-clipboard
-      wlr-randr
       gnome.adwaita-icon-theme
     ];
 
 
     #########
-    programs.eww = {
-      enable = true;
-      package = pkgs.eww-wayland;
-      configDir = ./eww;
-    };
-
-    systemd.user.services.eww = {
-      Unit = {
-        Description = "ElKowars wacky widgets";
-        Documentation = "https://elkowar.github.io/eww/eww.html";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session-pre.target" ];
-      };
-      Service = {
-        Environment = [
-          "GTK_THEME=Adwaita:dark"
-        ];
-        ExecStart = "${config.programs.eww.package}/bin/eww --no-daemonize daemon";
-        ExecReload = "${config.programs.eww.package}/bin/eww reload";
-        Restart = "on-failure";
-        KillMode = "mixed";
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
-
-    systemd.user.services.bar = {
-      Unit = {
-        Description = "Bar";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "eww.service" ];
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${config.programs.eww.package}/bin/eww open bar";
-      };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-    };
-
     home.sessionVariables = {
       GTK_THEME = "Adwaita:dark";
       NIXOS_OZONE_WL = "1";
@@ -142,11 +90,6 @@ in
       enable = true;
       xwayland = true;
       wrapperFeatures.gtk = true;
-      extraConfigEarly = ''
-        exec swaymsg rename workspace 1 to 01
-        titlebar_border_thickness 2
-        titlebar_padding 5 3
-      '';
       config = {
         inherit modifier;
         fonts = {
@@ -191,7 +134,7 @@ in
           };
         };
         window = {
-          border = 2;
+          border = 0;
         };
         keybindings = {
           "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";

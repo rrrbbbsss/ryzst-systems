@@ -1,0 +1,20 @@
+@import "colors";
+
+* {
+  all: unset;
+}
+
+.bar {
+  background-color: $bar;
+  border: 2px solid $border;
+}
+
+.icon {
+  background-color: $background;
+  border: 2px solid $border;
+  margin: 10px;
+}
+
+.icon:hover {
+  background-color: $hover;
+}

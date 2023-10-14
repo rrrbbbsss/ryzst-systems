@@ -9,6 +9,13 @@
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
+  device.monitors = {
+    HDMI-1 = {
+      number = "1";
+      mode = "1920x1080@60Hz";
+    };
+  };
+
   boot = {
     loader = {
       systemd-boot.enable = true;
