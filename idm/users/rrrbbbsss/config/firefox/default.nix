@@ -21,7 +21,7 @@
         "geo.enabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "privacy.firstparty.isolate" = true;
-        "privacy.resistFingerprinting" = true;
+        "privacy.resistFingerprinting" = false;
         "privacy.trackingprotection.enabled" = true;
         "browser.cache.offline.enable" = false;
         "dom.battery.enabled" = false;
@@ -49,7 +49,6 @@
         ublock-origin
         tridactyl
         adsum-notabs
-        darkreader
       ];
     };
   };
