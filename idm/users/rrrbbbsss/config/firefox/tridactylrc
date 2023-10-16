@@ -1,6 +1,9 @@
 " blank out
 set nativeinstallcmd ""
 
+" use darktheme
+set theme dark
+
 " use emacs
 set editorcmd emacsclient -c
 
