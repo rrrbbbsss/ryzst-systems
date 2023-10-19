@@ -96,8 +96,7 @@ in
           names = [ font ];
           size = 9.0;
         };
-        bars = [
-        ];
+        bars = [ ];
         seat = {
           "*" = {
             xcursor_theme = with config.home.pointerCursor;

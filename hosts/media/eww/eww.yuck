@@ -14,10 +14,11 @@
     :focusable "false"
     (bar))
 
-(defwidget icon [img exe]
+(defwidget icon [name img exe]
  (eventbox
   :class "icon"
-  :onclick "${launcher} ${exe}"
+  :onclick "${launcher} ${name} ${exe}"
+  :onrightclick "${killer} ${name}"
   :cursor "pointer"
   (image :path img
 	 :image-width img-size
@@ -28,5 +29,6 @@
   :orientation "vertical"
   :class "bar"
   (for entry in icons
-       (icon :img "${entry.image}"
+       (icon :name "${entry.name}"
+	     :img "${entry.image}"
 	     :exe "${entry.exe}"))))

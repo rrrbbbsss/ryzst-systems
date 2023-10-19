@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let
   colors = {
     bar = "#000000";
@@ -6,25 +6,51 @@ let
     border = "#3f4040";
     hover = "#292b2b";
   };
-  launcher = "${pkgs.sway}/bin/swaymsg exec";
   bar = [
     {
+      name = "firefox";
+      criteria = [{ app_id = "firefox"; }];
       image = "${pkgs.firefox}/share/icons/hicolor/128x128/apps/firefox.png";
       exe = "${pkgs.firefox}/bin/firefox";
     }
     {
+      name = "steam";
+      criteria = [{ class = "Steam"; }];
       image = "${pkgs.steam}/share/icons/hicolor/256x256/apps/steam.png";
       exe = "${pkgs.steam}/bin/steam";
     }
     {
+      name = "spotify";
+      criteria = [{ class = "Spotify"; }];
       image = "${pkgs.spotify}/share/spotify/icons/spotify-linux-256.png";
       exe = "${pkgs.spotify}/bin/spotify";
     }
     {
+      name = "power";
+      criteria = [{ app_id = "power"; }];
       image = ./images/power.png;
       exe = "todo";
     }
   ];
+  assignments = lib.lists.foldr
+    (x: acc: { "${x.name}" = x.criteria; } // acc)
+    { }
+    bar;
+  launcher = "${pkgs.writeShellApplication {
+    name = "launcher";
+    runtimeInputs = [ pkgs.systemd config.wayland.windowManager.sway.package ];
+    text = ''
+      swaymsg workspace "$1"
+      systemd-run --user --unit "$1" "$2"
+    '';
+  }}/bin/launcher";
+  killer = "${pkgs.writeShellApplication {
+    name = "killer";
+    runtimeInputs = [ pkgs.systemd ];
+    text = ''
+      systemctl --user stop "$1"
+    '';
+  }}/bin/killer";
   ewwDir = pkgs.stdenv.mkDerivation
     {
       name = "ewwDir";
@@ -33,13 +59,14 @@ let
       installPhase = ''
         mkdir -p $out
 
-        cat <<EOF > bar.json
+        cat <<EOF > $out/bar.json
         ${builtins.toJSON bar}
         EOF
         
         cat <<EOF > $out/vars.yuck
         (defvar launcher "${launcher}")
-        (defvar icons $(${pkgs.jq}/bin/jq @json < bar.json))
+        (defvar killer "${killer}")
+        (defvar icons $(${pkgs.jq}/bin/jq @json < $out/bar.json))
         EOF
         
         cat <<\EOF > $out/colors.scss
@@ -95,4 +122,6 @@ in
       WantedBy = [ "graphical-session.target" ];
     };
   };
+
+  wayland.windowManager.sway.config.assigns = assignments;
 }
