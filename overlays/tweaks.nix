@@ -11,6 +11,17 @@ final: prev:
   });
 
   ryzst = prev.ryzst // {
-    overrides.emacs = epkgs: epkgs // { };
+    overrides.emacs = epkgs: epkgs // {
+      #https://github.com/company-mode/company-mode/pull/1413
+      company = epkgs.melpaPackages.company.overrideAttrs
+        (old: {
+          src = prev.fetchFromGitHub {
+            owner = "company-mode";
+            repo = "company-mode";
+            rev = "a0c7c1775ab15d5d7df57a2126b6b9699049b7f0";
+            hash = "sha256-ZnI8w9oXZCLxDI0qSXvTFAmuKJZ+dEvhzt5tiuzxpSY=";
+          };
+        });
+    };
   };
 }
