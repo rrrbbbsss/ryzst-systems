@@ -134,9 +134,19 @@ in
         };
         window = {
           border = 0;
+          commands = [
+            {
+              command = "move scratchpad; scratchpad show";
+              criteria = {
+                app_id = "Alacritty";
+              };
+            }
+          ];
         };
         keybindings = {
-          "${modifier}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+          "${modifier}+Return" = ''
+            exec swaymsg [app_id="Alacritty"] scratchpad show || ${pkgs.alacritty}/bin/alacritty
+          '';
         };
       };
     };
