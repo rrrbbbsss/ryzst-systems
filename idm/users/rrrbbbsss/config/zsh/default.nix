@@ -58,6 +58,7 @@ in
         shellAliases = {
           "open" = "${pkgs.util-linux}/bin/setsid &>/dev/null -f ${pkgs.xdg-utils}/bin/xdg-open";
           "gd" = "cd $(${pkgs.git}/bin/git rev-parse --show-toplevel)";
+          "n-references" = "nix-store -q --references";
         };
 
       };
