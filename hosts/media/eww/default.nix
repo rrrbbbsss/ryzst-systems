@@ -5,6 +5,7 @@ let
     background = "#1d1f21";
     border = "#3f4040";
     hover = "#292b2b";
+    font = "#C5C8C6";
   };
   bar = [
     {
@@ -26,7 +27,7 @@ let
       exe = "${pkgs.spotify}/bin/spotify";
     }
     {
-      name = "power";
+      name = "media-powermenu";
       criteria = [{ app_id = "power"; }];
       image = ./images/power.png;
       exe = "todo";

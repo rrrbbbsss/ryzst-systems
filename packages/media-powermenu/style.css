@@ -1,0 +1,31 @@
+@define-color bar #000000;
+@define-color background #1d1f21;
+@define-color border #3f4040;
+@define-color hover #292b2b;
+@define-color font #C5C8C6;
+
+* {
+  all: unset;
+}
+
+.power {
+  background-color: @bar;
+  border: 4px solid @border;
+  padding: 20px;
+}
+
+.powerbutton {
+  margin: 20px;
+}
+
+.powerbutton > label {
+  background-color: @background;
+  color: @font;
+  border: 4px solid @border;
+  font-size: 40px;
+  padding: 20px;
+}
+
+.powerbutton:hover > label {
+  background-color: @hover;
+}
