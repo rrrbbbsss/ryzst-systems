@@ -50,7 +50,7 @@
 
       nixosConfigurations = self.lib.mkHosts ./hosts;
 
-      homeManagerModules.default = import ./modules/home { };
+      homeManagerModules.default = import ./modules/home { inherit self; };
 
       templates = import ./templates { inherit self; };
     } //

@@ -31,6 +31,7 @@ in
   home-manager.users.${username} = { pkgs, config, osConfig, ... }: {
     imports = [
       ./eww
+      ./media-powermenu
     ];
 
     programs.firefox = {

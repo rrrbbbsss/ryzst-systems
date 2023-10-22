@@ -1,4 +1,4 @@
-import sys, gi, subprocess
+import sys, gi, subprocess, os.path
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk, Gdk
 
@@ -44,8 +44,11 @@ class MyApp(Gtk.Application):
         self.win.present()
 
     def setCss(self):
+        configPath = os.path.expanduser('~/.config/media-powermenu/style.css')
+        if not os.path.exists(configPath):
+            return
         css_provider = Gtk.CssProvider()
-        css_provider.load_from_path('style.css')
+        css_provider.load_from_path(configPath)
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(),
                                                   css_provider,
                                                   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)

@@ -7,6 +7,12 @@ let
         if v == "directory" then { ${n} = dir + "/${n}"; } // acc else acc)
       { }
       (builtins.readDir dir);
+  getFilesList = dir: with lib-nixpkgs.attrsets;
+    foldlAttrs
+      (acc: n: v:
+        if v == "regular" then [ (dir + "/${n}") ] ++ acc else acc)
+      [ ]
+      (builtins.readDir dir);
   mkSystem = { name, path, target }:
     let
       hardwares =
@@ -83,6 +89,7 @@ let
 
   lib = {
     inherit getDirs;
+    inherit getFilesList;
     inherit mkHosts;
     inherit mkVMs;
     inherit mkISOs;
