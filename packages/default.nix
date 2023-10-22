@@ -14,6 +14,7 @@ let
     fzf-nix-options = callPackage ./fzf/nix-options { inherit hm; };
     kivymd = python3Packages.callPackage ./python-libs/kivymd { };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
+    media-powermenu = python3Packages.callPackage ./media-powermenu { };
   };
   target = {
     x86_64-linux = packages

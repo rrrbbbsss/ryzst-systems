@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "media-powermenu"
+version = "0.0.1"
+dependencies = ["pygobject3"]
+
+[project.scripts]
+media-powermenu = "media_powermenu:main"
