@@ -51,5 +51,9 @@ class MyApp(Gtk.Application):
                                                   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
 
-app = MyApp(application_id="net.ryzst.media-powermenu")
-app.run(sys.argv)
+def main():
+    app = MyApp(application_id="net.ryzst.media-powermenu")
+    app.run(sys.argv)
+
+if __name__ == "__main__":
+    main()

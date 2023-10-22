@@ -25,5 +25,10 @@ buildPythonApplication {
   propagatedBuildInputs = [
     pygobject3
   ];
+
+  postInstall = ''
+    install -D $src/icons/power.png $out/share/icons/power.png
+  '';
+
 }
 

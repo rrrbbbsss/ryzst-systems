@@ -28,9 +28,9 @@ let
     }
     {
       name = "media-powermenu";
-      criteria = [{ app_id = "power"; }];
-      image = ./images/power.png;
-      exe = "todo";
+      criteria = [{ app_id = "net.ryzst.media-powermenu"; }];
+      image = "${pkgs.ryzst.media-powermenu}/share/icons/power.png";
+      exe = "${pkgs.ryzst.media-powermenu}/bin/media-powermenu";
     }
   ];
   assignments = lib.lists.foldr
