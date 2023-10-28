@@ -397,6 +397,13 @@
 (use-package yuck-mode
   :ensure t)
 
+;; go
+(use-package go-mode
+  :ensure t
+  :hook
+  (go-mode . lsp)
+  (go-mode . (lambda () (setq tab-width 4))))
+
 ;; misc packages
 (use-package nov
   :ensure t
