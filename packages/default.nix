@@ -1,4 +1,4 @@
-{ pkgs, ryzst, hm, lib, system, ... }:
+{ pkgs, ryzst, lib, system, ... }:
 
 let
   packages = with pkgs; {
@@ -11,7 +11,6 @@ let
     fzf-pass = callPackage ./fzf/pass { };
     fzf-wifi = callPackage ./fzf/wifi { };
     fzf-sway-windows = callPackage ./fzf/sway-windows { };
-    fzf-nix-options = callPackage ./fzf/nix-options { inherit hm; };
     kivymd = python3Packages.callPackage ./python-libs/kivymd { };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
     media-powermenu = python3Packages.callPackage ./media-powermenu { };

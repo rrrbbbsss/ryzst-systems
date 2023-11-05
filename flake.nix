@@ -59,7 +59,6 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           ryzst = self.packages.${system};
-          hm = home-manager.packages.${system};
         in
         {
           devShells.default = import ./shell.nix { inherit self system pkgs; };
@@ -71,7 +70,7 @@
           apps = import ./apps { inherit ryzst; };
 
           packages = import ./packages {
-            inherit pkgs ryzst hm system;
+            inherit pkgs ryzst system;
             inherit (self) lib;
           };
         }
