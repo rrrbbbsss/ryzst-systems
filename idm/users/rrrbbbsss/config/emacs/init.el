@@ -321,8 +321,21 @@
 	read-process-output-max (* 1024 1024)
 	max-lisp-eval-depth 5000)
   (setq lsp-keymap-prefix "s-C-M-L"
-	lsp-headerline-breadcrumb-enable nil)
+	lsp-headerline-breadcrumb-enable nil
+	lsp-signature-auto-activate nil
+	lsp-signature-render-documentation nil)
   :hook ((lsp-mode . lsp-enable-which-key-integration)))
+
+(use-package lsp-ui
+  :ensure t
+  :init
+  (setq lsp-ui-doc-delay 0.5
+	lsp-ui-doc-position 'top
+	lsp-ui-sideline-enable nil)
+  :after
+  (lsp-mode)
+  :hook
+  (lsp-mode . lsp-ui-mode))
 
 (use-package helm-lsp
   :ensure t)
