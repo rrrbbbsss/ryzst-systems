@@ -4,6 +4,9 @@ let
     package = pkgs.emacs-pgtk;
     config = ./init.el;
     defaultInitFile = true;
+    extraEmacsPackages = epkgs: with epkgs; [
+      treesit-grammars.with-all-grammars
+    ];
     override = pkgs.ryzst.overrides.emacs;
   };
 in
@@ -69,5 +72,6 @@ in
     taplo-lsp
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
+    yaml-language-server
   ];
 }

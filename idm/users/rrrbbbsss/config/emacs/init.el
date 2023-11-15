@@ -346,6 +346,13 @@
 (use-package dap-mode
   :ensure t)
 
+(use-package treesit-auto
+  :ensure t
+  :init
+  (setq treesit-auto-install nil)
+  :config
+  (global-treesit-auto-mode))
+
 (use-package format-all
   :ensure t
   :config
@@ -416,6 +423,12 @@
   :hook
   (go-mode . lsp)
   (go-mode . (lambda () (setq tab-width 4))))
+
+;; yaml
+(use-package yaml-ts-mode
+  :mode "\\.yml\\'"
+  :hook
+  (yaml-ts-mode . lsp))
 
 ;; misc packages
 (use-package nov
