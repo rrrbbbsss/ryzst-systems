@@ -428,6 +428,7 @@
 (use-package yaml-ts-mode
   :mode "\\.yml\\'"
   :hook
+  (yaml-ts-mode . format-all-mode)
   (yaml-ts-mode . lsp))
 
 ;; misc packages
