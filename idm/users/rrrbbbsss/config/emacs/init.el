@@ -26,6 +26,7 @@
 ;; misc
 (defalias 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
+(setq native-comp-async-report-warnings-errors nil)
 
 ;; sticky buffers
 (customize-set-variable
