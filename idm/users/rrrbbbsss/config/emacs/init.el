@@ -177,6 +177,11 @@
   :config
   (magit-todos-mode 1))
 
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode 1))
+
 (use-package git-gutter
   :ensure t
   :init
