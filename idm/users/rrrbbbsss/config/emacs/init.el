@@ -171,6 +171,12 @@
   ("s-C-M-G" . magit-status)
   ("s-C-M-H" . magit-log-buffer-file))
 
+(use-package magit-todos
+  :ensure t
+  :after magit
+  :config
+  (magit-todos-mode 1))
+
 (use-package git-gutter
   :ensure t
   :init
