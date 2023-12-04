@@ -81,6 +81,10 @@ in
       };
     };
 
+    programs.bottom = {
+      enable = true;
+    };
+
     systemd.user.tmpfiles.rules = [
       "e /home/${username}/.local/share/Trash - - - 3w"
       "e /home/${username}/.cache             - - - 3w"
@@ -100,7 +104,6 @@ in
 
       #utils
       nix-tree
-      htop
       git
       strace
       yubikey-manager
