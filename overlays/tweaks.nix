@@ -2,7 +2,7 @@ final: prev:
 {
   ryzst = prev.ryzst // {
     overrides.emacs = epkgs: epkgs // {
-      #https://github.com/Alexander-Miller/treemacs/issues/1073
+      #https://github.com/doomemacs/themes/issues/809
       doom-themes = epkgs.melpaPackages.doom-themes.overrideAttrs
         (old: {
           patches = [
