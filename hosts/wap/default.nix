@@ -8,7 +8,7 @@ in
 
   imports = [ ];
 
-  #todo: redo
+  # TODO: redo
   services.hostapd = {
     enable = false;
   };

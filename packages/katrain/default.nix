@@ -59,7 +59,7 @@ pythonPackages.buildPythonApplication {
     icoFileToHiColorTheme katrain/img/icon.ico katrain $out
   '';
 
-  #todo: try to get tests working...
+  # TODO: try to get tests working...
   doCheck = false;
 
   meta = {

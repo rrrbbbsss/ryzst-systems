@@ -148,7 +148,7 @@ in
             };
             mountpoint = "/nix";
           };
-          #todo: move mointpoint
+          # TODO: move mointpoint
           "local/secrets" = {
             type = "zfs_fs";
             options = {
@@ -175,7 +175,7 @@ in
             };
           };
 
-          #todo: move mointpoint
+          # TODO: move mointpoint
           "persist" = {
             type = "zfs_fs";
             options = {
@@ -193,9 +193,9 @@ in
     neededForBoot = true;
   };
 
-  #todo: update installtion script (secrets):
+  # TODO: update installtion script (secrets):
 
-  #todo: break apart
+  # TODO: break apart
   #impermanence
   environment.persistence."/persist" = {
     directories = [
@@ -203,7 +203,7 @@ in
       "/var/lib/systemd/timers"
       "/var/lib/systemd/coredump"
       "/var/lib/nixos"
-      #todo: comb through home...
+      # TODO: comb through home...
       "/home"
     ];
     files = [

@@ -7,7 +7,7 @@ in
     (modulesPath + "/installer/cd-dvd/iso-image.nix")
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
-    #todo: clean this up
+    # TODO: clean this up
     ../../idm/users/rrrbbbsss/config/zsh
     ../../modules/hardware/common/wifi
   ];

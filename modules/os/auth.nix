@@ -59,7 +59,7 @@ in
           unixAuth = false;
         };
         sshd = {
-          u2fAuth = false; # todo...
+          u2fAuth = false; # TODO: ...
           showMotd = true;
         };
       };

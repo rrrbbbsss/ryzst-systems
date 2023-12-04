@@ -23,7 +23,7 @@ ykman -d "$SERIAL" config usb --disable OTP -f && sleep 1
 ykman -d "$SERIAL" config usb --disable U2F -f && sleep 1
 ykman -d "$SERIAL" config usb --disable OATH -f && sleep 1
 ykman -d "$SERIAL" config usb --disable PIV -f && sleep 1
-# todo again: https://github.com/drduh/YubiKey-Guide
+# TODO: https://github.com/drduh/YubiKey-Guide
 ykman -d "$SERIAL" config usb --disable OPENPGP -f && sleep 1
 ykman -d "$SERIAL" config usb --disable HSMAUTH -f && sleep 1
 ykman -d "$SERIAL" config nfc --disable-all -f && sleep 1
