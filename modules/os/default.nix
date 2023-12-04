@@ -97,5 +97,7 @@ in
       wireguard-tools
       bind.dnsutils
     ];
+
+    documentation.man.generateCaches = true;
   };
 }
