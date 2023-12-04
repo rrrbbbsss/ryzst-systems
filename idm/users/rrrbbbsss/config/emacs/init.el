@@ -204,6 +204,10 @@
 
 (use-package company
   :ensure t
+  :init
+  (setq ispell-alternate-dictionary
+	(expand-file-name "~/.local/share/emacs/wordlist.txt")
+	ispell-grep-command "rg")
   :config
   (global-company-mode 1))
 

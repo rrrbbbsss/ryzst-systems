@@ -86,8 +86,7 @@ in
       chromium
 
       #spelling
-      aspell
-      aspellDicts.en
+      (aspellWithDicts (dicts: with dicts; [ en ]))
 
       #utils
       nix-tree

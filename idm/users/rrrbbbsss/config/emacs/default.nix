@@ -65,6 +65,11 @@ in
       defaultApplications = mimeapps;
     };
 
+  # ispell-word-list
+  xdg.dataFile."emacs/wordlist.txt" = {
+    source = pkgs.ryzst.wordlist;
+  };
+
   home.packages = with pkgs; [
     #treemacs
     python3
