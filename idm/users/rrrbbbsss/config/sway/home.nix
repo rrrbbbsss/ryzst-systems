@@ -79,11 +79,11 @@ let
         }}/bin/colorpicker";
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
-      swaymsg [title="TODO"] scratchpad show \
-      || ${commands.editor} -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
+      swaymsg [title="^TODO$"] scratchpad show \
+      || ${commands.editor} -n -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
     '';
     music = ''
-      swaymsg [title="MUSIC"] scratchpad show \
+      swaymsg [title="^MUSIC$"] scratchpad show \
       || exec ${wrap-float-window "MUSIC" "${config.programs.ncspot.package}/bin/ncspot"}
     '';
     lockscreen = "${pkgs.writeShellApplication {
@@ -345,7 +345,7 @@ in
           {
             command = "move scratchpad; scratchpad show";
             criteria = {
-              title = "(TODO|MUSIC)";
+              title = "(^TODO$|^MUSIC$)";
             };
           }
         ];
