@@ -42,7 +42,10 @@ let
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            sharedModules = [ self.outputs.homeManagerModules.default ];
+            sharedModules = [
+              self.outputs.homeManagerModules.default
+              self.inputs.impermanence.nixosModules.home-manager.impermanence
+            ];
           };
         }
         self.inputs.disko.nixosModules.disko

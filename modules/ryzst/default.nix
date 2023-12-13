@@ -33,6 +33,15 @@ in
       };
     };
 
+    syncthing = {
+      server.nodes = with hosts; {
+        inherit brunhild;
+      };
+      client.nodes = with hosts; {
+        inherit desktop bed laptop;
+      };
+    };
+
     wg = {
       server.nodes = with hosts; {
         inherit brunhild;

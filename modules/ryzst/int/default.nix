@@ -5,5 +5,6 @@
     ./nfs
     ./ntp
     ./wg
+    ./syncthing
   ];
 }

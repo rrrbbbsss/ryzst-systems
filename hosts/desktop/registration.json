@@ -1,7 +1,8 @@
 {
-    "ip": "10.255.255.11",
-    "keys": {
-        "ssh": "todo",
-        "wg0": "crD1b+ATPxci2l1GCscKoD7KzvGrLAnc/aVxGcIlzBg="
-    }
+  "ip": "10.255.255.11",
+  "keys": {
+    "ssh": "todo",
+    "wg0": "crD1b+ATPxci2l1GCscKoD7KzvGrLAnc/aVxGcIlzBg="
+  },
+  "syncthing": "BZE74VM-ZP6XB2E-2TP4V3K-EXFXJQ7-5U3NU4T-7GL6JRJ-HJ3WXVV-IWUKPAR"
 }
