@@ -6,8 +6,8 @@ FLAKE="github:rrrbbbsss/ryzst-systems"
 FLAKE_REPO="git@${FLAKE}.git"
 REGISTRATION_JSON=/tmp/registration.json
 HOST=""
-SECRETS_DIR=/mnt/nix/secrets
-STATE_DIR=/mnt/nix/state
+SECRETS_DIR=/mnt/persist/secrets
+STATE_DIR=/mnt/persist
 
 function Confirmation() {
   printf '%s\n' "$1"
@@ -52,6 +52,7 @@ function SetupNetwork() {
   fi
 }
 
+# TODO: remove
 function SelectHost() {
   printf "Select Host:\n"
   HOSTS=$(nix flake show "$FLAKE" --json 2>/dev/null | jq -r '.nixosConfigurations | keys[]')
@@ -73,28 +74,44 @@ function SetupDisks() {
 
 function GenerateInstanceData() {
   printf "Generating Instance data:\n"
+
   # generate machineid
   (umask 0333 && systemd-machine-id-setup --print >$STATE_DIR/etc/machine-id)
-  # get endpoint
-  ENDPOINT="todo"
-  # generate iid
-  IID=$(openssl rand -hex 8 | fold -w 4 | paste -sd ':' -)
-  # generate ssh key
-  ssh-keygen -q -N "" -C "" -t ed25519 -f $SECRETS_DIR/ssh_host_ed25519_key
-  SSHPUB=$(cat $SECRETS_DIR/ssh_host_ed25519_key.pub)
-  # generate wireguard keys
-  wg genkey |
-    (umask 0077 && tee $SECRETS_DIR/wg0_key) |
-    (umask 0033 wg pubkey >$SECRETS_DIR/wg0_key.pub)
-  WGPUB=$(cat $SECRETS_DIR/wg0_key.pug)
-  # copy over wifi connection
+  # copy over wifi connection TODO: if wireless is used...
   cp --parents -r /var/lib/iwd $STATE_DIR
+  # TODO: hardware test
+  HARDWARE="todo"
+  # TODO: get endpoint
+  ENDPOINT="todo"
+  # TODO: ip from preallocated hostname
+  IP="todo"
+
+  # "secrets"
+  # generate ssh key
+  SSH_SECRETS_DIR=$SECRETS_DIR/ssh
+  mkdir $SSH_SECRETS_DIR
+  ssh-keygen -q -N "" -C "" -t ed25519 -f $SSH_SECRETS_DIR/ssh_host_ed25519_key
+  SSHPUB=$(cat $SSH_SECRETS_DIR/ssh_host_ed25519_key.pub)
+  # generate wireguard keys
+  WG_SECRETS_DIR=$SECRETS_DIR/wireguard
+  mkdir $WG_SECRETS_DIR
+  wg genkey |
+    (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) |
+    (umask 0033 wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
+  WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pug)
+  # generate syncthing keys
+  SYNCTHING_SECRETS_DIR=$SECRETS_DIR/syncthing
+  mkdir $SYNCTHING_SECRETS_DIR
+  syncthing --generate=$SYNCTHING_SECRETS_DIR
+  SYNCTHING_ID=$(syncthing --home=$SYNCTHING_SECRETS_DIR --device-id)
 
   jq -n \
+    --arg ip "$IP" \
     --arg endpoint "$ENDPOINT" \
-    --arg iid "$IID" \
-    --arg ssh-pub "$SSHPUB" \
-    --arg wg-pub "$WGPUB" \
+    --arg hardware "$HARDWARE" \
+    --arg ssh "$SSHPUB" \
+    --arg wireguard "$WGPUB" \
+    --arg syncthing "$SYNCTHING_ID" \
     '$ARGS.named' >$REGISTRATION_JSON
   printf 'success\n\n'
 }

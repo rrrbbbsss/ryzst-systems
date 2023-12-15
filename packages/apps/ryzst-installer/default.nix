@@ -20,6 +20,7 @@
 , openssh
 , networkmanager
 , curl
+, syncthing
 }:
 
 runCommandLocal "ryzst-installer"
@@ -47,4 +48,5 @@ runCommandLocal "ryzst-installer"
   openssh
   networkmanager
   curl
+  syncthing
   ]}''
