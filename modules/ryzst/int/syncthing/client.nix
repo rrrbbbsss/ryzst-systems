@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.ryzst.int.syncthing.client;
@@ -81,6 +81,19 @@ in
         ];
       };
     };
+
+
+    environment.systemPackages = [
+      (pkgs.makeDesktopItem {
+        name = "Syncthing";
+        exec = "${config.home-manager.users.${config.device.user}.programs.firefox.package}/bin/firefox localhost:8384";
+        # TODO: icon = pname;
+        desktopName = "Syncthing";
+        genericName = "Syncthing";
+        categories = [ "Settings" ];
+        startupNotify = false;
+      })
+    ];
 
     services.syncthing = {
       enable = true;
