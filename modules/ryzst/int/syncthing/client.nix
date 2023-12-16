@@ -107,7 +107,7 @@ in
       settings = {
         # TODO: gui listen on unix socket
         options = {
-          listenAddress = "tcp://${cfg.ip}:${builtins.toString cfg.port}";
+          listenAddresses = [ "${cfg.protocol}://${cfg.ip}:${builtins.toString cfg.port}" ];
           globalAnnounceEnabled = false;
           localAnnounceEnabled = false;
           natEnabled = false;
