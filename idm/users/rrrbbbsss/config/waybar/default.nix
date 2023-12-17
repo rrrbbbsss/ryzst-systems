@@ -39,7 +39,7 @@
         };
         clock = {
           timezone = "America/Chicago";
-          format = "{:%D %H:%M}";
+          format = "{:%a %D %H:%M}";
           tooltip-format = "{calendar}";
           calendar = {
             mode = "month";
