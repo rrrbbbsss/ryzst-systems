@@ -96,6 +96,8 @@ in
       nftables
       wireguard-tools
       bind.dnsutils
+      openssl
+      inetutils
     ];
 
     documentation.man.generateCaches = true;
