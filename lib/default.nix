@@ -89,6 +89,7 @@ let
   mkChecks = { system }: with lib-nixpkgs;
     (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
     (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system});
+  hostnames = import ./names { inherit self; };
 
   lib = {
     inherit getDirs;
@@ -97,6 +98,7 @@ let
     inherit mkVMs;
     inherit mkISOs;
     inherit mkChecks;
+    inherit hostnames;
   };
 in
 lib
