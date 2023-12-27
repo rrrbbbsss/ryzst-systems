@@ -179,6 +179,8 @@ in
       inherit font;
       font-size = 0.0;
       indicator-idle-visible = true;
+      indicator-radius = 100;
+      image = "${./braarudosphaera-bigelowii.png}";
       #default
       color = colors.desktop;
       bs-hl-color = colors.red;
