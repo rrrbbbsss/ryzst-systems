@@ -429,6 +429,10 @@
   (setq prolog-system 'swi)
   :mode "\\.pl\\'")
 
+;; scheme
+(use-package geiser-chez
+  :ensure t)
+
 ;; yuck
 (use-package yuck-mode
   :ensure t)
