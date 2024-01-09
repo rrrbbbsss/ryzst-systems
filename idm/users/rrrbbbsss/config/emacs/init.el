@@ -431,7 +431,21 @@
 
 ;; scheme
 (use-package geiser-chez
-  :ensure t)
+  :ensure t
+  :after format-all
+  :init
+  (define-format-all-formatter scheme-fmt
+    (:executable)
+    (:install)
+    (:languages "Scheme")
+    (:features region)
+    (:format
+     (format-all--buffer-native
+      'scheme-mode
+      (if region
+          (lambda () (indent-region (car region) (cdr region)))
+	(lambda () (indent-region (point-min) (point-max)))))))
+  (add-to-list 'format-all-default-formatters '("Scheme" scheme-fmt)))
 
 ;; yuck
 (use-package yuck-mode
