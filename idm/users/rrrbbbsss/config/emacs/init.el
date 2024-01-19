@@ -458,6 +458,12 @@
   (go-mode . lsp)
   (go-mode . (lambda () (setq tab-width 4))))
 
+;; python
+(use-package lsp-pyright
+  :ensure t
+  :hook
+  (python-ts-mode . lsp))
+
 ;; yaml
 (use-package yaml-ts-mode
   :mode "\\.yml\\'"

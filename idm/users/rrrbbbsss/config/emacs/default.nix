@@ -74,9 +74,11 @@ in
     #treemacs
     python3
     #formatters
+    black
     taplo-lsp
     nodePackages.prettier
     nodePackages.vscode-json-languageserver
     yaml-language-server
+    pyright
   ];
 }
