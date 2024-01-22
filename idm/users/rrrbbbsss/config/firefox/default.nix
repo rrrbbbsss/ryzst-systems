@@ -36,6 +36,7 @@
         "privacy.clearOnShutdown.cookies" = true;
         "layout.css.prefers-color-scheme.content-override" = 0;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.tabs.inTitlebar" = 0;
       };
       search = {
         force = true;
