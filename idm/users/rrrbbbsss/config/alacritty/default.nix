@@ -6,6 +6,8 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
+      # TODO: style appropriately eventually
+      import = [ "${pkgs.alacritty-theme}/alacritty_0_12.toml" ];
       env.TERM = "alacritty";
       window = {
         decorations = "full";
