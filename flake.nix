@@ -42,7 +42,7 @@
     pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
   };
 
-  outputs = { self, nixpkgs, flake-utils, home-manager, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }:
     {
       lib = import ./lib { inherit self; };
 
