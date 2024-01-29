@@ -19,7 +19,7 @@ let
   target = {
     x86_64-linux = packages
       // (lib.mkVMs ../hosts)
-      // (lib.mkISOs ../isos);
+      // (lib.mkISOs ./isos);
     aarch64-linux = {
       inherit (packages) apps fzf-pass fzf-wifi fzf-nix-options;
     };

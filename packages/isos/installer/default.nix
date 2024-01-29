@@ -8,8 +8,8 @@ in
     (modulesPath + "/profiles/base.nix")
     (modulesPath + "/profiles/all-hardware.nix")
     # TODO: clean this up
-    ../../idm/users/rrrbbbsss/config/zsh
-    ../../modules/hardware/common/wifi
+    ../../../idm/users/rrrbbbsss/config/zsh
+    ../../../modules/hardware/common/wifi
   ];
 
   device.user = "installer";
