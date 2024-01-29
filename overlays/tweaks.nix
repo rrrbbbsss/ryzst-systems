@@ -13,12 +13,6 @@ let
       };
 in
 {
-  #https://github.com/NixOS/nixpkgs/issues/281272
-  inherit (nixpkgs {
-    rev = "ac72b47ca1aed04d2e79dae839e34322a1634d9f";
-    sha256 = "sha256-d7rKs0LTxpKFL4D9jNh6NWFkOshTYlzDnC7Mr3t+Zak=";
-  }) j4-dmenu-desktop;
-
   ryzst = prev.ryzst // {
     overrides.emacs = epkgs: epkgs // {
       #https://github.com/nix-community/emacs-overlay/issues/384
