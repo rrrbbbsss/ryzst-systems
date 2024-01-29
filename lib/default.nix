@@ -61,7 +61,7 @@ let
     mapAttrs
       (name: value:
         mkSystem { inherit name target; path = dir + "/${name}"; })
-      (readDir dir);
+      (getDirs dir);
 
   mkHosts = dir: mkSystems { inherit dir; target = "host"; };
 

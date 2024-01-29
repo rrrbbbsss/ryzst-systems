@@ -1,11 +1,11 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 with lib;
 let
   hosts = with builtins;
     let dir = ../../../hosts; in
     mapAttrs
       (n: v: { name = n; } // fromJSON (readFile (dir + "/${n}/registration.json")))
-      (readDir dir);
+      (pkgs.ryzst.lib.getDirs dir);
 in
 {
   options.ryzst = {

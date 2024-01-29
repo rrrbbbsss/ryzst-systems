@@ -51,7 +51,7 @@
 
       overlays = import ./overlays { inherit self; };
 
-      nixosConfigurations = self.lib.mkHosts ./hosts;
+      nixosConfigurations = import ./hosts { inherit self; };
 
       homeManagerModules.default = import ./modules/home { inherit self; };
 

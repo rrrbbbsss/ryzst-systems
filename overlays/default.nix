@@ -1,9 +1,8 @@
 { self }:
 let
   ryzst = final: prev: {
-    ryzst = self.packages.${prev.system};
+    ryzst = self.packages.${prev.system} // { inherit (self) lib; };
     firefox-addons = self.inputs.firefox-addons.packages.${prev.system};
-    lib = prev.lib // { ryzst = self.lib; };
   };
   tweaks = import ./tweaks.nix;
 in
