@@ -38,23 +38,12 @@ let
 
   mkHosts = dir: mkSystems { inherit dir; target = "host"; };
 
-  mkVMs = dir:
-    lib-nixpkgs.concatMapAttrs
-      (n: v: {
-        "vm-${n}" = v.config.system.build.vm;
-      })
-      (mkSystems {
-        inherit dir;
-        target = "vm";
-      });
-
   hostnames = import ./names { inherit self; };
 
   lib = {
     inherit getDirs;
     inherit getFilesList;
     inherit mkHosts;
-    inherit mkVMs;
     inherit hostnames;
   };
 in
