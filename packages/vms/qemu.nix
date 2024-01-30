@@ -1,5 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
+  imports = [
+    ../../modules/hardware/devices/yubico/yubikey5
+  ];
+
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
   # sway
@@ -9,10 +13,6 @@
   hardware.opengl = {
     enable = true;
   };
-
-  # yubikey
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
 
   device.monitors = {
     Virtual-1 = {
