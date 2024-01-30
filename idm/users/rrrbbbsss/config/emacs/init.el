@@ -188,6 +188,8 @@
   :init
   (setq-default left-margin-width 1)
   (setq git-gutter:update-interval 2)
+  (add-to-list 'git-gutter:update-hooks 'focus-in-hook)
+  (add-to-list 'git-gutter:update-commands 'other-window)
   :config
   (global-git-gutter-mode 1))
 
