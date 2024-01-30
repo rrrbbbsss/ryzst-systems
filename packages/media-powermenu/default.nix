@@ -10,7 +10,7 @@ buildPythonApplication {
   name = "media-powermenu";
   src = ./.;
   version = "0.0.1";
-  format = "pyproject";
+  pyproject = true;
 
   nativeBuildInputs = [
     setuptools
@@ -29,6 +29,5 @@ buildPythonApplication {
   postInstall = ''
     install -D $src/icons/power.png $out/share/icons/power.png
   '';
-
 }
 
