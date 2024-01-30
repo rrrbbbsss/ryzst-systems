@@ -48,9 +48,6 @@ let
         target = "vm";
       });
 
-  mkChecks = { system }: with lib-nixpkgs;
-    (concatMapAttrs (n: v: { "packages-${n}" = v; }) self.packages.${system}) //
-    (concatMapAttrs (n: v: { "devShells-${n}" = v; }) self.devShells.${system});
   hostnames = import ./names { inherit self; };
 
   lib = {
@@ -58,7 +55,6 @@ let
     inherit getFilesList;
     inherit mkHosts;
     inherit mkVMs;
-    inherit mkChecks;
     inherit hostnames;
   };
 in
