@@ -1,15 +1,12 @@
-{ config, pkgs, options, lib, modulesPath, ... }:
+{ config, pkgs, lib, ... }:
 let
   username = config.device.user;
 in
 {
   imports = [
-    (modulesPath + "/installer/cd-dvd/iso-image.nix")
-    (modulesPath + "/profiles/base.nix")
-    (modulesPath + "/profiles/all-hardware.nix")
     # TODO: clean this up
-    ../../../idm/users/rrrbbbsss/config/zsh
-    ../../../modules/hardware/common/wifi
+    ../../idm/users/rrrbbbsss/config/zsh
+    ../../modules/hardware/common/wifi
   ];
 
   device.user = "installer";
@@ -18,12 +15,10 @@ in
     nix.enable = false;
   };
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
+  #nixpkgs.hostPlatform.system = "x86_64-linux";
 
-  # Adds terminus_font for people with HiDPI displays
-  console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];
   # ISO naming.
-  isoImage = {
+  isoImage = lib.mkForce {
     isoName = "installer.iso";
     volumeID = "ryzst-iso";
     makeEfiBootable = true;
@@ -31,12 +26,6 @@ in
     makeUsbBootable = true;
     squashfsCompression = "gzip -Xcompression-level 1";
   };
-  # Add Memtest86+ to the CD.
-  boot.loader.grub.memtest86.enable = true;
-  # An installation media cannot tolerate a host config defined file
-  # system layout on a fresh machine, before it has been formatted.
-  swapDevices = lib.mkImageMediaOverride [ ];
-  fileSystems = lib.mkImageMediaOverride config.lib.isoFileSystems;
 
   zramSwap = {
     enable = true;
@@ -65,7 +54,6 @@ in
     '';
     home.stateVersion = "22.11";
   };
-
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
@@ -86,11 +74,4 @@ in
       dejavu_fonts
     ];
   };
-
-  environment.variables.GC_INITIAL_HEAP_SIZE = "1M";
-  boot.kernel.sysctl."vm.overcommit_memory" = "1";
-  environment.etc."systemd/pstore.conf".text = ''
-    [PStore]
-    Unlink=no
-  '';
 }

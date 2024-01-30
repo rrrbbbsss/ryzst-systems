@@ -1,4 +1,4 @@
-{ pkgs, ryzst, lib, system, ... }:
+{ pkgs, ryzst, lib, system, self, ... }:
 
 let
   packages = with pkgs; {
@@ -15,11 +15,12 @@ let
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
     media-powermenu = python3Packages.callPackage ./media-powermenu { };
     wordlist = callPackage ./wordlist { };
+
   };
   target = {
     x86_64-linux = packages
       // (lib.mkVMs ../hosts)
-      // (lib.mkISOs ./isos);
+      // (import ./isos { inherit pkgs self system; });
     aarch64-linux = {
       inherit (packages) apps fzf-pass fzf-wifi fzf-nix-options;
     };
