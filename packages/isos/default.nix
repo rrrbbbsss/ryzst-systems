@@ -6,6 +6,7 @@ let
     format = "install-iso";
     modules = [
       ./installer.nix
+      { os.hostname = name; }
       self.outputs.nixosModules.default
     ];
   };
