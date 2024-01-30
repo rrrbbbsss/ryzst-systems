@@ -6,7 +6,7 @@ let
     format = "install-iso";
     modules = [
       ./installer.nix
-      (import ../../modules/default.nix { inherit self; })
+      self.outputs.nixosModules.default
     ];
   };
 in

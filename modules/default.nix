@@ -1,6 +1,6 @@
 { self }:
 let
-  defaults = [
+  default-imports = [
     #self
     ./hardware
     ./ryzst
@@ -30,22 +30,24 @@ let
     { programs.command-not-found.enable = false; }
   ];
 in
-{ ... }:
 {
-  imports = defaults;
+  default = { ... }:
+    {
+      imports = default-imports;
 
-  config = {
-    os = {
-      locale = "en_US.UTF-8";
-      timezone = "America/Chicago";
-      domain = "mek.ryzst.net";
-      flake = "github:rrrbbbsss/ryzst-systems";
+      config = {
+        os = {
+          locale = "en_US.UTF-8";
+          timezone = "America/Chicago";
+          domain = "mek.ryzst.net";
+          flake = "github:rrrbbbsss/ryzst-systems";
+        };
+
+        nix.registry = {
+          ryzst-systems.flake = self;
+        } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
+
+        nixpkgs.overlays = [ self.outputs.overlays.default ];
+      };
     };
-
-    nix.registry = {
-      ryzst-systems.flake = self;
-    } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
-
-    nixpkgs.overlays = [ self.outputs.overlays.default ];
-  };
 }

@@ -53,6 +53,8 @@
 
       nixosConfigurations = import ./hosts { inherit self; };
 
+      nixosModules = import ./modules { inherit self; };
+
       homeManagerModules.default = import ./modules/home { inherit self; };
 
       templates = import ./templates { inherit self; };

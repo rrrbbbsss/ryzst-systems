@@ -24,7 +24,7 @@ let
     in
     lib-nixpkgs.nixosSystem {
       modules = [
-        (import ../modules { inherit self; })
+        self.outputs.nixosModules.default
         { os.hostname = name; }
         (path + "/default.nix")
       ] ++ hardwares.${target};
