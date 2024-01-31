@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 with lib;
 let
   cfg = config.ryzst.int.dns.server;
@@ -102,7 +102,7 @@ in
               allow net ${cfg.allow}
               drop
             }
-            hosts ${pkgs.stevenblack-blocklist}/hosts {
+            hosts ${self.inputs.hosts}/hosts {
               ttl 3600
               no-reverse
               fallthrough
