@@ -14,6 +14,7 @@
       tscale = "oversample";
       gpu-hwdec-interop = "vaapi";
       hwdec = "auto";
+      screenshot-directory = "~/Pictures/screenshots";
     };
     bindings = {
       "Alt+H" = "add video-rotate 90";
