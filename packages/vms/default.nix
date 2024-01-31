@@ -4,6 +4,7 @@ let
     self.inputs.nixos-generators.nixosGenerate {
       system = "x86_64-linux";
       format = "vm";
+      specialArgs = { inherit self; };
       modules = [
         { os.hostname = name; }
         hostmodulepath

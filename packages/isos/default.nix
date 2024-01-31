@@ -4,6 +4,7 @@ let
   iso = self.inputs.nixos-generators.nixosGenerate {
     inherit system;
     format = "install-iso";
+    specialArgs = { inherit self; };
     modules = [
       ./installer.nix
       { os.hostname = name; }
