@@ -15,4 +15,4 @@ let
           })
       (self.lib.getDirs dir);
 in
-mkHosts ../hosts
+mkHosts ./.
