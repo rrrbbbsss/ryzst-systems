@@ -8,46 +8,46 @@ in
   ryzst.int = {
     dns = {
       server.nodes = with hosts; {
-        inherit brunhild;
+        inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media wap;
+        inherit cat-jar ape-orc car-fan mud-orb ant-bot;
       };
     };
 
     nfs = {
       server.nodes = with hosts; {
-        inherit brunhild;
+        inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit bed desktop;
+        inherit cat-jar ape-orc;
       };
     };
 
     ntp = {
       server.nodes = with hosts; {
-        inherit brunhild;
+        inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media wap;
+        inherit cat-jar ape-orc car-fan mud-orb ant-bot;
       };
     };
 
     syncthing = {
       server.nodes = with hosts; {
-        inherit brunhild;
+        inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit desktop bed laptop;
+        inherit ape-orc cat-jar car-fan;
       };
     };
 
     wg = {
       server.nodes = with hosts; {
-        inherit brunhild;
+        inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit bed desktop laptop media wap;
+        inherit cat-jar ape-orc car-fan mud-orb ant-bot;
       };
     };
   };
