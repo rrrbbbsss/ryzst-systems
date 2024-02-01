@@ -7,7 +7,6 @@ ryzst-systems
 ├── apps # flake apps
 ├── hosts # machine configurations
 ├── idm # user/group management
-├── isos # custom live/installer iso images
 ├── lib # misc helper functions
 ├── modules # nixos modules
 ├── packages # personal packages
