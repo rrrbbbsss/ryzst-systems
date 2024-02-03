@@ -9,7 +9,7 @@ let
       text = ''
         # TODO: don't use nix
         nix eval ${self}#lib --impure \
-        --apply "lib: builtins.mapAttrs (n: v: lib.hostnames.toInt n) (lib.getDirs ./hosts)"
+        --apply "lib: builtins.mapAttrs (n: v: lib.names.host.toIP n) (lib.getDirs ./hosts)"
       '';
     };
   hostnames-check = {

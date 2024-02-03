@@ -16,10 +16,10 @@ let
       [ ]
       (builtins.readDir dir);
 
-  hostnames = import ./names { inherit self; };
+  names = import ./names { inherit self; };
 in
 {
   inherit getDirs;
   inherit getFilesList;
-  inherit hostnames;
+  inherit names;
 }
