@@ -113,7 +113,7 @@ let
           padding = builtins.genList (x: "0") (2 - length);
           hostOctets = padding ++ digits;
         in
-        networkOctets + builtins.concatStringsSep "." hostOctets;
+        networkOctets + "." + builtins.concatStringsSep "." hostOctets;
       fromIP = ip:
         let
           octets = lib.strings.splitString "." ip;
