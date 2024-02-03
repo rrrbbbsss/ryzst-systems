@@ -25,7 +25,7 @@ in
     subnet = mkOption {
       description = "The subnet of the wireguard network";
       type = types.str;
-      default = "10.255.255.0/24";
+      default = config.os.subnet;
     };
     port = mkOption {
       description = "The port for the service to listen on";

@@ -30,6 +30,11 @@ in
       default = "mek.ryzst.net";
       description = "domain";
     };
+    subnet = mkOption {
+      type = types.str;
+      default = "10.255.0.0/16";
+      description = "internal subnet";
+    };
     flake = mkOption {
       type = types.str;
       example = "github:rrrbbbsss/ryzst-systems";

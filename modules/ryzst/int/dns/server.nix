@@ -44,7 +44,7 @@ in
     allow = mkOption {
       description = "The subnet to allow traffic from";
       type = types.str;
-      default = "10.255.255.0/24";
+      default = "10.255.0.0/16";
     };
     resolvers = mkOption {
       description = "DNS resolvers to forward to";

@@ -35,7 +35,7 @@ in
     address = mkOption {
       description = "The address for the client to use";
       type = types.str;
-      default = "${cfg.ip}/24";
+      default = "${cfg.ip}/16";
     };
     configs = mkOption {
       description = "The configs of the service endpoints";

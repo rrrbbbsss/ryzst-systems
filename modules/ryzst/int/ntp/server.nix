@@ -32,7 +32,7 @@ in
     allow = mkOption {
       description = "The subnet to allow traffic from";
       type = types.str;
-      default = "10.255.255.0/24";
+      default = config.os.subnet;
     };
     nts-servers = mkOption {
       description = "NTS servers to sync to";
