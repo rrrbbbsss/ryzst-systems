@@ -105,6 +105,9 @@ in
       inetutils
     ];
 
+    # vim is used instead of nano
+    programs.nano.enable = false;
+
     documentation.man.generateCaches = true;
   };
 }
