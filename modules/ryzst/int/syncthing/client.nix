@@ -6,7 +6,7 @@ let
   deviceConfigs = attrsets.foldlAttrs
     (acc: n: v: {
       ${n} = {
-        id = v.syncthing;
+        id = v.keys.syncthing;
         addresses = [ "${cfg.protocol}://${v.ip}:${builtins.toString cfg.port}" ];
       };
     } // acc)
