@@ -80,7 +80,7 @@ let
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
       swaymsg [title="^TODO$"] scratchpad show \
-      || ${commands.editor} -n -F '(quote (name . "TODO"))' /nfs/Notes/todos.org
+      || ${commands.editor} -n -F '(quote (name . "TODO"))' "$HOME/Notes/todos.org"
     '';
     music = ''
       swaymsg [title="^MUSIC$"] scratchpad show \
