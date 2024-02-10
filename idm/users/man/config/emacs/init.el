@@ -413,6 +413,13 @@
 (use-package nix-mode
   :ensure t
   :requires lsp-mode
+  :config
+  (advice-add
+   'nix-repl :around
+   (lambda (original)
+     (when-let ((root (vc-root-dir)))
+       (cd root))
+     (funcall original)))
   :mode "\\.nix\\'"
   :hook ((nix-mode . lsp)))
 
