@@ -2,17 +2,21 @@
 with lib;
 let
   cfg = config.os.auth;
-  motdFile = pkgs.runCommandLocal "motd.txt"
-    { inherit (pkgs) figlet boxes; } ''
-    printf $'\e[31m%s\e[0m\n' \
-    "$(printf 'Ryzst Systems\n${config.networking.hostName}' \
-    | $figlet/bin/figlet \
-    | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config)" \
-    > $out
+  boxedMessageFile = name: message:
+    pkgs.runCommandLocal name
+      { inherit (pkgs) figlet boxes; } ''
+      FANCY=$(printf "${message}" \
+              | $figlet/bin/figlet \
+              | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config)
+      printf $'\e[31m%s\e[0m\n' "$FANCY" > $out
+    '';
+  motdFile = boxedMessageFile "motd.txt" ''
+    Ryzst Systems
+    ${config.networking.hostName}
   '';
-  lecture = pkgs.runCommandLocal "lecture" { } ''
-    printf $'\e[31m%s\e[0m\n' "You'll shoot your eye out" \
-    > $out
+  lecture = boxedMessageFile "lecture" ''
+    You'll shoot
+    your eye out
   '';
 in
 {
