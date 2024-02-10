@@ -49,7 +49,7 @@ in
     stateDir = mkOption {
       description = "Path to syncthing service state";
       type = types.path;
-      default = "/home/${config.device.user}/.syncthing";
+      default = "/persist/syncthing";
     };
     secretsDir = mkOption {
       description = "Path to syncthing service secrets";
@@ -59,40 +59,20 @@ in
   };
 
   config = mkIf enable {
-    # TODO: redo and simplify this
-    home-manager.users.${config.device.user} = { pkgs, ... }: {
-      home.persistence."/persist/home/${config.device.user}/.syncthing" = {
-        removePrefixDirectory = true;
-        directories = [
-          { directory = "${config.device.user}/Code"; method = "symlink"; }
-          { directory = "${config.device.user}/Documents"; method = "symlink"; }
-          { directory = "${config.device.user}/Downloads"; method = "symlink"; }
-          { directory = "${config.device.user}/Pictures"; method = "symlink"; }
-          { directory = "${config.device.user}/Projects"; method = "symlink"; }
-          { directory = "${config.device.user}/Notes"; method = "symlink"; }
-          { directory = "${config.device.user}/Reading"; method = "symlink"; }
-        ];
-      };
-    };
-    environment.persistence."/persist" = {
-      users.${config.device.user} = {
-        directories = [
-          ".syncthing"
-        ];
-      };
-    };
-
-
     environment.systemPackages = [
       (pkgs.makeDesktopItem {
         name = "Syncthing";
-        exec = "${config.home-manager.users.${config.device.user}.programs.firefox.package}/bin/firefox localhost:8384";
+        exec = "${pkgs.xdg-utils}/bin/xdg-open localhost:8384";
         # TODO: icon = pname;
         desktopName = "Syncthing";
         genericName = "Syncthing";
         categories = [ "Settings" ];
         startupNotify = false;
       })
+    ];
+
+    systemd.tmpfiles.rules = [
+      "L /home/${config.device.user}/.stignore - - - - ${pkgs.writeText "stignore" "/.*"}"
     ];
 
     services.syncthing = {
@@ -116,8 +96,9 @@ in
         };
         devices = server.deviceConfigs;
         folders = {
-          ${config.device.user} = {
-            path = "${cfg.stateDir}/${config.device.user}";
+          # TODO: remove when finished switching
+          "${(if config.device.user == "man" then "home-man" else config.device.user)}" = {
+            path = "/home/${config.device.user}";
             devices = serverDeviceNames;
             type = "sendreceive";
             versioning = {

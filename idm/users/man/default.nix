@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, self, ... }:
 let
   username = config.device.user;
 in
@@ -12,9 +12,16 @@ in
 
   device.user = baseNameOf (toString ./.);
 
+
+  # TODO: remove
+  security.pam.u2f.authFile = lib.mkForce ./pubkeys/u2f_keys;
+
   users.users.${username} = {
     isNormalUser = true;
+    uid = self.outputs.lib.names.user.toUID username;
+    # TODO: full name
     description = username;
+    # TODO: if member of local-admins
     extraGroups = [ "wheel" ];
     hashedPassword = null;
   };

@@ -41,6 +41,7 @@ in
       u2f = {
         enable = true;
         origin = "pam://mek.ryzst.net";
+        # TODO: device.user + admins
         authFile = ../../idm/users/rrrbbbsss/pubkeys/u2f_keys;
         cue = true;
         debug = false;

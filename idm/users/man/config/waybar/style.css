@@ -1,0 +1,138 @@
+@define-color bar #000000;
+@define-color text #c5c8c6;
+@define-color background #1d1f21;
+@define-color border #3f4040;
+@define-color focus-color #ffffff;
+@define-color focus-background #a16bed;
+@define-color warning-color #ffffff;
+@define-color warning-background #cc6666;
+
+* {
+    font-family: DejaVu Sans Mono;
+    /*font-size: 13px;*/
+    font-size: 9.0pt;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 0px;
+}
+
+window#waybar {
+    background-color: @bar;
+    border: 2px solid @border;
+}
+
+/* left */
+.modules-left {
+    color: @text;
+    background-color: @background;
+}
+
+.modules-left>widget:not(#workspace)>label {
+    padding: 0px 10px;
+    border: 2px solid @border;
+    border-left: 0px;
+}
+
+#workspaces {
+    color: @text;
+    background-color: @background;
+    border: 1px solid @border;
+}
+
+#workspaces button {
+    color: @text;
+    padding: 0px 10px;
+    border: 1px solid @border;
+}
+
+#workspaces button.focused {
+    color: @focus-color;
+    background-color: @focus-background;
+}
+
+#workspaces button:hover {
+    color: @focus-background;
+    background-color: @focus-color;
+}
+
+#workspaces button.visible:not(.focused) {
+    background-color: @border;
+}
+
+
+/* center */
+.modules-center {
+    margin: 0px 40px;
+    color: @text;
+    background-color: @background;
+    border: 2px solid @border;
+}
+.modules-center>widget>label {
+    padding: 0px 10px;
+}
+.modules-center>widget:not(:last-child)>label {
+    border-right: 2px solid @border;
+}
+
+/* right */
+.modules-right {
+    color: @text;
+    background-color: @background;
+    border: 2px solid @border;
+}
+.modules-right>widget>label {
+    padding: 0px 10px;
+}
+.modules-right>widget:not(:last-child)>label {
+    border-right: 2px solid @border;
+}
+
+/* widgets */
+#mode {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#pulseaudio.muted {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#network.disconnected {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+#network.linked {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#cpu.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#memory.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#disk.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#temperature.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#battery.critical {
+    color: @warning-color;
+    background-color: @warning-background;
+}
+
+#idle_inhibitor.activated {
+    color: @warning-color;
+    background-color: @warning-background;
+}

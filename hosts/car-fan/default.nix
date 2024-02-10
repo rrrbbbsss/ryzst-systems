@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ../../idm/users/rrrbbbsss
+    ../../idm/users/man
   ];
 
 }

@@ -1,0 +1,34 @@
+{
+    "name": "uBlock0@raymondhill.net",
+    "description": "_",
+    "type": "storage",
+    "data": {
+	"toOverwrite": {
+	    "filterLists": [
+		"user-filters",
+		"ublock-filters",
+		"ublock-badware",
+		"ublock-privacy",
+		"ublock-quick-fixes",
+		"ublock-unbreak",
+		"adguard-generic",
+		"adguard-mobile",
+		"easylist",
+		"adguard-spyware",
+		"adguard-spyware-url",
+		"block-lan",
+		"easyprivacy",
+		"urlhaus-1",
+		"curben-phishing",
+		"dpollock-0",
+		"plowe-0",
+		"adguard-cookies",
+		"adguard-mobile-app-banners",
+		"adguard-other-annoyances",
+		"adguard-popup-overlays",
+		"adguard-social",
+		"adguard-widgets"
+	    ]
+	}
+    }
+}
