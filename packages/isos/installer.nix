@@ -5,7 +5,7 @@ in
 {
   imports = [
     # TODO: clean this up
-    ../../idm/users/rrrbbbsss/config/zsh
+    ../../idm/users/man/config/zsh
     ../../modules/hardware/common/wifi
   ];
 
@@ -47,7 +47,8 @@ in
 
   home-manager.users.${username} = { pkgs, ... }: {
     imports = [
-      ../../idm/users/rrrbbbsss/config/alacritty
+      # TODO: clean this up
+      ../../idm/users/man/config/alacritty
     ];
     programs.zsh.initExtra = ''
       [[ -v DISPLAY ]] && sudo ${pkgs.ryzst.apps}/bin/ryzst-installer

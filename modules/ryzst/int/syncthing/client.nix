@@ -96,8 +96,7 @@ in
         };
         devices = server.deviceConfigs;
         folders = {
-          # TODO: remove when finished switching
-          "${(if config.device.user == "man" then "home-man" else config.device.user)}" = {
+          "home-${config.device.user}" = {
             path = "/home/${config.device.user}";
             devices = serverDeviceNames;
             type = "sendreceive";

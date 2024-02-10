@@ -1,7 +1,7 @@
 { config, ... }:
 {
   imports = [
-    ../../idm/users/rrrbbbsss
+    ../../idm/users/man
     ../../modules/profiles/libvirtd.nix
   ];
 }

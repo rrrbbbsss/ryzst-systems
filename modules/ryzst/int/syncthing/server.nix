@@ -89,18 +89,6 @@ in
           "home-man" = {
             path = "${cfg.stateDir}/home-man";
             # TODO: compute based off devices assined to user
-            devices = [ "car-fan" ];
-            type = "receiveonly";
-            versioning = {
-              type = "staggered";
-              params = {
-                maxAge = builtins.toString (180 * 86400);
-                cleanupInterval = "3600";
-              };
-            };
-          };
-          "rrrbbbsss" = {
-            path = "${cfg.stateDir}/rrrbbbsss";
             devices = clientDeviceNames;
             type = "receiveonly";
             versioning = {

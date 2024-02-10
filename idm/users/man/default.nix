@@ -13,8 +13,8 @@ in
   device.user = baseNameOf (toString ./.);
 
 
-  # TODO: remove
-  security.pam.u2f.authFile = lib.mkForce ./pubkeys/u2f_keys;
+  # TODO: remove and do in auth module
+  security.pam.u2f.authFile = ./pubkeys/u2f_keys;
 
   users.users.${username} = {
     isNormalUser = true;
