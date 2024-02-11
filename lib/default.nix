@@ -17,9 +17,24 @@ let
       (builtins.readDir dir);
 
   names = import ./names { inherit self; };
+
+  types = {
+    username = lib-nixpkgs.types.mkOptionType {
+      name = "username";
+      description = "byteword username";
+      inherit (names.user) check;
+    };
+
+    hostname = lib-nixpkgs.types.mkOptionType {
+      name = "hostname";
+      description = "byteword hostname";
+      inherit (names.host) check;
+    };
+  };
 in
 {
   inherit getDirs;
   inherit getFilesList;
   inherit names;
+  inherit types;
 }

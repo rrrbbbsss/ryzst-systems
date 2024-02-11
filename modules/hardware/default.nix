@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, self, ... }:
 
 # personalized catalog based off:
 # https://github.com/NixOS/nixos-hardware
@@ -8,10 +8,11 @@ with lib;
 
   options.device = {
     user = mkOption {
-      type = types.str;
+      type = types.nullOr self.outputs.lib.types.username;
       description = ''
         User assigned to device.
       '';
+      default = null;
     };
     monitors = mkOption {
       type = types.attrsOf (types.attrsOf types.str);

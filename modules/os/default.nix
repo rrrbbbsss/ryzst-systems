@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 with lib;
 let
   cfg = config.os;
@@ -21,7 +21,7 @@ in
       description = "timezone";
     };
     hostname = mkOption {
-      type = types.str;
+      type = self.outputs.lib.types.hostname;
       example = "computer";
       description = "hostname";
     };

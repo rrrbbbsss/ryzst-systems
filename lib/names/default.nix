@@ -13,11 +13,13 @@ let
   wordlist = with builtins; fromJSON (readFile ./wordlist.json);
 
   bytewords = num: rec {
+    check = bytewords:
+      (builtins.tryEval (toInt bytewords)).success;
     toInt = bytewords:
       let
         lookup = byteword: lib.lists.findFirstIndex
           (x: x == byteword)
-          (abort "byteword not found: ${byteword}")
+          (throw "byteword not found: ${byteword}")
           wordlist;
         words = lib.strings.splitString "-" bytewords;
         result = lib.lists.foldr
@@ -29,7 +31,7 @@ let
           words;
       in
       if builtins.length words != num then
-        (abort "incorrect number of bytewords: ${bytewords}")
+        (throw "incorrect number of bytewords: ${bytewords}")
       else
         result.val;
 
@@ -85,6 +87,7 @@ let
       base = 5000;
     in
     {
+      inherit (username) check;
       toUID = name:
         base + (username.toInt name);
 
@@ -99,6 +102,7 @@ let
       networkOctets = "10.255";
     in
     {
+      inherit (hostname) check;
       inherit (hostname) toInt;
       inherit (hostname) fromInt;
       inherit (hostname) toHex;
