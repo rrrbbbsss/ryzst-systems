@@ -18,6 +18,35 @@ let
     You'll shoot
     your eye out
   '';
+
+  admins = lib.mapAttrs
+    (n: v: {
+      hashedPassword = null;
+      extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keyFiles = [ v.keys.ssh ];
+    })
+    config.ryzst.idm.groups.admins;
+
+  adminsSSHkeyFiles = lib.attrsets.foldlAttrs
+    (acc: n: v: acc ++ [ v.keys.ssh ])
+    [ ]
+    config.ryzst.idm.groups.admins;
+
+  userU2FkeyFiles =
+    if builtins.isNull config.device.user
+    then [ ]
+    else [ config.ryzst.idm.users.${config.device.user}.keys.u2f ];
+
+  adminsU2FkeyFiles = lib.attrsets.foldlAttrs
+    (acc: n: v: acc ++ [ v.keys.u2f ])
+    [ ]
+    config.ryzst.idm.groups.admins;
+
+  u2fAuthFile = pkgs.writeTextFile {
+    name = "u2fAuthFile";
+    text = concatStringsSep "\n"
+      (map readFile (userU2FkeyFiles ++ adminsU2FkeyFiles));
+  };
 in
 {
   options.os.auth = {
@@ -33,23 +62,29 @@ in
     users = {
       inherit motdFile;
       mutableUsers = false;
-      users.root = {
-        hashedPassword = null;
-        openssh.authorizedKeys.keys = import ../../idm/groups/admins.nix;
-      };
+      users = {
+        root = {
+          hashedPassword = null;
+          # TODO: remove
+          openssh.authorizedKeys.keyFiles = adminsSSHkeyFiles;
+        };
+      } // admins;
     };
-    security.sudo.extraConfig = ''
-      Defaults lecture_file  = ${lecture}
-    '';
+    security.sudo = {
+      execWheelOnly = true;
+      extraConfig = ''
+        Defaults lecture_file  = ${lecture}
+      '';
+    };
     security.pam = {
       u2f = {
         enable = true;
         origin = "pam://mek.ryzst.net";
-        # TODO: compute file: device user + admins
-        #authFile = ../../idm/users/man/pubkeys/u2f_keys;
+        authFile = u2fAuthFile;
         cue = true;
         debug = false;
       };
+      # TODO: cleanup
       services = {
         login = {
           u2fAuth = true;
@@ -64,7 +99,6 @@ in
           unixAuth = false;
         };
         sshd = {
-          u2fAuth = false; # TODO: ...
           showMotd = true;
         };
       };
@@ -77,6 +111,7 @@ in
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
+        X11Forwarding = false;
       };
       sftpFlags = [
         "-f AUTHPRIV"

@@ -12,17 +12,11 @@ in
 
   device.user = baseNameOf (toString ./.);
 
-
-  # TODO: remove and do in auth module
-  security.pam.u2f.authFile = ./pubkeys/u2f_keys;
-
   users.users.${username} = {
     isNormalUser = true;
     uid = self.outputs.lib.names.user.toUID username;
     # TODO: full name
     description = username;
-    # TODO: if member of local-admins
-    extraGroups = [ "wheel" ];
     hashedPassword = null;
   };
 

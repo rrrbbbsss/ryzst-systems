@@ -3,7 +3,7 @@ let
   hosts = config.ryzst.mek;
 in
 {
-  imports = [ ./mek ./int ];
+  imports = [ ./mek ./int ./idm ];
 
   ryzst.int = {
     dns = {
