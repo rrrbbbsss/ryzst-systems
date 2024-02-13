@@ -44,6 +44,16 @@ let
   };
 in
 {
+  #https://github.com/NixOS/nixpkgs/issues/16884#issuecomment-822144458
+  options.security.pam.services = mkOption {
+    type = types.attrsOf
+      (types.submodule ({ ... }: {
+        options.unixAuth = mkOption {
+          apply = v: false;
+        };
+      }));
+  };
+
   options.os.auth = {
     enable = mkOption {
       type = types.bool;
@@ -78,25 +88,9 @@ in
         cue = true;
         debug = false;
       };
-      # TODO: cleanup
-      services = {
-        login = {
-          u2fAuth = true;
-          unixAuth = false;
-        };
-        sudo = {
-          u2fAuth = true;
-          unixAuth = false;
-        };
-        polkit-1 = {
-          u2fAuth = true;
-          unixAuth = false;
-        };
-        sshd = {
-          showMotd = true;
-        };
-      };
+      services.sshd.showMotd = true;
     };
+
     services.openssh = {
       enable = true;
       openFirewall = true;
