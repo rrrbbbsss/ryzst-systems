@@ -14,10 +14,6 @@ let
     Ryzst Systems
     ${config.networking.hostName}
   '';
-  lecture = boxedMessageFile "lecture" ''
-    You'll shoot
-    your eye out
-  '';
 
   admins = lib.mapAttrs
     (n: v: {
@@ -77,7 +73,7 @@ in
       wheelNeedsPassword = false;
       execWheelOnly = true;
       extraConfig = ''
-        Defaults lecture_file  = ${lecture}
+        Defaults lecture = never
       '';
     };
     security.pam = {
