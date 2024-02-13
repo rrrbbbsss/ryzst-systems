@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, self, ... }:
 with lib;
 let
   cfg = config.os.auth;
@@ -17,6 +17,8 @@ let
 
   admins = lib.mapAttrs
     (n: v: {
+      isNormalUser = true;
+      uid = self.outputs.lib.names.user.toUID n;
       hashedPassword = null;
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keyFiles = [ v.keys.ssh ];
