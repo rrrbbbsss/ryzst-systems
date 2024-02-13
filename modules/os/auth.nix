@@ -27,11 +27,6 @@ let
     })
     config.ryzst.idm.groups.admins;
 
-  adminsSSHkeyFiles = lib.attrsets.foldlAttrs
-    (acc: n: v: acc ++ [ v.keys.ssh ])
-    [ ]
-    config.ryzst.idm.groups.admins;
-
   userU2FkeyFiles =
     if builtins.isNull config.device.user
     then [ ]
@@ -65,12 +60,11 @@ in
       users = {
         root = {
           hashedPassword = null;
-          # TODO: remove
-          openssh.authorizedKeys.keyFiles = adminsSSHkeyFiles;
         };
       } // admins;
     };
     security.sudo = {
+      wheelNeedsPassword = false;
       execWheelOnly = true;
       extraConfig = ''
         Defaults lecture_file  = ${lecture}
