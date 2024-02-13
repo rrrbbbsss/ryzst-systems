@@ -92,7 +92,7 @@ in
       openFirewall = true;
       settings = {
         LogLevel = "VERBOSE";
-        PermitRootLogin = "prohibit-password";
+        PermitRootLogin = "no";
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
         X11Forwarding = false;
