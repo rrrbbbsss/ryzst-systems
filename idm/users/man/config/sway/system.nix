@@ -11,16 +11,7 @@
     };
     vt = 7;
   };
-  security.pam.services = {
-    swaylock = {
-      u2fAuth = true;
-      unixAuth = false;
-    };
-    greetd = {
-      u2fAuth = true;
-      unixAuth = false;
-    };
-  };
+  security.pam.services.swaylock = { };
   security.polkit.enable = true;
   programs.dconf.enable = true;
   programs.xwayland.enable = true;
