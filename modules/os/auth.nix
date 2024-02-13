@@ -78,6 +78,8 @@ in
         Defaults lecture = never
       '';
     };
+    # if polkit sneaks in: warn
+    security.polkit.enable = false;
     security.pam = {
       u2f = {
         enable = true;

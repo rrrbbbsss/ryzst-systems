@@ -12,7 +12,6 @@
     vt = 7;
   };
   security.pam.services.swaylock = { };
-  security.polkit.enable = true;
   programs.dconf.enable = true;
   programs.xwayland.enable = true;
   xdg.portal = {
@@ -42,8 +41,6 @@
   };
   # Sound
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
