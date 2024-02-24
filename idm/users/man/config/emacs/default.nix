@@ -81,5 +81,6 @@ in
     nodePackages.vscode-json-languageserver
     yaml-language-server
     pyright
+    ryzst.souffle-lsp-plugin
   ];
 }

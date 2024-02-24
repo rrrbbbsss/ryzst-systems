@@ -14,6 +14,7 @@ let
     kivymd = python3Packages.callPackage ./python-libs/kivymd { };
     ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
     media-powermenu = python3Packages.callPackage ./media-powermenu { };
+    souffle-lsp-plugin = callPackage ./souffle-lsp-plugin { };
     souffle-treesitter = callPackage ./souffle-treesitter { };
     wordlist = callPackage ./wordlist { };
 

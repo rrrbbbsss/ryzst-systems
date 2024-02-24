@@ -463,10 +463,10 @@
 ;; souffle
 (use-package souffle-ts-mode
   :ensure t
-  :after format-all
+  :after format-all lsp-mode
   :mode "\\.dl\\'"
   :init
-  (language-id-definitions)
+  ;; formatting
   (define-format-all-formatter souffle-fmt
     (:executable)
     (:install)
@@ -479,7 +479,17 @@
           (lambda () (indent-region (car region) (cdr region)))
 	(lambda () (indent-region (point-min) (point-max)))))))
   (add-to-list 'format-all-default-formatters '("Soufflé" souffle-fmt))
-  (add-to-list 'language-id--definitions '("Soufflé" souffle-ts-mode)))
+  (add-to-list 'language-id--definitions '("Soufflé" souffle-ts-mode))
+  ;; lsp
+  (add-to-list 'lsp-language-id-configuration '(souffle-ts-mode . "Soufflé"))
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection "souffle-lsp-plugin")
+    :activation-fn (lsp-activate-on "Soufflé" )
+    :priority -1
+    :server-id 'souffle-lsp-plugin))
+  :hook
+  (souffle-ts-mode . lsp))
 
 ;; go
 (use-package go-mode
