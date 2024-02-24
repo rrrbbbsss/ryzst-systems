@@ -460,6 +460,27 @@
 (use-package yuck-mode
   :ensure t)
 
+;; souffle
+(use-package souffle-ts-mode
+  :ensure t
+  :after format-all
+  :mode "\\.dl\\'"
+  :init
+  (language-id-definitions)
+  (define-format-all-formatter souffle-fmt
+    (:executable)
+    (:install)
+    (:languages "Soufflé")
+    (:features region)
+    (:format
+     (format-all--buffer-native
+      'souffle-ts-mode
+      (if region
+          (lambda () (indent-region (car region) (cdr region)))
+	(lambda () (indent-region (point-min) (point-max)))))))
+  (add-to-list 'format-all-default-formatters '("Soufflé" souffle-fmt))
+  (add-to-list 'language-id--definitions '("Soufflé" souffle-ts-mode)))
+
 ;; go
 (use-package go-mode
   :ensure t
@@ -479,6 +500,7 @@
   :hook
   (yaml-ts-mode . format-all-mode)
   (yaml-ts-mode . lsp))
+
 
 ;; misc packages
 (use-package nov

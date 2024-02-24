@@ -5,7 +5,8 @@ let
     config = ./init.el;
     defaultInitFile = true;
     extraEmacsPackages = epkgs: with epkgs; [
-      treesit-grammars.with-all-grammars
+      (treesit-grammars.with-grammars (p:
+        (builtins.attrValues p) ++ [ pkgs.ryzst.souffle-treesitter ]))
     ];
     override = pkgs.ryzst.overrides.emacs;
   };

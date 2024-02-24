@@ -15,6 +15,11 @@ in
 {
   ryzst = prev.ryzst // {
     overrides.emacs = epkgs: epkgs // {
+      # add unpackaged emacs package
+      souffle-ts-mode = prev.callPackage ../packages/souffle-ts-mode {
+        inherit (prev.pkgs) fetchFromGitHub;
+        inherit (epkgs) trivialBuild;
+      };
       #https://github.com/nix-community/emacs-overlay/issues/384
       geiser = epkgs.melpaPackages.geiser.overrideAttrs
         (old: {
