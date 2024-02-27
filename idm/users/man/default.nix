@@ -145,6 +145,7 @@ in
 
       #images
       gimp
+      drawio
 
       #games
       steam
