@@ -4,7 +4,7 @@
 }:
 let
   pname = "gokey";
-  version = "202400223";
+  version = "20240305";
 in
 buildGoModule {
   inherit pname version;
