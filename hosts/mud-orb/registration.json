@@ -1,6 +1,6 @@
 {
   "keys": {
-    "ssh": "todo",
+    "ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRXkUFbe2sY3+Irb8knrGRnMt3N1tGdskFxbaS861WZ",
     "wg0": "5rD1b+ATPxci2l1GCscKoD7KzvGrLAnc/aVxGcIlzBg="
   }
 }
