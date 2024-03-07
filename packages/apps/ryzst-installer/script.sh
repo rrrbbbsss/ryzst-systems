@@ -86,7 +86,16 @@ function GenerateInstanceData() {
   # TODO: ip from preallocated hostname
   IP="todo"
 
+  # TODO: use gokey...
   # "secrets"
+  # generate nix key
+  NIX_SECRETS_DIR=$SECRETS_DIR/nix
+  mkdir -p $NIX_SECRETS_DIR
+  nix-store --generate-binary-cache-key \
+    "$HOST.mek.ryzst.net" \
+    $NIX_SECRETS_DIR/nix_key \
+    $NIX_SECRETS_DIR/nix_key.pub
+  NIXPUB=$(cat $NIX_SECRETS_DIR/nix_key.pub)
   # generate ssh key
   SSH_SECRETS_DIR=$SECRETS_DIR/ssh
   mkdir $SSH_SECRETS_DIR
@@ -109,6 +118,7 @@ function GenerateInstanceData() {
     --arg ip "$IP" \
     --arg endpoint "$ENDPOINT" \
     --arg hardware "$HARDWARE" \
+    --arg nix "$NIXPUB" \
     --arg ssh "$SSHPUB" \
     --arg wireguard "$WGPUB" \
     --arg syncthing "$SYNCTHING_ID" \

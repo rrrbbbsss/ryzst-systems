@@ -91,6 +91,10 @@ in
       services.sshd.showMotd = true;
     };
 
+    programs.ssh.extraConfig = ''
+      Host *
+        IdentityFile /persist/secrets/ssh_host_ed25519_key
+    '';
     services.openssh = {
       enable = true;
       openFirewall = true;

@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./cache
     ./dns
     ./nfs
     ./ntp

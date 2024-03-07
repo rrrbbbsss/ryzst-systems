@@ -1,6 +1,7 @@
 {
   "endpoint": "10.0.2.20",
   "keys": {
+    "nix": "tin-jet.mek.ryzst.net:yIR4HoFRxd+gOQWrK6SkTqMr8/Z7T0PeTUBGRrlmueo=",
     "ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2bOc8RzQ/2wvHnBSvYHpMWyHXVjNSwufNPN06waIeU",
     "wg0": "KbOsKRj36IbCxPV8pRpgzKOfnGXb0fOLROcp5duZvV4=",
     "syncthing": "M4T3DFJ-A7ETB4D-UMHI7XZ-L7FPY43-QSUFZ26-OACIP47-EA4CLQ7-GRMIFAK"

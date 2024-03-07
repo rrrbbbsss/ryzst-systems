@@ -20,6 +20,7 @@ in
       nixpkgs.config.allowUnfree = true;
       nix = {
         settings = {
+          secret-key-files = "/persist/secrets/nix/nix_key";
           experimental-features = [ "nix-command" "flakes" ];
           auto-optimise-store = true;
           flake-registry = "";

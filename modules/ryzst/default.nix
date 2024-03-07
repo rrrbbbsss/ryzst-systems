@@ -6,6 +6,14 @@ in
   imports = [ ./mek ./int ./idm ];
 
   ryzst.int = {
+    cache = {
+      server.nodes = with hosts; {
+        inherit tin-jet;
+      };
+      client.nodes = with hosts; {
+        inherit cat-jar ape-orc car-fan mud-orb ant-bot;
+      };
+    };
     dns = {
       server.nodes = with hosts; {
         inherit tin-jet;
