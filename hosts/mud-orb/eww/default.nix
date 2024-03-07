@@ -118,6 +118,8 @@ in
     Service = {
       Type = "oneshot";
       ExecStart = "${config.programs.eww.package}/bin/eww open bar";
+      Restart = "on-failure";
+      RestartSec = 1;
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
