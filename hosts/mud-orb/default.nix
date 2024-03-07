@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  username = config.device.user;
+  username = config.networking.hostName;
   font = "DejaVu Sans Mono";
   colors = {
     desktop = "#0d0d0d";
@@ -19,14 +19,14 @@ let
   modifier = "Mod4";
 in
 {
-
-  device.user = config.networking.hostName;
-
   users.users.${username} = {
     isNormalUser = true;
     description = username;
     hashedPassword = null;
+    extraGroups = [ "seat" ];
   };
+
+  services.seatd.enable = true;
 
   home-manager.users.${username} = { pkgs, config, osConfig, ... }: {
     imports = [
