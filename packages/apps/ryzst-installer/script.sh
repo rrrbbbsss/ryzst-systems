@@ -97,8 +97,8 @@ function GenerateInstanceData() {
   mkdir $WG_SECRETS_DIR
   wg genkey |
     (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) |
-    (umask 0033 wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
-  WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pug)
+    (umask 0033 && wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
+  WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pub)
   # generate syncthing keys
   SYNCTHING_SECRETS_DIR=$SECRETS_DIR/syncthing
   mkdir $SYNCTHING_SECRETS_DIR
