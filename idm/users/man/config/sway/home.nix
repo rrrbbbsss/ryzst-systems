@@ -345,6 +345,18 @@ in
         border = 2;
         commands = [
           {
+            command = "inhibit_idle fullscreen";
+            criteria = {
+              class = ".*";
+            };
+          }
+          {
+            command = "inhibit_idle fullscreen";
+            criteria = {
+              app_id = ".*";
+            };
+          }
+          {
             command = "move scratchpad; scratchpad show";
             criteria = {
               title = "(^TODO$|^MUSIC$)";
