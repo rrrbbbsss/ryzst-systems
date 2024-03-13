@@ -8,6 +8,7 @@
     ../../modules/hardware/devices/yubico/yubikey5
     ../../modules/hardware/devices/kensington/expert-trackball
     ../../modules/hardware/devices/tex/shinobi
+    ../../modules/hardware/devices/nullbits/tidbit
     ../../modules/hardware/devices/microchip/ir-transceiver
     ../../modules/hardware/devices/brother/hl-l2300d
     ../../modules/hardware/devices/canon/canoscan-lide-300
