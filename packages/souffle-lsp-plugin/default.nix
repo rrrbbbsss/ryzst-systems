@@ -33,8 +33,7 @@ stdenv.mkDerivation rec {
     description = "souffle language server";
     homepage = "https://github.com/jdaridis/souffle-lsp-plugin";
     changelog = "https://github.com/jdaridis/souffle-lsp-plugin/blob/v${version}/CHANGELOG.md";
-    # TODO: fix
-    #license = lib.licenses.unfree;
+    license = lib.licenses.unfree;
     platforms = lib.platforms.unix;
     sourceProvenance = [ lib.sourceTypes.binaryBytecode ];
   };
