@@ -3,6 +3,7 @@
 let
   packages = with pkgs; {
     default = ryzst.apps;
+    adom = callPackage ./adom { };
     apps = callPackage ./apps { inherit pkgs ryzst; };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };

@@ -152,6 +152,7 @@ in
       katago
       ryzst.katrain
       ryzst.sabaki
+      ryzst.adom
     ];
   };
 }
