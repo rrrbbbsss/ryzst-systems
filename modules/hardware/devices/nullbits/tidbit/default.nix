@@ -4,7 +4,7 @@ let
   group = "qmk-flash";
 in
 {
-  config = lib.mkIf user {
+  config = lib.mkIf (!(builtins.isNull user)) {
     users.groups.${group} = { };
     users.users.${user}.extraGroups = [ group ];
     hardware.keyboard.qmk.enable = true;
