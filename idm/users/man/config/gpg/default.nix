@@ -15,7 +15,7 @@ rec {
     enableSshSupport = true;
     defaultCacheTtl = 1800;
     defaultCacheTtlSsh = 1800;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry-curses;
     extraConfig = ''
       allow-loopback-pinentry
       allow-emacs-pinentry
