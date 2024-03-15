@@ -45,12 +45,12 @@ in
 
     # ip forwarding 
     boot.kernel.sysctl = {
-      "net.ipv4.conf.allforwarding" = true;
+      "net.ipv6.conf.allforwarding" = true;
     };
 
     networking.wireguard.interfaces = {
       wg0 = {
-        ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/24" ];
+        ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/48" ];
         listenPort = cfg.port;
         privateKeyFile = "/persist/secrets/wg0_key";
         peers = config.ryzst.int.wg.client.configs;

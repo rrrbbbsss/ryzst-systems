@@ -8,7 +8,7 @@ let
     (acc: n: v:
       [{
         publicKey = v.keys.wg0;
-        allowedIPs = [ "${v.ip}/32" ];
+        allowedIPs = [ "${v.ip}/128" ];
       }] ++ acc
     )
     [ ]
@@ -35,7 +35,7 @@ in
     address = mkOption {
       description = "The address for the client to use";
       type = types.str;
-      default = "${cfg.ip}/16";
+      default = "${cfg.ip}/48";
     };
     configs = mkOption {
       description = "The configs of the service endpoints";

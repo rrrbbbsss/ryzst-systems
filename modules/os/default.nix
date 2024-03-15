@@ -32,7 +32,11 @@ in
     };
     subnet = mkOption {
       type = types.str;
-      default = "10.255.0.0/16";
+      default =
+        let
+          hash = builtins.hashString "sha256" config.os.domain;
+        in
+        "fd${substring 0 2 hash}:${substring 2 4 hash}:${substring 4 4 hash}::/48";
       description = "internal subnet";
     };
     flake = mkOption {

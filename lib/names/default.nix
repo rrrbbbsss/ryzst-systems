@@ -97,9 +97,7 @@ let
 
   host =
     let
-      # TODO: transition to ipv6 lazy bum...
       hostname = bytewords 2;
-      networkOctets = "10.255";
     in
     {
       inherit (hostname) check;
@@ -108,24 +106,19 @@ let
       inherit (hostname) toHex;
       inherit (hostname) fromHex;
 
-      toIP = name:
+      toIP = name: network:
         let
-          int = host.toInt name;
-          baseDigits = lib.trivial.toBaseDigits 256 int;
-          digits = map toString baseDigits;
-          length = builtins.length baseDigits;
-          padding = builtins.genList (x: "0") (2 - length);
-          hostOctets = padding ++ digits;
+          networkprefix = builtins.substring 0 14 network;
+          hex = host.toHex name;
         in
-        networkOctets + "." + builtins.concatStringsSep "." hostOctets;
+        lib.strings.toLower "${networkprefix}::${hex}";
       fromIP = ip:
         let
-          octets = lib.strings.splitString "." ip;
-          byteword = bytewords 1;
-          first = byteword.fromInt (lib.toInt (builtins.elemAt octets 2));
-          second = byteword.fromInt (lib.toInt (builtins.elemAt octets 3));
+          hex = lib.strings.toUpper
+            (builtins.elemAt
+              (lib.strings.splitString "::" ip) 1);
         in
-        "${first}-${second}";
+        hostname.fromHex hex;
     };
 in
 {

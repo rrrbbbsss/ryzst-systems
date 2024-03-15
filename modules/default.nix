@@ -51,7 +51,6 @@ in
           locale = "en_US.UTF-8";
           timezone = "America/Chicago";
           domain = "mek.ryzst.net";
-          subnet = "10.255.0.0/16";
           flake = "github:rrrbbbsss/ryzst-systems";
         };
 

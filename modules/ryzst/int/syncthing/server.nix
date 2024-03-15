@@ -9,7 +9,7 @@ let
     (acc: n: v: {
       ${n} = {
         id = v.keys.syncthing;
-        addresses = [ "${cfg.protocol}://${v.ip}:${builtins.toString cfg.port}" ];
+        addresses = [ "${cfg.protocol}://[${v.ip}]:${builtins.toString cfg.port}" ];
       };
     } // acc)
     { }
@@ -40,8 +40,7 @@ in
     protocol = mkOption {
       description = "Protocol to use";
       type = types.enum [ "tcp" "tcp4" "tcp6" "quic" "quic4" "quic6" ];
-      # TODO: update to tcp6 when time comes
-      default = "tcp4";
+      default = "tcp6";
     };
     deviceConfigs = mkOption {
       description = "Device configuration information";
@@ -62,7 +61,7 @@ in
 
   config = mkIf enable {
     networking.firewall.extraCommands = ''
-      ${pkgs.nftables}/bin/nft add rule ip filter nixos-fw iifname "wg0" counter ip saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+      ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
     '';
 
     services.syncthing = {
@@ -76,7 +75,7 @@ in
       overrideFolders = true;
       settings = {
         options = {
-          listenAddresses = [ "${cfg.protocol}://${cfg.ip}:${builtins.toString cfg.port}" ];
+          listenAddresses = [ "${cfg.protocol}://[${cfg.ip}]:${builtins.toString cfg.port}" ];
           globalAnnounceEnabled = false;
           localAnnounceEnabled = false;
           natEnabled = false;
