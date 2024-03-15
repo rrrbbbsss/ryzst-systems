@@ -41,33 +41,28 @@
         device = "/dev/sda";
         type = "disk";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "BOOT";
-              start = "1MiB";
-              end = "100MiB";
-              bootable = true;
+          type = "gpt";
+          partitions = {
+            BOOT = {
+              label = "BOOT";
+              type = "EF00";
+              size = "512M";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot/efi";
               };
-            }
-            {
-              name = "ROOT";
-              start = "100MiB";
-              end = "100%";
-              part-type = "primary";
-              bootable = true;
+            };
+            ROOT = {
+              label = "BOOT";
+              size = "100%";
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
               };
-            }
-          ];
+            };
+          };
         };
       };
     };

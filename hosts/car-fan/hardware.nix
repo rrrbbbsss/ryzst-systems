@@ -1,11 +1,5 @@
 { config, lib, pkgs, ... }:
 
-
-let
-  disk-size = 120;
-  reserved-space = with builtins;
-    toString (ceil (disk-size * .15)) + "G";
-in
 {
   imports = [
     ../../modules/hardware/common/gpu/intel
@@ -86,32 +80,27 @@ in
         device = "/dev/sda";
         type = "disk";
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
-              name = "ESP";
-              start = "0";
-              end = "512MiB";
-              bootable = true;
+          type = "gpt";
+          partitions = {
+            ESP = {
+              label = "ESP";
+              type = "EF00";
+              size = "512M";
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
               };
-            }
-            {
-              name = "TANK";
-              start = "512MiB";
-              end = "100%";
-              part-type = "primary";
-              bootable = true;
+            };
+            TANK = {
+              label = "TANK";
+              size = "100%";
               content = {
                 type = "zfs";
                 pool = "tank";
               };
-            }
-          ];
+            };
+          };
         };
       };
     };
@@ -165,14 +154,6 @@ in
               mountpoint = "legacy";
             };
             mountpoint = "/var/log";
-          };
-          "local/reserve" = {
-            type = "zfs_fs";
-            options = {
-              reservation = reserved-space;
-              quota = reserved-space;
-
-            };
           };
 
           # TODO: move mointpoint
