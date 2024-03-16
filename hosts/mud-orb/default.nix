@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let
   username = config.networking.hostName;
   font = "DejaVu Sans Mono";
@@ -27,6 +27,8 @@ in
   };
 
   services.seatd.enable = true;
+  # TODO: required for powermenu right now
+  security.polkit.enable = lib.mkForce true;
 
   home-manager.users.${username} = { pkgs, config, osConfig, ... }: {
     imports = [
