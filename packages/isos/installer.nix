@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
-  username = config.device.user;
+  username = "installer";
 in
 {
   imports = [
@@ -9,10 +9,10 @@ in
     ../../modules/hardware/common/wifi
   ];
 
-  device.user = "installer";
   os = {
     auth.enable = false;
     nix.enable = false;
+    hostname = "zoo-zoo";
   };
 
   #nixpkgs.hostPlatform.system = "x86_64-linux";

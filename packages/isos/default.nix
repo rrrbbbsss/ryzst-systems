@@ -7,7 +7,6 @@ let
     specialArgs = { inherit self; };
     modules = [
       ./installer.nix
-      { os.hostname = name; }
       self.outputs.nixosModules.default
     ];
   };
