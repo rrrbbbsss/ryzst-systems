@@ -54,7 +54,7 @@
               };
             };
             ROOT = {
-              label = "BOOT";
+              label = "ROOT";
               size = "100%";
               content = {
                 type = "filesystem";
