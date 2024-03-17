@@ -87,7 +87,7 @@ in
       gtk.enable = true;
       package = pkgs.bibata-cursors;
       name = "Bibata-Original-Classic";
-      size = 16;
+      size = 32;
     };
     gtk.enable = true;
 
@@ -126,7 +126,7 @@ in
         };
         input = osConfig.device.rats;
         output = {
-          "*" = { bg = "${colors.desktop} solid_color"; };
+          "*" = { bg = "${colors.desktop} solid_color"; scale = "2"; };
         } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
           osConfig.device.monitors);
         colors = {
@@ -191,7 +191,6 @@ in
         };
       };
     };
-
   };
 
   #services.getty.autologinUser = username;
