@@ -7,6 +7,7 @@
     ../../modules/hardware/common/tpm/2-0
     ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/yubico/yubikey5
+    ../../modules/hardware/devices/vontar/d8
   ];
 
   device.monitors = {

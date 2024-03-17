@@ -113,6 +113,7 @@ in
             hide_cursor = "5000";
           };
         };
+        input = osConfig.device.rats;
         output = {
           "*" = { bg = "${colors.desktop} solid_color"; };
         } // (builtins.mapAttrs (n: v: (builtins.removeAttrs v [ "number" ]))
