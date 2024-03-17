@@ -17,6 +17,17 @@ let
     transparent = "#00000000";
   };
   modifier = "Mod4";
+  commands = {
+    media = {
+      raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+      lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+      mute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      micMute = "${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+      play = "${pkgs.playerctl}/bin/playerctl play-pause";
+      next = "${pkgs.playerctl}/bin/playerctl next";
+      prev = "${pkgs.playerctl}/bin/playerctl previous";
+    };
+  };
 in
 {
   users.users.${username} = {
@@ -169,6 +180,14 @@ in
           "${modifier}+Return" = ''
             exec swaymsg [app_id="Alacritty"] scratchpad show || ${pkgs.alacritty}/bin/alacritty
           '';
+          "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
+          "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
+          "XF86AudioMute" = "exec ${commands.media.mute}";
+          "XF86AudioMicMute" = "exec ${commands.media.micMute}";
+          "${modifier}+XF86AudioMute" = "exec ${commands.media.micMute}";
+          "XF86AudioPlay" = "exec ${commands.media.play}";
+          "XF86AudioNext" = "exec ${commands.media.next}";
+          "XF86AudioPrev" = "exec ${commands.media.prev}";
         };
       };
     };
