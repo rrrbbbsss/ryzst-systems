@@ -30,6 +30,13 @@ in
   # TODO: required for powermenu right now
   security.polkit.enable = lib.mkForce true;
 
+  # bar disappears when monitor powers on/off
+  services.udev.extraRules = ''
+    ACTION=="change", \
+    SUBSYSTEM=="drm", \
+    RUN+="${pkgs.systemd}/bin/systemctl -M ${username}@ start --user bar.service"
+  '';
+
   home-manager.users.${username} = { pkgs, config, osConfig, ... }: {
     imports = [
       ./eww
