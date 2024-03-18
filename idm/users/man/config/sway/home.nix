@@ -229,7 +229,7 @@ in
         resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
       }
       {
-        timeout = 3600;
+        timeout = 900;
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
