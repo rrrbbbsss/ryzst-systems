@@ -54,6 +54,11 @@ in
       ./media-powermenu
     ];
 
+    dconf = {
+      enable = true;
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    };
+
     programs.firefox = {
       enable = true;
       profiles.default = {
