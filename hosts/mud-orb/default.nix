@@ -17,11 +17,36 @@ let
     transparent = "#00000000";
   };
   modifier = "Mod4";
+  volume = pkgs.writeShellApplication {
+    name = "volume";
+    runtimeInputs = with pkgs; [ pulseaudio wireplumber gawk eww ];
+    text = ''
+      case $1 in
+        increase)
+          pactl set-sink-volume @DEFAULT_SINK@ +5%
+          ;;
+        decrease)
+          pactl set-sink-volume @DEFAULT_SINK@ -5%
+          ;;
+        mute)
+          pactl set-sink-mute @DEFAULT_SINK@ toggle
+          ;;
+        *)
+          exit 1
+          ;;
+      esac
+
+      VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ print $2*100 }')
+      MUTED=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{ print $2 }')
+
+      eww open audio --duration 3s --arg muted="$MUTED" --arg vol="$VOLUME"
+    '';
+  };
   commands = {
     media = {
-      raiseVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-      lowerVolume = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-      mute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      raiseVolume = "${volume}/bin/volume increase";
+      lowerVolume = "${volume}/bin/volume decrease";
+      mute = "${volume}/bin/volume mute";
       micMute = "${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
       play = "${pkgs.playerctl}/bin/playerctl play-pause";
       next = "${pkgs.playerctl}/bin/playerctl next";

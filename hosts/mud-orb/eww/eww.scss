@@ -18,3 +18,22 @@
 .icon:hover {
   background-color: $hover;
 }
+
+.audio {
+  background-color: $background;
+  border: 2px solid $focus;
+  margin: 0px;
+  font-size: 40px;
+  color: $font;
+}
+
+.audio scale trough {
+  border: 2px solid $border;
+  min-height: 30px;
+  padding: 5px;
+  margin: 0px 10px 10px 10px;
+}
+
+.audio scale trough highlight {
+  background-color: $font;
+}

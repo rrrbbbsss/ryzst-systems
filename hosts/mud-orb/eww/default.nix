@@ -6,6 +6,7 @@ let
     border = "#3f4040";
     hover = "#292b2b";
     font = "#C5C8C6";
+    focus = "#a16bed";
   };
   bar = [
     {
@@ -75,6 +76,8 @@ let
         $background: ${colors.background};
         $border: ${colors.border};
         $hover: ${colors.hover};
+        $focus: ${colors.focus};
+        $font: ${colors.font};
         EOF
 
         cp -r $src/* $out
@@ -95,9 +98,6 @@ in
       After = [ "graphical-session-pre.target" ];
     };
     Service = {
-      Environment = [
-        "GTK_THEME=Adwaita:dark"
-      ];
       ExecStart = "${config.programs.eww.package}/bin/eww --no-daemonize daemon";
       ExecReload = "${config.programs.eww.package}/bin/eww reload";
       Restart = "on-failure";

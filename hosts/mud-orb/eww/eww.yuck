@@ -32,3 +32,38 @@
        (icon :name "${entry.name}"
 	     :img "${entry.image}"
 	     :exe "${entry.exe}"))))
+
+;; audio window
+(defwindow audio [muted vol]
+    :monitor 0
+    :geometry (geometry :x "0"
+			:y "0"
+			:width "300px"
+			;;:height "400px"
+			:anchor "center center")
+    :stacking "fg"
+    :exclusive "false"
+    :focusable "false"
+    (audio-inner :muted muted :vol vol))
+
+(defwidget audio-inner [muted vol]
+ (box
+  :orientation "vertical"
+  :class "audio-inner"
+  :style {muted == "yes" ? "background-color: #cc6666" : ""}
+  (volume :vol vol)
+  (volume-bar :vol vol)))
+
+(defwidget volume [vol]
+ (box
+  :orientation "horizontal"
+  :active "false"
+  "${vol}%"))
+
+(defwidget volume-bar [vol]
+ (scale
+  :orientation "horizontal"
+  :min 0
+  :max 101
+  :active "false"
+  :value vol))
