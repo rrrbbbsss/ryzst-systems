@@ -48,6 +48,9 @@ in
       client.nodes = with hosts; {
         inherit ape-orc cat-jar car-fan;
       };
+      reading.nodes = with hosts; {
+        inherit gas-ink;
+      };
     };
 
     wg = {
@@ -55,7 +58,7 @@ in
         inherit tin-jet;
       };
       client.nodes = with hosts; {
-        inherit cat-jar ape-orc car-fan mud-orb ant-bot;
+        inherit cat-jar ape-orc car-fan mud-orb ant-bot gas-ink;
       };
     };
   };

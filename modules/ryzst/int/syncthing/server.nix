@@ -14,11 +14,15 @@ let
     } // acc)
     { }
     cfg.nodes;
-  inherit (config.ryzst.int.syncthing) client;
+  inherit (config.ryzst.int.syncthing) client reading;
   clientDeviceNames = attrsets.foldlAttrs
     (acc: n: _: [ n ] ++ acc)
     [ ]
     client.deviceConfigs;
+  ReadingDeviceNames = attrsets.foldlAttrs
+    (acc: n: _: [ n ] ++ acc)
+    [ ]
+    reading.deviceConfigs;
 in
 {
   options.ryzst.int.syncthing.server = {
@@ -82,14 +86,27 @@ in
           relaysEnabled = false;
           urAccepted = -1;
         };
-        devices = client.deviceConfigs;
+        devices = client.deviceConfigs // reading.deviceConfigs;
         folders = {
+          "Reading" = {
+            # TODO: do this properly
+            path = "${cfg.stateDir}/home-man/Reading";
+            devices = ReadingDeviceNames;
+            type = "sendonly";
+            versioning = {
+              type = "staggered";
+              params = {
+                maxAge = builtins.toString (180 * 86400);
+                cleanupInterval = "3600";
+              };
+            };
+          };
           # TODO: dont hardcode folder name for user homes
           "home-man" = {
             path = "${cfg.stateDir}/home-man";
             # TODO: compute based off devices assined to user
             devices = clientDeviceNames;
-            type = "receiveonly";
+            type = "sendreceive";
             versioning = {
               type = "staggered";
               params = {
