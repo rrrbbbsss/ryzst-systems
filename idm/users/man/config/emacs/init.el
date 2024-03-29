@@ -492,11 +492,12 @@
   (souffle-ts-mode . lsp))
 
 ;; go
-(use-package go-mode
-  :ensure t
+(use-package go-ts-mode
+  :init
+  (setq go-ts-mode-indent-offset 4)
   :hook
-  (go-mode . lsp)
-  (go-mode . (lambda () (setq tab-width 4))))
+  (go-ts-mode . lsp)
+  (go-ts-mode . (lambda () (setq tab-width 4))))
 
 ;; python
 (use-package lsp-pyright
