@@ -63,6 +63,11 @@ let
     '';
     windows = wrap-float-window "FZF-Windows"
       "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows";
+    # TODO: don't hardcode
+    mirror = ''
+      kill $(${pkgs.procps}/bin/pidof wl-mirror) \
+      || ${pkgs.wl-mirror}/bin/wl-mirror --fullscreen-output DP-3 DP-1
+    '';
     screenshot = ''
       ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
       | ${config.programs.swappy.package}/bin/swappy -f -
@@ -428,6 +433,7 @@ in
         "${modifier}+p" = "exec ${commands.passwords}";
         "${modifier}+n" = "exec ${commands.wifi}";
         "${modifier}+m" = "exec ${commands.music}";
+        "${modifier}+F10" = "exec ${commands.mirror}";
         "${modifier}+F11" = "exec ${commands.colorpicker}";
         "${modifier}+F12" = "exec ${commands.screenshot}";
         "${modifier}+backslash" = "exec ${commands.editor}";
