@@ -7,6 +7,7 @@ in
   imports = [
     ./auth.nix
     ./nix.nix
+    ./security.nix
   ];
   options.os = {
     locale = mkOption {
