@@ -495,6 +495,7 @@
 (use-package go-ts-mode
   :init
   (setq go-ts-mode-indent-offset 4)
+  :mode "\\.go\\'"
   :hook
   (go-ts-mode . lsp)
   (go-ts-mode . (lambda () (setq tab-width 4))))
