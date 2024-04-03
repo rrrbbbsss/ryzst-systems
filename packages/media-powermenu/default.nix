@@ -29,5 +29,11 @@ buildPythonApplication {
   postInstall = ''
     install -D $src/icons/power.png $out/share/icons/power.png
   '';
+
+  meta = {
+    description = "A simple powermenu";
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "media-powermenu";
+  };
 }
 
