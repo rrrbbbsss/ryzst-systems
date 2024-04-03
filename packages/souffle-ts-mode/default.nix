@@ -11,7 +11,7 @@ trivialBuild {
     owner = "chaosite";
     repo = "souffle-ts-mode";
     rev = "458ebe6115dbc8c6a60b019326ada7aa6106161a";
-    sha256 = "sha256-VCVnCSXTcFvHHsDDk/7NbnORDHwV+cRLk9aagABbXow=";
+    hash = "sha256-VCVnCSXTcFvHHsDDk/7NbnORDHwV+cRLk9aagABbXow=";
   };
 
   meta = {
