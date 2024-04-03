@@ -28,7 +28,7 @@ pythonPackages.buildPythonApplication {
   src = pythonPackages.fetchPypi {
     pname = "KaTrain";
     inherit version;
-    sha256 = "sha256-gMZ8b3oB/WReaK6aN7yLU+ZegGHi/sJpgvshXuxqcf4=";
+    hash = "sha256-gMZ8b3oB/WReaK6aN7yLU+ZegGHi/sJpgvshXuxqcf4=";
   };
 
   nativeBuildInputs = [ iconConvTools ];
@@ -73,5 +73,7 @@ pythonPackages.buildPythonApplication {
       - Automatically generate focused SGF reviews which show your biggest mistakes.
     '';
     license = licenses.mit;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "katrain";
   };
 }
