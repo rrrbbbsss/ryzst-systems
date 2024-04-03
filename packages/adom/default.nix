@@ -12,14 +12,15 @@ let
       "--with-versioned-syms"
       old.configureFlags;
   });
-in
-stdenv.mkDerivation rec {
-  name = "adom-${version}";
+
   version = "3.3.3";
+in
+stdenv.mkDerivation {
+  name = "adom-${version}";
 
   src = fetchurl {
     url = "https://www.adom.de/home/download/current/adom_linux_ubuntu_64_${version}.tar.gz";
-    sha256 = "sha256-ST73ZZTB9qfzjc8yp2zRB/tx3RK/kXwY/errysGjU7E=";
+    hash = "sha256-ST73ZZTB9qfzjc8yp2zRB/tx3RK/kXwY/errysGjU7E=";
   };
 
   nativeBuildInputs = [
@@ -39,5 +40,6 @@ stdenv.mkDerivation rec {
     homepage = "http://adom.de/";
     license = licenses.unfreeRedistributable;
     platforms = [ "x86_64-linux" ];
+    mainProgram = "adom";
   };
 }
