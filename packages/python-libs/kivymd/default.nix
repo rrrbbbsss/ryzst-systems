@@ -17,7 +17,7 @@ buildPythonPackage rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-ncvCy4r/3pyCVyGY/dsyyBTN1XJUoOSwDFOILbLI1qY=";
+    hash = "sha256-ncvCy4r/3pyCVyGY/dsyyBTN1XJUoOSwDFOILbLI1qY=";
   };
 
   nativeBuildInputs = [ docutils ];
@@ -34,5 +34,6 @@ buildPythonPackage rec {
     description = "KivyMD is a collection of Material Design compliant widgets for use with Kivy";
     homepage = "https://github.com/kivymd/KivyMD";
     license = licenses.mit;
+    platforms = [ "x86_64-linux" ];
   };
 }
