@@ -32,7 +32,7 @@ stdenv.mkDerivation {
     owner = "bernds";
     repo = "q5Go";
     rev = "${pname}-${version}";
-    sha256 = "sha256-MQ/FqAsBnQVaP9VDbFfEbg5ymteb/NSX4nS8YG49HXU=";
+    hash = "sha256-MQ/FqAsBnQVaP9VDbFfEbg5ymteb/NSX4nS8YG49HXU=";
   };
 
   nativeBuildInputs = [
@@ -69,5 +69,7 @@ stdenv.mkDerivation {
       - Export to a variety of formats
     '';
     license = licenses.gpl2;
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "q5go";
   };
 }
