@@ -6,7 +6,7 @@ let
   name = "${pname}-${version}";
   src = fetchurl {
     url = "https://github.com/SabakiHQ/Sabaki/releases/download/v${version}/sabaki-v${version}-linux-x64.AppImage";
-    sha256 = "0inlp5wb8719qygcac5268afim54ds7knffp765csrfdggja7q62";
+    hash = "sha256-wuCj5HvNZc2KOdc5O49upNToFDKiMMWexykctHi51EY=";
   };
   appimageContents = appimageTools.extract { inherit name src; };
 in
@@ -27,5 +27,7 @@ appimageTools.wrapType2 {
     homepage = "https://sabaki.yichuanshen.de/";
     license = licenses.mit;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    platforms = [ "x86_64-linux" ];
+    mainProgram = "sabaki";
   };
 }
