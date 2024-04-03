@@ -299,7 +299,11 @@
   ("<f2>" . treemacs))
 
 (use-package treemacs-evil
-  :ensure t)
+  :ensure t
+  :config
+  (setq evil-treemacs-state-cursor evil-normal-state-cursor)
+  :hook
+  (treemacs-mode . evil-treemacs-state))
 
 (use-package doom-modeline
   :ensure t
