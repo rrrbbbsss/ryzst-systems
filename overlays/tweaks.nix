@@ -25,8 +25,8 @@ in
         (old: {
           patches = [
             (prev.fetchpatch {
-              url = "https://github.com/cosmicexplorer/helm-rg/pull/33.patch";
-              sha256 = "sha256-AGAvRzmWfBt+PcnKVaX4/N7jUELgDCQSXxi8pK88Bsg=";
+              url = "https://github.com/cosmicexplorer/helm-rg/pull/33/commits/26725676b31e6e60b054b0ee1482be450cb826d7.patch";
+              hash = "sha256-AGAvRzmWfBt+PcnKVaX4/N7jUELgDCQSXxi8pK88Bsg=";
             })
           ];
         });
