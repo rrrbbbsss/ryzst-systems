@@ -20,7 +20,7 @@ buildPythonPackage rec {
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-vmsJLjFEaDD7EHOVXQQgplEJUtBo2nDmFjrXRCDw5DQ=";
+    hash = "sha256-vmsJLjFEaDD7EHOVXQQgplEJUtBo2nDmFjrXRCDw5DQ=";
   };
 
   nativeBuildInputs = [ cython pkg-config pytest ];
@@ -36,5 +36,6 @@ buildPythonPackage rec {
     description = "FFPyPlayer is a python binding for the FFmpeg library for playing and writing media files.";
     homepage = "https://matham.github.io/ffpyplayer/";
     license = licenses.lgpl3;
+    platforms = [ "x86_64-linux" ];
   };
 }
