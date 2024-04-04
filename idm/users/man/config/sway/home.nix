@@ -174,7 +174,7 @@ in
     gtk.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Original-Classic";
-    size = 16;
+    size = 22;
   };
   gtk.enable = true;
 
