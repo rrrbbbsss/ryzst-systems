@@ -37,6 +37,7 @@
     "/boot/efi" = {
       label = "BOOT";
       fsType = "vfat";
+      options = [ "umask=0077" ];
     };
     "/" = {
       label = "ROOT";
