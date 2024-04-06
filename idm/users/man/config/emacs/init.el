@@ -439,6 +439,15 @@
 (use-package prolog-mode
   :ensure t
   :init
+  (setopt prolog-program-name '(((getenv "EPROLOG") (eval (getenv "EPROLOG")))
+				(eclipse "eclipse")
+				(mercury nil)
+				(sicstus "sicstus")
+				(swi "swipl")
+				(gnu "gprolog")
+				(yap "yap")
+				(xsb "xsb")
+				(t "swipl")))
   (setq prolog-system 'swi)
   :mode "\\.pl\\'")
 
