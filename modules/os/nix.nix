@@ -24,6 +24,7 @@ in
           experimental-features = [ "nix-command" "flakes" ];
           auto-optimise-store = true;
           flake-registry = "";
+          allowed-users = [ "@wheel" ];
         };
         extraOptions = ''
           keep-outputs = true

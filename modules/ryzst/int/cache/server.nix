@@ -36,6 +36,7 @@ in
     '';
 
     nix = {
+      settings.allowed-users = [ "nix-ssh" ];
       sshServe = {
         enable = true;
         keys = clientsSSHKeys;
