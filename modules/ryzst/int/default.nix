@@ -7,5 +7,6 @@
     ./ntp
     ./wg
     ./syncthing
+    ./remote-build
   ];
 }

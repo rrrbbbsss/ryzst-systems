@@ -41,6 +41,16 @@ in
       };
     };
 
+    remote-build = {
+      server.nodes = with hosts; {
+        inherit tin-jet;
+      };
+      client.nodes = with hosts; {
+        # TODO: remove ape-orc when ci is in place
+        inherit ape-orc car-fan;
+      };
+    };
+
     syncthing = {
       server.nodes = with hosts; {
         inherit tin-jet;
