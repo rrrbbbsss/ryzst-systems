@@ -25,6 +25,7 @@ in
           auto-optimise-store = true;
           flake-registry = "";
           allowed-users = [ "@wheel" ];
+          trusted-users = [ "root" ];
         };
         extraOptions = ''
           keep-outputs = true
