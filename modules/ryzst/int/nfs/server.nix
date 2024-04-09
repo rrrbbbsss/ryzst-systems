@@ -40,17 +40,21 @@ in
       ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
     '';
 
-    services.nfs.server = {
-      enable = true;
-      hostName = cfg.ip;
-      extraNfsdConfig = ''
-        vers3=no
-      '';
-      # cheat
-      exports = ''
-        /srv/nfs      ${cfg.allow}(rw,fsid=0,no_subtree_check)
-        /srv/nfs/dump ${cfg.allow}(rw,nohide,insecure,no_subtree_check)
-      '';
+    services.nfs = {
+      server = {
+        enable = true;
+        # cheat
+        exports = ''
+          /srv/nfs      ${cfg.allow}(rw,fsid=0,no_subtree_check)
+          /srv/nfs/dump ${cfg.allow}(rw,nohide,insecure,no_subtree_check)
+        '';
+      };
+      settings = {
+        nfsd = {
+          hostName = cfg.ip;
+          ver3 = "no";
+        };
+      };
     };
 
     services.rpcbind.enable = mkForce false;
