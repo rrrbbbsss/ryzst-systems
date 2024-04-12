@@ -25,7 +25,7 @@ let
       // (import ./vms { inherit pkgs self; })
       // (import ./isos { inherit pkgs self system; });
     aarch64-linux = {
-      inherit (packages) apps fzf-pass fzf-wifi fzf-nix-options;
+      inherit (packages) apps fzf-pass fzf-wifi;
     };
   };
 in
