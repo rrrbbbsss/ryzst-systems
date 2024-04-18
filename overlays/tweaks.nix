@@ -20,6 +20,13 @@ in
         inherit (prev.pkgs) fetchFromGitHub;
         inherit (epkgs) trivialBuild;
       };
+      #https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+      lsp-mode = epkgs.melpaPackages.lsp-mode.overrideAttrs
+        (old: {
+          env = {
+            LSP_USE_PLISTS = "true";
+          };
+        });
       #https://github.com/cosmicexplorer/helm-rg/pull/33
       helm-rg = epkgs.melpaPackages.helm-rg.overrideAttrs
         (old: {

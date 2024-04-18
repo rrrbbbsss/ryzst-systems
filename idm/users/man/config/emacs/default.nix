@@ -52,6 +52,9 @@ in
       "emacs" = "${emacspkg}/bin/emacsclient -c";
     };
   };
+  home.sessionVariables = {
+    LSP_USE_PLISTS = "true";
+  };
 
   xdg.mimeApps =
     let
@@ -82,5 +85,6 @@ in
     yaml-language-server
     pyright
     ryzst.souffle-lsp-plugin
+    emacs-lsp-booster
   ];
 }
