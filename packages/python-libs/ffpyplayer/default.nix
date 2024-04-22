@@ -1,7 +1,7 @@
 { lib
 , buildPythonPackage
 , fetchPypi
-, cython
+, cython_0
 , pkg-config
 , pytest
 , SDL2
@@ -23,7 +23,7 @@ buildPythonPackage rec {
     hash = "sha256-vmsJLjFEaDD7EHOVXQQgplEJUtBo2nDmFjrXRCDw5DQ=";
   };
 
-  nativeBuildInputs = [ cython pkg-config pytest ];
+  nativeBuildInputs = [ cython_0 pkg-config pytest ];
   buildInputs = [ SDL2 SDL2_mixer ffmpeg ];
 
   preBuild = ''
