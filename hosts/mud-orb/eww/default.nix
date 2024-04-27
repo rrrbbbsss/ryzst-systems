@@ -116,7 +116,16 @@ in
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${config.programs.eww.package}/bin/eww open bar";
+      ExecStart = (pkgs.writeShellApplication {
+        name = "run-bar";
+        runtimeInputs = [
+          config.programs.eww.package
+        ];
+        text = ''
+          eww ping
+          eww open bar
+        '';
+      }) + "/bin/run-bar";
       Restart = "on-failure";
       RestartSec = 1;
     };
