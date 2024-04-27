@@ -66,6 +66,9 @@ in
   # TODO: required for powermenu right now
   security.polkit.enable = lib.mkForce true;
 
+
+  nix.settings.allowed-users = [ username ];
+
   # bar disappears when monitor powers on/off
   services.udev.extraRules = ''
     ACTION=="change", \
