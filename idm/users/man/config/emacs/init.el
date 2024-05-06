@@ -455,7 +455,7 @@
   :ensure t
   :requires lsp-mode
   :init
-  (setq lsp-nix-nil-auto-eval-input nil)
+  (setq lsp-nix-nil-auto-eval-inputs nil)
   :config
   (advice-add
    'nix-repl :around
