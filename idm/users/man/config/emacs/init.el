@@ -454,6 +454,8 @@
 (use-package nix-mode
   :ensure t
   :requires lsp-mode
+  :init
+  (setq lsp-nix-nil-auto-eval-input nil)
   :config
   (advice-add
    'nix-repl :around
