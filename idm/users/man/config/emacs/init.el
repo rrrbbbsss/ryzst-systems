@@ -313,16 +313,22 @@
   (column-number-mode 1)
   (doom-modeline-mode 1)
   (doom-modeline-def-modeline 'main
-    '(eldoc bar workspace-name window-number modals matches
-	    follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(compilation objed-state misc-info persp-name battery grip
-		  irc mu4e gnus github debug repl lsp minor-modes input-method
-		  indent-info buffer-encoding major-mode process vcs checker time "  "))
+    '(eldoc bar workspace-name window-number modals matches follow buffer-info
+	    remote-host buffer-position word-count parrot selection-info)
+    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus
+		  github debug repl lsp minor-modes input-method indent-info
+		  buffer-encoding major-mode process vcs check time " "))
+  (doom-modeline-def-modeline 'minimal
+    '(bar window-number modals matches buffer-info-simple)
+    '(media-info major-mode time " "))
   (doom-modeline-def-modeline 'vcs
-    '(bar window-number modals matches buffer-info
-	  remote-host buffer-position parrot selection-info)
-    '(compilation misc-info battery irc mu4e gnus github debug
-		  minor-modes buffer-encoding major-mode process time "  ")))
+    '(bar window-number modals matches buffer-info remote-host buffer-position
+	  parrot selection-info)
+    '(compilation misc-info battery irc mu4e gnus github debug minor-modes
+		  buffer-encoding major-mode process time " "))
+  (doom-modeline-def-modeline 'info
+    '(bar window-number modals buffer-info info-nodes buffer-position parrot selection-info)
+    '(compilation misc-info buffer-encoding major-mode time " ")))
 
 (use-package nerd-icons
   :ensure t
