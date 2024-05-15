@@ -22,6 +22,7 @@ in
         settings = {
           secret-key-files = "/persist/secrets/nix/nix_key";
           experimental-features = [ "nix-command" "flakes" ];
+          tarball-ttl = 0;
           auto-optimise-store = true;
           flake-registry = "";
           allowed-users = [ "@wheel" ];
