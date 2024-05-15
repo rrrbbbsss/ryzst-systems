@@ -1,8 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 {
   # VMS
   users.users.${config.device.user}.extraGroups = [ "libvirtd" ];
-  security.polkit.enable = lib.mkForce true;
+  security.polkit.enable = true;
   virtualisation.libvirtd = {
     enable = true;
     qemu = {

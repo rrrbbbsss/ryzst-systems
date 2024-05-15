@@ -22,9 +22,9 @@
       xdg-desktop-portal-gtk
     ];
   };
-  # no polkit
-  users.users.${config.device.user}.extraGroups = [ "seat" ];
-  services.seatd.enable = true;
+
+  # polkit
+  security.polkit.enable = true;
   # use dark themes
   environment.variables = {
     GTK_THEME = "Adwaita:dark";
