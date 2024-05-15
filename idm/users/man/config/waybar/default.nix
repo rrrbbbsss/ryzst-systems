@@ -125,4 +125,6 @@
       "GTK_THEME=Adwaita:dark"
     ];
   };
+
+  systemd.user.services.waybar.Service.RestartSec = 5;
 }
