@@ -27,6 +27,7 @@
         "dom.battery.enabled" = false;
         "dom.event.clipboardevents.enabled" = false;
         "network.trr.mode" = 5;
+        "network.http.referer.XOriginPolicy" = 1;
         "dom.security.https_only_mode" = true;
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
         "browser.urlbar.suggest.quicksuggest.sponsored" = false;
