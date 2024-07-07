@@ -70,9 +70,13 @@ in
       })
     ];
 
-    systemd.tmpfiles.rules = [
-      "L /home/${config.device.user}/.stignore - - - - ${pkgs.writeText "stignore" "/.*"}"
-    ];
+    home-manager.users.${config.device.user} = { pkgs, ... }: {
+      home.file = {
+        ".stignore".text = ''
+          /.*
+        '';
+      };
+    };
 
     services.syncthing = {
       enable = true;
