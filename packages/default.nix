@@ -4,6 +4,7 @@ let
   packages = with pkgs; {
     default = ryzst.apps;
     adom = callPackage ./adom { };
+    adom-gui = callPackage ./adom-gui { };
     apps = callPackage ./apps { inherit pkgs ryzst; };
     efmt = callPackage ./efmt { };
     sabaki = callPackage ./sabaki { };
