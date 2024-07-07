@@ -5,6 +5,7 @@ let
     default = ryzst.apps;
     adom = callPackage ./adom { };
     apps = callPackage ./apps { inherit pkgs ryzst; };
+    efmt = callPackage ./efmt { };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };
     gokey = callPackage ./gokey { };
