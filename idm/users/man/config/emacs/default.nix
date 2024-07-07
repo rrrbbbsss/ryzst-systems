@@ -81,10 +81,13 @@ in
     black
     taplo-lsp
     nodePackages.prettier
+    ryzst.efmt
+    #lsp
     nodePackages.vscode-json-languageserver
     yaml-language-server
     pyright
     ryzst.souffle-lsp-plugin
+    erlang-ls
     emacs-lsp-booster
   ];
 }

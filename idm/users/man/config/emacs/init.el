@@ -565,6 +565,12 @@
   (yaml-ts-mode . format-all-mode)
   (yaml-ts-mode . lsp))
 
+;; erlang
+(use-package erlang
+  :ensure t
+  :hook
+  (erlang-mode . lsp))
+
 
 ;; misc packages
 (use-package nov
