@@ -153,6 +153,7 @@ in
       ryzst.katrain
       ryzst.sabaki
       ryzst.adom
+      ryzst.adom-gui
     ];
   };
 }
