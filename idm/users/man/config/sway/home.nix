@@ -254,6 +254,8 @@ in
     ];
   };
 
+  services.reboot-nag.enable = true;
+
   wayland.windowManager.sway = {
     enable = true;
     xwayland = true;

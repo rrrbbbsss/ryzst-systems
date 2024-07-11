@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
   # Login Manager
   boot.kernelParams = [ "console=tty1" ];
@@ -22,6 +22,9 @@
       xdg-desktop-portal-gtk
     ];
   };
+
+  #reboot nag
+  system.autoUpgrade.allowReboot = lib.mkForce false;
 
   # polkit
   security.polkit.enable = true;
