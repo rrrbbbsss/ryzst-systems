@@ -141,7 +141,6 @@ in
 
       #video
       yt-dlp
-      ffmpeg
 
       #images
       gimp
