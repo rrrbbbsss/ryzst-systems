@@ -11,7 +11,9 @@ let
       built="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
 
       if [ "''${booted}" != "''${built}" ]; then
-        swaynag --message "Reboot Required" --button "Reboot" "systemctl reboot"
+        swaynag --message "Reboot Required" \
+                --layer overlay \
+                --button "Reboot" "systemctl reboot"
       fi
     '';
   };
