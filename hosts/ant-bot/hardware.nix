@@ -2,13 +2,12 @@
 {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image.nix")
-    #nixos-hardware.raspberry-pi-4
   ];
 
   documentation.nixos.enable = false; #xsltproc issues
   nixpkgs.config.allowUnsupportedSystem = true;
   nixpkgs.hostPlatform.system = "aarch64-linux";
-  nixpkgs.buildPlatform.system = "x86_64-linux";
+  nixpkgs.buildPlatform.system = "aarch64-linux";
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   boot.loader.grub.enable = false;
