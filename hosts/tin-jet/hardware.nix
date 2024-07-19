@@ -6,6 +6,8 @@
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   boot = {
     loader = {
       systemd-boot.enable = true;

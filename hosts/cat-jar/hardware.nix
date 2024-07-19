@@ -18,6 +18,8 @@
     };
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # BootLoader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
