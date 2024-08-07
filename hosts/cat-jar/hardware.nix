@@ -28,7 +28,10 @@
     useTmpfs = true;
     tmpfsSize = "80%";
   };
-  boot.kernelParams = [ "console=tty1" ];
+  boot.kernelParams = [
+    "usbcore.autosuspend=-1"
+    "console=tty1"
+  ];
 
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
