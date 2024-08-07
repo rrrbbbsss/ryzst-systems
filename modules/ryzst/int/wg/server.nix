@@ -8,7 +8,7 @@ let
       [{
         publicKey = v.keys.wg0;
         allowedIPs = [ cfg.subnet ];
-        endpoint = "${v.endpoint}:${builtins.toString cfg.port}";
+        endpoint = "${n}.local:${builtins.toString cfg.port}";
         persistentKeepalive = 10;
       }] ++ acc
     )
@@ -41,7 +41,11 @@ in
 
   config = mkIf enable {
 
-    networking.firewall.allowedUDPPorts = [ cfg.port ];
+    systemd.network.networks.wired.networkConfig.MulticastDNS = lib.mkForce true;
+
+    networking.firewall.allowedUDPPorts = [
+      cfg.port
+    ];
 
     # ip forwarding 
     boot.kernel.sysctl = {

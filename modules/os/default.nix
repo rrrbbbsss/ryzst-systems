@@ -73,7 +73,17 @@ in
       useDHCP = false;
     };
 
-    services.resolved.enable = false;
+    # mDNS
+    networking.firewall.allowedUDPPorts = [ 5353 ];
+
+    services.resolved = {
+      enable = true;
+      llmnr = "false";
+      fallbackDns = [ ];
+      extraConfig = ''
+        MulticastDNS=resolve
+      '';
+    };
     systemd.network = {
       enable = true;
       wait-online.enable = false;
@@ -84,6 +94,7 @@ in
           };
           networkConfig = {
             DHCP = "ipv4";
+            MulticastDNS = "resolve";
           };
           dhcpV4Config = {
             UseDNS = false;
@@ -107,7 +118,7 @@ in
       wireguard-tools
       bind.dnsutils
       openssl
-      inetutils
+      iputils
     ];
 
     # vim is used instead of nano

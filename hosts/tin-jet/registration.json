@@ -1,5 +1,4 @@
 {
-  "endpoint": "10.0.2.20",
   "keys": {
     "nix": "tin-jet.mek.ryzst.net:yIR4HoFRxd+gOQWrK6SkTqMr8/Z7T0PeTUBGRrlmueo=",
     "ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2bOc8RzQ/2wvHnBSvYHpMWyHXVjNSwufNPN06waIeU",

@@ -23,6 +23,7 @@
         };
         networkConfig = {
           DHCP = "ipv4";
+          MulticastDNS = "resolve";
           IgnoreCarrierLoss = "3s";
         };
         dhcpV4Config = {
