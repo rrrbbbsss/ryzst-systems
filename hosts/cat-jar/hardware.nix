@@ -29,7 +29,6 @@
     tmpfsSize = "80%";
   };
   boot.kernelParams = [
-    "usbcore.autosuspend=-1"
     "console=tty1"
   ];
 
