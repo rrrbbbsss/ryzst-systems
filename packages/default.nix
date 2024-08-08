@@ -9,7 +9,6 @@ let
     efmt = callPackage ./efmt { };
     sabaki = callPackage ./sabaki { };
     katrain = callPackage ./katrain { inherit ryzst; };
-    gokey = callPackage ./gokey { };
     q5go = libsForQt5.callPackage ./q5go { };
     fzf-pass = callPackage ./fzf/pass { };
     fzf-wifi = callPackage ./fzf/wifi { };
