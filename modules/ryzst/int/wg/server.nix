@@ -41,7 +41,11 @@ in
 
   config = mkIf enable {
 
-    systemd.network.networks.wired.networkConfig.MulticastDNS = lib.mkForce true;
+    services.resolved.extraConfig = lib.mkForce ''
+      MulticastDNS=true
+    '';
+    systemd.network.networks.wired.networkConfig.MulticastDNS =
+      lib.mkForce true;
 
     networking.firewall.allowedUDPPorts = [
       cfg.port
