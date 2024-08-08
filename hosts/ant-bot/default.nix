@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 let
   wifi = "wlan0";
   lan = "end0";
@@ -14,7 +14,7 @@ in
   };
 
   networking.useDHCP = false;
-  services.resolved.enable = false;
+  services.resolved.enable = lib.mkForce false;
   systemd.network = {
     enable = true;
     netdevs = {
