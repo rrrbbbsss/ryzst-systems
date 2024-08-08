@@ -33,7 +33,7 @@ in
   ryzst = prev.ryzst // {
     overrides.emacs = epkgs: epkgs // {
       # add unpackaged emacs package
-      souffle-ts-mode = prev.callPackage ../packages/souffle-ts-mode {
+      souffle-ts-mode = prev.callPackage ../packages/souffle-ts-mode/package.nix {
         inherit (prev.pkgs) fetchFromGitHub;
         inherit (epkgs) trivialBuild;
       };

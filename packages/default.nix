@@ -1,33 +1,11 @@
-{ pkgs, ryzst, lib, system, self, ... }:
-
+{ self, system, lib, pkgs, ryzst, ... }:
 let
-  packages = with pkgs; {
-    default = ryzst.apps;
-    adom = callPackage ./adom { };
-    adom-gui = callPackage ./adom-gui { };
-    apps = callPackage ./apps { inherit pkgs ryzst; };
-    efmt = callPackage ./efmt { };
-    sabaki = callPackage ./sabaki { };
-    katrain = callPackage ./katrain { inherit ryzst; };
-    q5go = libsForQt5.callPackage ./q5go { };
-    fzf-pass = callPackage ./fzf/pass { };
-    fzf-wifi = callPackage ./fzf/wifi { };
-    fzf-sway-windows = callPackage ./fzf/sway-windows { };
-    kivymd = python3Packages.callPackage ./python-libs/kivymd { };
-    ffpyplayer = python3Packages.callPackage ./python-libs/ffpyplayer { };
-    media-powermenu = python3Packages.callPackage ./media-powermenu { };
-    souffle-lsp-plugin = callPackage ./souffle-lsp-plugin { };
-    souffle-treesitter = callPackage ./souffle-treesitter { };
-    wordlist = callPackage ./wordlist { };
-
-  };
-  target = {
-    x86_64-linux = packages
-      // (import ./vms { inherit pkgs self; })
-      // (import ./isos { inherit pkgs self system; });
-    aarch64-linux = {
-      inherit (packages) apps fzf-pass fzf-wifi;
-    };
-  };
+  mkPackages = dir:
+    pkgs.lib.foldlAttrs
+      (acc: name: path:
+        acc // (import path { inherit self system lib pkgs ryzst; })
+      )
+      { }
+      (self.lib.getDirs dir);
 in
-target.${system}
+mkPackages ./.
