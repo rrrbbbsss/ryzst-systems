@@ -7,8 +7,10 @@ let
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
-        publicKey = v.keys.wg0;
-        allowedIPs = [ "${v.ip}/128" ];
+        wireguardPeerConfig = {
+          PublicKey = v.keys.wg0;
+          AllowedIPs = [ "${v.ip}/128" ];
+        };
       }] ++ acc
     )
     [ ]
@@ -45,12 +47,29 @@ in
   };
 
   config = mkIf enable {
-    networking.wireguard.interfaces = {
-      wg0 = {
-        ips = [ "${cfg.address}" ];
-        listenPort = cfg.port;
-        privateKeyFile = "/persist/secrets/wg0_key";
-        peers = server.configs;
+    systemd.network = {
+      netdevs = {
+        "wg0" = {
+          netdevConfig = {
+            Kind = "wireguard";
+            Name = "wg0";
+            MTUBytes = "1420";
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/persist/secrets/wg0_key";
+            ListenPort = cfg.port;
+          };
+          wireguardPeers = server.configs;
+        };
+      };
+      networks.wg0 = {
+        matchConfig.Name = "wg0";
+        networkConfig = {
+          Address = cfg.address;
+          DHCP = false;
+          IPv6AcceptRA = false;
+          MulticastDNS = false;
+        };
       };
     };
   };

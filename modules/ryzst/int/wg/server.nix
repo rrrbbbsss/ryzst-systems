@@ -3,13 +3,16 @@ with lib;
 let
   cfg = config.ryzst.int.wg.server;
   enable = cfg.nodes?${config.networking.hostName};
+  inherit (config.ryzst.mek.${config.networking.hostName}) ip;
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
-        publicKey = v.keys.wg0;
-        allowedIPs = [ cfg.subnet ];
-        endpoint = "${n}.local:${builtins.toString cfg.port}";
-        persistentKeepalive = 10;
+        wireguardPeerConfig = {
+          PublicKey = v.keys.wg0;
+          AllowedIPs = [ cfg.subnet ];
+          Endpoint = "${n}.local:${builtins.toString cfg.port}";
+          PersistentKeepalive = 10;
+        };
       }] ++ acc
     )
     [ ]
@@ -32,6 +35,16 @@ in
       type = types.int;
       default = 51820;
     };
+    ip = mkOption {
+      description = "The ip address for the server to use";
+      type = types.str;
+      default = ip;
+    };
+    address = mkOption {
+      description = "The address for the server to use";
+      type = types.str;
+      default = "${cfg.ip}/48";
+    };
     configs = mkOption {
       description = "The configs of the service endpoints";
       type = types.listOf types.attrs;
@@ -44,8 +57,6 @@ in
     services.resolved.extraConfig = lib.mkForce ''
       MulticastDNS=true
     '';
-    systemd.network.networks.wired.networkConfig.MulticastDNS =
-      lib.mkForce true;
 
     networking.firewall.allowedUDPPorts = [
       cfg.port
@@ -56,12 +67,32 @@ in
       "net.ipv6.conf.allforwarding" = true;
     };
 
-    networking.wireguard.interfaces = {
-      wg0 = {
-        ips = [ "${cfg.nodes.${config.networking.hostName}.ip}/48" ];
-        listenPort = cfg.port;
-        privateKeyFile = "/persist/secrets/wg0_key";
-        peers = config.ryzst.int.wg.client.configs;
+    systemd.network = {
+      netdevs = {
+        "wg0" = {
+          netdevConfig = {
+            Kind = "wireguard";
+            Name = "wg0";
+            MTUBytes = "1420";
+          };
+          wireguardConfig = {
+            PrivateKeyFile = "/persist/secrets/wg0_key";
+            ListenPort = cfg.port;
+          };
+          wireguardPeers = config.ryzst.int.wg.client.configs;
+        };
+      };
+      networks = {
+        wg0 = {
+          matchConfig.Name = "wg0";
+          networkConfig = {
+            Address = cfg.address;
+            DHCP = false;
+            IPv6AcceptRA = false;
+            MulticastDNS = false;
+          };
+        };
+        wired.networkConfig.MulticastDNS = lib.mkForce true;
       };
     };
   };
