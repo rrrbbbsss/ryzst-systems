@@ -14,12 +14,22 @@ in
         inherit cat-jar ape-orc car-fan mud-orb ant-bot;
       };
     };
+
     dns = {
       server.nodes = with hosts; {
         inherit tin-jet;
       };
       client.nodes = with hosts; {
         inherit cat-jar ape-orc car-fan mud-orb ant-bot;
+      };
+    };
+
+    git = {
+      server.nodes = with hosts; {
+        inherit tin-jet;
+      };
+      client.nodes = with hosts; {
+        inherit cat-jar ape-orc car-fan;
       };
     };
 
