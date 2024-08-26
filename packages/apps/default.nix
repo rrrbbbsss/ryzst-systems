@@ -1,5 +1,5 @@
-{ pkgs, ryzst, ... }:
+{ pkgs, ... }:
 {
   ${builtins.baseNameOf ./.} =
-    pkgs.callPackage ./package.nix { inherit ryzst; };
+    pkgs.callPackage ./package.nix { };
 }

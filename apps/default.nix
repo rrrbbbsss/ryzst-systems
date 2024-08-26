@@ -1,25 +1,25 @@
-{ ryzst }:
-
+{ pkgs }:
+with pkgs.ryzst;
 {
   default = {
     type = "app";
-    program = "${ryzst.apps}/bin/ryzst";
+    program = "${apps}/bin/ryzst";
   };
   burn-iso = {
     type = "app";
-    program = "${ryzst.apps}/bin/burn-iso";
+    program = "${apps}/bin/burn-iso";
   };
   ryzst-installer = {
     type = "app";
-    program = "${ryzst.apps}/bin/ryzst-installer";
+    program = "${apps}/bin/ryzst-installer";
   };
   yubikey-setup = {
     type = "app";
-    program = "${ryzst.apps}/bin/yubikey-setup";
+    program = "${apps}/bin/yubikey-setup";
   };
   template-picker = {
     type = "app";
-    program = "${ryzst.apps}/bin/template-picker";
+    program = "${apps}/bin/template-picker";
   };
 }
 

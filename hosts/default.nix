@@ -3,6 +3,7 @@ let
   mkHosts = dir: with builtins;
     mapAttrs
       (name: path:
+        #TODO: use pkgs somehow?...
         self.inputs.nixpkgs.lib.nixosSystem
           {
             specialArgs = { inherit self; };

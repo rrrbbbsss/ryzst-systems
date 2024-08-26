@@ -64,8 +64,11 @@
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
       (system:
         let
-          pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-          ryzst = self.packages.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ self.overlays.default ];
+          };
         in
         {
           devShells.default = import ./shell.nix { inherit self system pkgs; };
@@ -74,10 +77,10 @@
 
           formatter = pkgs.nixpkgs-fmt;
 
-          apps = import ./apps { inherit ryzst; };
+          apps = import ./apps { inherit pkgs; };
 
           packages = import ./packages {
-            inherit pkgs ryzst system self;
+            inherit pkgs system self;
             inherit (self) lib;
           };
         }
