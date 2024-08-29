@@ -33,9 +33,12 @@ in
       ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
     '';
 
-    services.gitolite = {
+    services.declarative-gitolite = {
       enable = true;
-      adminPubkey = builtins.readFile config.ryzst.idm.groups.admins.man.keys.ssh;
+      userKeys = {
+        # TODO: don't hardcode this
+        man = [ (builtins.readFile config.ryzst.idm.users.man.keys.ssh) ];
+      };
     };
   };
 }
