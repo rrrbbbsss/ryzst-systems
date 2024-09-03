@@ -5,6 +5,130 @@ with lib;
 let
   cfg = config.services.declarative-gitolite;
   hooks = lib.concatMapStrings (hook: "${hook} ") cfg.commonHooks;
+  rcType = types.submodule {
+    options = {
+      UMASK = mkOption {
+        type = types.str;
+        default = "0077";
+        description = ''
+          The default umask for repositories.
+        '';
+        example = "0077";
+      };
+      GIT_CONFIG_KEYS = mkOption {
+        type = with types; listOf str;
+        default = [ ];
+        description = ''
+          List of regexes for allowed git-config keys.
+        '';
+        example = literalExpression ''
+          [ "core\.logAllRefUpdates" "core\..*compression" ]
+        '';
+      };
+
+      LOG_EXTRA = mkOption {
+        type = with types; nullOr bool;
+        default = true;
+        description = ''
+          Extra detail in logfile
+        '';
+      };
+      LOG_DEST = mkOption {
+        type = with types; nullOr (listOf (enum [ "syslog" "normal" "repo-log" ]));
+        default = null;
+        description = ''
+          List of logging destinations.
+          Empty List is normal (default) logging.
+        '';
+      };
+      LOG_FACILITY = mkOption {
+        type = with types; nullOr str;
+        default = null;
+        description = ''
+          syslog 'facility': defaults to 'local0'
+        '';
+        example = literalExpression ''
+          "local4"
+        '';
+      };
+
+      # avoid caching:
+      # CACHE
+      # CACHE_TTL
+
+      ROLES = mkOption {
+        type = with types; attrsOf bool;
+        default = {
+          READERS = true;
+          WRITERS = true;
+        };
+        description = ''
+          Attrset of role names for wildcard repos.
+        '';
+      };
+      OWNER_ROLENAME = mkOption {
+        type = with types; nullOr str;
+        default = null;
+        description = ''
+          Name for Owner role for assigning permissions.
+        '';
+        example = ''
+          "OWNERS"
+        '';
+      };
+
+      SITE_INFO = mkOption {
+        type = with types; nullOr str;
+        default = null;
+        description = ''
+          Additional info that the 'info' command prints.
+        '';
+        example = literalExpression ''
+          "Please see https://example.com/gitolite for more help"
+        '';
+      };
+
+      # for CpuTime feature:
+      # DISPLAY_CPU_TIME
+      # CPU_TIME_WARN_LIMIT
+
+      # for Mirroring feature:
+      # HOSTNAME
+
+      LOCAL_CODE = mkOption {
+        type = with types; nullOr path;
+        default = null;
+        description = ''
+          Location for site-local gitolite code.
+        '';
+      };
+
+      ENABLE = mkOption {
+        type = with types; listOf str;
+        default = [
+          #COMMANDS
+          "help"
+          "desc"
+          "info"
+          "perms"
+          "writable"
+          #FEATURES
+          "ssh-authkeys"
+          "git-config"
+          "daemon"
+          "gitweb"
+        ];
+      };
+      description = ''
+        List of Commands and Features to enable.
+        See https://github.com/sitaramc/gitolite/blob/a546e5e8bdbb7069b995ca95fd20556157b0b439/src/lib/Gitolite/Rc.pm#L574
+        for a list of builtin commands and features.
+      '';
+
+      #for triggers to run after builtin triggers:
+      #NON_CORE
+    };
+  };
 in
 {
   options = {
@@ -34,22 +158,6 @@ in
         default = [ ];
         description = ''
           A list of custom git hooks that get copied to `~/.gitolite/hooks/common`.
-        '';
-      };
-
-      extraGitoliteRc = mkOption {
-        type = types.lines;
-        default = "";
-        example = literalExpression ''
-          '''
-            $RC{UMASK} = 0027;
-            $RC{SITE_INFO} = 'This is our private repository host';
-            push( @{$RC{ENABLE}}, 'Kindergarten' ); # enable the command/feature
-            @{$RC{ENABLE}} = grep { $_ ne 'desc' } @{$RC{ENABLE}}; # disable the command/feature
-          '''
-        '';
-        description = ''
-          Extra configuration to append to the default `~/.gitolite.rc`.
         '';
       };
 
@@ -87,24 +195,67 @@ in
           { bob = [ "key1" "key2" "key3" ]; }
         '';
       };
+
+      rc = mkOption {
+        type = rcType;
+        description = ''
+          Submodule to declare the RC file.
+        '';
+        default = { };
+      };
     };
   };
 
   config = mkIf cfg.enable (
     let
-      rc = pkgs.runCommand "gitolite-rc" { preferLocalBuild = true; } rcDirScript;
-      rcDirScript = ''
-        mkdir "$out"
-        export HOME=temp-home
-        mkdir -p "$HOME/.gitolite/logs" # gitolite can't run without it
-        '${pkgs.gitolite}'/bin/gitolite print-default-rc >>"$out/gitolite.rc.default"
-        cat <<END >>"$out/gitolite.rc"
-        # This file is managed by NixOS.
-        # Use services.gitolite options to control it.
+      format = key: fun:
+        let val = cfg.rc.${key};
+        in
+        if (val == null)
+        then "#${key}" else
+          "${key} => ${fun val},"
+      ;
+      # gross but good enough
+      rc = pkgs.writeTextFile {
+        name = "gitolite-rc";
+        text = ''
+          %RC = (
+              ${format "UMASK"
+                (v: v)}
+              ${format "GIT_CONFIG_KEYS"
+                (v: "'${builtins.concatStringsSep " " v}'")}
 
-        END
-        cat "$out/gitolite.rc.default" >>"$out/gitolite.rc"
-      '';
+              ${format "LOG_EXTRA"
+                (v: "1")}
+              ${format "LOG_DEST"
+                (v: "'${builtins.concatStringsSep "," v}'")}
+              ${format "LOG_FACILITY"
+                (v: "'${v}'")}
+
+              ${format "ROLES"
+                (let
+                  ownerVal = cfg.rc.OWNER_ROLENAME;
+                  owner = if ownerVal != null then { ${ownerVal} = true; } else { };
+                  in
+                    v: "{\n" +
+                       (foldlAttrs (acc: n: _: "      ${n} => 1,\n" + acc) "" (v // owner)) +
+                       "    }")}
+              ${format "OWNER_ROLENAME"
+                (v: "'${v}'")}
+
+              ${format "SITE_INFO"
+                (v: "'${v}'")}
+              ${format "LOCAL_CODE"
+                (v: "'${v}'")}
+
+              ${format "ENABLE"
+                (v: "[\n" +
+                    (fold (x: acc: "      '${x}',\n" + acc) "" v) +
+                    "    ]")}
+          );
+          1;
+        '';
+      };
       conf = pkgs.writeTextFile {
         name = "gitolite-conf";
         text = ''
@@ -183,7 +334,7 @@ in
             chmod +x .gitolite/hooks/common/*
           fi
 
-          ln -sf  "${rc}/gitolite.rc" .gitolite.rc
+          ln -sf  "${rc}" .gitolite.rc
           ln -sf  "${conf}" .gitolite/conf/gitolite.conf
           ln -sfn "${keys}" .gitolite/keydir
 
