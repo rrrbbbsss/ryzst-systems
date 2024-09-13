@@ -7,6 +7,16 @@ let
     (acc: n: v: "${v.ip}, ${acc}")
     ""
     config.ryzst.int.git.client.nodes;
+  userKeys = attrsets.foldlAttrs
+    (acc: n: v: acc //
+      { ${n} = [ (builtins.readFile v.keys.ssh) ]; })
+    { }
+    config.ryzst.idm.users;
+  hostKeys = attrsets.foldlAttrs
+    (acc: n: v: acc //
+      { ${n} = [ v.keys.ssh ]; })
+    { }
+    config.ryzst.int.git.client.nodes;
 in
 {
   options.ryzst.int.git.server = {
@@ -35,10 +45,31 @@ in
 
     services.declarative-gitolite = {
       enable = true;
-      userKeys = {
-        # TODO: don't hardcode this
-        man = [ (builtins.readFile config.ryzst.idm.users.man.keys.ssh) ];
+      user = "git";
+      repos = {
+        "users/CREATOR/..*" = {
+          access = [
+            # TODO: build users list
+            { perms = "C"; refex = ""; users = [ "man" ]; }
+            { perms = "RW+CDM"; refex = ""; users = [ "CREATOR" ]; }
+          ];
+        };
+        # TODO: domain repo
       };
+      rc = {
+        ENABLE = [
+          #COMMANDS
+          "help"
+          "desc"
+          "info"
+          "writable"
+          "D"
+          #FEATURES
+          "ssh-authkeys"
+          "git-config"
+        ];
+      };
+      userKeys = userKeys // hostKeys;
     };
   };
 }

@@ -5,6 +5,84 @@ with lib;
 let
   cfg = config.services.declarative-gitolite;
   hooks = lib.concatMapStrings (hook: "${hook} ") cfg.commonHooks;
+  rule = types.submodule {
+    options = {
+      perms = mkOption {
+        type = types.mkOptionType {
+          name = "gitolite-perms";
+          description = "gitolite perm regex";
+          check = str: isList (match "-|C|R|RW\\+?C?D?M?" str);
+        };
+        description = ''
+          The permissions.
+          The regex for the permissions is "-|C|R|RW\\+?C?D?M?"
+          See manual for meaning.
+          https://gitolite.com/gitolite/conf-2#appendix-1-different-types-of-write-operations
+          Individually think of perms as follows:
+          -  : deny all
+          C  : create wildcard repos (see manual)
+          R  : read
+          W  : forward push
+          +  : rewind push
+          C  : create a ref
+          D  : delete a ref
+          M  : allow merge
+        '';
+        example = "RW+CDM";
+      };
+      refex = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          A reference regular expresions [refex](https://gitolite.com/gitolite/conf.html#the-refex-field)
+          or virtual reference [vref](https://gitolite.com/gitolite/vref.html)
+          the permissions apply to.
+        '';
+        example = "refs/tags/v[0-9]";
+      };
+      users = mkOption {
+        type = with types; listOf str;
+        description = ''
+          The list of users to apply the rule to.
+          "@all" is the special group for all gitolite users.
+        '';
+        example = [ "bob" "sally" ];
+      };
+    };
+  };
+  repo = types.submodule {
+    options = {
+      access = mkOption {
+        type = types.listOf rule;
+        description = ''
+          List of access rules.
+        '';
+        example = [
+          { perms = "RW+"; refex = "main"; users = [ "bob" ]; }
+        ];
+      };
+      options = mkOption {
+        type = with types; attrsOf str;
+        default = { };
+        description = ''
+          Attrset of gitolite options for a repo.
+        '';
+        example = {
+          deny-rules = "1";
+        };
+      };
+      config = mkOption {
+        type = with types; attrsOf str;
+        default = { };
+        description = ''
+          Attrset of git-config values for a repo.
+        '';
+        example = {
+          "hooks.emailprefix" = "[%GL_REPO] ";
+        };
+      };
+    };
+  };
   rcType = types.submodule {
     options = {
       UMASK = mkOption {
@@ -15,14 +93,20 @@ let
         '';
         example = "0077";
       };
+
       GIT_CONFIG_KEYS = mkOption {
         type = with types; listOf str;
         default = [ ];
         description = ''
           List of regexes for allowed git-config keys.
         '';
-        example = literalExpression ''
-          [ "core\.logAllRefUpdates" "core\..*compression" ]
+        example = [ "core\.logAllRefUpdates" "core\..*compression" ];
+      };
+      EXPAND_GROUPS_IN_CONFIG = mkOption {
+        type = with types; nullOr bool;
+        default = true;
+        description = ''
+          The value of a config line will have groupnames expanded.
         '';
       };
 
@@ -34,7 +118,8 @@ let
         '';
       };
       LOG_DEST = mkOption {
-        type = with types; nullOr (listOf (enum [ "syslog" "normal" "repo-log" ]));
+        type = with types; nullOr
+          (listOf (enum [ "syslog" "normal" "repo-log" ]));
         default = null;
         description = ''
           List of logging destinations.
@@ -47,9 +132,7 @@ let
         description = ''
           syslog 'facility': defaults to 'local0'
         '';
-        example = literalExpression ''
-          "local4"
-        '';
+        example = "local4";
       };
 
       # avoid caching:
@@ -72,9 +155,7 @@ let
         description = ''
           Name for Owner role for assigning permissions.
         '';
-        example = ''
-          "OWNERS"
-        '';
+        example = "OWNERS";
       };
 
       SITE_INFO = mkOption {
@@ -83,9 +164,7 @@ let
         description = ''
           Additional info that the 'info' command prints.
         '';
-        example = literalExpression ''
-          "Please see https://example.com/gitolite for more help"
-        '';
+        example = "Please see https://example.com/gitolite for more help";
       };
 
       # for CpuTime feature:
@@ -121,7 +200,7 @@ let
       };
       description = ''
         List of Commands and Features to enable.
-        See https://github.com/sitaramc/gitolite/blob/a546e5e8bdbb7069b995ca95fd20556157b0b439/src/lib/Gitolite/Rc.pm#L574
+        See https://gitolite.com/gitolite/list-non-core.html
         for a list of builtin commands and features.
       '';
 
@@ -191,9 +270,9 @@ in
         description = ''
           Keys of users.
         '';
-        example = literalExpression ''
-          { bob = [ "key1" "key2" "key3" ]; }
-        '';
+        example = {
+          bob = [ "key1" "key2" "key3" ];
+        };
       };
 
       rc = mkOption {
@@ -202,6 +281,13 @@ in
           Submodule to declare the RC file.
         '';
         default = { };
+      };
+
+      repos = mkOption {
+        type = types.attrsOf repo;
+        description = ''
+          Attrset of repos.
+        '';
       };
     };
   };
@@ -222,8 +308,12 @@ in
           %RC = (
               ${format "UMASK"
                 (v: v)}
+
               ${format "GIT_CONFIG_KEYS"
                 (v: "'${builtins.concatStringsSep " " v}'")}
+              ${format "EXPAND_GROUPS_IN_CONFIG"
+                (v: "1")}
+                
 
               ${format "LOG_EXTRA"
                 (v: "1")}
@@ -256,12 +346,44 @@ in
           1;
         '';
       };
+
       conf = pkgs.writeTextFile {
         name = "gitolite-conf";
-        text = ''
-          repo test123
-              RW+ = @all
-        '';
+        text =
+          let
+            perms = v:
+              fold
+                (x: acc:
+                  "    " +
+                  "${x.perms} ${x.refex} = ${concatStringsSep " " x.users}\n"
+                  + acc)
+                ""
+                v.access;
+            options = v:
+              foldlAttrs
+                (acc: n: v:
+                  "    " +
+                  "option ${n} = ${v}\n" + acc)
+                ""
+                v.options;
+            config = v:
+              foldlAttrs
+                (acc: n: v:
+                  "    " +
+                  "config ${n} = ${v}\n" + acc)
+                ""
+                v.config;
+          in
+          foldlAttrs
+            (acc: n: v: ''
+              repo ${n}
+              ${perms v}
+              ${options v}
+              ${config v}
+
+            '' + acc)
+            ""
+            cfg.repos;
       };
       keysJSON = pkgs.writeTextFile {
         name = "gitolite-keysJSON";
@@ -283,8 +405,28 @@ in
                     done
            done
       '';
+      checkConfigKeys = repos: GIT_CONFIG_KEYS:
+        let
+          regex = builtins.concatStringsSep "|" GIT_CONFIG_KEYS;
+        in
+        foldlAttrs
+          (acc: n: v: acc &&
+            (fold (x: acc: acc && (isList (match regex x)))
+              true
+              (attrNames v.config)))
+          true
+          repos;
     in
     {
+      assertions = [
+        {
+          assertion = checkConfigKeys cfg.repos cfg.rc.GIT_CONFIG_KEYS;
+          message = ''
+            gitolite repo config key is not whitelisted in GIT_CONFIG_KEYS
+          '';
+        }
+      ];
+
       users.users.${cfg.user} = {
         inherit (cfg) group description;
         home = cfg.dataDir;
