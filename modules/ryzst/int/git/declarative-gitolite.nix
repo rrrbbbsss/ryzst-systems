@@ -184,7 +184,7 @@ let
 
       ENABLE = mkOption {
         type = with types; listOf str;
-        default = [
+        example = [
           #COMMANDS
           "help"
           "desc"
@@ -197,12 +197,12 @@ let
           "daemon"
           "gitweb"
         ];
+        description = ''
+          List of Commands and Features to enable.
+          See https://gitolite.com/gitolite/list-non-core.html
+          for a list of builtin commands and features.
+        '';
       };
-      description = ''
-        List of Commands and Features to enable.
-        See https://gitolite.com/gitolite/list-non-core.html
-        for a list of builtin commands and features.
-      '';
 
       #for triggers to run after builtin triggers:
       #NON_CORE
@@ -218,6 +218,14 @@ in
         description = ''
           Enable gitolite management under the
           `gitolite` user.
+        '';
+      };
+
+      enableGitAnnex = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Enable git-annex support.
         '';
       };
 
@@ -299,8 +307,7 @@ in
         in
         if (val == null)
         then "#${key}" else
-          "${key} => ${fun val},"
-      ;
+          "${key} => ${fun val},";
       # gross but good enough
       rc = pkgs.writeTextFile {
         name = "gitolite-rc";
@@ -427,6 +434,9 @@ in
         }
       ];
 
+      services.declarative-gitolite.rc.ENABLE = mkIf cfg.enableGitAnnex
+        [ "git-annex-shell ua" ];
+
       users.users.${cfg.user} = {
         inherit (cfg) group description;
         home = cfg.dataDir;
@@ -435,7 +445,8 @@ in
       };
       users.groups.${cfg.group}.gid = config.ids.gids.gitolite;
 
-      environment.systemPackages = [ pkgs.gitolite pkgs.git ];
+      environment.systemPackages = [ pkgs.gitolite pkgs.git ]
+        ++ optional cfg.enableGitAnnex pkgs.git-annex;
 
       systemd.services.gitolite-init = {
         description = "Gitolite initialization";

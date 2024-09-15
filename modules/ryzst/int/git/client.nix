@@ -22,5 +22,8 @@ in
     programs.ssh = {
       inherit knownHosts;
     };
+
+    environment.systemPackages = mkIf server.enableGitAnnex
+      [ pkgs.git-annex ];
   };
 }

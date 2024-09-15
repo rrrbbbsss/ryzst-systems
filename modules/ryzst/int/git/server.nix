@@ -21,6 +21,7 @@ in
 {
   options.ryzst.int.git.server = {
     enable = mkEnableOption "Internal Git service";
+    enableGitAnnex = mkEnableOption "enable git-annex for repos";
     nodes = mkOption {
       description = "Nodes the service is deployed to";
       type = types.attrs;
@@ -43,8 +44,20 @@ in
       ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
     '';
 
+    programs.git = {
+      enable = true;
+      config = {
+        init = {
+          defaultBranch = "main";
+        };
+      };
+    };
+
+    ryzst.int.git.server.enableGitAnnex = true;
+
     services.declarative-gitolite = {
       enable = true;
+      inherit (cfg) enableGitAnnex;
       user = "git";
       repos = {
         "users/CREATOR/..*" = {
