@@ -17,6 +17,8 @@ let
       { ${n} = [ v.keys.ssh ]; })
     { }
     config.ryzst.int.git.client.nodes;
+  admins = attrNames config.ryzst.idm.groups.admins;
+  hosts = attrNames config.ryzst.int.git.client.nodes;
 in
 {
   options.ryzst.int.git.server = {
@@ -68,6 +70,13 @@ in
           ];
         };
         # TODO: domain repo
+        "domain" = {
+          access = [
+            { perms = "RW+CDM"; refex = ""; users = admins; }
+            { perms = "R"; refex = ""; users = hosts; }
+            #{ perms = "RW"; refex = "hosts"; users = builders; }
+          ];
+        };
       };
       rc = {
         ENABLE = [

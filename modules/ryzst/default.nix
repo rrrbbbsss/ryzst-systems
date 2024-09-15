@@ -29,7 +29,7 @@ in
         inherit (hosts) tin-jet;
       };
       client.nodes = {
-        inherit (hosts) cat-jar ape-orc car-fan;
+        inherit (hosts) tin-jet cat-jar ape-orc car-fan mud-orb ant-bot;
       };
     };
 
