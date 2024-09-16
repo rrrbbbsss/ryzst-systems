@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-flake="github:rrrbbbsss/ryzst-systems"
+flake="git+ssh://git@git.int.ryzst.net/domain"
 
 # run as sudo
 if [[ $EUID -ne 0 ]]; then

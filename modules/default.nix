@@ -51,7 +51,7 @@ in
           locale = "en_US.UTF-8";
           timezone = "America/Chicago";
           domain = "mek.ryzst.net";
-          flake = "github:rrrbbbsss/ryzst-systems";
+          flake = "git+ssh://git@git.int.ryzst.net/domain";
         };
 
         nix.registry = {

@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-FLAKE="github:rrrbbbsss/ryzst-systems"
+FLAKE="git+ssh://git@git.int.ryzst.net/domain"
 FLAKE_REPO="git@${FLAKE}.git"
 REGISTRATION_JSON=/tmp/registration.json
 HOST=""

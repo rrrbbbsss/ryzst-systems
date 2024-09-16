@@ -42,7 +42,7 @@ in
     };
     flake = mkOption {
       type = types.str;
-      example = "github:rrrbbbsss/ryzst-systems";
+      example = "git+ssh://git@git.int.ryzst.net/domain";
       description = "flake to grab updates from";
     };
   };

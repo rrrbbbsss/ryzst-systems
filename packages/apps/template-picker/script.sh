@@ -17,7 +17,7 @@ if [ -d "$project" ]; then
   Error "project folder already exists"
 fi
 
-flake="github:rrrbbbsss/ryzst-systems"
+flake="git+ssh://git@git.int.ryzst.net/domain"
 templates=$(nix flake show "$flake" --json 2>/dev/null | jq '.templates')
 choices=$(jq -r 'keys[]' <<<"$templates")
 query="jq -r --arg a {} '.[\$a].description' <<< '$templates'"
