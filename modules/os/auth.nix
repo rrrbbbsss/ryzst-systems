@@ -95,6 +95,7 @@ in
     '';
     services.openssh = {
       enable = true;
+      authorizedKeysInHomedir = false;
       openFirewall = true;
       settings = {
         LogLevel = "VERBOSE";

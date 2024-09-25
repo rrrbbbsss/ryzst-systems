@@ -494,6 +494,12 @@ in
       environment.systemPackages = [ pkgs.gitolite pkgs.git ]
         ++ optional cfg.enableGitAnnex pkgs.git-annex;
 
+      services.openssh.extraConfig = ''
+        Match User ${cfg.user}
+          AuthorizedKeysFile "%h/.ssh/authorized_keys"
+        Match All
+      '';
+
       systemd.services.gitolite-init = {
         description = "Gitolite initialization";
         wantedBy = [ "multi-user.target" ];
