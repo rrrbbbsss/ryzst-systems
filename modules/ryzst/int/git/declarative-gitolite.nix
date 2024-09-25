@@ -343,6 +343,7 @@ in
               LOCAL_CODE => "$ENV{HOME}/local",
               ${format "UMASK"
                 (v: v)}
+              MULTI_HOOK_DRIVER => "$ENV{HOME}/multi-hook-driver",
 
               ${format "GIT_CONFIG_KEYS"
                 (v: "'${builtins.concatStringsSep " " v}'")}

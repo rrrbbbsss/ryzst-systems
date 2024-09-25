@@ -24,14 +24,13 @@ let
     name = "hosts-job";
     runtimeInputs = [ ];
     text = ''
-      # shellcheck disable=SC2034
       while read -r OLD NEW REF
       do
           if [[ "$REF" = "refs/heads/main" ]]
           then
-              echo "Ref $REF received. TODO: Trigger job"
+              echo "Ref $REF received. TODO: Trigger job with $NEW"
           else
-              echo "$REF"
+              echo "Test: $REF $OLD $NEW"
           fi
       done
       exit 0
@@ -117,6 +116,7 @@ in
           #FEATURES
           "ssh-authkeys"
           "git-config"
+          "repo-specific-hooks"
         ];
       };
       userKeys = userKeys // hostKeys;
