@@ -4,7 +4,41 @@
 with lib;
 let
   cfg = config.services.declarative-gitolite;
-  hooks = lib.concatMapStrings (hook: "${hook} ") cfg.commonHooks;
+  exeType = types.submodule {
+    options = {
+      name = mkOption {
+        type = types.str;
+        description = ''
+          name of executable
+        '';
+        example = "post-receive";
+      };
+      path = mkOption {
+        type = types.path;
+        description = ''
+          Path to executable
+        '';
+      };
+    };
+  };
+  hookType = types.submodule {
+    options = {
+      common = mkOption {
+        type = types.listOf exeType;
+        default = [ ];
+        description = ''
+          Attrset of custom git hooks that are used by all repos.
+        '';
+      };
+      repo-specific = mkOption {
+        type = types.listOf exeType;
+        default = [ ];
+        description = ''
+          Attrset of custom git hooks used by specific repos.
+        '';
+      };
+    };
+  };
   rule = types.submodule {
     options = {
       perms = mkOption {
@@ -174,14 +208,6 @@ let
       # for Mirroring feature:
       # HOSTNAME
 
-      LOCAL_CODE = mkOption {
-        type = with types; nullOr path;
-        default = null;
-        description = ''
-          Location for site-local gitolite code.
-        '';
-      };
-
       ENABLE = mkOption {
         type = with types; listOf str;
         example = [
@@ -240,14 +266,6 @@ in
         '';
       };
 
-      commonHooks = mkOption {
-        type = types.listOf types.path;
-        default = [ ];
-        description = ''
-          A list of custom git hooks that get copied to `~/.gitolite/hooks/common`.
-        '';
-      };
-
       user = mkOption {
         type = types.str;
         default = "gitolite";
@@ -297,6 +315,15 @@ in
           Attrset of repos.
         '';
       };
+
+      hooks = mkOption {
+        type = hookType;
+        description = ''
+          Submodule to declare git hooks.
+        '';
+        default = { };
+      };
+
     };
   };
 
@@ -313,6 +340,7 @@ in
         name = "gitolite-rc";
         text = ''
           %RC = (
+              LOCAL_CODE => "$ENV{HOME}/local",
               ${format "UMASK"
                 (v: v)}
 
@@ -341,8 +369,6 @@ in
                 (v: "'${v}'")}
 
               ${format "SITE_INFO"
-                (v: "'${v}'")}
-              ${format "LOCAL_CODE"
                 (v: "'${v}'")}
 
               ${format "ENABLE"
@@ -412,6 +438,26 @@ in
                     done
            done
       '';
+      local = pkgs.linkFarm "gitolite-local" [
+        {
+          name = "hooks";
+          path = pkgs.linkFarm "gitolite-hooks" [
+            {
+              name = "common";
+              path = pkgs.linkFarm "gitolite-common"
+                cfg.hooks.common;
+            }
+            {
+              name = "repo-specific";
+              path = pkgs.linkFarm "gitolite-repo-specific"
+                cfg.hooks.repo-specific;
+            }
+          ];
+        }
+        #TODO: VREF
+        #TODO: commands
+        #TODO: triggers
+      ];
       checkConfigKeys = repos: GIT_CONFIG_KEYS:
         let
           regex = builtins.concatStringsSep "|" GIT_CONFIG_KEYS;
@@ -482,15 +528,12 @@ in
             rm .gitolite/conf/gitolite.conf
           fi
 
-          if [ -n "${hooks}" ]; then
-            cp -f ${hooks} .gitolite/hooks/common/
-            chmod +x .gitolite/hooks/common/*
-          fi
-
           ln -sf  "${rc}" .gitolite.rc
           ln -sf  "${conf}" .gitolite/conf/gitolite.conf
           ln -sfn "${keys}" .gitolite/keydir
+          ln -sfn "${local}" local
 
+          gitolite setup --hooks-only
           gitolite compile
           gitolite trigger POST_COMPILE
         '';

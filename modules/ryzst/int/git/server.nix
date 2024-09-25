@@ -19,6 +19,24 @@ let
     config.ryzst.int.git.client.nodes;
   admins = attrNames config.ryzst.idm.groups.admins;
   hosts = attrNames config.ryzst.int.git.client.nodes;
+
+  hosts-job = pkgs.writeShellApplication {
+    name = "hosts-job";
+    runtimeInputs = [ ];
+    text = ''
+      # shellcheck disable=SC2034
+      while read -r OLD NEW REF
+      do
+          if [[ "$REF" = "refs/heads/main" ]]
+          then
+              echo "Ref $REF received. TODO: Trigger job"
+          else
+              echo "$REF"
+          fi
+      done
+      exit 0
+    '';
+  };
 in
 {
   options.ryzst.int.git.server = {
@@ -69,14 +87,24 @@ in
             { perms = "RW+CDM"; refex = ""; users = [ "CREATOR" ]; }
           ];
         };
-        # TODO: domain repo
         "domain" = {
           access = [
             { perms = "RW+CDM"; refex = ""; users = admins; }
             { perms = "R"; refex = ""; users = hosts; }
             #{ perms = "RW"; refex = "hosts"; users = builders; }
           ];
+          options = {
+            "hook.post-receive" = "hosts-job";
+          };
         };
+      };
+      hooks = {
+        repo-specific = [
+          {
+            name = "hosts-job";
+            path = "${hosts-job}/bin/hosts-job";
+          }
+        ];
       };
       rc = {
         ENABLE = [
