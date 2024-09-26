@@ -62,6 +62,10 @@
 
       homeManagerModules.default = import ./modules/home { inherit self; };
 
+      hosts = builtins.mapAttrs
+        (n: v: v.config.system.build.toplevel)
+        self.nixosConfigurations;
+
       templates = import ./templates { inherit self; };
     } //
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
