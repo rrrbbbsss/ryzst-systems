@@ -45,6 +45,9 @@
 
     hosts.url = "github:StevenBlack/hosts";
     hosts.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixops.url = "github:NixOS/nixops";
+    nixops.flake = false;
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
