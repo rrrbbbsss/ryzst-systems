@@ -53,7 +53,7 @@
       useTmpfs = true;
       tmpfsSize = "80%";
     };
-    kernelParams = [ "mem_sleep_default=shallow" ];
+    kernelParams = [ "mem_sleep_default=shallow" "amdgpu.aspm=0" ];
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   };
 
