@@ -125,5 +125,8 @@ in
     programs.nano.enable = false;
 
     documentation.man.generateCaches = true;
+
+    # increase entropy
+    services.jitterentropy-rngd.enable = true;
   };
 }
