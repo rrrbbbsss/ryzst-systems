@@ -4,11 +4,13 @@
 , python3Packages
 , katago
 , ryzst
+, fetchFromGitHub
+, gst_all_1
 }:
 
 let
   pname = "katrain";
-  version = "1.14.0";
+  version = "1.15.0";
   pythonPackages = python3Packages;
   desktopItem = makeDesktopItem {
     name = pname;
@@ -24,14 +26,20 @@ in
 with lib;
 pythonPackages.buildPythonApplication {
   inherit pname version;
+  pyproject = true;
 
-  src = pythonPackages.fetchPypi {
-    pname = "KaTrain";
-    inherit version;
-    hash = "sha256-gMZ8b3oB/WReaK6aN7yLU+ZegGHi/sJpgvshXuxqcf4=";
+  src = fetchFromGitHub {
+    owner = "sanderland";
+    repo = "katrain";
+    rev = "v${version}-fix";
+    hash = "sha256-FhW8FJaiLCmWwGYzo0/wArX/xdv7KEudRTNXXokGW1c=";
   };
 
-  nativeBuildInputs = [ iconConvTools ];
+  nativeBuildInputs = [
+    iconConvTools
+    pythonPackages.poetry-core
+    pythonPackages.poetry-dynamic-versioning
+  ];
 
   propagatedBuildInputs = with pythonPackages; [
     certifi
@@ -52,7 +60,21 @@ pythonPackages.buildPythonApplication {
   postPatch = ''
     substituteInPlace katrain/core/engine.py \
       --replace 'katrain/KataGo/katago' ${katago}/bin/katago
+
+    sed -i 's/^ranking.*/ranking = [ ("gst", -10), ("", 0) ]/' katrain/gui/sound.py
   '';
+
+  postFixup =
+    let
+      GST_PLUGIN_PATH = lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+      ];
+    in
+    ''
+      wrapProgram $out/bin/katrain --prefix GST_PLUGIN_PATH : ${GST_PLUGIN_PATH}
+    '';
+
 
   postInstall = ''
     install -D ${desktopItem}/share/applications/${pname}.desktop $out/share/applications/${pname}.desktop
