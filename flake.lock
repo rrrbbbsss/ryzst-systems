@@ -243,22 +243,6 @@
         "type": "github"
       }
     },
-    "nixops": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1712747698,
-        "narHash": "sha256-39X72K1Hg4h+I8hkr16yIloMVj2kBZ8OBuLkVkOFqdI=",
-        "owner": "NixOS",
-        "repo": "nixops",
-        "rev": "5374247f3a6aecbac561d162f2b8e9bee0a8ab0a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixops",
-        "type": "github"
-      }
-    },
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
@@ -351,7 +335,6 @@
         "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
         "nix-vscode-extensions": "nix-vscode-extensions",
-        "nixops": "nixops",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

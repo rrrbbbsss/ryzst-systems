@@ -16,8 +16,6 @@ let
         ];
       };
     }
-    # nixops keys module
-    "${self.inputs.nixops}/nix/keys.nix"
     # disko
     self.inputs.disko.nixosModules.disko
     # impermanence
