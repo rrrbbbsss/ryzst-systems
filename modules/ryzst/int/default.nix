@@ -2,6 +2,7 @@
 {
   imports = [
     ./cache
+    ./ci
     ./dns
     ./git
     ./nfs
