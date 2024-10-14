@@ -5,7 +5,7 @@ let
   cfg = config.services.reboot-nag;
   script = pkgs.writeShellApplication {
     name = "reboot-nag";
-    runtimeInputs = [ pkgs.coreutils pkgs.sway pkgs.systemd ];
+    runtimeInputs = [ pkgs.coreutils pkgs.sway pkgs.systemd pkgs.bash ];
     text = ''
       booted="$(readlink /run/booted-system/{initrd,kernel,kernel-modules})"
       built="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
