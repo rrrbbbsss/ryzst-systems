@@ -15,6 +15,18 @@ in
       };
     };
 
+    ci = {
+      server.nodes = {
+        inherit (hosts) tin-jet;
+      };
+      client-rpc.nodes = {
+        inherit (hosts) tin-jet cat-jar ape-orc;
+      };
+      client-web.nodes = {
+        inherit (hosts) cat-jar ape-orc car-fan;
+      };
+    };
+
     dns = {
       server.nodes = {
         inherit (hosts) tin-jet;

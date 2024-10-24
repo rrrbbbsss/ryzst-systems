@@ -135,11 +135,6 @@ let
       };
     };
   };
-
-  #TODO: write all the files
-  #TODO: the init script needs to put symlinks into place
-  # 
-  #...
 in
 {
   options.services.laminar = {
@@ -169,7 +164,6 @@ in
     };
     rpcInterface = mkOption {
       type = types.str;
-      #TODO: maybe change default to regular unix-socket?
       default = "unix-abstract:laminar";
       description = ''
         The interface/port or unix socket on which
@@ -270,7 +264,7 @@ in
       laminarConfig = pkgs.writeTextFile {
         name = "laminar.conf";
         text = ''
-          LAMINAR_HOME=/var/lib/private/laminar
+          LAMINAR_HOME=/var/lib/laminar
           LAMINAR_BIND_HTTP=${cfg.webInterface}
           LAMINAR_BIND_RPC=${cfg.rpcInterface}
           LAMINAR_TITLE=${cfg.title}
@@ -339,21 +333,67 @@ in
       };
     in
     {
+      users.users.laminar = {
+        description = "Nix Remote Build user";
+        isSystemUser = true;
+        home = "/var/lib/laminar";
+        group = "laminar";
+        useDefaultShell = true;
+      };
+      users.groups.laminar = { };
+
       systemd.services.laminar = {
         description = "Laminar continuous integration service";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
+          User = "laminar";
+          Group = "laminar";
           StateDirectory = "laminar";
+          RuntimeDirectory = "laminar";
           WorkingDirectory = "%S/laminar";
           EnvironmentFile = laminarConfig;
           ExecStartPre = "${laminar-init}/bin/laminar-init";
           ExecStart = "${cfg.package}/bin/laminard -v";
-          DynamicUser = true;
+          #DynamicUser = true;
+          SystemCallArchitectures = "native";
+          SystemCallFilter = "@system-service";
+          LockPersonality = true;
+          CapabilityBoundingSet = "";
+
+          ProtectClock = true;
+          ProtectKernelTunables = true;
+          ProtectProc = "invisible";
+          ProcSubset = "pid";
           ProtectSystem = "strict";
-          NoNewPrivileges = true;
+          ProtectHome = true;
+          ProtectHostname = true;
+          ProtectControlGroups = true;
+          ProtectKernelLogs = true;
+          ProtectKernelModules = true;
+
+          #RestrictNetworkInterfaces
+          RestrictAddressFamilies = "AF_INET AF_INET6 AF_UNIX";
+          #SocketBindALlow
+          #IPAddressAllow
+          #NFTSet
+
+          RestrictNamespaces = "yes";
+          RestrictRealtime = true;
+          RestrictSUIDSGID = true;
+
+          MemoryDenyWriteExecute = true;
+
+          PrivateDevices = true;
+          PrivateUsers = true;
           PrivateTmp = true;
+
+          NoNewPrivileges = true;
+
+          UMask = 0027;
+          PrivateIPC = true;
+          RemoveIPC = true;
         };
       };
     }
