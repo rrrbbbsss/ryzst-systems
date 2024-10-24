@@ -348,6 +348,7 @@ in
           text = colors.unfocus-text;
         };
       };
+      focus.newWindow = "none";
       window = {
         border = 2;
         commands = [
