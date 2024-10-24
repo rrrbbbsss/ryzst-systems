@@ -21,7 +21,7 @@ DEVICES=$(iwctl device list | cleanup | awk '{ print $1}')
 if [[ $(wc -l <<<"$DEVICES") -gt 1 ]]; then
   DEVICE=$(selector "$DEVICES" "Select Device")
 else
-  DEVICE=$DEVICES
+  DEVICE="$DEVICES"
 fi
 
 #scan
@@ -32,7 +32,7 @@ clear
 
 #select network
 NETWORKS=$(iwctl station "$DEVICE" get-networks | cleanup)
-NETWORK=$(selector "$NETWORKS" "Select Network" | awk '{ print $1 }')
+NETWORK=$(selector "$NETWORKS" "Select Network" | awk '{ NF-=2; print }')
 
 #connect
 iwctl station "$DEVICE" connect "$NETWORK"
