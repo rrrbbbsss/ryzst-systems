@@ -3,7 +3,6 @@
   boot.initrd.kernelModules = [ "i915" ];
   hardware.opengl = {
     enable = true;
-    driSupport = true;
     driSupport32Bit = true;
     extraPackages = with pkgs; [
       intel-vaapi-driver

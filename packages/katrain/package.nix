@@ -45,7 +45,7 @@ pythonPackages.buildPythonApplication {
     certifi
     chardet
     docutils
-    ryzst.ffpyplayer
+    #ryzst.ffpyplayer
     idna
     kivy
     kivy-garden
@@ -62,6 +62,8 @@ pythonPackages.buildPythonApplication {
       --replace 'katrain/KataGo/katago' ${katago}/bin/katago
 
     sed -i 's/^ranking.*/ranking = [ ("gst", -10), ("", 0) ]/' katrain/gui/sound.py
+
+    sed -i 's/^ffpyplayer/#ffpyplayer/' pyproject.toml
   '';
 
   postFixup =
