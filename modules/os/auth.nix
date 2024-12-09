@@ -81,10 +81,12 @@ in
     security.pam = {
       u2f = {
         enable = true;
-        origin = "pam://mek.ryzst.net";
-        authFile = u2fAuthFile;
-        cue = true;
-        debug = false;
+        settings = {
+          origin = "pam://mek.ryzst.net";
+          authfile = u2fAuthFile;
+          cue = true;
+          debug = false;
+        };
       };
       services.sshd.showMotd = true;
     };
