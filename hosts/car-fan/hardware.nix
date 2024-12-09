@@ -38,7 +38,6 @@
   networking.hostId = lib.mkForce "79468924";
   boot = {
     kernelParams = [ "nohibernate" ];
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     zfs.forceImportRoot = false;
     zfs.devNodes = "/dev/disk/by-partuuid";
     supportedFilesystems = [ "zfs" ];

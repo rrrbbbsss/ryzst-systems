@@ -7,10 +7,8 @@ let
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
-        wireguardPeerConfig = {
-          PublicKey = v.keys.wg0;
-          AllowedIPs = [ "${v.ip}/128" ];
-        };
+        PublicKey = v.keys.wg0;
+        AllowedIPs = [ "${v.ip}/128" ];
       }] ++ acc
     )
     [ ]

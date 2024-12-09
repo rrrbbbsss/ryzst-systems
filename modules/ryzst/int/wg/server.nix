@@ -7,12 +7,10 @@ let
   configs = attrsets.foldlAttrs
     (acc: n: v:
       [{
-        wireguardPeerConfig = {
-          PublicKey = v.keys.wg0;
-          AllowedIPs = [ cfg.subnet ];
-          Endpoint = "${n}.local:${builtins.toString cfg.port}";
-          PersistentKeepalive = 10;
-        };
+        PublicKey = v.keys.wg0;
+        AllowedIPs = [ cfg.subnet ];
+        Endpoint = "${n}.local:${builtins.toString cfg.port}";
+        PersistentKeepalive = 10;
       }] ++ acc
     )
     [ ]

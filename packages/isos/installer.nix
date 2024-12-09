@@ -60,7 +60,7 @@ in
     wheelNeedsPassword = false;
   };
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   services.cage = {
     enable = true;
