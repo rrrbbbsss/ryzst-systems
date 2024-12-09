@@ -137,7 +137,7 @@ in
       qpwgraph
 
       #print/scan
-      gnome.simple-scan
+      simple-scan
 
       #video
       yt-dlp

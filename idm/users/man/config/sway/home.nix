@@ -166,7 +166,7 @@ in
   home.packages = with pkgs; [
     wl-clipboard
     wlr-randr
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
   ];
 
   #cursor

@@ -3,7 +3,7 @@ let
   replacements = [ ];
 in
 {
-  system.replaceRuntimeDependencies = replacements;
+  system.replaceDependencies.replacements = replacements;
   # grafting is impure :(
   system.autoUpgrade.flags =
     if replacements == [ ]
