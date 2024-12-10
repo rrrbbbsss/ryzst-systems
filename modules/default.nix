@@ -29,17 +29,6 @@ let
     # nix-index
     self.inputs.nix-index-database.nixosModules.nix-index
     { programs.command-not-found.enable = false; }
-    # emacs-overlay
-    {
-      nix.settings = {
-        trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-        substituters = [
-          "https://nix-community.cachix.org"
-        ];
-      };
-    }
   ];
 in
 {
