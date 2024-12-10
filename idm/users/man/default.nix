@@ -27,7 +27,6 @@ in
       ./config/firefox
       ./config/gpg
       ./config/mpv
-      ./config/vscode
       ./config/waybar
       ./config/zathura
     ];

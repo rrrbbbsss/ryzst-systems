@@ -22,11 +22,6 @@
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
     firefox-addons.inputs.flake-utils.follows = "flake-utils";
 
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
-    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
-
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
     emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
