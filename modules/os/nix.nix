@@ -14,8 +14,6 @@ in
   };
   config = mkMerge [
     {
-      # read manual:
-      system.stateVersion = "22.11";
       # forgive me
       nixpkgs.config.allowUnfree = true;
       nix = {
