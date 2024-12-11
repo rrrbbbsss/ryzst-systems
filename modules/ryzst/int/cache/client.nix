@@ -15,7 +15,7 @@ let
       server.nodes;
   substituters =
     attrsets.foldlAttrs
-      (acc: n: v: [ "ssh://nix-ssh@${n}.mek.ryzst.net" ] ++ acc)
+      (acc: n: v: [ "ssh://nix-ssh@${n}.mek.ryzst.net?priority=10" ] ++ acc)
       [ ]
       server.nodes;
 in
