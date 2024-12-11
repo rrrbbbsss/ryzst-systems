@@ -45,6 +45,10 @@ in
   };
 
   config = mkIf enable {
+
+    systemd.services.systemd-networkd.serviceConfig.LoadCredential = [
+      "wg0:/persist/secrets/wg0_key"
+    ];
     systemd.network = {
       netdevs = {
         "wg0" = {
@@ -54,7 +58,7 @@ in
             MTUBytes = "1420";
           };
           wireguardConfig = {
-            PrivateKeyFile = "/persist/secrets/wg0_key";
+            PrivateKey = "@wg0";
             ListenPort = cfg.port;
           };
           wireguardPeers = server.configs;

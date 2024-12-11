@@ -107,8 +107,6 @@ function GenerateInstanceData() {
   wg genkey |
     (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) |
     (umask 0033 && wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
-  #https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/misc/ids.nix
-  chown root:152 $WG_SECRETS_DIR/wg0_key
   WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pub)
   # generate syncthing keys
   SYNCTHING_SECRETS_DIR=$SECRETS_DIR/syncthing

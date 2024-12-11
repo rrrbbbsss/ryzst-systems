@@ -65,6 +65,9 @@ in
       "net.ipv6.conf.allforwarding" = true;
     };
 
+    systemd.services.systemd-networkd.serviceConfig.LoadCredential = [
+      "wg0:/persist/secrets/wg0_key"
+    ];
     systemd.network = {
       netdevs = {
         "wg0" = {
@@ -74,7 +77,7 @@ in
             MTUBytes = "1420";
           };
           wireguardConfig = {
-            PrivateKeyFile = "/persist/secrets/wg0_key";
+            PrivateKey = "@wg0";
             ListenPort = cfg.port;
           };
           wireguardPeers = config.ryzst.int.wg.client.configs;
