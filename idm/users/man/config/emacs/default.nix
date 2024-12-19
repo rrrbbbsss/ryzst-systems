@@ -81,7 +81,7 @@ in
     black
     taplo-lsp
     nodePackages.prettier
-    ryzst.efmt
+    efmt
     #lsp
     nodePackages.vscode-json-languageserver
     yaml-language-server
