@@ -90,6 +90,7 @@ in
       "e /home/${username}/.cache             - - - 3w"
     ];
 
+    # TODO: inherit from host
     home.stateVersion = "22.11";
     home.packages = with pkgs; [
       #fzf scripts
@@ -152,6 +153,10 @@ in
       ryzst.sabaki
       ryzst.adom
       ryzst.adom-gui
+
+      #3d-printing
+      freecad-wayland
+      orca-slicer
     ];
   };
 }
