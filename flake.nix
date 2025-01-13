@@ -2,42 +2,41 @@
   description = "ryzst-systems: learning nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-24.11";
+    nixpkgs-stable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-24.11";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "git+https://github.com/numtide/flake-utils?shallow=1";
 
-    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.url = "git+https://github.com/edolstra/flake-compat?shallow=1";
     flake-compat.flake = false;
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence.url = "git+https://github.com/nix-community/impermanence?shallow=1";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "git+https://github.com/nix-community/home-manager/?shallow=1&ref=release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    disko.url = "github:nix-community/disko";
+    disko.url = "git+https://github.com/nix-community/disko?shallow=1";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    firefox-addons.url = "git+https://gitlab.com/rycee/nur-expressions?shallow=1&dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
     firefox-addons.inputs.flake-utils.follows = "flake-utils";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.url = "git+https://github.com/nix-community/emacs-overlay?shallow=1";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
     emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
-    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.url = "git+https://github.com/nix-community/nix-index-database?shallow=1";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.url = "git+https://github.com/cachix/git-hooks.nix?shallow=1";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
-    pre-commit-hooks.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
 
-    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.url = "git+https://github.com/nix-community/nixos-generators?shallow=1";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
-    hosts.url = "github:StevenBlack/hosts";
+    hosts.url = "git+https://github.com/StevenBlack/hosts?shallow=1";
     hosts.inputs.nixpkgs.follows = "nixpkgs";
   };
 
