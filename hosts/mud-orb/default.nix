@@ -55,8 +55,6 @@ let
   };
 in
 {
-  system.stateVersion = "22.11";
-
   users.users.${username} = {
     isNormalUser = true;
     description = username;

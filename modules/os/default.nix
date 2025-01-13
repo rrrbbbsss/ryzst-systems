@@ -107,6 +107,9 @@ in
       };
     };
 
+    # version
+    system.stateVersion = config.ryzst.mek."${cfg.hostname}".version;
+
     # base-packages
     environment.systemPackages = with pkgs; [
       ryzst.apps

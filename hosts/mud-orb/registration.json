@@ -3,5 +3,6 @@
     "nix": "mud-orb.mek.ryzst.net:wpxnwqyfzlbyLYznji0YrOn0d3rs56oS9sLtvJmC53g=",
     "ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRXkUFbe2sY3+Irb8knrGRnMt3N1tGdskFxbaS861WZ",
     "wg0": "WfX3+gWtVDY+7espyWtmBD6+aj7L5M2iUZKXmi8ukRs="
-  }
+  },
+  "version": "22.11"
 }

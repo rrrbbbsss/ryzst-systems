@@ -5,8 +5,6 @@ let
   bridge = "br0";
 in
 {
-  system.stateVersion = "22.11";
-
   imports = [ ];
 
   # TODO: redo

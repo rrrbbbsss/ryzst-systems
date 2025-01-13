@@ -4,5 +4,6 @@
     "ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICLrcL8zXOvna1kksTOmviPwMhj8/iumSCHQ9y7G4Ke1",
     "wg0": "crD1b+ATPxci2l1GCscKoD7KzvGrLAnc/aVxGcIlzBg=",
     "syncthing": "BZE74VM-ZP6XB2E-2TP4V3K-EXFXJQ7-5U3NU4T-7GL6JRJ-HJ3WXVV-IWUKPAR"
-  }
+  },
+  "version": "22.11"
 }
