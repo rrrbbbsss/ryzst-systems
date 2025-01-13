@@ -17,6 +17,7 @@ in
       # forgive me
       nixpkgs.config.allowUnfree = true;
       nix = {
+        channel.enable = false;
         settings = {
           secret-key-files = "/persist/secrets/nix/nix_key";
           experimental-features = [ "nix-command" "flakes" ];
