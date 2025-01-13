@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+# TODO: redo this whole thing
 FLAKE="git+ssh://git@git.int.ryzst.net/domain"
 FLAKE_REPO="git@${FLAKE}.git"
 REGISTRATION_JSON=/tmp/registration.json
@@ -85,6 +86,7 @@ function GenerateInstanceData() {
   ENDPOINT="todo"
   # TODO: ip from preallocated hostname
   IP="todo"
+  VERSION="$(nix flake metadata --json | jq -r '.locks.nodes.nixpkgs.original.ref' | cut -f2 -d '-')"
 
   # TODO: use gokey...
   # "secrets"
@@ -118,6 +120,7 @@ function GenerateInstanceData() {
     --arg ip "$IP" \
     --arg endpoint "$ENDPOINT" \
     --arg hardware "$HARDWARE" \
+    --arg version "$VERSION" \
     --arg nix "$NIXPUB" \
     --arg ssh "$SSHPUB" \
     --arg wireguard "$WGPUB" \
