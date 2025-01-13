@@ -1,6 +1,7 @@
 { config, lib, self, ... }:
 let
   username = config.device.user;
+  version = config.system.stateVersion;
 in
 {
   imports = [
@@ -90,8 +91,7 @@ in
       "e /home/${username}/.cache             - - - 3w"
     ];
 
-    # TODO: inherit from host
-    home.stateVersion = "22.11";
+    home.stateVersion = version;
     home.packages = with pkgs; [
       #fzf scripts
       ryzst.fzf-wifi
