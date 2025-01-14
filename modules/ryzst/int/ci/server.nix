@@ -56,6 +56,16 @@ in
       ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${client-rpcIps} } tcp dport ${builtins.toString cfg.rpc-port} jump nixos-fw-accept
     '';
 
+    # TODO: will have redo cert gen so certs can expire quickly.
+    keys.ssh-certs.laminar = {
+      validInterval = "+3w";
+      forceCommand = "${pkgs.gitolite}/bin/gitolite-shell laminar";
+      sourceAddress = cfg.nodes.${config.networking.hostName}.ip;
+      extraPrincipals = [ ];
+      extensions = [ ];
+      systemdServiceName = "laminar";
+    };
+
     services.laminar = {
       enable = true;
       title = "Laminar";
@@ -63,24 +73,55 @@ in
       webInterface = ''
         [${cfg.nodes.${config.networking.hostName}.ip}]:${toString cfg.web-port}
       '';
-      rpcInterface = "unix:/run/laminar/rpc.sock";
+      #rpcInterface = "unix:/run/laminar/rpc.sock";
       contexts = {
-        hello = {
+        hosts-job = {
           executors = 1;
-          jobs = [ "hello" ];
+          jobs = [ "hosts-job" ];
         };
       };
       jobs = {
-        hello = {
-          timeout = 120;
-          description = "this is a test";
+        hosts-job = {
+          timeout = 60 * 60 * 4;
+          description = "this is temp";
           run = getExe (pkgs.writeShellApplication {
-            name = "testeroni";
-            runtimeInputs = [ ];
+            name = "hosts-job";
+            runtimeInputs = with pkgs; [
+              coreutils-full
+              nix-eval-jobs
+              git
+              jq
+              parallel
+              openssh
+              nix
+            ];
             text = ''
-              pwd
-              sleep 5
-              echo 123
+              TMPDIR=$(mktemp -d)
+              trap 'rm -rf "$TMPDIR"' EXIT
+              cd "$TMPDIR"
+
+              export GIT_SSH_COMMAND="ssh -i $RUNTIME_DIRECTORY/ssh.key -o CertificateFile=$RUNTIME_DIRECTORY/ssh.cert"
+
+              FLAKE="git+ssh://git@git.int.ryzst.net/domain"
+
+              printf "Building Paths:\n"
+              nix-eval-jobs \
+                  --workers 4 \
+                  --gc-roots-dir "$TMPDIR" \
+                  --flake "$FLAKE?ref=main&rev=$COMMIT"#hosts \
+              	| tee -a eval.json \
+              	| jq -r --unbuffered '.drvPath' \
+              	| parallel --halt-on-error 2 nix-build {}
+
+
+              # JSON
+              # shellcheck disable=SC2016
+              FILTER='{commit: $COMMIT, hosts:
+                               (reduce .[] as $i ({}; . + ($i | { (.attr): .outputs.out})))}'
+              JSON=$(jq -s "$FILTER" --arg COMMIT "$COMMIT" eval.json)
+              printf "JSON:\n%s\n" "$JSON"
+
+              # TODO: push json
             '';
           });
         };

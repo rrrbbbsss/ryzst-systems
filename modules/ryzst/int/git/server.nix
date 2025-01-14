@@ -1,6 +1,26 @@
 { config, lib, pkgs, ... }:
 with lib;
 let
+  # TODO: redo and cleanup
+  mkAuthorizedKey = key: ip:
+    (concatStringsSep "," [
+      "cert-authority"
+      ''principals="laminar"''
+      ''command="${pkgs.gitolite}/bin/gitolite-shell laminar"''
+      "restrict"
+      "no-port-forwarding"
+      "no-X11-forwarding"
+      "no-agent-forwarding"
+      "no-pty"
+      "no-user-rc"
+      ''from="${ip}"''
+    ]) + " ${key}";
+  laminar-Keys =
+    attrsets.foldlAttrs
+      (acc: n: v: [ (mkAuthorizedKey v.keys.ssh v.ip) ] ++ acc) [ ]
+      config.ryzst.int.ci.server.nodes;
+
+
   cfg = config.ryzst.int.git.server;
   enable = cfg.nodes?${config.networking.hostName};
   clientsIps = attrsets.foldlAttrs
@@ -20,15 +40,18 @@ let
   admins = attrNames config.ryzst.idm.groups.admins;
   hosts = attrNames config.ryzst.int.git.client.nodes;
 
+  # TODO: do this properly.
   hosts-job = pkgs.writeShellApplication {
     name = "hosts-job";
-    runtimeInputs = [ ];
+    runtimeInputs = with pkgs; [
+      laminar
+    ];
     text = ''
       while read -r OLD NEW REF
       do
           if [[ "$REF" = "refs/heads/main" ]]
           then
-              echo "Ref $REF received. TODO: Trigger job with $NEW"
+              laminarc queue hosts-job COMMIT="$NEW"
           else
               echo "Test: $REF $OLD $NEW"
           fi
@@ -72,6 +95,9 @@ in
       };
     };
 
+    # TODO: this is gross
+    users.users.git.openssh.authorizedKeys.keys = laminar-Keys;
+
     ryzst.int.git.server.enableGitAnnex = true;
 
     services.declarative-gitolite = {
@@ -90,7 +116,9 @@ in
           access = [
             { perms = "RW+CDM"; refex = ""; users = admins; }
             { perms = "R"; refex = ""; users = hosts; }
-            #{ perms = "RW"; refex = "hosts"; users = builders; }
+            # ci
+            { perms = "R"; refex = "main"; users = [ "laminar" ]; }
+            { perms = "RW"; refex = "hosts"; users = [ "laminar" ]; }
           ];
           options = {
             "hook.post-receive" = "hosts-job";

@@ -341,6 +341,9 @@ in
         useDefaultShell = true;
       };
       users.groups.laminar = { };
+      environment.systemPackages = with pkgs; [ laminar ];
+
+      nix.settings.trusted-users = [ "laminar" ];
 
       systemd.services.laminar = {
         description = "Laminar continuous integration service";
@@ -365,7 +368,7 @@ in
           ProtectClock = true;
           ProtectKernelTunables = true;
           ProtectProc = "invisible";
-          ProcSubset = "pid";
+          #ProcSubset = "pid";
           ProtectSystem = "strict";
           ProtectHome = true;
           ProtectHostname = true;

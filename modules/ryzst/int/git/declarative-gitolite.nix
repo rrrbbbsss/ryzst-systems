@@ -497,7 +497,7 @@ in
 
       services.openssh.extraConfig = ''
         Match User ${cfg.user}
-          AuthorizedKeysFile "%h/.ssh/authorized_keys"
+          AuthorizedKeysFile "/etc/ssh/authorized_keys.d/%u" "%h/.ssh/authorized_keys"
         Match All
       '';
 
