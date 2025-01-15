@@ -103,6 +103,12 @@ in
               export GIT_SSH_COMMAND="ssh -i $RUNTIME_DIRECTORY/ssh.key -o CertificateFile=$RUNTIME_DIRECTORY/ssh.cert"
 
               FLAKE="git+ssh://git@git.int.ryzst.net/domain"
+              BRANCH="hosts"
+              GIT_NAME="laminar"
+              # TODO: don't hardcode
+              GIT_EMAIL="laminar@tin-jet.mek.ryzst.net"
+              REPO="$TMPDIR/repo"
+              #GPG_KEY="TODO"
 
               printf "Building Paths:\n"
               nix-eval-jobs \
@@ -121,7 +127,18 @@ in
               JSON=$(jq -s "$FILTER" --arg COMMIT "$COMMIT" eval.json)
               printf "JSON:\n%s\n" "$JSON"
 
-              # TODO: push json
+              # Push JSON
+              mkdir "$REPO"
+              git clone --depth=1 --branch="$BRANCH" "$FLAKE" "$REPO"
+              cd "$REPO"
+              echo "$JSON" > "hosts.json"
+              git config user.name  "$GIT_NAME"
+              git config user.email "$GIT_EMAIL"
+              # TODO: Don't be negligent
+              # git config user.signingKey "$GPG_KEY"
+              git commit -m "cache: $COMMIT" hosts.json || true
+              git pull --rebase --autostash
+              git push
             '';
           });
         };
