@@ -45,16 +45,6 @@ in
           '';
         };
       };
-      system = {
-        autoUpgrade = {
-          enable = true;
-          persistent = true;
-          randomizedDelaySec = "30min";
-          dates = "daily";
-          allowReboot = true;
-          inherit (config.os) flake;
-        };
-      };
     })
   ];
 }
