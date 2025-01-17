@@ -67,10 +67,7 @@ in
       server.nodes = {
         inherit (hosts) tin-jet;
       };
-      client.nodes = {
-        # TODO: remove ape-orc when ci is in place
-        inherit (hosts) ape-orc car-fan;
-      };
+      client.nodes = { };
     };
 
     syncthing = {
