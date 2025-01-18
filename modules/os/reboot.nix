@@ -105,7 +105,6 @@ in
       timerConfig = {
         RandomizedDelaySec = cfg.randomizedDelaySec;
         FixedRandomDelay = cfg.fixedRandomDelay;
-        Persistent = cfg.persistent;
       };
     };
   };
