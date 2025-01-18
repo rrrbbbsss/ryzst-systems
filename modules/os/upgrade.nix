@@ -38,19 +38,8 @@ in {
         '';
       };
 
-      allowReboot = lib.mkOption {
-        default = false;
-        type = lib.types.bool;
-        description = ''
-          Reboot the system into the new generation instead of a switch
-          if the new generation uses a different kernel, kernel modules
-          or initrd than the booted system.
-          See {option}`rebootWindow` for configuring the times at which a reboot is allowed.
-        '';
-      };
-
       randomizedDelaySec = lib.mkOption {
-        default = cfg.dates;
+        default = "10min";
         type = lib.types.str;
         example = "10min";
         description = ''
@@ -70,42 +59,6 @@ in {
           This reduces the jitter between automatic upgrades.
           See {option}`randomizedDelaySec` for configuring the randomized delay.
         '';
-      };
-
-      uptime = lib.mkOption {
-        default = 60 * 60 * 24 * 30;
-        type = lib.types.int;
-        example = "2592000";
-        description = ''
-          Max uptime in seconds before reboot required.
-          No immortal machines.
-        '';
-      };
-
-      rebootWindow = lib.mkOption {
-        description = ''
-          Define a lower and upper time value (in HH:MM format) which
-          constitute a time window during which reboots are allowed after an upgrade.
-          This option only has an effect when {option}`allowReboot` is enabled.
-          The default value of `null` means that reboots are allowed at any time.
-        '';
-        default = null;
-        example = { lower = "01:00"; upper = "05:00"; };
-        type = with lib.types; nullOr (submodule {
-          options = {
-            lower = lib.mkOption {
-              description = "Lower limit of the reboot window";
-              type = lib.types.strMatching "[[:digit:]]{2}:[[:digit:]]{2}";
-              example = "01:00";
-            };
-
-            upper = lib.mkOption {
-              description = "Upper limit of the reboot window";
-              type = lib.types.strMatching "[[:digit:]]{2}:[[:digit:]]{2}";
-              example = "05:00";
-            };
-          };
-        });
       };
 
       persistent = lib.mkOption {
@@ -146,7 +99,6 @@ in {
             nix
             jq
             openssh
-
           ];
           text = ''
             TMPDIR=$(mktemp -d)
@@ -156,7 +108,7 @@ in {
             git clone --depth=1 --branch="hosts" "${cfg.repo}" "$TMPDIR"
             STOREPATH=$(jq -er --arg h "$(cat /etc/hostname)" '.hosts.[$h]' "$TMPDIR"/hosts.json)
 
-            # Update
+            # Update TODO: rethink this check
             CURRENT=$(readlink /run/current-system)
             if [[ "$CURRENT" != "$STOREPATH" ]]; then
               # download store-path
@@ -166,7 +118,6 @@ in {
               # activate boot
               "$STOREPATH"/bin/switch-to-configuration boot
 
-              # TODO: add reboot logic (try to not overcomplicate)
               BOOTED=$(readlink /run/booted-system/{initrd,kernel,kernel-modules})
               BUILT=$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})
               if [[ "$BOOTED" = "$BUILT" ]]; then
@@ -174,6 +125,8 @@ in {
                 # https://github.com/NixOS/nixpkgs/pull/309911
                 "$STOREPATH"/bin/switch-to-configuration switch
               fi
+            else
+              echo "Nothing to do."
             fi
           '';
         });

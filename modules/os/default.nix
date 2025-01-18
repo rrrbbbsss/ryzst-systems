@@ -9,6 +9,7 @@ in
     ./nix.nix
     ./grafting.nix
     ./upgrade.nix
+    ./reboot.nix
   ];
   options.os = {
     locale = mkOption {
@@ -110,6 +111,7 @@ in
 
     #updates
     os.upgrade.enable = true;
+    os.reboot.enable = true;
 
     # version
     system.stateVersion = config.ryzst.mek."${cfg.hostname}".version;

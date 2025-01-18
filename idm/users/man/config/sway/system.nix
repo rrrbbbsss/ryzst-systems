@@ -24,8 +24,7 @@
   };
 
   #reboot nag
-  # TODO: change
-  system.autoUpgrade.allowReboot = lib.mkForce false;
+  os.reboot.enable = lib.mkForce false;
 
   # polkit
   security.polkit.enable = true;

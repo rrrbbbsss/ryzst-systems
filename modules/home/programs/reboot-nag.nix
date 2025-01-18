@@ -7,10 +7,11 @@ let
     name = "reboot-nag";
     runtimeInputs = [ pkgs.coreutils pkgs.sway pkgs.systemd pkgs.bash ];
     text = ''
-      booted="$(readlink /run/booted-system/{initrd,kernel,kernel-modules})"
-      built="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
+      BOOTED="$(readlink /run/booted-system/{initrd,kernel,kernel-modules})"
+      BUILT="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
+      UPTIME=$(cut -f 1 -d " " /proc/uptime)
 
-      if [ "''${booted}" != "''${built}" ]; then
+      if [[ "$BOOTED" != "$BUILT" ]] || [[ "$UPTIME" -gt ${toString cfg.uptime} ]]; then
         swaynag --message "Reboot Required" \
                 --layer overlay \
                 --button "Reboot" "systemctl reboot"
@@ -33,6 +34,15 @@ in
         How often to check for reboot.
         The format is described in
         {manpage}`systemd.time(7)`.
+      '';
+    };
+    uptime = mkOption {
+      type = types.int;
+      default = 60 * 60 * 24 * 14;
+      example = "1209600";
+      description = lib.mdDoc ''
+        Max uptime before nagging reboot.
+        No immortal machines.
       '';
     };
   };
