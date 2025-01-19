@@ -20,7 +20,7 @@ in
         inherit (hosts) tin-jet;
       };
       client-rpc.nodes = {
-        inherit (hosts) tin-jet cat-jar ape-orc;
+        inherit (hosts) tin-jet;
       };
       client-web.nodes = {
         inherit (hosts) cat-jar ape-orc car-fan;
