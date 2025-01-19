@@ -356,6 +356,8 @@
 	lsp-headerline-breadcrumb-enable nil
 	lsp-signature-auto-activate nil
 	lsp-signature-render-documentation nil)
+  (setq lsp-copilot-enabled nil
+	lsp-copilot-applicable-fn (-const nil))
   :config
   ;; https://github.com/blahgeek/emacs-lsp-booster?tab=readme-ov-file#configure-lsp-mode
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
