@@ -1,4 +1,7 @@
 { ... }:
 {
-  imports = [ ./ssh-certs.nix ];
+  imports = [
+    ./ssh-certs.nix
+    ./x509-certs.nix
+  ];
 }

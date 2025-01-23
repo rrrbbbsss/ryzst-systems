@@ -115,6 +115,20 @@ function GenerateInstanceData() {
   mkdir $SYNCTHING_SECRETS_DIR
   syncthing --generate=$SYNCTHING_SECRETS_DIR
   SYNCTHING_ID=$(syncthing --home=$SYNCTHING_SECRETS_DIR --device-id)
+  # generate x509 cert
+  X509_SECRETS_DIR=$SECRETS_DIR/x509
+  mkdir $X509_SECRETS_DIR
+  openssl req -x509 -noenc \
+    -keyout "${X509_SECRETS_DIR}/ca.key" \
+    -out "${X509_SECRETS_DIR}/ca.crt" \
+    -newkey ed25519 \
+    -days 3650 \
+    -subj "/CN=${HOST}.mek.ryzst.net CA" \
+    -addext "basicConstraints = critical, CA:true, pathlen:0" \
+    -addext "subjectKeyIdentifier = hash" \
+    -addext "keyUsage = critical, keyCertSign, cRLSign" \
+    -addext "nameConstraints = critical, permitted;DNS:.${HOST}.mek.ryzst.net"
+  X509CERT=$(cat "${TLS_SECRETS_DIR}/ca.crt")
 
   jq -n \
     --arg ip "$IP" \
@@ -123,6 +137,7 @@ function GenerateInstanceData() {
     --arg version "$VERSION" \
     --arg nix "$NIXPUB" \
     --arg ssh "$SSHPUB" \
+    --arg x509 "$X509CERT" \
     --arg wireguard "$WGPUB" \
     --arg syncthing "$SYNCTHING_ID" \
     '$ARGS.named' >$REGISTRATION_JSON
