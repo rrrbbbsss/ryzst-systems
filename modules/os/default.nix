@@ -133,7 +133,8 @@ in
     # vim is used instead of nano
     programs.nano.enable = false;
 
-    documentation.man.generateCaches = true;
+    # too slow
+    documentation.man.generateCaches = false;
 
     # increase entropy
     services.jitterentropy-rngd.enable = true;
