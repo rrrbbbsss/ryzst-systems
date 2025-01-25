@@ -156,7 +156,6 @@ in
         "${value.systemdServiceName}" = {
           requires = [ "x509-certs-${name}.socket" ];
           serviceConfig = {
-            RuntimeDirectory = [ name ];
             LoadCredential = [ "x509:/run/x509-certs/${name}.socket" ];
             ExecStartPre = mkBefore [ "${getExe (mkPreScript name value)}" ];
           };
