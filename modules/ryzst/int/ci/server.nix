@@ -66,13 +66,36 @@ in
       systemdServiceName = "laminar";
     };
 
+    keys.x509-certs.ci = {
+      days = 21;
+      systemdServiceName = "nginx";
+    };
+    services.nginx = {
+      enable = true;
+      sslProtocols = "TLSv1.3";
+      virtualHosts."nginx.int.ryzst.net" = {
+        listen = [
+          {
+            addr = "[${cfg.nodes.${config.networking.hostName}.ip}]";
+            port = cfg.web-port;
+            ssl = true;
+          }
+        ];
+        onlySSL = true;
+        sslCertificate = "/run/nginx/x509-ci.cert";
+        sslCertificateKey = "/run/nginx/x509-ci.key";
+        # TODO: unix sockets
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:10000";
+        };
+      };
+    };
+
     services.laminar = {
       enable = true;
       title = "Laminar";
-      #TODO: tls
-      webInterface = ''
-        [${cfg.nodes.${config.networking.hostName}.ip}]:${toString cfg.web-port}
-      '';
+      #TODO: unix socket
+      webInterface = "127.0.0.1:10000";
       #rpcInterface = "unix:/run/laminar/rpc.sock";
       contexts = {
         hosts-job = {
