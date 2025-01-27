@@ -9,7 +9,7 @@ let
     text = ''
       BOOTED="$(readlink /run/booted-system/{initrd,kernel,kernel-modules})"
       BUILT="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
-      UPTIME=$(cut -f 1 -d " " /proc/uptime)
+      UPTIME=$(cut -f 1 -d "." /proc/uptime)
 
       if [[ "$BOOTED" != "$BUILT" ]] || [[ "$UPTIME" -gt ${toString cfg.uptime} ]]; then
         swaynag --message "Reboot Required" \
