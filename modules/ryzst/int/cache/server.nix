@@ -41,6 +41,8 @@ in
         enable = true;
         keys = clientsSSHKeys;
       };
+      # TODO: buy some time to do this properly.
+      gc.dates = lib.mkForce "quarterly";
     };
   };
 }
