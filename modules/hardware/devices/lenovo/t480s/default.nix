@@ -25,6 +25,9 @@
       accel_profile = "adaptive";
       pointer_accel = "1";
     };
+    "1267:32:Elan_Touchpad" = {
+      events = "disabled";
+    };
   };
 
   device.keyboard = {
