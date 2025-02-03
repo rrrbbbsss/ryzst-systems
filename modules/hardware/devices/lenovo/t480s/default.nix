@@ -4,6 +4,7 @@
     ../../../common/cpu/intel
     ../../../common/gpu/intel
     ../../../common/tpm/2-0
+    ../../common/wifi
   ];
 
   services.throttled.enable = true;
