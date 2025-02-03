@@ -8,9 +8,11 @@
       intel-vaapi-driver
       libvdpau-va-gl
       intel-media-driver
+      mesa.opencl
     ];
   };
   environment.variables = {
     VDPAU_DRIVER = "va_gl";
+    RUSTICL_ENABLE = "iris";
   };
 }
