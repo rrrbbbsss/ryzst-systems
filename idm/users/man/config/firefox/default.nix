@@ -6,6 +6,11 @@
     package = pkgs.firefox.override {
       nativeMessagingHosts = [ pkgs.tridactyl-native ];
     };
+    policies = {
+      SecurityDevices.Add = {
+        "Yubikey" = "${pkgs.yubico-piv-tool}/lib/libykcs11.so";
+      };
+    };
     profiles.default = {
       id = 0;
       isDefault = true;
