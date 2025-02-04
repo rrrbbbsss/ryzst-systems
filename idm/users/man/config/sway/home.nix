@@ -179,6 +179,7 @@ in
   gtk.enable = true;
 
   programs.swaylock = {
+    enable = true;
     settings = {
       scaling = "center";
       inherit font;
