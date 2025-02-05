@@ -1,4 +1,6 @@
 { pkgs, lib, ... }:
+# TODO: this is broken.
+# TODO: fix later.
 let
   username = "installer";
 in
@@ -14,6 +16,9 @@ in
     nix.enable = false;
     hostname = "zoo-zoo";
   };
+
+  system.stateVersion = lib.mkForce "24.11";
+  ryzst.mek.zoo-zoo.version = "";
 
   #nixpkgs.hostPlatform.system = "x86_64-linux";
 
@@ -53,7 +58,8 @@ in
     programs.zsh.initExtra = ''
       [[ -v DISPLAY ]] && sudo ${pkgs.ryzst.apps}/bin/ryzst-installer
     '';
-    home.stateVersion = "22.11";
+    # TODO: cleanup
+    home.stateVersion = "24.11";
   };
   security.sudo = {
     enable = true;

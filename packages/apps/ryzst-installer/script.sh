@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-# TODO: redo this whole thing
+# TODO: this is broken.
+# TODO: fix later.
+
 FLAKE="git+ssh://git@git.int.ryzst.net/domain"
 FLAKE_REPO="git@${FLAKE}.git"
 REGISTRATION_JSON=/tmp/registration.json
@@ -80,16 +82,12 @@ function GenerateInstanceData() {
   (umask 0333 && systemd-machine-id-setup --print >$STATE_DIR/etc/machine-id)
   # copy over wifi connection TODO: if wireless is used...
   cp --parents -r /var/lib/iwd $STATE_DIR
-  # TODO: hardware test
-  HARDWARE="todo"
-  # TODO: get endpoint
-  ENDPOINT="todo"
-  # TODO: ip from preallocated hostname
-  IP="todo"
-  VERSION="$(nix flake metadata --json | jq -r '.locks.nodes.nixpkgs.original.ref' | cut -f2 -d '-')"
 
-  # TODO: use gokey...
-  # "secrets"
+  # TODO: hardware test
+  #HARDWARE="todo"
+
+  VERSION=$(nix flake metadata --json "$FLAKE" | jq -r '.locks.nodes.nixpkgs.original.ref' | cut -f2 -d '-')
+
   # generate nix key
   NIX_SECRETS_DIR=$SECRETS_DIR/nix
   mkdir -p $NIX_SECRETS_DIR
@@ -98,11 +96,13 @@ function GenerateInstanceData() {
     $NIX_SECRETS_DIR/nix_key \
     $NIX_SECRETS_DIR/nix_key.pub
   NIXPUB=$(cat $NIX_SECRETS_DIR/nix_key.pub)
+
   # generate ssh key
   SSH_SECRETS_DIR=$SECRETS_DIR/ssh
   mkdir $SSH_SECRETS_DIR
   ssh-keygen -q -N "" -C "" -t ed25519 -f $SSH_SECRETS_DIR/ssh_host_ed25519_key
   SSHPUB=$(cat $SSH_SECRETS_DIR/ssh_host_ed25519_key.pub)
+
   # generate wireguard keys
   WG_SECRETS_DIR=$SECRETS_DIR/wireguard
   mkdir $WG_SECRETS_DIR
@@ -110,11 +110,13 @@ function GenerateInstanceData() {
     (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) |
     (umask 0033 && wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
   WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pub)
+
   # generate syncthing keys
   SYNCTHING_SECRETS_DIR=$SECRETS_DIR/syncthing
   mkdir $SYNCTHING_SECRETS_DIR
   syncthing --generate=$SYNCTHING_SECRETS_DIR
   SYNCTHING_ID=$(syncthing --home=$SYNCTHING_SECRETS_DIR --device-id)
+
   # generate x509 cert
   X509_SECRETS_DIR=$SECRETS_DIR/x509
   mkdir $X509_SECRETS_DIR
@@ -128,18 +130,19 @@ function GenerateInstanceData() {
     -addext "subjectKeyIdentifier = hash" \
     -addext "keyUsage = critical, keyCertSign, cRLSign" \
     -addext "nameConstraints = critical, permitted;DNS:.${HOST}.mek.ryzst.net"
-  X509CERT=$(cat "${TLS_SECRETS_DIR}/ca.crt")
+  X509CERT=$(cat "${X509_SECRETS_DIR}/ca.crt")
 
-  jq -n \
-    --arg ip "$IP" \
-    --arg endpoint "$ENDPOINT" \
-    --arg hardware "$HARDWARE" \
-    --arg version "$VERSION" \
+  KEYS=$(jq -n \
     --arg nix "$NIXPUB" \
     --arg ssh "$SSHPUB" \
     --arg x509 "$X509CERT" \
     --arg wireguard "$WGPUB" \
     --arg syncthing "$SYNCTHING_ID" \
+    '$ARGS.named')
+
+  jq -n \
+    --argjson keys "$KEYS" \
+    --arg version "$VERSION" \
     '$ARGS.named' >$REGISTRATION_JSON
   printf 'success\n\n'
 }
