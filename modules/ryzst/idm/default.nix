@@ -9,6 +9,7 @@ let
           gpg = dir + "/${n}/pubkeys/gpg.pub";
           ssh = dir + "/${n}/pubkeys/ssh.pub";
           u2f = dir + "/${n}/pubkeys/u2f_keys";
+          x509 = dir + "/${n}/pubkeys/x509.crt";
         };
         module = dir + "/${n}/default.nix";
       })

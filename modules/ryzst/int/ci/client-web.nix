@@ -21,6 +21,7 @@ in
     environment.systemPackages = [
       (pkgs.makeDesktopItem {
         name = "Laminar";
+        # TODO: fix hostname
         exec = "${pkgs.xdg-utils}/bin/xdg-open https://ci.tin-jet.mek.ryzst.net:${toString config.ryzst.int.ci.server.web-port}";
         desktopName = "Laminar";
         genericName = "Laminar";

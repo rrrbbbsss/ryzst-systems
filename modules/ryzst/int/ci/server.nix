@@ -28,6 +28,8 @@ let
     attrsets.foldlAttrs
       (acc: n: v: [ (mkAuthorizedKey v.keys.ssh v.ip) ] ++ acc) [ ]
       config.ryzst.int.ci.client-rpc.nodes;
+  # TODO: generate this properly
+  client-certs = config.ryzst.idm.users.man.keys.x509;
 in
 {
   options.ryzst.int.ci.server = {
@@ -84,6 +86,11 @@ in
         onlySSL = true;
         sslCertificate = "/run/nginx/x509-ci.cert";
         sslCertificateKey = "/run/nginx/x509-ci.key";
+        # ssl_verify_depth 1
+        extraConfig = ''
+          ssl_client_certificate ${client-certs};
+          ssl_verify_client on;
+        '';
         # TODO: unix sockets
         locations."/" = {
           proxyPass = "http://127.0.0.1:10000";
