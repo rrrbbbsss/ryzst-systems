@@ -55,7 +55,7 @@ let
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic
     '';
-    browser = "${config.programs.firefox.package}/bin/firefox";
+    browser = "${config.programs.firefox.finalPackage}/bin/firefox";
     passwords = wrap-float-window "FZF-Pass"
       "${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
     wifi = wrap-float-window "FZF-Wifi" ''
