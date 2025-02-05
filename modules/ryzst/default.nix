@@ -64,9 +64,7 @@ in
     };
 
     remote-build = {
-      server.nodes = {
-        inherit (hosts) tin-jet;
-      };
+      server.nodes = { };
       client.nodes = { };
     };
 
