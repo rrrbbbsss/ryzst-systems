@@ -9,6 +9,7 @@ in
     ./config/wireshark
     ./config/zsh
     ./config/ncspot
+    ./config/libvirtd
   ];
 
   device.user = baseNameOf (toString ./.);
