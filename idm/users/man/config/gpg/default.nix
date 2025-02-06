@@ -6,6 +6,7 @@ rec {
     publicKeys = [{ source = ../../pubkeys/gpg.pub; trust = "ultimate"; }];
     scdaemonSettings = {
       disable-ccid = true;
+      pcsc-shared = true;
     };
   };
 

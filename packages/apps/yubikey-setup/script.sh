@@ -32,7 +32,6 @@ ykman -d "$SERIAL" config nfc --disable-all -f && sleep 1
 printf "\n"
 
 # piv
-# doesn't play ball with gpg at same time...
 PIV_PIN="123456"
 PIV_PUK="12345678"
 PIV_MGT="010203040506070801020304050607080102030405060708"

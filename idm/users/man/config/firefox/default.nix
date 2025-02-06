@@ -8,7 +8,7 @@
     };
     policies = {
       SecurityDevices.Add = {
-        "Yubikey" = "${pkgs.yubico-piv-tool}/lib/libykcs11.so";
+        "Yubikey" = "${pkgs.opensc}/lib/opensc-pkcs11.so";
       };
     };
     profiles.default = {
