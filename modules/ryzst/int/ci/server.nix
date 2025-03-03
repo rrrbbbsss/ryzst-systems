@@ -75,7 +75,7 @@ in
     services.nginx = {
       enable = true;
       sslProtocols = "TLSv1.3";
-      virtualHosts."nginx.int.ryzst.net" = {
+      virtualHosts."ci.${config.networking.hostName}.mek.ryzst.net" = {
         listen = [
           {
             addr = "[${cfg.nodes.${config.networking.hostName}.ip}]";
@@ -86,14 +86,17 @@ in
         onlySSL = true;
         sslCertificate = "/run/nginx/x509-ci.cert";
         sslCertificateKey = "/run/nginx/x509-ci.key";
-        # ssl_verify_depth 1
         extraConfig = ''
           ssl_client_certificate ${client-certs};
+          ssl_verify_depth 1;
           ssl_verify_client on;
         '';
         # TODO: unix sockets
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:10000";
+        locations = {
+          "/" = { proxyPass = "http://127.0.0.1:10000"; };
+          "= /style.css" = {
+            alias = ./style.css;
+          };
         };
       };
     };
