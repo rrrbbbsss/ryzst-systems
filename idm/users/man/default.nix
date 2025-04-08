@@ -98,6 +98,7 @@ in
       nix-tree
       git
       strace
+      ltrace
       yubikey-manager
       usbutils
       ncdu
