@@ -145,6 +145,7 @@ in
       ryzst.sabaki
       ryzst.weiqihub
       ryzst.minifoxwq
+      ryzst.foxwq-gym
       ryzst.adom
       ryzst.adom-gui
 
