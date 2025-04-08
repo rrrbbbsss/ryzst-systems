@@ -152,6 +152,15 @@ in
               	| jq -r --unbuffered '.drvPath' \
               	| parallel --halt-on-error 2 nix-build {}
 
+              # TODO: setup cache gc roots
+              # either with nix-store --add-root <cache-root-folder/host> -r <store-path>
+              # or maybe nix-build --outlink (if that works?)
+              # then have a job that goes through and
+              # cleans up old roots in <cache-root-folder> based off timestamps.
+              # (can be more complicated like: keep n of currently valid hosts)
+              # nix-collect-garbage job can then clean all unused store-paths up.
+              # (if not store-based-cache, then have fun with narinfos)
+              # hopefully that should do it.
 
               # JSON
               # shellcheck disable=SC2016
@@ -168,6 +177,7 @@ in
               git config user.name  "$GIT_NAME"
               git config user.email "$GIT_EMAIL"
               # TODO: Don't be negligent
+              # (look into sigstore for ephemoral x509)
               # git config user.signingKey "$GPG_KEY"
               git commit -m "cache: $COMMIT" hosts.json || true
               git pull --rebase --autostash
