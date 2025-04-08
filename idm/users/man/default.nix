@@ -142,6 +142,7 @@ in
       katago
       ryzst.katrain
       ryzst.sabaki
+      ryzst.weiqihub
       ryzst.adom
       ryzst.adom-gui
 
