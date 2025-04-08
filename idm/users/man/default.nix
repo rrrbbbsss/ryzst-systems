@@ -143,6 +143,7 @@ in
       ryzst.katrain
       ryzst.sabaki
       ryzst.weiqihub
+      ryzst.minifoxwq
       ryzst.adom
       ryzst.adom-gui
 
