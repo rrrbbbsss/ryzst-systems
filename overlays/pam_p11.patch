@@ -1,0 +1,28 @@
+diff --git a/src/match_opensc.c b/src/match_opensc.c
+index a453d18..eaf8650 100644
+--- a/src/match_opensc.c
++++ b/src/match_opensc.c
+@@ -26,8 +26,8 @@ extern int match_user_opensc(EVP_PKEY *authkey, const char *login)
+ 	if (!pw || !pw->pw_dir)
+ 		return -1;
+ 
+-	snprintf(filename, PATH_MAX, "%s/.eid/authorized_certificates",
+-		 pw->pw_dir);
++	snprintf(filename, PATH_MAX, "/etc/pam_p11/%s/eid_certificates",
++		 pw->pw_name);
+ 
+ 	in = BIO_new(BIO_s_file());
+ 	if (!in)
+diff --git a/src/match_openssh.c b/src/match_openssh.c
+index d10e586..5ce507c 100644
+--- a/src/match_openssh.c
++++ b/src/match_openssh.c
+@@ -462,7 +462,7 @@ extern int match_user_openssh(EVP_PKEY *authkey, const char *login)
+ 	if (!pw || !pw->pw_dir)
+ 		return -1;
+ 
+-	snprintf(filename, PATH_MAX, "%s/.ssh/authorized_keys", pw->pw_dir);
++	snprintf(filename, PATH_MAX, "/etc/pam_p11/%s/ssh_keys", pw->pw_name);
+ 
+ 	file = fopen(filename, "r");
+ 	if (!file)

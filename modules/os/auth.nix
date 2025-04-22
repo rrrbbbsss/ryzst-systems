@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let
   cfg = config.os.auth;
@@ -15,31 +15,33 @@ let
     ${config.networking.hostName}
   '';
 
-  admins = lib.mapAttrs
-    (n: v: {
-      isNormalUser = true;
-      uid = self.outputs.lib.names.user.toUID n;
-      hashedPassword = null;
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keyFiles = [ v.keys.ssh ];
-    })
-    config.ryzst.idm.groups.admins;
-
-  userU2FkeyFiles =
-    if builtins.isNull config.device.user
-    then [ ]
-    else [ config.ryzst.idm.users.${config.device.user}.keys.u2f ];
-
-  adminsU2FkeyFiles = lib.attrsets.foldlAttrs
-    (acc: n: v: acc ++ [ v.keys.u2f ])
-    [ ]
-    config.ryzst.idm.groups.admins;
-
-  u2fAuthFile = pkgs.writeTextFile {
-    name = "u2fAuthFile";
-    text = concatStringsSep "\n"
-      (map readFile (userU2FkeyFiles ++ adminsU2FkeyFiles));
+  admin = {
+    isNormalUser = true;
+    uid = 2000;
+    hashedPassword = null;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keyFiles = foldlAttrs
+      (acc: n: v: acc ++ [ v.keys.ssh ])
+      [ ]
+      config.ryzst.idm.groups.admins;
   };
+
+  userX509 =
+    if builtins.isNull config.device.user
+    then { }
+    else {
+      "${config.device.user}" =
+        readFile config.ryzst.idm.users.${config.device.user}.keys.x509;
+    };
+
+  adminsX509 = {
+    admin = foldlAttrs
+      (acc: n: v: acc + "\n\n" + (readFile v.keys.x509))
+      ""
+      config.ryzst.idm.groups.admins;
+  };
+
+  p11x509certs = userX509 // adminsX509;
 in
 {
   #https://github.com/NixOS/nixpkgs/issues/16884#issuecomment-822144458
@@ -69,27 +71,31 @@ in
         root = {
           hashedPassword = null;
         };
-      } // admins;
+      } // { inherit admin; };
     };
     security.sudo = {
-      wheelNeedsPassword = false;
+      wheelNeedsPassword = true;
       execWheelOnly = true;
+      extraRules = [
+        {
+          users = [ "admin" ];
+          commands = [ "NOPASSWD:ALL" ];
+        }
+      ];
       extraConfig = ''
         Defaults lecture = never
       '';
     };
     security.pam = {
-      u2f = {
-        enable = true;
-        settings = {
-          origin = "pam://mek.ryzst.net";
-          authfile = u2fAuthFile;
-          cue = true;
-          debug = false;
-        };
-      };
+      p11.enable = true;
       services.sshd.showMotd = true;
     };
+
+    #p11
+    environment.etc = foldlAttrs
+      (acc: n: v: acc // { "pam_p11/${n}/eid_certificates".text = v; })
+      { }
+      p11x509certs;
 
     programs.ssh.extraConfig = ''
       Host *

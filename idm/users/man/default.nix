@@ -20,7 +20,12 @@ in
     # TODO: full name
     description = username;
     hashedPassword = null;
+    # TODO: don't do this here
+    extraGroups = [ "wheel" ];
   };
+  # this is required for home-manager-<user>.service
+  nix.settings.allowed-users = [ username ];
+
 
   home-manager.users.${username} = { pkgs, ... }: {
     imports = [

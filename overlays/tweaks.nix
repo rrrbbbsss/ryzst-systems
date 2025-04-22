@@ -13,6 +13,12 @@ let
       };
 in
 {
+
+  # use /etc/pam_p11/<username> instead of home dir
+  pam_p11 = prev.pam_p11.overrideAttrs (old: {
+    patches = old.patches or [ ] ++ [ ./pam_p11.patch ];
+  });
+
   #https://github.com/tree-sitter/tree-sitter/issues/3296
   tree-sitter = prev.tree-sitter.overrideAttrs (old: rec {
     pname = "tree-sitter";
