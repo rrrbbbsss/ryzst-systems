@@ -42,8 +42,8 @@ in
   };
   config = mkIf enable {
 
-    networking.firewall.extraCommands = ''
-      ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+    networking.firewall.extraInputRules = ''
+      iifname "wg0" counter ip6 saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} accept
     '';
 
     # NTP server

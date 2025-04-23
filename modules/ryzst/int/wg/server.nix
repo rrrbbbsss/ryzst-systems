@@ -60,9 +60,16 @@ in
       cfg.port
     ];
 
+    networking.nftables.enable = true;
+    networking.firewall.filterForward = true;
+    # TODO: tighten
+    networking.firewall.extraForwardRules = ''
+      iifname wg0 oifname wg0 accept
+    '';
+
     # ip forwarding 
     boot.kernel.sysctl = {
-      "net.ipv6.conf.allforwarding" = true;
+      "net.ipv6.conf.all.forwarding" = true;
     };
 
     systemd.services.systemd-networkd.serviceConfig.LoadCredential = [

@@ -64,9 +64,9 @@ in
   config = mkIf enable {
     networking.nameservers = cfg.nameservers;
 
-    networking.firewall.extraCommands = ''
-      ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} jump nixos-fw-accept
-      ${pkgs.nftables}/bin/nft add rule ip6 filter nixos-fw iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} jump nixos-fw-accept
+    networking.firewall.extraInputRules = ''
+      iifname "wg0" counter ip6 saddr { ${clientsIps} } udp dport ${builtins.toString cfg.port} accept
+      iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} accept
     '';
 
     services.coredns =
