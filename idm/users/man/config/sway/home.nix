@@ -384,7 +384,10 @@ in
         ];
       };
       floating = {
-        criteria = [{ app_id = "__float__"; }];
+        criteria = [
+          { app_id = "__float__"; }
+          { app_id = "com.walruswq.wqhub"; }
+        ];
       };
       keybindings = {
         #windows
