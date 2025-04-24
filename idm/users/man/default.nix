@@ -1,4 +1,4 @@
-{ config, lib, self, ... }:
+{ config, self, ... }:
 let
   username = config.device.user;
   version = config.system.stateVersion;
@@ -9,7 +9,6 @@ in
     ./config/wireshark
     ./config/zsh
     ./config/ncspot
-    ./config/libvirtd
   ];
 
   device.user = baseNameOf (toString ./.);
