@@ -95,6 +95,7 @@ in
 
       #browsers 
       chromium
+      ryzst.tails
 
       #spelling
       (aspellWithDicts (dicts: with dicts; [ en ]))
