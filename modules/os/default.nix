@@ -75,6 +75,9 @@ in
       useDHCP = false;
     };
 
+    #nftables
+    networking.nftables.enable = true;
+
     # mDNS
     networking.firewall.allowedUDPPorts = [ 5353 ];
 

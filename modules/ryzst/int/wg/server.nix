@@ -60,7 +60,6 @@ in
       cfg.port
     ];
 
-    networking.nftables.enable = true;
     networking.firewall.filterForward = true;
     # TODO: tighten
     networking.firewall.extraForwardRules = ''
