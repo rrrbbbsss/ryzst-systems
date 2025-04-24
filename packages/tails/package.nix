@@ -3,6 +3,7 @@
 , fetchurl
 , makeDesktopItem
 , stdenvNoCC
+, qemu
 }:
 let
   name = "tails";
@@ -32,15 +33,16 @@ stdenvNoCC.mkDerivation {
 
     cat >$out/bin/tails <<EOF
     #! ${stdenvNoCC.shell}
-    qemu-system-x86_64 -enable-kvm \
-                       -cpu host \
-                       -smp cores=4 \
-                       -m 8G \
-                       -cdrom ${src} \
-                       -device intel-hda -audiodev pipewire,id=snd0 \
-                       -device hda-output,audiodev=snd0 \
-                       -device virtio-vga-gl \
-                       -display sdl,gl=on
+    ${qemu}/bin/qemu-system-x86_64 \
+        -enable-kvm \
+        -cpu host \
+        -smp cores=4 \
+        -m 8G \
+        -cdrom ${src} \
+        -device intel-hda -audiodev pipewire,id=snd0 \
+        -device hda-output,audiodev=snd0 \
+        -device virtio-vga-gl \
+        -display sdl,gl=on
     EOF
     chmod +x $out/bin/tails
 
