@@ -46,30 +46,40 @@ let
       '';
     }}/bin/workspace-cmd";
     terminal = "${pkgs.alacritty}/bin/alacritty";
-    applancher = wrap-float-window "FZF-Launcher" ''
-      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop \
-      &> /dev/null \
+    applancher = ''
+      swaymsg [title="^LAUNCH"] kill \
+      || ${wrap-float-window "LAUNCH" ''
+      ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop &> /dev/null \
       --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
       --wrapper='swaymsg exec' \
       --term="${commands.terminal}" \
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
-      --no-generic
+      --no-generic''}
     '';
     browser = "${config.programs.firefox.finalPackage}/bin/firefox";
-    passwords = wrap-float-window "FZF-Pass"
-      "${pkgs.ryzst.fzf-pass}/bin/fzf-pass";
-    wifi = wrap-float-window "FZF-Wifi" ''
-      bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'
+    passwords = ''
+      swaymsg [title="^PASS"] kill \
+      || exec ${wrap-float-window "PASS"
+        "${pkgs.ryzst.fzf-pass}/bin/fzf-pass"}
     '';
-    windows = wrap-float-window "FZF-Windows"
-      "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows";
+    wifi = ''
+      swaymsg [title="^WIFI"] scratchpad show \
+      || exec ${wrap-float-window "WIFI"
+        "bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'"}
+    '';
+    windows = ''
+      swaymsg [title="^WINDOWS"] kill \
+      || exec ${wrap-float-window "WINDOWS"
+        "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows"}
+    '';
     # TODO: don't hardcode
     mirror = ''
       kill $(${pkgs.procps}/bin/pidof wl-mirror) \
       || ${pkgs.wl-mirror}/bin/wl-mirror --fullscreen-output DP-3 DP-1
     '';
     screenshot = ''
-      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
+      kill $(${pkgs.procps}/bin/pidof slurp) \
+      || ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - \
       | ${config.programs.swappy.package}/bin/swappy -f -
     '';
     colorpicker = "${pkgs.writeShellApplication {
@@ -77,9 +87,11 @@ let
           runtimeInputs = with pkgs; [
             hyprpicker
             wl-clipboard
+            procps
           ];
           text = ''
-            hyprpicker --no-fancy --render-inactive --autocopy
+            kill "$(pidof hyprpicker)" \
+            || hyprpicker --no-fancy --render-inactive --autocopy
           '';
         }}/bin/colorpicker";
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
@@ -378,7 +390,7 @@ in
           {
             command = "move scratchpad; scratchpad show";
             criteria = {
-              title = "(^TODO$|^MUSIC$)";
+              title = "(^TODO$|^MUSIC$|^WIFI$)";
             };
           }
         ];
