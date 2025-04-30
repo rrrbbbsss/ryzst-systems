@@ -129,7 +129,6 @@ in
       ripgrep
       fd
       bat
-      virt-manager
       pavucontrol
       qpwgraph
 
