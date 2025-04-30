@@ -129,9 +129,9 @@ let
               (builtins.toJSON {
                 exit = "swaymsg exit";
                 lock = commands.lockscreen;
-                suspend = "sudo systemctl suspend";
-                reboot = "sudo systemctl reboot";
-                shutdown = "sudo systemctl poweroff";
+                suspend = "systemctl suspend";
+                reboot = "systemctl reboot";
+                shutdown = "systemctl poweroff";
               })}"
             options=$(jq -r 'keys[]' "$actions")
             selection=$(fzf --reverse --prompt 'Exit > ' <<<"$options")
