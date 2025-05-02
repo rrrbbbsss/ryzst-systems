@@ -1,3 +1,7 @@
+# btw, Sander van der Burg has ideas:
+# http://sandervanderburg.nl/pdf/publications/vanderburg12-disnix.pdf
+# i liked his distribution model,
+# but need to add some more models at some point.
 { config, ... }:
 let
   hosts = config.ryzst.mek;
