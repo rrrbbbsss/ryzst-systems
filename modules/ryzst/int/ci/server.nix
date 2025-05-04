@@ -115,7 +115,7 @@ in
       jobs = {
         hosts-job = {
           timeout = 60 * 60 * 4;
-          description = "this is temp";
+          description = "got gist from wiki but think cachix did it first.";
           run = getExe (pkgs.writeShellApplication {
             name = "hosts-job";
             runtimeInputs = with pkgs; [
