@@ -1,6 +1,7 @@
 * ryzst-systems
 learning nix.
 this is a homelab.
+will be going under the sea in a bit for a bit.
 
 ** Structure
 #+BEGIN_SRC
