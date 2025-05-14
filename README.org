@@ -1,16 +1,19 @@
 * ryzst-systems
 learning nix.
-this is a homelab.
-will be going under the sea in a bit for a bit.
+this is my homelab for rejected ideas.
+if you find something worthwhile,
+then feel free to snag it.
 
 ** Structure
 #+BEGIN_SRC
 ryzst-systems
-├── apps # flake apps
-├── hosts # machine configurations
-├── idm # user/group management
-├── lib # misc helper functions
-├── modules # nixos modules
-├── packages # personal packages
+├── apps      # flake apps
+├── checks    # checks
+├── hosts     # machine configurations
+├── idm       # user/group management
+├── lib       # misc helper functions
+├── modules   # nixos modules
+├── overlays  # various package tweaks
+├── packages  # personal packages
 └── templates # templates for projects
 #+END_SRC
