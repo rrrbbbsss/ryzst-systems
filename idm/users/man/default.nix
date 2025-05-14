@@ -152,6 +152,7 @@ in
       ryzst.foxwq-gym
       ryzst.adom
       ryzst.adom-gui
+      ryzst.cho-ren-sha-68k
 
       #3d-printing
       freecad-wayland
