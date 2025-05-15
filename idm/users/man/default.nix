@@ -131,6 +131,7 @@ in
       bat
       pavucontrol
       qpwgraph
+      ryzst.oniux
 
       #print/scan
       simple-scan
