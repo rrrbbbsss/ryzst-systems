@@ -10,6 +10,10 @@
       SecurityDevices.Add = {
         "Yubikey" = "${pkgs.opensc}/lib/opensc-pkcs11.so";
       };
+      DisableFirefoxAccounts = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
     };
     profiles.default = {
       id = 0;
