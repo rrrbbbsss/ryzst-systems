@@ -1,14 +1,16 @@
 * ryzst-systems
 learning nix.
-this is my homelab for rejected ideas.
+this is my home-lab for rejected ideas.
 if you find something worthwhile,
 then feel free to snag it.
+keeping everything in one place since
+i have a hard time convincing people i know things.
 
 ** Structure
 #+BEGIN_SRC
 ryzst-systems
 ├── apps      # flake apps
-├── checks    # checks
+├── checks    # gradually check things
 ├── hosts     # machine configurations
 ├── idm       # user/group management
 ├── lib       # misc helper functions
