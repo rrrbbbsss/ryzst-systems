@@ -1,10 +1,10 @@
 * ryzst-systems
 learning nix.
 this is my home-lab for rejected ideas.
+finishing up some half-baked thoughts so i can move forwards.
 if you find something worthwhile,
 then feel free to snag it.
-keeping everything in one place since
-i have a hard time convincing people i know things.
+upstreamin nothin.
 
 ** Structure
 #+BEGIN_SRC
