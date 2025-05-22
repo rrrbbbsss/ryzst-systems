@@ -8,6 +8,7 @@
   ];
 
   services.throttled.enable = true;
+  hardware.bluetooth.enable = true;
 
   device.monitors = {
     eDP-1 = {
