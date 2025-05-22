@@ -41,6 +41,10 @@
       position = "3760 2160";
     };
   };
+  device.mirror = {
+    main = "DP-1";
+    secondary = "DP-3";
+  };
 
   boot = {
     loader = {

@@ -15,9 +15,14 @@
       number = "0";
       mode = "1920x1080@60Hz";
     };
-    HDMI-2 = {
+    HDMI-A-2 = {
       number = "1";
     };
+  };
+
+  device.mirror = {
+    main = "eDP-1";
+    secondary = "HDMI-A-2";
   };
 
   device.rats = {

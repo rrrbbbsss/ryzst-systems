@@ -72,10 +72,9 @@ let
       || exec ${wrap-float-window "WINDOWS"
         "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows"}
     '';
-    # TODO: don't hardcode
     mirror = ''
       kill $(${pkgs.procps}/bin/pidof wl-mirror) \
-      || ${pkgs.wl-mirror}/bin/wl-mirror --fullscreen-output DP-3 DP-1
+      || ${pkgs.wl-mirror}/bin/wl-mirror --fullscreen-output ${osConfig.device.mirror.secondary} ${osConfig.device.mirror.main}
     '';
     screenshot = ''
       kill $(${pkgs.procps}/bin/pidof slurp) \
