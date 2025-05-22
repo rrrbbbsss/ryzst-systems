@@ -36,6 +36,7 @@ stdenvNoCC.mkDerivation
 
     DUMP_DIR="$HOME/.crs68k-${version}"
     export WINEPREFIX="$DUMP_DIR/wine"
+    export PATH=$PATH:${wineWowPackages.full}/bin
     if [[ ! -d "$DUMP_DIR" ]]; then
       ${unzip}/bin/unzip ${src} -d "$DUMP_DIR"
       ${winetricks}/bin/winetricks vkd3d
