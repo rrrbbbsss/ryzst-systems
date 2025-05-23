@@ -31,6 +31,15 @@ in
       };
     };
 
+    cups = {
+      server.nodes = {
+        inherit (hosts) ant-bot;
+      };
+      client.nodes = {
+        inherit (hosts) fox-cup cat-jar ape-orc;
+      };
+    };
+
     dns = {
       server.nodes = {
         inherit (hosts) tin-jet;

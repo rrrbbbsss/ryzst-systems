@@ -3,6 +3,7 @@
   imports = [
     ./cache
     ./ci
+    ./cups
     ./dns
     ./git
     ./nfs

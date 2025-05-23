@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   services.printing = {
-    enable = true;
     drivers = [ pkgs.brlaser ];
   };
   hardware.printers.ensurePrinters = [
@@ -10,6 +9,7 @@
       model = "drv:///brlaser.drv/brl2300d.ppd";
       location = "place";
       deviceUri = "usb://Brother/HL-L2300D%20series";
+      ppdOptions = { printer-is-shared = "true"; };
     }
   ];
 }
