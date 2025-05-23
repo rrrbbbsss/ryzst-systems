@@ -46,9 +46,9 @@ in
         "${cfg.ip}:${toString cfg.port}"
       ];
       allowFrom = clientsIpsList;
-      #extraConf = ''
-      #  ServerAlias *
-      #'';
+      extraConf = ''
+        ServerAlias [${cfg.ip}]
+      '';
     };
   };
 }
