@@ -42,7 +42,6 @@ in
     services.printing = {
       enable = true;
       defaultShared = true;
-      webInterface = false;
       listenAddresses = [
         "${cfg.ip}:${toString cfg.port}"
       ];
