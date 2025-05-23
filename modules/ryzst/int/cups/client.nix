@@ -25,6 +25,7 @@ in
   };
 
   # TODO: add .desktop file for cups
+  # TODO: tls
   config = mkIf enable {
     services.printing = {
       enable = true;

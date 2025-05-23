@@ -39,6 +39,7 @@ in
       iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} accept
     '';
 
+    # TODO: tls
     services.printing = {
       enable = true;
       defaultShared = true;
