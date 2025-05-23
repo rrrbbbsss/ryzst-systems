@@ -24,6 +24,7 @@ in
     };
   };
 
+  # TODO: add .desktop file for cups
   config = mkIf enable {
     services.printing = {
       enable = true;
