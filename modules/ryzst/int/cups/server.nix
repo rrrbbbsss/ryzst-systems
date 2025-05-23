@@ -45,7 +45,7 @@ in
       listenAddresses = [
         "${cfg.ip}:${toString cfg.port}"
       ];
-      #allowFrom = clientsIpsList;
+      allowFrom = clientsIpsList;
       #extraConf = ''
       #  ServerAlias *
       #'';
