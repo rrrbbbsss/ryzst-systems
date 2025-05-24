@@ -81,6 +81,15 @@ in
       client.nodes = { };
     };
 
+    sane = {
+      server.nodes = {
+        inherit (hosts) ant-bot;
+      };
+      client.nodes = {
+        inherit (hosts) fox-cup cat-jar ape-orc;
+      };
+    };
+
     syncthing = {
       server.nodes = {
         inherit (hosts) tin-jet;
