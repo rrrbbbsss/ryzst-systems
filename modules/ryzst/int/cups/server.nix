@@ -44,7 +44,7 @@ in
       enable = true;
       defaultShared = true;
       listenAddresses = [
-        "${cfg.ip}:${toString cfg.port}"
+        "[${cfg.ip}]:${toString cfg.port}"
       ];
       allowFrom = clientsIpsList;
       extraConf = ''
