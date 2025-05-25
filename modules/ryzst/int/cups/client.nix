@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.ryzst.int.cups.client;
@@ -32,9 +32,9 @@ in
       listenAddresses = [ "localhost:631" ];
     };
     hardware.printers.ensurePrinters = printers;
-    systemd.services.ensure-printers = {
-      requires = [ "systemd-networkd-wait-online@wg0.service" ];
-      after = [ "systemd-networkd-wait-online@wg0.service" ];
+    systemd.services.ensure-printers.serviceConfig = {
+      # TODO: Fix this properly
+      ExecStartPre = mkBefore [ "${pkgs.coreutils-full}/bin/sleep 5" ];
     };
   };
 }
