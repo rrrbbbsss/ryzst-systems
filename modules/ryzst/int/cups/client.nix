@@ -33,8 +33,8 @@ in
     };
     hardware.printers.ensurePrinters = printers;
     systemd.services.ensure-printers = {
-      requires = [ "systemd-networkd-wait-online.service" ];
-      after = [ "systemd-networkd-wait-online.service" ];
+      requires = [ "systemd-networkd-wait-online@wg0.service" ];
+      after = [ "systemd-networkd-wait-online@wg0.service" ];
     };
   };
 }
