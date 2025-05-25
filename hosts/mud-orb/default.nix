@@ -123,12 +123,12 @@ in
         search = {
           force = true;
           engines = {
-            "Bing".metaData.hidden = true;
-            "Amazon.com".metaData.hidden = true;
-            "eBay".metaData.hidden = true;
+            "bing".metaData.hidden = true;
+            "amazondotcom-us".metaData.hidden = true;
+            "ebay".metaData.hidden = true;
           };
         };
-        extensions = with pkgs.firefox-addons; [
+        extensions.packages = with pkgs.firefox-addons; [
           ublock-origin
         ];
       };
@@ -301,7 +301,7 @@ in
     enableDefaultPackages = true;
     packages = with pkgs; [
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      nerd-fonts.dejavu-sans-mono
     ];
   };
   # Sound

@@ -55,7 +55,7 @@ in
       # TODO: clean this up
       ../../idm/users/man/config/alacritty
     ];
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       [[ -v DISPLAY ]] && sudo ${pkgs.ryzst.apps}/bin/ryzst-installer
     '';
     # TODO: cleanup

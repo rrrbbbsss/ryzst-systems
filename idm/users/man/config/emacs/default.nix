@@ -32,7 +32,7 @@ in
 
   programs.zsh = {
     #vterm directory tracking
-    initExtra = lib.mkAfter ''
+    initContent = lib.mkAfter ''
       vterm_printf() {
         if [ -n "$TMUX" ] && { [ "''${TERM%%-*}" = "tmux" ] || [ "''${TERM%%-*}" = "screen" ] ; }  then
             printf "\ePtmux;\e\e]%s\007\e\\" "$1"

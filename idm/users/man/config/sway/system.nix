@@ -42,7 +42,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      nerd-fonts.dejavu-sans-mono
     ];
   };
   # Sound

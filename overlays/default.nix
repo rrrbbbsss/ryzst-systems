@@ -2,6 +2,7 @@
 let
   ryzst = final: prev: {
     ryzst = self.packages.${prev.system} // { inherit (self) lib; };
+    # TODO: there is an overlay now.
     firefox-addons = self.inputs.firefox-addons.packages.${prev.system};
   };
   tweaks = import ./tweaks.nix;

@@ -16,7 +16,7 @@ in
         enableCompletion = true;
         syntaxHighlighting.enable = true;
         dotDir = ".config/zsh";
-        initExtra = ''
+        initContent = ''
           stty -ixon
           ZVM_INIT_MODE=sourcing
           source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh

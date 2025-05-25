@@ -19,23 +19,6 @@ in
     patches = old.patches or [ ] ++ [ ./pam_p11.patch ];
   });
 
-  #https://github.com/tree-sitter/tree-sitter/issues/3296
-  tree-sitter = prev.tree-sitter.overrideAttrs (old: rec {
-    pname = "tree-sitter";
-    version = "0.22.2";
-    src = prev.fetchFromGitHub {
-      owner = "tree-sitter";
-      repo = "tree-sitter";
-      rev = "v${version}";
-      hash = "sha256-RhM3SgsCb8eLs56cm8/Yo1ptNnFrR21FriHAlMdvdrU=";
-    };
-    cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
-      name = "${pname}-vendor.tar.gz";
-      inherit src;
-      outputHash = "sha256-EcRYHEfLookHi/0xGVAWzypFZQjdKTkRYBw2h39YJLM=";
-    });
-  });
-
   ryzst = prev.ryzst // {
     overrides.emacs = epkgs: epkgs // {
       # add unpackaged emacs package
