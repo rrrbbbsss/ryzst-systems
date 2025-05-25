@@ -48,10 +48,10 @@ let
     terminal = "${pkgs.alacritty}/bin/alacritty";
     applancher = ''
       swaymsg [title="^LAUNCH"] kill \
-      || ${wrap-float-window "LAUNCH" ''
+      || exec ${wrap-float-window "LAUNCH" ''
       ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop &> /dev/null \
       --dmenu="${pkgs.fzf}/bin/fzf --reverse --prompt 'Launch > '" \
-      --wrapper='swaymsg exec' \
+      --i3-ipc \
       --term="${commands.terminal}" \
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic''}
