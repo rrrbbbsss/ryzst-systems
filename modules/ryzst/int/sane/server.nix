@@ -35,6 +35,7 @@ in
   };
   config = mkIf enable {
 
+    # TODO: fix this rule for connection tracking
     networking.firewall.extraInputRules = ''
       iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} accept
     '';
