@@ -51,5 +51,10 @@ in
         ServerAlias [${cfg.ip}]
       '';
     };
+
+    # TODO: Fix this properly
+    systemd.services.cups.serviceConfig = {
+      ExecStartPre = mkBefore [ "${pkgs.coreutils-full}/bin/sleep 5" ];
+    };
   };
 }
