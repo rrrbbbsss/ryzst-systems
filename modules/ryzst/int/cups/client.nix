@@ -32,5 +32,9 @@ in
       listenAddresses = [ "localhost:631" ];
     };
     hardware.printers.ensurePrinters = printers;
+    systemd.services.ensure-printers = {
+      requires = [ "sys-devices-virtual-net-wg0.device" ];
+      after = [ "sys-devices-virtual-net-wg0.device" ];
+    };
   };
 }
