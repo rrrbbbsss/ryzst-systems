@@ -6,8 +6,8 @@
   networking.wireless.iwd = {
     enable = true;
     settings = {
+      DriverQuirks.UseDefaultInterface = false;
       General = {
-        UseDefaultInterface = false;
         AddressRandomization = "once";
         AddressRandomizationRange = "full";
       };
