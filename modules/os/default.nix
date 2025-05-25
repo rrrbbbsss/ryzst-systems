@@ -112,6 +112,9 @@ in
       };
     };
 
+    # boot entries
+    boot.loader.systemd-boot.configurationLimit = 10;
+
     #updates
     os.upgrade.enable = true;
     os.reboot.enable = true;
