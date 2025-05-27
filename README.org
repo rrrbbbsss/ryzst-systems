@@ -5,7 +5,7 @@ finishing up some half-baked thoughts so i can move forwards.
 if you find something worthwhile,
 then feel free to snag it.
 upstreamin nothin cuz ain't got the smarts.
-let me wage my waaagh in peace.
+[[https://www.youtube.com/watch?v=8kNBGcbllkI][let me wage my waaagh in peace.]]
 
 ** Structure
 #+BEGIN_SRC
