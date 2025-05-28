@@ -1,7 +1,8 @@
-{ config, pkgs, lib, modulesPath, nixos-hardware, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image.nix")
+    ../../modules/hardware/devices/yubico/yubikey5
   ];
 
   documentation.nixos.enable = false; #xsltproc issues
