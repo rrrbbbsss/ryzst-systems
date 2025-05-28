@@ -3,7 +3,6 @@ learning nix.
 this is my home-lab for half-baked thoughts.
 if you find something worthwhile,
 then feel free to snag it.
-[[https://www.youtube.com/watch?v=8kNBGcbllkI][upstreamin nothin]].
 
 ** Structure
 #+BEGIN_SRC
