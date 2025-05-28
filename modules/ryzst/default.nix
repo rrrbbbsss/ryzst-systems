@@ -72,7 +72,7 @@ in
         inherit (hosts) ant-bot;
       };
       client.nodes = {
-        inherit (hosts) fox-cup cat-jr ape-orc;
+        inherit (hosts) fox-cup cat-jar ape-orc;
       };
     };
 
