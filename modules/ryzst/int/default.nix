@@ -8,6 +8,7 @@
     ./git
     ./nfs
     ./ntp
+    ./octoprint
     ./wg
     ./sane
     ./syncthing

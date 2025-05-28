@@ -67,6 +67,15 @@ in
       };
     };
 
+    octoprint = {
+      server.nodes = {
+        inherit (hosts) ant-bot;
+      };
+      client.nodes = {
+        inherit (hosts) fox-cup cat-jr ape-orc;
+      };
+    };
+
     ntp = {
       server.nodes = {
         inherit (hosts) tin-jet;
