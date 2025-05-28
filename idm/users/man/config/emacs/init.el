@@ -249,11 +249,8 @@
   :config
   (helm-projectile-on)
   :bind
-  ("s-C-M-R" . helm-projectile-rg)
+  ("s-C-M-R" . helm-projectile-grep)
   ("s-C-M-P" . helm-projectile-find-file))
-
-(use-package helm-rg
-  :ensure t)
 
 (use-package helm-descbinds
   :ensure t
