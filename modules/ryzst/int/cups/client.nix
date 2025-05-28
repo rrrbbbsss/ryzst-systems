@@ -24,9 +24,17 @@ in
     };
   };
 
-  # TODO: add .desktop file for cups
   # TODO: tls
   config = mkIf enable {
+    environment.systemPackages = [
+      (pkgs.makeDesktopItem {
+        name = "Cups";
+        exec = "${pkgs.xdg-utils}/bin/xdg-open http://localhost:631";
+        desktopName = "Cups";
+        genericName = "Cups";
+        categories = [ "Office" ];
+      })
+    ];
     services.printing = {
       enable = true;
       listenAddresses = [ "localhost:631" ];
