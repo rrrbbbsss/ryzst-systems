@@ -1,11 +1,9 @@
 * ryzst-systems
 learning nix.
-this is my home-lab for rejected ideas.
-finishing up some half-baked thoughts so i can move forwards.
+this is my home-lab for half-baked thoughts.
 if you find something worthwhile,
 then feel free to snag it.
-upstreamin nothin cuz ain't got the smarts.
-[[https://www.youtube.com/watch?v=8kNBGcbllkI][let me wage my waaagh in peace.]]
+[[https://www.youtube.com/watch?v=8kNBGcbllkI][upstreamin nothin]].
 
 ** Structure
 #+BEGIN_SRC
