@@ -40,7 +40,7 @@ in
       plugins = plugins: with plugins; [
         themeify
       ];
-      host = "[${cfg.ip}]";
+      host = "${cfg.ip}";
       inherit (cfg) port;
       # TODO: extraConfig
     };
