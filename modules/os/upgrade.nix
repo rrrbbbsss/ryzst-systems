@@ -100,6 +100,7 @@ in {
             jq
             openssh
           ];
+          # got gist from wiki but think cachix did it first.
           text = ''
             TMPDIR=$(mktemp -d)
             trap 'rm -rf "$TMPDIR"' EXIT
