@@ -2,8 +2,6 @@
 let
   ryzst = final: prev: {
     ryzst = self.packages.${prev.system} // { inherit (self) lib; };
-    # TODO: there is an overlay now.
-    firefox-addons = self.inputs.firefox-addons.packages.${prev.system};
   };
   tweaks = import ./tweaks.nix;
 in
@@ -14,6 +12,7 @@ in
       [
         ryzst
         self.inputs.emacs-overlay.overlays.default
+        self.inputs.firefox-addons.overlays.default
         tweaks
       ];
 }
