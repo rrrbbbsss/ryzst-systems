@@ -155,5 +155,8 @@ in
 
     # https://github.com/NixOS/nixpkgs/security/advisories/GHSA-m7pq-h9p4-8rr4
     systemd.shutdownRamfs.enable = false;
+
+    # https://www.openwall.com/lists/oss-security/2025/05/29/3
+    boot.kernel.sysctl."fs.suid_dumpable" = 0;
   };
 }
