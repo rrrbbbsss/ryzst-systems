@@ -32,18 +32,41 @@ in
       type = types.int;
       default = 6566;
     };
+    dataPortRange = mkOption {
+      description = "The data port range for the service to listen on";
+      type = types.str;
+      default = "10000 - 10100";
+    };
   };
   config = mkIf enable {
 
-    # TODO: fix this rule for connection tracking
     networking.firewall.extraInputRules = ''
       iifname "wg0" counter ip6 saddr { ${clientsIps} } tcp dport ${builtins.toString cfg.port} accept
     '';
+    networking.nftables.tables = {
+      stateful-sane = {
+        family = "inet";
+        content = ''
+          ct helper sane-standard {
+              type "sane" protocol tcp;
+          }
+
+          chain PRE {
+              type filter hook prerouting priority filter;
+              iifname "wg0" tcp dport 6566 ct helper set "sane-standard"
+          }
+
+          chain IN {
+              ct helper "sane" accept
+          }
+        '';
+      };
+    };
 
     hardware.sane.enable = true;
     services.saned = {
       enable = true;
-      extraConfig = clients;
+      extraConfig = "data_portrange = ${cfg.dataPortRange}\n\n" + clients;
     };
     systemd.sockets.saned.listenStreams = mkForce [
       "[${cfg.ip}]:${toString cfg.port}"
