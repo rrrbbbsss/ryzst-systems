@@ -136,6 +136,14 @@ in
       iputils
     ];
 
+    # faster reboot
+    systemd.extraConfig = ''
+      DefaultTimeoutStopSec=10s
+    '';
+    systemd.user.extraConfig = ''
+      DefaultTimeoutStopSec=10s
+    '';
+
     # vim is used instead of nano
     programs.nano.enable = false;
 
