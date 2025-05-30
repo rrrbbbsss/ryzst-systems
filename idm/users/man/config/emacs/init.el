@@ -132,7 +132,6 @@
   :config
   (evil-set-initial-state 'vterm-mode 'emacs)
   (add-to-list 'beacon-dont-blink-major-modes 'vterm-mode)
-  ;; TODO: use general
   (evil-define-key 'emacs 'vterm-mode-map (kbd "C-z")
     '(lambda ()
        (interactive)

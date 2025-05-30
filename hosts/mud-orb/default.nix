@@ -63,7 +63,7 @@ in
   };
 
   services.seatd.enable = true;
-  # TODO: required for powermenu right now
+  # required for powermenu
   security.polkit.enable = lib.mkForce true;
 
 
