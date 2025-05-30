@@ -109,7 +109,6 @@ in {
             git clone --depth=1 --branch="hosts" "${cfg.repo}" "$TMPDIR"
             STOREPATH=$(jq -er --arg h "$(cat /etc/hostname)" '.hosts.[$h]' "$TMPDIR"/hosts.json)
 
-            # Update TODO: rethink this check
             CURRENT=$(readlink /run/current-system)
             if [[ "$CURRENT" != "$STOREPATH" ]]; then
               # download store-path
@@ -122,8 +121,6 @@ in {
               BOOTED=$(readlink /run/booted-system/{initrd,kernel,kernel-modules})
               BUILT=$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})
               if [[ "$BOOTED" = "$BUILT" ]]; then
-                # TODO: pay attention to soft-reboot 
-                # https://github.com/NixOS/nixpkgs/pull/309911
                 "$STOREPATH"/bin/switch-to-configuration switch
               fi
             else
