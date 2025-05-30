@@ -273,7 +273,6 @@ in
   };
   security.pam.services = {
     greetd = {
-      u2fAuth = true;
       unixAuth = false;
     };
   };
