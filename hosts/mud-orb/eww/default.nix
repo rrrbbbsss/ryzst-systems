@@ -23,9 +23,9 @@ let
     }
     {
       name = "spotify";
-      criteria = [{ class = "Spotify"; }];
-      image = "${pkgs.spotify}/share/spotify/icons/spotify-linux-256.png";
-      exe = "${pkgs.spotify}/bin/spotify";
+      criteria = [{ title = "spotify-qt"; }];
+      image = "${pkgs.spotify-qt}/share/icons/hicolor/scalable/apps/spotify-qt.svg";
+      exe = "${pkgs.spotify-qt}/bin/spotify-qt";
     }
     {
       name = "media-powermenu";
@@ -43,7 +43,9 @@ let
     runtimeInputs = [ pkgs.systemd config.wayland.windowManager.sway.package ];
     text = ''
       swaymsg workspace "$1"
-      systemd-run --user --unit "$1" "$2"
+      systemd-run -E GTK_THEME='Adwaita:dark' \
+                  -E QT_STYLE_OVERRIDE='adwaita-dark' \
+                  --user --unit "$1" "$2"
     '';
   }}/bin/launcher";
   killer = "${pkgs.writeShellApplication {
