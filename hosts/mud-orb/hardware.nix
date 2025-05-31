@@ -19,7 +19,7 @@
 
   boot = {
     # TODO: remove when iwlwifi driver not pooped.
-    kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
     loader = {
       systemd-boot.enable = true;
       efi = {
