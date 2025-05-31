@@ -1,6 +1,5 @@
 {
   description = "ryzst-systems: learning nix";
-  # think mark, think!
   # https://dl.acm.org/doi/pdf/10.1145/232627.232653
 
   inputs = {
