@@ -53,6 +53,27 @@ let
       prev = "${pkgs.playerctl}/bin/playerctl previous";
     };
   };
+
+  # maximum jank:
+  # play wav files to send IR signals to power on/off tv/receiver.
+  # https://github.com/S-shangli/lirc_rawcode2wav
+  playIR = pkgs.writeShellApplication {
+    name = "playIR";
+    runtimeInputs = with pkgs; [ mpv ];
+    text = ''
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${./ir/receiver.wav}
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --volume=200 ${./ir/tv.wav}
+    '';
+  };
+  suspendIR = pkgs.writeShellApplication {
+    name = "suspendIR";
+    runtimeInputs = [ playIR pkgs.systemd ];
+    text = ''
+      playIR
+      systemctl suspend
+    '';
+  };
+  # TODO: playIR on startup/sleep/reboot/shutdown
 in
 {
   users.users.${username} = {
@@ -167,7 +188,8 @@ in
         }
         {
           timeout = 900;
-          command = "${pkgs.systemd}/bin/systemctl suspend";
+          command = "${suspendIR}/bin/suspendIR";
+          resumeCommand = "${playIR}/bin/playIR";
         }
       ];
     };
@@ -245,6 +267,7 @@ in
           "${modifier}+Return" = ''
             exec swaymsg [app_id="Alacritty"] scratchpad show || ${pkgs.alacritty}/bin/alacritty
           '';
+          "${modifier}+p" = "exec ${playIR}/bin/playIR";
           "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
           "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
           "XF86AudioMute" = "exec ${commands.media.mute}";
