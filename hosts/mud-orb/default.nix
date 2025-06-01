@@ -57,13 +57,27 @@ let
   # maximum jank:
   # play wav files to send IR signals to power on/off tv/receiver.
   # https://github.com/S-shangli/lirc_rawcode2wav
-  playIR = pkgs.writeShellApplication {
-    name = "playIR";
+  powerTV = pkgs.writeShellApplication {
+    name = "powerTV";
+    runtimeInputs = with pkgs; [ mpv ];
+    text = ''
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --volume=200 ${./ir/tv.wav}
+    '';
+  };
+  powerReceiver = pkgs.writeShellApplication {
+    name = "powerReceiver";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${./ir/receiver.wav}
+    '';
+  };
+  playIR = pkgs.writeShellApplication {
+    name = "playIR";
+    runtimeInputs = [ powerTV powerReceiver pkgs.mpv ];
+    text = ''
+      powerTV
       sleep 1
-      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --volume=200 ${./ir/tv.wav}
+      powerReceiver
     '';
   };
   suspendIR = pkgs.writeShellApplication {
@@ -269,6 +283,8 @@ in
             exec swaymsg [app_id="Alacritty"] scratchpad show || ${pkgs.alacritty}/bin/alacritty
           '';
           "${modifier}+p" = "exec ${playIR}/bin/playIR";
+          "${modifier}+t" = "exec ${powerTV}/bin/powerTV";
+          "${modifier}+r" = "exec ${powerReceiver}/bin/powerReceiver";
           "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
           "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
           "XF86AudioMute" = "exec ${commands.media.mute}";
