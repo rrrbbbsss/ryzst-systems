@@ -18,12 +18,6 @@
   };
 
   boot = {
-    # TODO: remove when iwlwifi driver not pooped.
-    # i think a fix is in linux 6.15.rc3
-    # but i had to disable wifi in BIOS, then reboot,
-    # then re-enable wifi in BIOS for it to work again.
-    # don't feel like fiddling with it anymore.
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
     loader = {
       systemd-boot.enable = true;
       efi = {

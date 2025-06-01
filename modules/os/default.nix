@@ -158,5 +158,10 @@ in
 
     # https://www.openwall.com/lists/oss-security/2025/05/29/3
     boot.kernel.sysctl."fs.suid_dumpable" = 0;
+
+    # iwlwifi plague
+    # you might have to disable wifi in BIOS,
+    # then reboot, then re-enable wifi in BIOS.
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
   };
 }
