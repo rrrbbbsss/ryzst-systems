@@ -62,6 +62,7 @@ let
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${./ir/receiver.wav}
+      sleep 1
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --volume=200 ${./ir/tv.wav}
     '';
   };
