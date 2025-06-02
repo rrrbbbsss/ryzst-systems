@@ -17,6 +17,9 @@
       mode = "3440x1440@144Hz";
     };
   };
+  device.mirror = {
+    main = "DP-1";
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 

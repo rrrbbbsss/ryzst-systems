@@ -19,6 +19,10 @@
     };
   };
 
+  device.mirror = {
+    main = "LVDS-1";
+  };
+
   device.rats = {
     "2:10:TPPS/2_IBM_TrackPoint" = {
       natural_scroll = "disabled";

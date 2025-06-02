@@ -1,19 +1,27 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, osConfig, ... }:
 
 with lib;
 let
   cfg = config.services.reboot-nag;
   script = pkgs.writeShellApplication {
     name = "reboot-nag";
-    runtimeInputs = [ pkgs.coreutils pkgs.sway pkgs.systemd pkgs.bash ];
+    runtimeInputs = with pkgs; [
+      coreutils
+      sway
+      systemd
+      bash
+      procps
+    ];
     text = ''
       BOOTED="$(readlink /run/booted-system/{initrd,kernel,kernel-modules})"
       BUILT="$(readlink /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
       UPTIME=$(cut -f 1 -d "." /proc/uptime)
 
       if [[ "$BOOTED" != "$BUILT" ]] || [[ "$UPTIME" -gt ${toString cfg.uptime} ]]; then
+        kill "$(pidof swaynag)"
         swaynag --message "Reboot Required" \
                 --layer overlay \
+                --output ${osConfig.device.mirror.main} \
                 --button "Reboot" "systemctl reboot"
       fi
     '';
