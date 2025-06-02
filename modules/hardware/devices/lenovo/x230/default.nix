@@ -21,6 +21,7 @@
 
   device.mirror = {
     main = "LVDS-1";
+    secondary = "VGA-1";
   };
 
   device.rats = {

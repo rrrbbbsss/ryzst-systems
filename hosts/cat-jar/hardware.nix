@@ -19,6 +19,7 @@
   };
   device.mirror = {
     main = "DP-1";
+    secondary = "null";
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
