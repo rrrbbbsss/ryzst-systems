@@ -10,7 +10,7 @@
 
 let
   pname = "katrain";
-  version = "1.15.0";
+  version = "1.16";
   pythonPackages = python3Packages;
   desktopItem = makeDesktopItem {
     name = pname;
@@ -31,8 +31,8 @@ pythonPackages.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "sanderland";
     repo = "katrain";
-    rev = "v${version}-fix";
-    hash = "sha256-FhW8FJaiLCmWwGYzo0/wArX/xdv7KEudRTNXXokGW1c=";
+    rev = "v${version}";
+    hash = "sha256-v0VGjxayXLbBSXs/jkYeXgbyDg+JFLgxESDuh/qbg1U=";
   };
 
   nativeBuildInputs = [
@@ -88,16 +88,11 @@ pythonPackages.buildPythonApplication {
 
   meta = {
     homepage = "https://github.com/sanderland/katrain";
-    description = "KaTrain is a tool for analyzing games and playing go with AI feedback from KataGo";
-    longDescription = ''
-      KaTrain is a tool for analyzing games and playing go with AI feedback from KataGo:
-      - Review your games to find the moves that were most costly in terms of points lost.
-      - Play against AI and get immediate feedback on mistakes with option to retry.
-      - Play against a wide range of weakened versions of AI with various styles.
-      - Automatically generate focused SGF reviews which show your biggest mistakes.
-    '';
+    description = "tool for analyzing games and playing go with AI feedback from KataGo";
     license = licenses.mit;
     platforms = [ "x86_64-linux" ];
     mainProgram = "katrain";
   };
 }
+
+
