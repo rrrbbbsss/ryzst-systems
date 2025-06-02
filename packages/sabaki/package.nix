@@ -1,9 +1,8 @@
-{ lib, stdenv, makeDesktopItem, appimageTools, fetchurl }:
+{ lib, appimageTools, fetchurl }:
 
 let
   version = "0.52.2";
   pname = "sabaki";
-  name = "${pname}-${version}";
   src = fetchurl {
     url = "https://github.com/SabakiHQ/Sabaki/releases/download/v${version}/sabaki-v${version}-linux-x64.AppImage";
     hash = "sha256-wuCj5HvNZc2KOdc5O49upNToFDKiMMWexykctHi51EY=";
@@ -12,6 +11,10 @@ let
 in
 appimageTools.wrapType2 {
   inherit pname version src;
+
+  extraPkgs = pkgs: with pkgs; [
+    xorg.libxshmfence
+  ];
 
   extraInstallCommands = ''
     install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications
