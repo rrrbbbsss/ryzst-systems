@@ -73,7 +73,12 @@ let
   };
   playIR = pkgs.writeShellApplication {
     name = "playIR";
-    runtimeInputs = [ powerTV powerReceiver pkgs.mpv ];
+    runtimeInputs = [
+      powerTV
+      powerReceiver
+      pkgs.mpv
+      pkgs.coreutils-full
+    ];
     text = ''
       powerTV
       sleep 1
