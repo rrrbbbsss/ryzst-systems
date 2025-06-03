@@ -1,6 +1,4 @@
-#! /usr/bin/env bash
-
-set -euo pipefail
+# shellcheck shell=bash
 
 # shellcheck disable=SC2016
 WINDOW_QUERY='
