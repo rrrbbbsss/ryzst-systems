@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
 
 #https://git.zx2c4.com/password-store/tree/contrib/dmenu/passmenu
 shopt -s nullglob globstar
