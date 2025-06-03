@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+# shellcheck shell=bash
+
 # TODO: this file is just notes right now.
 # TODO: clean it up and make it proper.
 

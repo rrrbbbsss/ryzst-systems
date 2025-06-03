@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
+# shellcheck shell=bash
 
 function Error() {
   printf 'Error: %s\n' "$1"
@@ -29,7 +27,7 @@ selection=$(fzf --reverse --prompt 'Select template > ' \
   <<<"$choices")
 
 git init "$project"
-pushd "$project"
+pushd "$project" || exit
 nix flake init -t "$flake"\#"$selection"
 git grep -Frl "$text" | xargs sed -i "s/$text/$project/g"
-popd
+popd || exit

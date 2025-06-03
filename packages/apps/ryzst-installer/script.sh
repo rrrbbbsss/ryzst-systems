@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
+# shellcheck shell=bash
 
 # TODO: this is broken.
 # TODO: fix later.

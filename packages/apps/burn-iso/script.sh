@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
+# shellcheck shell=bash
 
 flake="git+ssh://git@git.int.ryzst.net/domain"
 
