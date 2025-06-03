@@ -1,9 +1,17 @@
-{ lib, runCommandLocal, makeWrapper, bash, iwd, fzf, gnused, gawk }:
-runCommandLocal "fzf-wifi"
-{
-  script = ./script.sh;
-  nativeBuildInputs = [ makeWrapper ];
-} ''
-  makeWrapper $script $out/bin/fzf-wifi \
-  --prefix PATH : ${lib.makeBinPath [ bash iwd fzf gnused gawk ]}
-''
+{ writeShellApplication
+, iwd
+, fzf
+, gnused
+, gawk
+}:
+
+writeShellApplication {
+  name = "fzf-wifi";
+  runtimeInputs = [
+    fzf
+    gawk
+    gnused
+    iwd
+  ];
+  text = builtins.readFile ./script.sh;
+}
