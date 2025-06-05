@@ -14,6 +14,15 @@
       DisableFirefoxStudies = true;
       DisablePocket = true;
       DisableTelemetry = true;
+      # stop doom-scrolling.
+      # focus.
+      WebsiteFilter = {
+        Block = [
+          "https://bsky.app/*"
+          "https://mastodon.social/*"
+          "https://reddit.com/*"
+        ];
+      };
     };
     profiles.default = {
       id = 0;
