@@ -72,14 +72,14 @@ let
     '';
   };
   volumeUp = pkgs.writeShellApplication {
-    name = "powerReceiver";
+    name = "volumeUp";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.volume-up}
     '';
   };
   volumeDown = pkgs.writeShellApplication {
-    name = "powerReceiver";
+    name = "volumeDown";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.volume-down}
