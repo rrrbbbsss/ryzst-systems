@@ -82,7 +82,7 @@ let
     name = "powerReceiver";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
-      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.voluem-down}
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.volume-down}
     '';
   };
   playIR = pkgs.writeShellApplication {
