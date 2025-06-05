@@ -21,6 +21,7 @@
           "https://bsky.app/*"
           "https://mastodon.social/*"
           "https://reddit.com/*"
+          "https://www.reddit.com/*"
         ];
       };
     };
