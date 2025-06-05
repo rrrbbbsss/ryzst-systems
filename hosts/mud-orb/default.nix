@@ -71,6 +71,20 @@ let
       mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.power}
     '';
   };
+  volumeUp = pkgs.writeShellApplication {
+    name = "powerReceiver";
+    runtimeInputs = with pkgs; [ mpv ];
+    text = ''
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.volume-up}
+    '';
+  };
+  volumeDown = pkgs.writeShellApplication {
+    name = "powerReceiver";
+    runtimeInputs = with pkgs; [ mpv ];
+    text = ''
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.voluem-down}
+    '';
+  };
   playIR = pkgs.writeShellApplication {
     name = "playIR";
     runtimeInputs = [
@@ -290,6 +304,8 @@ in
           "${modifier}+p" = "exec ${playIR}/bin/playIR";
           "${modifier}+t" = "exec ${powerTV}/bin/powerTV";
           "${modifier}+r" = "exec ${powerReceiver}/bin/powerReceiver";
+          "${modifier}+Up" = "exec ${volumeUp}/bin/volumeUp";
+          "${modifier}+Down" = "exec ${volumeDown}/bin/volumeDown";
           "XF86AudioRaiseVolume" = "exec ${commands.media.raiseVolume}";
           "XF86AudioLowerVolume" = "exec ${commands.media.lowerVolume}";
           "XF86AudioMute" = "exec ${commands.media.mute}";
