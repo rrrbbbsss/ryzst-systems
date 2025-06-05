@@ -1,5 +1,4 @@
 { lib, ... }:
-# https://www.youtube.com/watch?v=thmR2SmkeDU
 # my ryzen 7 5700G was having issues with random reboots/freezing.
 # had to disable "AMD Cool n' Quiet" in BIOS.
 {
