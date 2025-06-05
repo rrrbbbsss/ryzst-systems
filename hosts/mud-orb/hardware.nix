@@ -8,6 +8,8 @@
     ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/yubico/yubikey5
     ../../modules/hardware/devices/vontar/d8
+    ../../modules/hardware/devices/funai/lf320fx4f
+    ../../modules/hardware/devices/denon/dra-800h
   ];
 
   device.monitors = {

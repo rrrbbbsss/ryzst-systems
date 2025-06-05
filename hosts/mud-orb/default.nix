@@ -61,14 +61,14 @@ let
     name = "powerTV";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
-      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --loop-file=100 ${./ir/tv.wav}
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 --loop-file=100 ${config.device.ir.wav.tv.power}
     '';
   };
   powerReceiver = pkgs.writeShellApplication {
     name = "powerReceiver";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
-      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${./ir/receiver.wav}
+      mpv --audio-device=alsa/front:CARD=PCH,DEV=0 ${config.device.ir.wav.receiver.power}
     '';
   };
   playIR = pkgs.writeShellApplication {

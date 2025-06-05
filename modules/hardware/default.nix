@@ -4,7 +4,10 @@
 # https://github.com/NixOS/nixos-hardware
 with lib;
 {
-  imports = [ ./common/keyboards ];
+  imports = [
+    ./common/keyboards
+    ./common/ir
+  ];
 
   options.device = {
     user = mkOption {
