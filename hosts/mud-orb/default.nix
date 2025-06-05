@@ -108,7 +108,7 @@ let
       systemctl suspend
     '';
   };
-  # TODO: playIR on startup/sleep/reboot/shutdown
+  # TODO: playIR on powermenu sleep/reboot/shutdown
 in
 {
   users.users.${username} = {
