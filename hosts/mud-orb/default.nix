@@ -96,7 +96,7 @@ let
     ];
     text = ''
       powerTV
-      sleep 1
+      sleep 3
       powerReceiver
     '';
   };
@@ -232,6 +232,9 @@ in
       enable = true;
       xwayland = true;
       wrapperFeatures.gtk = true;
+      extraConfigEarly = ''
+        exec ${playIR}/bin/playIR
+      '';
       config = {
         inherit modifier;
         fonts = {
