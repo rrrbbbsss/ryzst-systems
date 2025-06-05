@@ -57,12 +57,12 @@ let
   # maximum jank:
   # play wav files to send IR signals to power on/off tv/receiver.
   # https://github.com/S-shangli/lirc_rawcode2wav
-  card = "pipewire/alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_YDSB1730445005703D-00.analog-stereo";
+  card = "pulse/alsa_output.usb-Creative_Technology_Ltd_Sound_Blaster_Play__3_YDSB1730445005703D-00.analog-stereo";
   powerTV = pkgs.writeShellApplication {
     name = "powerTV";
     runtimeInputs = with pkgs; [ mpv ];
     text = ''
-      mpv --audio-device=${card} --loop-file=100 ${config.device.ir.wav.tv.power}
+      mpv --audio-device=${card} --loop-file=50 ${config.device.ir.wav.tv.power}
     '';
   };
   powerReceiver = pkgs.writeShellApplication {
