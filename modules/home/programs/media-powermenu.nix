@@ -18,6 +18,14 @@ in
         {file}`$XDG_CONFIG_HOME/eww`.
       '';
     };
+
+    buttons = mkOption {
+      type = with types; attrsOf str;
+      # TODO: example
+      description = ''
+        The commands to run for buttons.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {

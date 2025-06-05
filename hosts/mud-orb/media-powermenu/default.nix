@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+# this is bad but whatever.
 let
   colors = {
     bar = "#000000";
@@ -7,6 +8,7 @@ let
     hover = "#292b2b";
     font = "#C5C8C6";
   };
+  buttons = builtins.toJSON config.programs.media-powermenu.buttons;
   media-powermenuDir = pkgs.stdenv.mkDerivation {
     name = "media-powermenuDir";
     src = ./.;
@@ -15,6 +17,10 @@ let
       mkdir -p $out
 
       install $src/style.css $out/style.css
+
+      cat <<EOF > $out/buttons.json
+      ${buttons}
+      EOF
 
       cat <<EOF > $out/colors.css
       @define-color bar ${colors.bar};

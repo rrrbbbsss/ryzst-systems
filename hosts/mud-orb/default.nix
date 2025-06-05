@@ -104,13 +104,33 @@ let
     name = "suspendIR";
     runtimeInputs = [ playIR pkgs.systemd ];
     text = ''
-      playIR
+      playIR || true
       systemctl suspend
     '';
   };
-  # TODO: playIR on powermenu sleep/reboot/shutdown
+  rebootIR = pkgs.writeShellApplication {
+    name = "rebootIR";
+    runtimeInputs = [ playIR pkgs.systemd ];
+    text = ''
+      playIR || true
+      systemctl reboot
+    '';
+  };
+  shutDownIR = pkgs.writeShellApplication {
+    name = "shutDownIR";
+    runtimeInputs = [ playIR pkgs.systemd ];
+    text = ''
+      playIR || true
+      systemctl poweroff
+    '';
+  };
 in
 {
+  # TODO: figure out how to handle vm...
+  imports = [
+    ../../modules/hardware/devices/funai/lf320fx4f
+    ../../modules/hardware/devices/denon/dra-800h
+  ];
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -141,6 +161,15 @@ in
     dconf = {
       enable = true;
       settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    };
+
+    # TODO: powerIR on wakeup from manual sleep
+    programs.media-powermenu = {
+      buttons = {
+        Sleep = "${suspendIR}/bin/suspendIR";
+        Reboot = "${rebootIR}/bin/rebootIR";
+        "Shut Down" = "${shutDownIR}/bin/shutDownIR";
+      };
     };
 
     programs.firefox = {
