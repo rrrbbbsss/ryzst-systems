@@ -10,6 +10,7 @@
     ../../modules/hardware/devices/tex/shinobi
     ../../modules/hardware/devices/nullbits/tidbit
     ../../modules/hardware/devices/microchip/ir-transceiver
+    ../../modules/hardware/devices/sceptre/u550cv-u
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
