@@ -1,15 +1,15 @@
 { system, self, ... }:
 let
   name = "iso-installer";
-  iso = self.inputs.nixos-generators.nixosGenerate {
+  iso = (self.inputs.nixpkgs.lib.nixosSystem {
     inherit system;
-    format = "install-iso";
     specialArgs = { inherit self; };
     modules = [
+      "${self.inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
       ./installer.nix
       self.outputs.nixosModules.default
     ];
-  };
+  }).config.system.build.isoImage;
 in
 {
   "${name}" = iso;
