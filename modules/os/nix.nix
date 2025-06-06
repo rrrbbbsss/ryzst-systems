@@ -14,8 +14,6 @@ in
   };
   config = mkMerge [
     {
-      # forgive me
-      nixpkgs.config.allowUnfree = true;
       nix = {
         channel.enable = false;
         settings = {

@@ -39,55 +39,42 @@
     hosts.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }:
-    # just get rid of flake-utils, but i want to do this differently...
-    let
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      forSomeSystems = f:
-        nixpkgs.lib.genAttrs systems
-          (system:
-            let
-              pkgs = import nixpkgs {
-                inherit system;
-                config.allowUnfree = true;
-                overlays = [ self.overlays.default ];
-              };
-            in
-            f { inherit system pkgs; });
-    in
-    {
-      lib = import ./lib { inherit self; };
+  outputs = { self, nixpkgs, ... }: {
 
-      overlays = import ./overlays { inherit self; };
+    systems = [ "x86_64-linux" "aarch64-linux" ];
 
-      nixosConfigurations = import ./hosts { inherit self; };
+    instances = nixpkgs.lib.genAttrs self.systems (system:
+      import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ self.overlays.default ];
+      });
 
-      nixosModules = import ./modules { inherit self; };
+    lib = import ./lib { inherit self; };
 
-      homeManagerModules.default = import ./modules/home { inherit self; };
+    overlays = import ./overlays { inherit self; };
 
-      hosts = builtins.mapAttrs
-        (n: v: v.config.system.build.toplevel)
-        self.nixosConfigurations;
+    nixosConfigurations = import ./hosts { inherit self; };
 
-      templates = import ./templates { inherit self; };
+    nixosModules = import ./modules { inherit self; };
 
-      devShells = forSomeSystems ({ pkgs, system }:
-        { default = import ./shell.nix { inherit self system pkgs; }; });
+    homeManagerModules.default = import ./modules/home { inherit self; };
 
-      checks = forSomeSystems ({ pkgs, system }:
-        import ./checks { inherit self system; });
+    hosts = builtins.mapAttrs
+      (n: v: v.config.system.build.toplevel)
+      self.nixosConfigurations;
 
-      formatter = forSomeSystems ({ pkgs, system }:
-        pkgs.nixpkgs-fmt);
+    templates = import ./templates { inherit self; };
 
-      apps = forSomeSystems ({ pkgs, system }:
-        import ./apps { inherit pkgs; });
+    devShells = import ./shell.nix { inherit self; };
 
-      packages = forSomeSystems ({ pkgs, system }:
-        import ./packages {
-          inherit pkgs system self;
-          inherit (self) lib;
-        });
-    };
+    formatter = nixpkgs.lib.genAttrs self.systems (system:
+      self.instances.${system}.nixpkgs-fmt);
+
+    checks = import ./checks { inherit self; };
+
+    apps = import ./apps { inherit self; };
+
+    packages = import ./packages { inherit self; };
+  };
 }

@@ -17,7 +17,7 @@ in
     hostname = "zoo-zoo";
   };
 
-  system.stateVersion = lib.mkForce "24.11";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   ryzst.mek.zoo-zoo.version = "";
 
   #nixpkgs.hostPlatform.system = "x86_64-linux";

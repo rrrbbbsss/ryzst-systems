@@ -32,7 +32,7 @@ let
   ];
 in
 {
-  default = { ... }:
+  default = { config, ... }:
     {
       imports = default-imports;
 
@@ -48,7 +48,7 @@ in
           ryzst-systems.flake = self;
         } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
 
-        nixpkgs.overlays = [ self.outputs.overlays.default ];
+        nixpkgs.pkgs = self.instances.${config.nixpkgs.hostPlatform.system};
       };
     };
 }

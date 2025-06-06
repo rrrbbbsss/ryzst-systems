@@ -1,5 +1,10 @@
-{ pkgs }:
-with pkgs.ryzst;
+{ self }:
+let
+  inherit (self) instances systems;
+  inherit (self.inputs) nixpkgs;
+in
+nixpkgs.lib.genAttrs systems (system:
+with instances.${system}.ryzst;
 {
   default = {
     type = "app";
@@ -21,5 +26,5 @@ with pkgs.ryzst;
     type = "app";
     program = "${apps}/bin/template-picker";
   };
-}
+})
 
