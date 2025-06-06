@@ -107,22 +107,22 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "pre-commit-hooks",
           "nixpkgs"
         ]
       },
       "locked": {
         "lastModified": 1709087332,
         "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
+        "ref": "refs/heads/master",
         "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/hercules-ci/gitignore.nix"
       },
       "original": {
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/hercules-ci/gitignore.nix"
       }
     },
     "home-manager": {
@@ -244,7 +244,9 @@
         "flake-compat": [
           "flake-compat"
         ],
-        "gitignore": "gitignore",
+        "gitignore": [
+          "gitignore"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -271,6 +273,7 @@
         "firefox-addons": "firefox-addons",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
+        "gitignore": "gitignore",
         "home-manager": "home-manager",
         "hosts": "hosts",
         "impermanence": "impermanence",
