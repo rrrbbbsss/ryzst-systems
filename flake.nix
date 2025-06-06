@@ -33,9 +33,6 @@
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
 
-    nixos-generators.url = "git+https://github.com/nix-community/nixos-generators?shallow=1";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-
     hosts.url = "git+https://github.com/StevenBlack/hosts?shallow=1";
     hosts.inputs.nixpkgs.follows = "nixpkgs";
   };

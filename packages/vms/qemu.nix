@@ -24,6 +24,7 @@
   virtualisation = {
     cores = 4;
     memorySize = 4096;
+    diskSize = 2048;
     qemu = {
       guestAgent.enable = true;
       options = [

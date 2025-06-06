@@ -1,17 +1,17 @@
 { pkgs, self }:
 let
   mkVm = name: hostmodulepath:
-    self.inputs.nixos-generators.nixosGenerate {
+    (self.inputs.nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      format = "vm";
       specialArgs = { inherit self; };
       modules = [
+        "${self.inputs.nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
         { os.hostname = name; }
         hostmodulepath
         ./qemu.nix
         self.outputs.nixosModules.default
       ];
-    };
+    }).config.system.build.vm;
   mkVmScript = name: path:
     pkgs.writeShellApplication {
       name = "vm-${name}";

@@ -205,43 +205,6 @@
         "url": "https://github.com/nix-community/nix-index-database"
       }
     },
-    "nixlib": {
-      "locked": {
-        "lastModified": 1736643958,
-        "narHash": "sha256-tmpqTSWVRJVhpvfSN9KXBvKEXplrwKnSZNAoNPf/S/s=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "1418bc28a52126761c02dd3d89b2d8ca0f521181",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
-    "nixos-generators": {
-      "inputs": {
-        "nixlib": "nixlib",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1747663185,
-        "narHash": "sha256-Obh50J+O9jhUM/FgXtI3he/QRNiV9+J53+l+RlKSaAk=",
-        "ref": "refs/heads/master",
-        "rev": "ee07ba0d36c38e9915c55d2ac5a8fb0f05f2afcc",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/nixos-generators"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/nixos-generators"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1748437600,
@@ -312,7 +275,6 @@
         "hosts": "hosts",
         "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
-        "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "pre-commit-hooks": "pre-commit-hooks"
