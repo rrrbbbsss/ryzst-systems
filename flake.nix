@@ -6,8 +6,6 @@
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
     nixpkgs-stable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
 
-    flake-utils.url = "git+https://github.com/numtide/flake-utils?shallow=1";
-
     flake-compat.url = "git+https://github.com/edolstra/flake-compat?shallow=1";
     flake-compat.flake = false;
 
@@ -41,7 +39,22 @@
     hosts.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, ... }:
+    # just get rid of flake-utils, but i want to do this differently...
+    let
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      forSomeSystems = f:
+        nixpkgs.lib.genAttrs systems
+          (system:
+            let
+              pkgs = import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+                overlays = [ self.overlays.default ];
+              };
+            in
+            f { inherit system pkgs; });
+    in
     {
       lib = import ./lib { inherit self; };
 
@@ -58,29 +71,23 @@
         self.nixosConfigurations;
 
       templates = import ./templates { inherit self; };
-    } //
-    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
-      (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ self.overlays.default ];
-          };
-        in
-        {
-          devShells.default = import ./shell.nix { inherit self system pkgs; };
 
-          checks = import ./checks { inherit self system; };
+      devShells = forSomeSystems ({ pkgs, system }:
+        { default = import ./shell.nix { inherit self system pkgs; }; });
 
-          formatter = pkgs.nixpkgs-fmt;
+      checks = forSomeSystems ({ pkgs, system }:
+        import ./checks { inherit self system; });
 
-          apps = import ./apps { inherit pkgs; };
+      formatter = forSomeSystems ({ pkgs, system }:
+        pkgs.nixpkgs-fmt);
 
-          packages = import ./packages {
-            inherit pkgs system self;
-            inherit (self) lib;
-          };
-        }
-      );
+      apps = forSomeSystems ({ pkgs, system }:
+        import ./apps { inherit pkgs; });
+
+      packages = forSomeSystems ({ pkgs, system }:
+        import ./packages {
+          inherit pkgs system self;
+          inherit (self) lib;
+        });
+    };
 }
