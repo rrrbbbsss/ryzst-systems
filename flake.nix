@@ -47,6 +47,7 @@
       import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        config.allowUnsupportedSystem = true;
         overlays = [ self.overlays.default ];
       });
 
