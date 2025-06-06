@@ -63,7 +63,7 @@ let
         "${pkgs.ryzst.fzf-pass}/bin/fzf-pass"}
     '';
     wifi = ''
-      swaymsg [title="^WIFI"] scratchpad show \
+      swaymsg [title="^WIFI"] kill \
       || exec ${wrap-float-window "WIFI"
         "bash -c '${pkgs.ryzst.fzf-wifi}/bin/fzf-wifi && sleep 1'"}
     '';
@@ -95,11 +95,15 @@ let
         }}/bin/colorpicker";
     editor = "${config.services.emacs.package}/bin/emacsclient -c";
     scratchpad = ''
-      swaymsg [title="^TODO$"] scratchpad show \
+      [[ $(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.name=="TODO") | .focused') == 'false' ]] \
+      && swaymsg [title="^TODO$"] focus \
+      || swaymsg [title="^TODO$"] scratchpad show \
       || ${commands.editor} -n -F '(quote (name . "TODO"))' "$HOME/Notes/todos.org"
     '';
     music = ''
-      swaymsg [title="^MUSIC$"] scratchpad show \
+      [[ $(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.name=="MUSIC") | .focused') == 'false' ]] \
+      && swaymsg [title="^MUSIC$"] focus \
+      || swaymsg [title="^MUSIC$"] scratchpad show \
       || exec ${wrap-float-window "MUSIC" "${config.programs.ncspot.package}/bin/ncspot"}
     '';
     lockscreen = "${pkgs.writeShellApplication {
