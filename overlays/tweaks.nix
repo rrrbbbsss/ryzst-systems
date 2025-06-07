@@ -13,6 +13,22 @@ let
       };
 in
 {
+  # fix cross-compilation
+  boxes = prev.boxes.overrideAttrs (old: {
+    nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ prev.bintools ];
+  });
+
+  # fix cross-compilation
+  yubikey-manager = prev.yubikey-manager.overrideAttrs (old: {
+    postInstall = ''
+      installManPage man/ykman.1
+    '' + prev.lib.optionalString (prev.stdenv.buildPlatform.canExecute prev.stdenv.hostPlatform) ''
+      installShellCompletion --cmd ykman \
+        --bash <(_YKMAN_COMPLETE=bash_source "$out/bin/ykman") \
+        --zsh  <(_YKMAN_COMPLETE=zsh_source  "$out/bin/ykman") \
+        --fish <(_YKMAN_COMPLETE=fish_source "$out/bin/ykman") \
+    '';
+  });
 
   # use /etc/pam_p11/<username> instead of home dir
   pam_p11 = prev.pam_p11.overrideAttrs (old: {
