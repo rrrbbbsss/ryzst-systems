@@ -41,6 +41,7 @@
 
   outputs = { self, nixpkgs, ... }: {
 
+    # pretend: what if this was a list of tiplets?
     systems = [ "x86_64-linux" "aarch64-linux" ];
 
     instances = nixpkgs.lib.genAttrs self.systems (system:
