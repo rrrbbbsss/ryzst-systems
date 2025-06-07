@@ -40,6 +40,9 @@
   };
 
   outputs = { self, nixpkgs, ... }: {
+    # ignoring the schema,
+    # this is just an attribute set,
+    # so i'm gonna do whatever i want to do:
 
     # pretend: what if this was a list of triplets?
     systems = [ "x86_64-linux" "aarch64-linux" ];
