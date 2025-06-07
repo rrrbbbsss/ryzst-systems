@@ -41,7 +41,7 @@
 
   outputs = { self, nixpkgs, ... }: {
 
-    # pretend: what if this was a list of tiplets?
+    # pretend: what if this was a list of triplets?
     systems = [ "x86_64-linux" "aarch64-linux" ];
 
     instances = nixpkgs.lib.genAttrs self.systems (system:
