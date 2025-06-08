@@ -1,8 +1,15 @@
 { self }:
 let
-  ryzst = final: prev: {
-    ryzst = self.packages.${prev.system} // { inherit (self) lib; };
-  };
+  ryzst = final: prev:
+    let
+      system =
+        if (prev.hostPlatform.system == prev.buildPlatform.system)
+        then prev.hostPlatform.system
+        else "${prev.buildPlatform.system}/${prev.hostPlatform.system}";
+    in
+    {
+      ryzst = self.packages.${system} // { inherit (self) lib; };
+    };
   tweaks = import ./tweaks.nix;
 in
 {
