@@ -15,7 +15,10 @@ in
 {
   # fix cross-compilation
   boxes = prev.boxes.overrideAttrs (old: {
-    nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ prev.bintools ];
+    postPatch = ''
+      substituteInPlace src/Makefile \
+        --replace "STRIP=true" "STRIP=false"
+    '';
   });
 
   # fix cross-compilation
