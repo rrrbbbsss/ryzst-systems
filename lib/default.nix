@@ -2,6 +2,21 @@
 let
   lib-nixpkgs = self.inputs.nixpkgs.lib;
 
+  mkSystems = f:
+    lib-nixpkgs.listToAttrs
+      (map
+        (spec:
+          let
+            string = spec.local +
+              (if spec.cross == null then "" else "/${spec.cross}");
+            attr = {
+              inherit string;
+              inherit (spec) local cross;
+            };
+          in
+          lib-nixpkgs.nameValuePair string (f attr))
+        self.systems);
+
   getDirs = dir: with lib-nixpkgs.attrsets;
     foldlAttrs
       (acc: n: v:
@@ -33,6 +48,7 @@ let
   };
 in
 {
+  inherit mkSystems;
   inherit getDirs;
   inherit getFilesList;
   inherit names;

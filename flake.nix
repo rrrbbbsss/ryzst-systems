@@ -40,19 +40,22 @@
   };
 
   outputs = { self, nixpkgs, ... }: {
-    # ignoring the schema,
-    # this is just an attribute set,
-    # so i'm gonna do whatever i want to do:
 
-    # pretend: what if this was a list of triplets?
-    systems = [ "x86_64-linux" "aarch64-linux" ];
+    # ignore schema and experiment with cross-compilation:
+    systems = [
+      { local = "x86_64-linux"; cross = null; }
+      { local = "aarch64-linux"; cross = null; }
+      { local = "x86_64-linux"; cross = "aarch64-linux"; }
+    ];
 
-    instances = nixpkgs.lib.genAttrs self.systems (system:
+    instances = self.lib.mkSystems (system:
+      # TODO: https://wiki.nixos.org/wiki/Cross_Compiling#Leveraging_the_binary_cache
       import nixpkgs {
-        inherit system;
         config.allowUnfree = true;
         config.allowUnsupportedSystem = true;
         overlays = [ self.overlays.default ];
+        localSystem = system.local;
+        crossSystem = system.cross;
       });
 
     lib = import ./lib { inherit self; };
@@ -73,8 +76,8 @@
 
     devShells = import ./shell.nix { inherit self; };
 
-    formatter = nixpkgs.lib.genAttrs self.systems (system:
-      self.instances.${system}.nixpkgs-fmt);
+    formatter = self.lib.mkSystems (system:
+      self.instances.${system.string}.nixpkgs-fmt);
 
     checks = import ./checks { inherit self; };
 

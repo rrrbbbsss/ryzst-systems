@@ -1,10 +1,9 @@
 { self }:
 let
-  inherit (self) instances systems;
-  inherit (self.inputs) nixpkgs;
+  inherit (self) instances;
 in
-nixpkgs.lib.genAttrs systems (system:
-with instances.${system}.ryzst;
+self.lib.mkSystems (system:
+with instances.${system.string}.ryzst;
 {
   default = {
     type = "app";

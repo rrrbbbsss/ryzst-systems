@@ -1,13 +1,12 @@
 { self }:
 let
-  inherit (self) systems;
-  inherit (self.inputs) pre-commit-hooks nixpkgs;
+  inherit (self.inputs) pre-commit-hooks;
   #hostnames-check = import ./hostnames-check.nix { inherit self system; };
   #usernames-check = import ./usernames-check.nix { inherit self system; };
 in
-nixpkgs.lib.genAttrs systems (system:
+self.lib.mkSystems (system:
 {
-  pre-commit-check = pre-commit-hooks.lib.${system}.run {
+  pre-commit-check = pre-commit-hooks.lib.${system.string}.run {
     src = ../.;
     hooks = {
       # TODO: re-enable
