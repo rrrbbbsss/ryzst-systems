@@ -95,6 +95,7 @@ let
       pkgs.coreutils-full
     ];
     text = ''
+      sleep 3
       powerTV
       sleep 3
       powerReceiver
