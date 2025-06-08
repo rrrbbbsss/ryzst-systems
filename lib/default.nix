@@ -12,6 +12,7 @@ let
             attr = {
               inherit string;
               inherit (spec) local cross;
+              native = spec.native or false;
             };
           in
           lib-nixpkgs.nameValuePair string (f attr))

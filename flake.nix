@@ -45,15 +45,28 @@
     systems = [
       { local = "x86_64-linux"; cross = null; }
       { local = "aarch64-linux"; cross = null; }
-      { local = "x86_64-linux"; cross = "aarch64-linux"; }
+      { local = "x86_64-linux"; cross = "aarch64-linux"; native = true; }
     ];
 
     instances = self.lib.mkSystems (system:
-      # TODO: https://wiki.nixos.org/wiki/Cross_Compiling#Leveraging_the_binary_cache
+      # TODO: clean this up.
+      let
+        native = self.instances.${system.cross};
+        native-overlay =
+          if system.native
+          then [
+            (final: prev: {
+              inherit (native)
+                linuxKernel
+                qemu;
+            })
+          ]
+          else [ ];
+      in
       import nixpkgs {
         config.allowUnfree = true;
         config.allowUnsupportedSystem = true;
-        overlays = [ self.overlays.default ];
+        overlays = native-overlay ++ [ self.overlays.default ];
         localSystem = system.local;
         crossSystem = system.cross;
       });

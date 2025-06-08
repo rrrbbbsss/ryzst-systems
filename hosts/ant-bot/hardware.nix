@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, self, ... }:
 {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image.nix")
@@ -7,8 +7,9 @@
 
   documentation.nixos.enable = false; #xsltproc issues
   nixpkgs.hostPlatform.system = "aarch64-linux";
-  nixpkgs.buildPlatform.system = "aarch64-linux";
   hardware.enableRedistributableFirmware = lib.mkDefault true;
+  # um...
+  nixpkgs.pkgs = lib.mkForce self.instances."x86_64-linux/aarch64-linux";
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
