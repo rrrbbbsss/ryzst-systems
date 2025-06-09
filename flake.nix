@@ -39,36 +39,22 @@
     hosts.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }: {
+  outputs = { self, ... }: {
 
-    # ignore schema and experiment with cross-compilation:
     systems = [
       { local = "x86_64-linux"; cross = null; }
       { local = "aarch64-linux"; cross = null; }
-      { local = "x86_64-linux"; cross = "aarch64-linux"; native = true; }
+      {
+        local = "x86_64-linux";
+        cross = "aarch64-linux";
+        native = pkgs: { inherit (pkgs) linuxKernel; };
+      }
     ];
 
-    instances = self.lib.mkSystems (system:
-      # TODO: clean this up.
-      let
-        native = self.instances.${system.cross};
-        native-overlay =
-          if system.native
-          then [
-            (final: prev: {
-              inherit (native)
-                linuxKernel;
-            })
-          ]
-          else [ ];
-      in
-      import nixpkgs {
-        config.allowUnfree = true;
-        config.allowUnsupportedSystem = true;
-        overlays = native-overlay ++ [ self.overlays.default ];
-        localSystem = system.local;
-        crossSystem = system.cross;
-      });
+    instances = self.lib.mkInstances {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+    };
 
     lib = import ./lib { inherit self; };
 
