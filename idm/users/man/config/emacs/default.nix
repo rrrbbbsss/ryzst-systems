@@ -47,6 +47,11 @@ in
       }
       setopt PROMPT_SUBST
       PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
+      # https://github.com/akermu/emacs-libvterm/issues/745
+      if [[ "$INSIDE_EMACS" ]]; then
+         export PAGER=less
+      fi
     '';
     shellAliases = {
       "emacs" = "${emacspkg}/bin/emacsclient -c";
