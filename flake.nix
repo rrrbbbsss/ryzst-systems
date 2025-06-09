@@ -57,8 +57,7 @@
           then [
             (final: prev: {
               inherit (native)
-                linuxKernel
-                qemu;
+                linuxKernel;
             })
           ]
           else [ ];
