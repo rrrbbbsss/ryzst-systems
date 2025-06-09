@@ -114,7 +114,7 @@ in
       };
       jobs = {
         hosts-job = {
-          timeout = 60 * 60 * 4;
+          timeout = 60 * 60 * 8;
           description = "blah.";
           run = getExe (pkgs.writeShellApplication {
             name = "hosts-job";
