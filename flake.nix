@@ -57,31 +57,31 @@
       allowUnsupportedSystem = true;
     };
 
-    lib = import ./lib { inherit self; };
+    lib = import ./lib self;
 
-    overlays = import ./overlays { inherit self; };
+    overlays = import ./overlays self;
 
-    nixosConfigurations = import ./hosts { inherit self; };
+    nixosConfigurations = import ./hosts self;
 
-    nixosModules = import ./modules { inherit self; };
+    nixosModules = import ./modules self;
 
-    homeManagerModules.default = import ./modules/home { inherit self; };
+    homeManagerModules.default = import ./modules/home self;
 
     hosts = builtins.mapAttrs
       (n: v: v.config.system.build.toplevel)
       self.nixosConfigurations;
 
-    templates = import ./templates { inherit self; };
+    templates = import ./templates self;
 
-    devShells = import ./shell.nix { inherit self; };
+    devShells = import ./shell.nix self;
 
     formatter = self.lib.mkSystems (system:
       self.instances.${system.string}.nixpkgs-fmt);
 
-    checks = import ./checks { inherit self; };
+    checks = import ./checks self;
 
-    apps = import ./apps { inherit self; };
+    apps = import ./apps self;
 
-    packages = import ./packages { inherit self; };
+    packages = import ./packages self;
   };
 }

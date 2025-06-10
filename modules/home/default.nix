@@ -1,4 +1,4 @@
-{ self, ... }:
+self:
 let
   programs = self.lib.getFilesList ./programs;
 in

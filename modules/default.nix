@@ -1,4 +1,4 @@
-{ self }:
+self:
 # TODO: clean this up...
 let
   default-imports = [

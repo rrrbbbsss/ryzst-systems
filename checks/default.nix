@@ -1,4 +1,4 @@
-{ self }:
+self:
 let
   inherit (self.inputs) pre-commit-hooks;
   #hostnames-check = import ./hostnames-check.nix { inherit self system; };

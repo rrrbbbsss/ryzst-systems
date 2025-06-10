@@ -1,4 +1,4 @@
-{ self }:
+self:
 let
   inherit (self) instances;
   mkHosts = dir: with builtins;

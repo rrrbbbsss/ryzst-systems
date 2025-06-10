@@ -1,4 +1,4 @@
-{ self }:
+self:
 let
   inherit (self) instances lib;
 in

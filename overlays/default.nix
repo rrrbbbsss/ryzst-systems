@@ -1,4 +1,4 @@
-{ self }:
+self:
 let
   ryzst = final: prev:
     let
