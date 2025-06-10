@@ -1,4 +1,5 @@
 { self }:
+# TODO: clean this up...
 let
   default-imports = [
     #self
@@ -32,11 +33,14 @@ let
   ];
 in
 {
-  default = { config, ... }:
+  default = { config, pkgs, ... }:
     {
       imports = default-imports;
 
       config = {
+
+        programs.nix-index.package = pkgs.nix-index-with-db;
+
         os = {
           locale = "en_US.UTF-8";
           timezone = "America/Chicago";

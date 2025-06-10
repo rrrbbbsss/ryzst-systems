@@ -20,6 +20,7 @@ in
         ryzst
         self.inputs.emacs-overlay.overlays.default
         self.inputs.firefox-addons.overlays.default
+        self.inputs.nix-index-database.overlays.nix-index
         tweaks
       ];
 }
