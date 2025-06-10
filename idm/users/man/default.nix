@@ -40,6 +40,9 @@ in
     programs.password-store = {
       enable = true;
     };
+    home.sessionVariables = {
+      PASSWORD_STORE_CLIP_TIME = "20";
+    };
 
     programs.git = {
       enable = true;
