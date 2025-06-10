@@ -3,13 +3,17 @@ with lib;
 let
   cfg = config.os.auth;
   boxedMessageFile = name: message:
-    pkgs.runCommandLocal name
-      { inherit (pkgs) figlet boxes; } ''
-      FANCY=$(printf "${message}" \
-              | $figlet/bin/figlet \
-              | $boxes/bin/boxes -f $boxes/share/boxes/boxes-config)
-      printf $'\e[31m%s\e[0m\n' "$FANCY" > $out
-    '';
+    pkgs.stdenvNoCC.mkDerivation {
+      inherit name;
+      dontUnpack = true;
+      nativeBuildInputs = with pkgs; [ figlet boxes ];
+      installPhase = ''
+        FANCY=$(printf "${message}" \
+                | figlet \
+                | boxes -f ${pkgs.boxes}/share/boxes/boxes-config)
+        printf $'\e[31m%s\e[0m\n' "$FANCY" > $out
+      '';
+    };
   motdFile = boxedMessageFile "motd.txt" ''
     Ryzst Systems
     ${config.networking.hostName}
