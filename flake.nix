@@ -47,6 +47,7 @@
       {
         local = "x86_64-linux";
         cross = "aarch64-linux";
+        # cross yaml-merge makes me cross-eyed.
         native = pkgs: { inherit (pkgs) linuxKernel yaml-merge; };
       }
     ];
