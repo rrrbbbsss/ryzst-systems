@@ -41,17 +41,13 @@
 
   outputs = { self, ... }: {
 
-    # subflake weird half-baked idea (haven't played with subflakes yet):
-    # - main-flake contains 0 derivations
-    # - sub-flakes contain the derivations
-
     systems = [
       { local = "x86_64-linux"; cross = null; }
       { local = "aarch64-linux"; cross = null; }
       {
         local = "x86_64-linux";
         cross = "aarch64-linux";
-        native = pkgs: { inherit (pkgs) linuxKernel; };
+        native = pkgs: { inherit (pkgs) linuxKernel yaml-merge; };
       }
     ];
 
