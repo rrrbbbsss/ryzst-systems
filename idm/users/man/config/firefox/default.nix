@@ -22,6 +22,7 @@
           "https://mastodon.social/*"
           "https://reddit.com/*"
           "https://www.reddit.com/*"
+          "https://www.youtube.com/*"
         ];
       };
     };
