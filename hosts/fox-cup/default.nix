@@ -13,7 +13,7 @@
       ryzst.int.wg.client.nodes = lib.mkForce { };
 
       networking.nameservers = [ "1.1.1.1" ];
+      services.resolved.dnsovertls = "true";
     };
   };
-
 }
