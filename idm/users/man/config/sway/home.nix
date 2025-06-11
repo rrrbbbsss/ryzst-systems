@@ -1,6 +1,7 @@
 { pkgs, osConfig, config, lib, ... }:
 
 let
+  inherit (osConfig.nix.registry.ryzst-systems) flake;
   font = "DejaVu Sans Mono";
   colors = {
     desktop = "#0d0d0d";
@@ -55,6 +56,12 @@ let
       --term="${commands.terminal}" \
       --usage-log="''${XDG_CACHE_DIR:-$HOME/.cache}/fzf-launcher" \
       --no-generic''}
+    '';
+    specials = ''
+      swaymsg [title="^SPECIAL"] kill \
+      || exec ${wrap-float-window "SPECIAL" ''
+      ${pkgs.ryzst.fzf-specialisations}/bin/fzf-specialisations ${flake}
+      ''}
     '';
     browser = "${config.programs.firefox.finalPackage}/bin/firefox";
     passwords = ''
@@ -471,6 +478,7 @@ in
         "${modifier}+backslash" = "exec ${commands.editor}";
         "${modifier}+tab" = "exec ${commands.windows}";
         "${modifier}+apostrophe" = "exec ${commands.browser}";
+        "${modifier}+Delete" = "exec ${commands.specials}";
 
         #scratchpad
         "${modifier}+Shift+Backspace" = "move scratchpad";
