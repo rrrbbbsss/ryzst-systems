@@ -1,6 +1,7 @@
 {
   description = "ryzst-systems: learning nix";
   # https://dl.acm.org/doi/pdf/10.1145/232627.232653
+  # https://en.wikipedia.org/wiki/Dunbar%27s_number
 
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
