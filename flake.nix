@@ -3,6 +3,7 @@
   # https://dl.acm.org/doi/pdf/10.1145/232627.232653
   # https://en.wikipedia.org/wiki/Dunbar%27s_number
 
+  # TODO: would like to move most of these to subflake
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
     nixpkgs-stable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
@@ -33,6 +34,7 @@
 
     lib = import ./lib self;
 
+    # TODO: clean this up.
     overlays = import ./overlays self;
 
     # TODO: make this more consumable
