@@ -144,6 +144,11 @@ in
       DefaultTimeoutStopSec=10s
     '';
 
+    # fix ssh logout for alacritty
+    programs.bash.logout = ''
+      printf "\e]0;''${TERM^}\a"
+    '';
+
     # vim is used instead of nano
     programs.nano.enable = false;
 
