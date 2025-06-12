@@ -31,24 +31,6 @@
 
   outputs = { self, ... }: {
 
-    # TODO: remove
-    systems = [
-      { local = "x86_64-linux"; cross = null; }
-      { local = "aarch64-linux"; cross = null; }
-      {
-        local = "x86_64-linux";
-        cross = "aarch64-linux";
-        # cross yaml-merge makes me cross-eyed.
-        native = pkgs: { inherit (pkgs) linuxKernel yaml-merge; };
-      }
-    ];
-
-    # TODO: remove
-    instances = self.lib.mkInstances self {
-      allowUnfree = true;
-      allowUnsupportedSystem = true;
-    };
-
     lib = import ./lib self;
 
     overlays = import ./overlays self;
@@ -58,14 +40,6 @@
 
     # TODO: make this more consumable
     homeManagerModules.default = import ./modules/home self;
-
-    # TODO: remove
-    nixosConfigurations = import ./hosts self;
-
-    # TODO: remove
-    hosts = builtins.mapAttrs
-      (n: v: v.config.system.build.toplevel)
-      self.nixosConfigurations;
 
   };
 }
