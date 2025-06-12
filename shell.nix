@@ -12,7 +12,7 @@ self.lib.mkSystems (system:
         nixpkgs-fmt
         direnv
         statix
-        #shellcheck
+        shellcheck
       ];
     };
 })

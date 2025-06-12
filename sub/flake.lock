@@ -3,6 +3,7 @@
     "disko": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ]
       },
@@ -24,9 +25,11 @@
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ],
         "nixpkgs-stable": [
+          "ryzst",
           "nixpkgs-stable"
         ]
       },
@@ -48,6 +51,7 @@
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ]
       },
@@ -68,9 +72,49 @@
         "url": "https://gitlab.com/rycee/nur-expressions"
       }
     },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747046372,
+        "narHash": "sha256-CIVLLkVgvHYbgI2UpXvIIBJ12HWgX+fjA8Xf8PUmqCY=",
+        "ref": "refs/heads/master",
+        "rev": "9100a0f413b0c601e0533d1d94ffd501ce2e7885",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/edolstra/flake-compat"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/edolstra/flake-compat"
+      }
+    },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "ryzst",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "ref": "refs/heads/master",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/hercules-ci/gitignore.nix"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/hercules-ci/gitignore.nix"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ]
       },
@@ -93,6 +137,7 @@
     "hosts": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ]
       },
@@ -130,6 +175,7 @@
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
+          "ryzst",
           "nixpkgs"
         ]
       },
@@ -182,7 +228,43 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "pre-commit-hooks": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "gitignore": [
+          "gitignore"
+        ],
+        "nixpkgs": [
+          "ryzst",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749636823,
+        "narHash": "sha256-WUaIlOlPLyPgz9be7fqWJA5iG6rHcGRtLERSCfUDne4=",
+        "ref": "refs/heads/master",
+        "rev": "623c56286de5a3193aa38891a6991b28f9bab056",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/cachix/git-hooks.nix"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/cachix/git-hooks.nix"
+      }
+    },
     "root": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "gitignore": "gitignore",
+        "pre-commit-hooks": "pre-commit-hooks",
+        "ryzst": "ryzst"
+      }
+    },
+    "ryzst": {
       "inputs": {
         "disko": "disko",
         "emacs-overlay": "emacs-overlay",
@@ -193,7 +275,16 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable"
-      }
+      },
+      "locked": {
+        "path": "../",
+        "type": "path"
+      },
+      "original": {
+        "path": "../",
+        "type": "path"
+      },
+      "parent": []
     }
   },
   "root": "root",
