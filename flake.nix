@@ -62,7 +62,5 @@
       self.nixosConfigurations;
 
     templates = import ./templates self;
-
-    packages = import ./packages self;
   };
 }

@@ -2,13 +2,15 @@ self:
 let
   ryzst = final: prev:
     let
+      # TODO: git rid fo "system..."
       system =
-        if (prev.hostPlatform.system == prev.buildPlatform.system)
-        then prev.hostPlatform.system
-        else "${prev.buildPlatform.system}/${prev.hostPlatform.system}";
+        if (final.hostPlatform.system == final.buildPlatform.system)
+        then final.hostPlatform.system
+        else "${final.buildPlatform.system}/${final.hostPlatform.system}";
     in
     {
-      ryzst = self.packages.${system} // { inherit (self) lib; };
+      ryzst = (self.lib.mkPackages ../packages final system)
+        // { inherit (self) lib; };
     };
   tweaks = import ./tweaks.nix;
 in

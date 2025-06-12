@@ -38,6 +38,19 @@ let
         crossSystem = system.cross;
       });
 
+  mkPackages = dir: pkgs: system:
+    # TODO: get rid of "system"
+    nixpkgs.lib.foldlAttrs
+      (acc: name: path:
+        acc // (import path {
+          inherit self pkgs;
+          system = system.string;
+        })
+      )
+      { }
+      (getDirs dir);
+
+
   getDirs = dir: with nixpkgs.lib.attrsets;
     foldlAttrs
       (acc: n: v:
@@ -71,6 +84,7 @@ in
 {
   inherit mkSystems;
   inherit mkInstances;
+  inherit mkPackages;
   inherit getDirs;
   inherit getFilesList;
   inherit names;

@@ -44,6 +44,6 @@
 
     apps = import ../apps self;
 
-    #packages = import ../packages self;
+    packages = import ../packages self;
   };
 }
