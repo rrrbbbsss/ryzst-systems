@@ -9,7 +9,7 @@
   nixpkgs.hostPlatform.system = "aarch64-linux";
   hardware.enableRedistributableFirmware = lib.mkDefault true;
   # cross-compiling everything sucks for this...
-  #nixpkgs.pkgs = lib.mkForce self.instances."x86_64-linux/aarch64-linux";
+  nixpkgs.pkgs = lib.mkForce self.instances."x86_64-linux/aarch64-linux";
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
