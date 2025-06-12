@@ -43,6 +43,8 @@
     ];
 
     # TODO: remove instances from main flake.
+    # pretend: nixpkgs main flake doesn't have (legacy)packages attribute,
+    #          and/or nixpkgs.lib is in a seperate repo/flake...
     instances = self.lib.mkInstances {
       allowUnfree = true;
       allowUnsupportedSystem = true;
@@ -62,6 +64,5 @@
       (n: v: v.config.system.build.toplevel)
       self.nixosConfigurations;
 
-    templates = import ./templates self;
   };
 }
