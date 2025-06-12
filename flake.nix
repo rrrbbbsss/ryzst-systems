@@ -42,6 +42,7 @@
       }
     ];
 
+    # TODO: remove instances from main flake.
     instances = self.lib.mkInstances {
       allowUnfree = true;
       allowUnsupportedSystem = true;
