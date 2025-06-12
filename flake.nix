@@ -31,6 +31,7 @@
 
   outputs = { self, ... }: {
 
+    # TODO: remove
     systems = [
       { local = "x86_64-linux"; cross = null; }
       { local = "aarch64-linux"; cross = null; }
@@ -42,10 +43,8 @@
       }
     ];
 
-    # TODO: remove instances from main flake.
-    # pretend: nixpkgs main flake doesn't have (legacy)packages attribute,
-    #          and/or nixpkgs.lib is in a seperate repo/flake...
-    instances = self.lib.mkInstances {
+    # TODO: remove
+    instances = self.lib.mkInstances self {
       allowUnfree = true;
       allowUnsupportedSystem = true;
     };
@@ -54,12 +53,16 @@
 
     overlays = import ./overlays self;
 
-    nixosConfigurations = import ./hosts self;
-
+    # TODO: make this more consumable
     nixosModules = import ./modules self;
 
+    # TODO: make this more consumable
     homeManagerModules.default = import ./modules/home self;
 
+    # TODO: remove
+    nixosConfigurations = import ./hosts self;
+
+    # TODO: remove
     hosts = builtins.mapAttrs
       (n: v: v.config.system.build.toplevel)
       self.nixosConfigurations;

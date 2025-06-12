@@ -2,7 +2,7 @@ self:
 let
   inherit (self) instances;
 in
-self.lib.mkSystems (system:
+self.lib.mkSystems self (system:
 with instances.${system.string}.ryzst;
 {
   default = {

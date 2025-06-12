@@ -2,7 +2,7 @@ self:
 let
   inherit (self.inputs) nixpkgs;
 
-  mkSystems = f:
+  mkSystems = self: f:
     nixpkgs.lib.listToAttrs
       (map
         (spec:
@@ -18,9 +18,9 @@ let
           nixpkgs.lib.nameValuePair string (f attr))
         self.systems);
 
-  mkInstances = config:
+  mkInstances = self: config:
     # https://wiki.nixos.org/wiki/Cross_Compiling#Leveraging_the_binary_cache
-    mkSystems (system:
+    mkSystems self (system:
       let
         native-overlay =
           if builtins.isFunction system.native

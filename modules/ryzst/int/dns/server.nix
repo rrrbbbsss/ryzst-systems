@@ -23,6 +23,9 @@ let
             (acc: n: v: "${v.ip} ${n}.mek.ryzst.net\n${acc}") ""
             config.ryzst.mek);
     };
+
+  # TODO: cleanup
+  blocklist = self.inputs.hosts or self.inputs.ryzst.inputs.hosts;
 in
 {
   options.ryzst.int.dns.server = {
@@ -103,7 +106,7 @@ in
               allow net ${cfg.allow}
               drop
             }
-            hosts ${self.inputs.hosts}/hosts {
+            hosts ${blocklist}/hosts {
               ttl 3600
               no-reverse
               fallthrough

@@ -146,7 +146,7 @@ in
               nix-eval-jobs \
                   --workers 4 \
                   --gc-roots-dir "$TMPDIR" \
-                  --flake "$FLAKE?ref=main&rev=$COMMIT"#hosts \
+                  --flake "$FLAKE?dir=/sub?ref=main&rev=$COMMIT"#hosts \
               	| tee -a eval.json \
               	| jq -r --unbuffered '.drvPath' \
               	| parallel --halt-on-error 2 nix-build {}

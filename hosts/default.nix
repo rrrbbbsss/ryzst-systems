@@ -1,10 +1,12 @@
 self:
 let
-  inherit (self) instances;
+  # TODO: remove
+  nixpkgs = self.inputs.nixpkgs or
+    self.inputs.ryzst.inputs.nixpkgs;
   mkHosts = dir: with builtins;
     mapAttrs
       (name: path:
-        self.inputs.nixpkgs.lib.nixosSystem
+        nixpkgs.lib.nixosSystem
           {
             specialArgs = { inherit self; };
             modules = [

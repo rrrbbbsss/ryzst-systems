@@ -4,7 +4,7 @@ let
   #hostnames-check = import ./hostnames-check.nix { inherit self system; };
   #usernames-check = import ./usernames-check.nix { inherit self system; };
 in
-self.lib.mkSystems (system:
+self.lib.mkSystems self (system:
 {
   pre-commit-check = pre-commit-hooks.lib.${system.string}.run {
     src = ../.;

@@ -33,7 +33,7 @@ let
   ];
 in
 {
-  default = { config, pkgs, ... }:
+  default = { config, pkgs, self, ... }:
     {
       imports = default-imports;
 

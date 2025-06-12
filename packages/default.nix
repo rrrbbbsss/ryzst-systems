@@ -2,7 +2,7 @@ self:
 let
   inherit (self) instances lib;
 in
-lib.mkSystems (system:
+lib.mkSystems self (system:
 lib.mkPackages ./.
   instances.${system.string}
   system)

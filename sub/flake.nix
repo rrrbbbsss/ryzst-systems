@@ -18,7 +18,10 @@
 
   outputs = { self, ... }: {
 
-    inherit (self.inputs.ryzst) lib;
+    inherit (self.inputs.ryzst)
+      lib
+      nixosModules
+      overlays;
 
     systems = [
       { local = "x86_64-linux"; cross = null; }
@@ -30,14 +33,14 @@
       }
     ];
 
-    instances = self.lib.mkInstances {
+    instances = self.lib.mkInstances self {
       allowUnfree = true;
       allowUnsupportedSystem = true;
     };
 
     devShells = import ../shell.nix self;
 
-    formatter = self.lib.mkSystems (system:
+    formatter = self.lib.mkSystems self (system:
       self.instances.${system.string}.nixpkgs-fmt);
 
     checks = import ../checks self;
@@ -45,5 +48,11 @@
     apps = import ../apps self;
 
     packages = import ../packages self;
+
+    nixosConfigurations = import ../hosts self;
+
+    hosts = builtins.mapAttrs
+      (n: v: v.config.system.build.toplevel)
+      self.nixosConfigurations;
   };
 }
