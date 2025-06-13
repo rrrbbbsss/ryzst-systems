@@ -32,10 +32,6 @@
 
   outputs = { self, ... }: {
 
-    # weird thought:
-    # could nixpkgs lib be a subflake?
-    # (no clue of feasibility.)
-
     lib = import ./lib self;
 
     # TODO: clean this up.
