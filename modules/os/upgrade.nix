@@ -107,6 +107,7 @@ in {
 
             # Get cached store-path from json file
             git clone --depth=1 --branch="hosts" "${cfg.repo}" "$TMPDIR"
+            # TODO: validate repo...
             STOREPATH=$(jq -er --arg h "$(cat /etc/hostname)" '.hosts.[$h]' "$TMPDIR"/hosts.json)
 
             CURRENT=$(readlink /run/current-system)
