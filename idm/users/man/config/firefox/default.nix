@@ -14,6 +14,7 @@
       DisableFirefoxStudies = true;
       DisablePocket = true;
       DisableTelemetry = true;
+      SearchSuggestEnabled = false;
       # stop doom-scrolling.
       # focus.
       WebsiteFilter = {
