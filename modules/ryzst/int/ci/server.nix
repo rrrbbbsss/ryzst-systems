@@ -142,6 +142,10 @@ in
               REPO="$TMPDIR/repo"
               #GPG_KEY="TODO"
 
+              # TODO: validate repo signatures
+              # could use 'guix git authenticate'
+              # as a starting point...
+
               printf "Building Paths:\n"
               nix-eval-jobs \
                   --workers 4 \
