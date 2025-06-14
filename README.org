@@ -15,5 +15,5 @@ ryzst-systems
 ├── modules   # nixos modules
 ├── overlays  # various package tweaks
 ├── packages  # personal packages
-└── templates # templates for projects
+└── sub       # subflake
 #+END_SRC
