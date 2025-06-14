@@ -1,16 +1,19 @@
 { writeShellApplication
+, coreutils-full
 , fzf
-, nix
 , git
 , findutils
 }:
 writeShellApplication {
   name = "template-picker";
   runtimeInputs = [
+    coreutils-full
     fzf
-    nix
     git
     findutils
   ];
-  text = builtins.readFile ./script.sh;
+  # TODO: redo all the templates...
+  text = ''
+    templates=${./templates}
+  '' + builtins.readFile ./script.sh;
 }

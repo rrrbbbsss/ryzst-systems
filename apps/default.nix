@@ -21,9 +21,5 @@ with instances.${system.string}.ryzst;
     type = "app";
     program = "${apps}/bin/yubikey-setup";
   };
-  template-picker = {
-    type = "app";
-    program = "${apps}/bin/template-picker";
-  };
 })
 
