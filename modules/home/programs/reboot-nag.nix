@@ -18,7 +18,7 @@ let
       UPTIME=$(cut -f 1 -d "." /proc/uptime)
 
       if [[ "$BOOTED" != "$BUILT" ]] || [[ "$UPTIME" -gt ${toString cfg.uptime} ]]; then
-        kill "$(pidof swaynag)"
+        kill "$(pidof swaynag)" || true
         swaynag --message "Reboot Required" \
                 --layer overlay \
                 --output ${osConfig.device.mirror.main} \
