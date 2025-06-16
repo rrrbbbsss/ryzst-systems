@@ -32,14 +32,6 @@
 
   outputs = { self, ... }: {
 
-    # random thoughts:
-    # if flakes set up intial environment for nix-code evaluation,
-    # then it is up to nix-code to be "composable" (whatever that means).
-    # if that means overlays and nixosModules to make the giant hairballs,
-    # then that means like no security.
-    # like any overlay/nixosModule can try to change sudo/ssh/...
-    # idk...
-
     lib = import ./lib self;
 
     # TODO: clean this up.
