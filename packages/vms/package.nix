@@ -1,15 +1,16 @@
 { pkgs, self }:
 let
+  inherit (self.inputs) nixpkgs;
   mkVm = name: hostmodulepath:
-    (self.inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+    (nixpkgs.lib.nixosSystem {
       specialArgs = { inherit self; };
       modules = [
-        "${self.inputs.nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+        "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
         { os.hostname = name; }
         hostmodulepath
         ./qemu.nix
         self.outputs.nixosModules.default
+        { nixpkgs.pkgs = pkgs; }
       ];
     }).config.system.build.vm;
   mkVmScript = name: path:

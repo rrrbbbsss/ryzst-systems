@@ -8,7 +8,17 @@ let
       (treesit-grammars.with-grammars (p:
         (builtins.attrValues p) ++ [ pkgs.ryzst.souffle-treesitter ]))
     ];
-    override = pkgs.ryzst.overrides.emacs;
+    override = epkgs: epkgs // {
+      inherit (pkgs.ryzst) souffle-ts-mode;
+
+      #https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+      lsp-mode = epkgs.melpaPackages.lsp-mode.overrideAttrs
+        (old: {
+          env = {
+            LSP_USE_PLISTS = "true";
+          };
+        });
+    };
   };
 in
 {

@@ -1,8 +1,4 @@
 self:
-let
-  inherit (self) instances lib;
-in
-lib.mkSystems self (system:
-lib.mkPackages ./.
-  instances.${system.string}
-  system)
+builtins.mapAttrs
+  (name: value: value.ryzst)
+  self.instances

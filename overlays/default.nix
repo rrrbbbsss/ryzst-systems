@@ -8,10 +8,7 @@ let
         then final.hostPlatform.system
         else "${final.buildPlatform.system}/${final.hostPlatform.system}";
     in
-    {
-      ryzst = (self.lib.mkPackages ../packages final system)
-        // { inherit (self) lib; };
-    };
+    { ryzst = self.lib.mkPackages ../packages final system; };
   tweaks = import ./tweaks.nix;
 in
 {

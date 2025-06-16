@@ -1,4 +1,4 @@
-{ lib, pkgs, self, config, ... }:
+{ lib, self, config, ... }:
 with lib;
 let
   hosts = with builtins;
@@ -6,9 +6,9 @@ let
     mapAttrs
       (n: v: {
         name = n;
-        ip = self.outputs.lib.names.host.toIP n config.os.subnet;
+        ip = self.lib.names.host.toIP n config.os.subnet;
       } // fromJSON (readFile (dir + "/${n}/registration.json")))
-      (pkgs.ryzst.lib.getDirs dir);
+      (self.lib.getDirs dir);
 in
 {
   options.ryzst = {

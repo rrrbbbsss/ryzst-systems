@@ -1,2 +1,2 @@
-{ system, self, ... }:
+{ system, self, pkgs, ... }:
 import ./package.nix { inherit system self; }

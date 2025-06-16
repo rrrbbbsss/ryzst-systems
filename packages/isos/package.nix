@@ -2,7 +2,7 @@
 let
   name = "iso-installer";
   iso = (self.inputs.nixpkgs.lib.nixosSystem {
-    inherit system;
+    system = "x86_64-linux";
     specialArgs = { inherit self; };
     modules = [
       "${self.inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
@@ -12,5 +12,5 @@ let
   }).config.system.build.isoImage;
 in
 {
-  "${name}" = iso;
+  ${name} = iso;
 }

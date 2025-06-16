@@ -52,7 +52,6 @@ in
           ryzst-systems.flake = self;
         } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
 
-        nixpkgs.pkgs = self.instances.${config.nixpkgs.hostPlatform.system};
       };
     };
 }

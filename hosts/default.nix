@@ -14,6 +14,7 @@ let
               { os.hostname = name; }
               (path + "/default.nix")
               (path + "/hardware.nix")
+              ({ config, ... }: { nixpkgs.pkgs = self.instances.${config.nixpkgs.hostPlatform.system}; })
             ];
           })
       (self.lib.getDirs dir);
