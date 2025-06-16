@@ -35,12 +35,15 @@
     lib = import ./lib self;
 
     # TODO: clean this up.
+    # NOTE: probs want a safer way to share packages...
     overlays = import ./overlays self;
 
     # TODO: make this more consumable
+    # NOTE: probs want a safer way to share configurations...
     nixosModules = import ./modules self;
 
     # TODO: make this more consumable
+    # NOTE: probs want a safer way to share configurations...
     homeManagerModules.default = import ./modules/home self;
 
   };
