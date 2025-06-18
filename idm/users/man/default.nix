@@ -135,6 +135,7 @@ in
       pavucontrol
       qpwgraph
       oniux
+      poop
 
       #print/scan
       simple-scan
