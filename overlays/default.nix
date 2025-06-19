@@ -14,11 +14,7 @@ let
 
   tweaks = import ./tweaks.nix;
 
-  # create a new fixed-point to throw "untrusted" overlays into.
-  # that way they are unable fiddle with base instance (like poking at ssh).
-  # for me for now,
-  # this seems to work,
-  # but a fixed-point expert should do something proper.
+  # this seems to work?
   boxed = final: prev:
     let
       inherit (self.inputs) nixpkgs;
@@ -45,11 +41,9 @@ in
 {
   inherit ryzst tweaks;
   default =
-    nixpkgs.lib.composeManyExtensions
-      [
-        tweaks
-        boxed
-        ryzst
-        # maybe a post tweaks?
-      ];
+    nixpkgs.lib.composeManyExtensions [
+      tweaks
+      boxed
+      ryzst
+    ];
 }
