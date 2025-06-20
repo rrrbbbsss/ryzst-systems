@@ -10,6 +10,7 @@ in
     ./grafting.nix
     ./upgrade.nix
     ./reboot.nix
+    ./misc-gc.nix
   ];
   options.os = {
     locale = mkOption {
@@ -118,6 +119,9 @@ in
     #updates
     os.upgrade.enable = true;
     os.reboot.enable = true;
+
+    # having 3 different timers for gc is sort of annoying...
+    os.misc-gc.enable = true;
 
     # version
     system.stateVersion = config.ryzst.mek."${cfg.hostname}".version;
