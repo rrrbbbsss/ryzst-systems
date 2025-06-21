@@ -27,9 +27,6 @@ let
         self.inputs.impermanence.nixosModules.home-manager.impermanence
       ];
     }
-    # nix-index
-    self.inputs.nix-index-database.nixosModules.nix-index
-    { programs.command-not-found.enable = false; }
   ];
 in
 {

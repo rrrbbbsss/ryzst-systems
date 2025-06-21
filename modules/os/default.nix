@@ -156,6 +156,9 @@ in
     # vim is used instead of nano
     programs.nano.enable = false;
 
+    # disable this
+    programs.command-not-found.enable = false;
+
     # too slow
     documentation.man.generateCaches = false;
 

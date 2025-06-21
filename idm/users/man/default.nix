@@ -103,6 +103,7 @@ in
       (aspellWithDicts (dicts: with dicts; [ en ]))
 
       #utils
+      nix-index-with-db
       nix-tree
       git
       strace
