@@ -38,11 +38,11 @@
     overlays = import ./overlays self;
 
     # TODO: make this more consumable
-    # NOTE: probs want a safer way to share/consume...
+    # NOTE: no clue, be careful with trusting random modules.
     nixosModules = import ./modules self;
 
     # TODO: make this more consumable
-    # NOTE: probs want a safer way to share/consume...
+    # NOTE: no clue, be careful with trusting random modules.
     homeManagerModules.default = import ./modules/home self;
 
   };
