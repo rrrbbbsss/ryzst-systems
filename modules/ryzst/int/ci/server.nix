@@ -162,7 +162,7 @@ in
               FILTER='{commit: $COMMIT, hosts:
                                (reduce .[] as $i ({}; . + ($i | { (.attr): .outputs.out})))}'
               JSON=$(jq -s "$FILTER" --arg COMMIT "$COMMIT" eval.json)
-              printf "JSON:\n%s\n\n" "$JSON"
+              printf "\nJSON:\n%s\n\n" "$JSON"
 
               # Push to cache
               # (currently cheesing it since on same host)
@@ -191,6 +191,44 @@ in
         };
       };
     };
+
+    #gc-timer
+    systemd.services.hosts-job-gc = {
+      description = "Clean up hosts-job roots.";
+      restartIfChanged = false;
+      unitConfig.X-StopOnRemoval = false;
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = getExe (pkgs.writeShellApplication {
+          name = "hosts-job-gc";
+          runtimeInputs = with pkgs; [
+            coreutils-full
+            findutils
+          ];
+          text = ''
+            shopt -s nullglob globstar
+
+            ROOT_DIR=/var/lib/laminar/roots/hosts-job
+            CURRENT=$(date '+%s')
+            SECONDS=$((21 * 86400))
+            EXPIRED=$((CURRENT - SECONDS))
+
+            stat --format='%Y %N' "$ROOT_DIR"/* \
+              | sort --reverse \
+              | tail --lines=+11 \
+              | awk -v X="$EXPIRED" '$1 < X { print $2 }' \
+              | xargs -I '{}' rm '{}'
+          '';
+        });
+      };
+      startAt = "weekly";
+    };
+    systemd.timers.hosts-job-gc = {
+      timerConfig = {
+        Persistent = true;
+      };
+    };
+
 
     #rpc
     services.openssh.enable = true;
