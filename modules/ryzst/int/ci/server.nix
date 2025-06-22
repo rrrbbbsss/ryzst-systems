@@ -147,6 +147,8 @@ in
               # could use 'guix git authenticate'
               # as a starting point...
 
+              printf "Commit:\n%s\n\n" "$COMMIT"
+
               printf "Building Paths:\n"
               # shellcheck disable=SC2016
               nix-eval-jobs \
