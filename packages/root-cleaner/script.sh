@@ -19,4 +19,4 @@ SCRIPT='
 
 stat --format='%N %Y' "$ROOT_DIR"/* |
   awk -v X="$EXPIRED" "$SCRIPT" |
-  xargs -I '{}' rm '{}'
+  xargs -I '{}' unlink '{}'
