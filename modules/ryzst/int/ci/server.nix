@@ -204,6 +204,7 @@ in
           runtimeInputs = with pkgs; [
             coreutils-full
             findutils
+            gawk
           ];
           text = ''
             shopt -s nullglob globstar
