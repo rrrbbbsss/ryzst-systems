@@ -141,29 +141,21 @@ in
               GIT_EMAIL="laminar@tin-jet.mek.ryzst.net"
               REPO="$TMPDIR/repo"
               #GPG_KEY="TODO"
+              ROOT_DIR=/var/lib/laminar/roots
 
               # TODO: validate repo signatures
               # could use 'guix git authenticate'
               # as a starting point...
 
               printf "Building Paths:\n"
+              # shellcheck disable=SC2016
               nix-eval-jobs \
                   --workers 4 \
                   --gc-roots-dir "$TMPDIR" \
                   --flake "$FLAKE?dir=/sub&ref=main&rev=$COMMIT"#hosts \
               	| tee -a eval.json \
               	| jq -r --unbuffered '.drvPath' \
-              	| parallel --halt-on-error 2 nix-build {}
-
-              # TODO: setup cache gc roots
-              # either with nix-store --add-root <cache-root-folder/host> -r <store-path>
-              # or maybe nix-build --outlink (if that works?)
-              # then have a job that goes through and
-              # cleans up old roots in <cache-root-folder> based off timestamps.
-              # (can be more complicated like: keep n of currently valid hosts)
-              # nix-collect-garbage job can then clean all unused store-paths up.
-              # (if not store-based-cache, then have fun with narinfos)
-              # hopefully that should do it.
+              	| parallel --halt-on-error 2 'nix-build {} --out-link "$(basename {})"'
 
               # JSON
               # shellcheck disable=SC2016
@@ -171,6 +163,13 @@ in
                                (reduce .[] as $i ({}; . + ($i | { (.attr): .outputs.out})))}'
               JSON=$(jq -s "$FILTER" --arg COMMIT "$COMMIT" eval.json)
               printf "JSON:\n%s\n" "$JSON"
+
+              # Push to cache
+              # (currently cheesing it since on same host)
+              printf "Register gc roots:\n"
+              jq -r '.hosts | to_entries[] | "\(.key) \(.value)"' <<<"$JSON" \
+                | parallel --colsep ' ' \
+                  "nix-store --add-root $ROOT_DIR/hosts-job/$COMMIT/hosts/{1} --realise {2}"
 
               # Push JSON
               mkdir "$REPO"
@@ -180,7 +179,7 @@ in
               git config user.name  "$GIT_NAME"
               git config user.email "$GIT_EMAIL"
               # TODO: Don't be negligent
-              # (look into sigstore for ephemoral x509)
+              # (look into sigstore for ephemeral x509)
               # git config user.signingKey "$GPG_KEY"
               git commit -m "cache: $COMMIT" hosts.json || true
               git pull --rebase --autostash
