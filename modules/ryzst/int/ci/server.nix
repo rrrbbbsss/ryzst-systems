@@ -171,7 +171,7 @@ in
               printf "Register gc roots:\n"
               jq -r '.hosts | to_entries[] | "\(.key) \(.value)"' <<<"$JSON" \
                 | parallel --colsep ' ' \
-                  "nix-store --add-root $ROOT_DIR/$COMMIT-hosts-{1} --realise {2}"
+                  "nix-store --add-root $ROOT_DIR/$COMMIT/hosts-{1} --realise {2}"
               printf "\n"
 
               # Push JSON
@@ -197,9 +197,9 @@ in
     #gc-timer
     systemd.services.hosts-job-gc = {
       description = "Clean up hosts-job roots.";
-      restartIfChanged = false;
-      unitConfig.X-StopOnRemoval = false;
       serviceConfig = {
+        User = "laminar";
+        Group = "laminar";
         Type = "oneshot";
         ExecStart = getExe (pkgs.writeShellApplication {
           name = "hosts-job-gc";
@@ -219,7 +219,7 @@ in
             stat --format='%Y %N' "$ROOT_DIR"/* \
               | sort --reverse \
               | awk -v X="$EXPIRED" '(NR > 10) && ($1 < X) { print $2 }' \
-              | xargs -I '{}' unlink '{}'
+              | xargs -I '{}' rm -rf '{}'
           '';
         });
       };
