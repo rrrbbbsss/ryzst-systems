@@ -218,7 +218,7 @@ in
 
             stat --format='%Y %N' "$ROOT_DIR"/* \
               | sort --reverse \
-              | awk -v X="$EXPIRED" '($NL > 10) && ($1 < X) { print $2 }' \
+              | awk -v X="$EXPIRED" '(NR > 10) && ($1 < X) { print $2 }' \
               | xargs -I '{}' rm '{}'
           '';
         });
