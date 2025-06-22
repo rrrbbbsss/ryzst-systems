@@ -162,7 +162,7 @@ in
               FILTER='{commit: $COMMIT, hosts:
                                (reduce .[] as $i ({}; . + ($i | { (.attr): .outputs.out})))}'
               JSON=$(jq -s "$FILTER" --arg COMMIT "$COMMIT" eval.json)
-              printf "JSON:\n%s\n" "$JSON"
+              printf "JSON:\n%s\n\n" "$JSON"
 
               # Push to cache
               # (currently cheesing it since on same host)
@@ -170,8 +170,10 @@ in
               jq -r '.hosts | to_entries[] | "\(.key) \(.value)"' <<<"$JSON" \
                 | parallel --colsep ' ' \
                   "nix-store --add-root $ROOT_DIR/hosts-job/$COMMIT/hosts/{1} --realise {2}"
+              printf "\n"
 
               # Push JSON
+              printf "Push to git:\n"
               mkdir "$REPO"
               git clone --depth=1 --branch="$BRANCH" "$FLAKE" "$REPO"
               cd "$REPO"
