@@ -141,7 +141,7 @@ in
               GIT_EMAIL="laminar@tin-jet.mek.ryzst.net"
               REPO="$TMPDIR/repo"
               #GPG_KEY="TODO"
-              ROOT_DIR=/var/lib/laminar/roots
+              ROOT_DIR=/var/lib/laminar/roots/hosts-job
 
               # TODO: validate repo signatures
               # could use 'guix git authenticate'
@@ -171,7 +171,7 @@ in
               printf "Register gc roots:\n"
               jq -r '.hosts | to_entries[] | "\(.key) \(.value)"' <<<"$JSON" \
                 | parallel --colsep ' ' \
-                  "nix-store --add-root $ROOT_DIR/hosts-job/$COMMIT/hosts/{1} --realise {2}"
+                  "nix-store --add-root $ROOT_DIR/$COMMIT-hosts-{1} --realise {2}"
               printf "\n"
 
               # Push JSON
@@ -219,7 +219,7 @@ in
             stat --format='%Y %N' "$ROOT_DIR"/* \
               | sort --reverse \
               | awk -v X="$EXPIRED" '(NR > 10) && ($1 < X) { print $2 }' \
-              | xargs -I '{}' rm '{}'
+              | xargs -I '{}' unlink '{}'
           '';
         });
       };
