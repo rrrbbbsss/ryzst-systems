@@ -22,7 +22,10 @@ in
           source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
           source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
           autoload -Uz vcs_info
-          precmd() { vcs_info }
+          precmd() {
+            vcs_info
+            printf "\e]0;''${(C)TERM}\a"
+          }
           zstyle ':vcs_info:git:*' formats '%K{#000000} %b %K{#4e4e4e} %k'
           function zle-keymap-select {
             VIMODE="''${''${KEYMAP/vicmd/$}/(main|viins)/>}"
