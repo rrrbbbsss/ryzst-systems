@@ -195,12 +195,6 @@ in
     };
 
     # gc-timer
-    # keep messing this up, but ya get the idea:
-    # - each commit maps to set of store-paths
-    #   (doesn't have to be just hosts)
-    # - each store-path gets registered as a gc-root
-    # then specify the commits you want to keep cached.
-    # (less than 21 days old but at least 10...)
     systemd.services.hosts-job-gc = {
       description = "Clean up hosts-job roots.";
       serviceConfig = {
