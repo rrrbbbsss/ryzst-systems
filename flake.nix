@@ -43,15 +43,7 @@
     # TODO: make this more consumable
     homeManagerModules.default = import ./modules/home self;
 
-    # NOTE: for now,
-    # going to seperate these out since
-    # these should be "imported", not "enabled".
-    # imo, these should never be "enabled".
-    # no need to add to the default import bloat.
-    # want to experiment with conditional imports
-    # based on information managed outside of module-system
-    # to avoid the classic beginner inf-recursion problem.
-    # ("think outside of the box" right?)
+    # NOTE: go use nixos-hardware.
     hardwareModules = import ./modules/hardware self;
 
   };
