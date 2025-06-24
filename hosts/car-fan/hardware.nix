@@ -2,8 +2,6 @@
 
 {
   imports = [
-    ../../modules/hardware/common/gpu/intel
-    ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/lenovo/x230
     ../../modules/hardware/devices/yubico/yubikey5
   ];

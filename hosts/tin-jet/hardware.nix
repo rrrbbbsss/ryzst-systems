@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../modules/hardware/common/cpu/intel
+    ../../modules/hardware/devcies/intel/cpu
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 

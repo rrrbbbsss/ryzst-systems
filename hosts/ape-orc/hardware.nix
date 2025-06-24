@@ -4,8 +4,8 @@
 
   imports = [
     ../../modules/hardware/common/display
-    ../../modules/hardware/common/cpu/intel
-    ../../modules/hardware/common/gpu/amd
+    ../../modules/hardware/devices/intel/cpu
+    ../../modules/hardware/devices/amd/gpu
     ../../modules/hardware/devices/yubico/yubikey5
     ../../modules/hardware/devices/kensington/expert-trackball
     ../../modules/hardware/devices/tex/shinobi

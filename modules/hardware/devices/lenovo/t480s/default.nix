@@ -2,12 +2,12 @@
 {
   imports = [
     ../../../common/display
-    ../../../common/cpu/intel
-    ../../../common/gpu/intel
     ../../../common/tpm/2-0
     ../../../common/wifi
     ../../../common/keyboards
     ../../../common/rats
+    ../../../devices/intel/cpu
+    ../../../devices/intel/gpu
   ];
 
   services.throttled.enable = true;

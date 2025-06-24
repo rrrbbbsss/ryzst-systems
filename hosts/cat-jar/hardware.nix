@@ -3,10 +3,10 @@
 {
   imports = [
     ../../modules/hardware/common/display
-    ../../modules/hardware/common/cpu/amd
-    ../../modules/hardware/common/gpu/amd
     ../../modules/hardware/common/tpm/2-0
     ../../modules/hardware/common/wifi
+    ../../modules/hardware/devices/amd/cpu
+    ../../modules/hardware/devices/amd/gpu
     ../../modules/hardware/devices/kensington/expert-trackball-wireless
     ../../modules/hardware/devices/lenovo/trackpoint
     ../../modules/hardware/devices/yubico/yubikey5

@@ -3,10 +3,10 @@
 {
   imports = [
     ../../modules/hardware/common/display
-    ../../modules/hardware/common/cpu/intel
-    ../../modules/hardware/common/gpu/intel
     ../../modules/hardware/common/tpm/2-0
     ../../modules/hardware/common/wifi
+    ../../modules/hardware/devices/intel/cpu
+    ../../modules/hardware/devices/intel/gpu
     ../../modules/hardware/devices/yubico/yubikey5
     ../../modules/hardware/devices/vontar/d8
     ../../modules/hardware/devices/funai/lf320fx4f
