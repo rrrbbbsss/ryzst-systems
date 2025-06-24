@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../modules/hardware/common/display
     ../../modules/hardware/common/cpu/amd
     ../../modules/hardware/common/gpu/amd
     ../../modules/hardware/common/tpm/2-0

@@ -1,5 +1,10 @@
 { ... }:
 {
+  imports = [
+    ../../../common/keyboards
+    ../../../common/rats
+  ];
+
   device.rats = {
     "1241:1031:USB-HID_Keyboard_Mouse" = {
       natural_scroll = "disabled";

@@ -1,9 +1,12 @@
 { ... }:
 {
   imports = [
+    ../../../common/display
     ../../../common/cpu/intel
     ../../../common/gpu/intel
     ../../../common/tpm/1-2
+    ../../../common/keyboards
+    ../../../common/rats
   ];
 
   device.monitors = {

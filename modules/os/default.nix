@@ -12,6 +12,18 @@ in
     ./reboot.nix
     ./misc-gc.nix
   ];
+
+  # TODO: redo when remodel.
+  options.device = {
+    user = mkOption {
+      type = types.nullOr self.lib.types.username;
+      description = ''
+        User assigned to device.
+      '';
+      default = null;
+    };
+  };
+
   options.os = {
     locale = mkOption {
       type = types.str;

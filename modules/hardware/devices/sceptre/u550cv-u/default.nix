@@ -4,6 +4,10 @@ let
   inherit (config.home-manager.users.${user}.wayland.windowManager.sway.config) modifier;
 in
 {
+  imports = [
+    ../../../common/ir
+  ];
+
   device.ir.code.tv = {
     power = ./power.ir;
   };

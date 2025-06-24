@@ -1,10 +1,13 @@
 { ... }:
 {
   imports = [
+    ../../../common/display
     ../../../common/cpu/intel
     ../../../common/gpu/intel
     ../../../common/tpm/2-0
     ../../../common/wifi
+    ../../../common/keyboards
+    ../../../common/rats
   ];
 
   services.throttled.enable = true;

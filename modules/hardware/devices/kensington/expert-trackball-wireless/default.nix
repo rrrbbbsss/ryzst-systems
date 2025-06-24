@@ -1,5 +1,9 @@
 { ... }:
 {
+  imports = [
+    ../../../common/rats
+  ];
+
   device.rats = {
     "1149:32792:Kensington_Expert_Wireless_TB_Mouse" = {
       scroll_button = "BTN_SIDE";

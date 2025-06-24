@@ -1,5 +1,10 @@
 { ... }:
 {
+  imports = [
+    ../../../common/keyboards
+    ../../../common/rats
+  ];
+
   device.rats = {
     "6127:24814:Lenovo_TrackPoint_Keyboard_II" = {
       natural_scroll = "disabled";

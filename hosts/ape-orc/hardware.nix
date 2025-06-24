@@ -3,6 +3,7 @@
 {
 
   imports = [
+    ../../modules/hardware/common/display
     ../../modules/hardware/common/cpu/intel
     ../../modules/hardware/common/gpu/amd
     ../../modules/hardware/devices/yubico/yubikey5

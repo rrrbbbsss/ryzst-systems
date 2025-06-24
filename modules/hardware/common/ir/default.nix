@@ -3,6 +3,7 @@ with lib;
 let
   cfg = config.device.ir;
   mkWav = codePath:
+    # TODO: don't use runCommand due to cross
     pkgs.runCommand "ir.wav" { } ''
       ${pkgs.ryzst.lirc_rawcode2wav}/bin/lirc_rawcode2wav ${codePath} $out
     '';

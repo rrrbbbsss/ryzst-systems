@@ -3,7 +3,7 @@ self:
 let
   default-imports = [
     #self
-    ./hardware
+    #./hardware
     ./ryzst
     ./os
     ./keys

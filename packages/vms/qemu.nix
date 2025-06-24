@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ../../modules/hardware/common/display
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
