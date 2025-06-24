@@ -2,7 +2,7 @@
 {
   imports = [
     ../../../common/display
-    ../../../common/tpm/2-0
+    ../../../common/tpm
     ../../../common/wifi
     ../../../common/keyboards
     ../../../common/rats

@@ -3,7 +3,7 @@
 {
   imports = [
     ../../modules/hardware/common/display
-    ../../modules/hardware/common/tpm/2-0
+    ../../modules/hardware/common/tpm
     ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/amd/cpu
     ../../modules/hardware/devices/amd/gpu

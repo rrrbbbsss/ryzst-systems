@@ -3,7 +3,6 @@
   imports = [
     ../../../common/display
     ../../../common/wifi
-    ../../../common/tpm/1-2
     ../../../common/keyboards
     ../../../common/rats
     ../../../devices/intel/cpu
