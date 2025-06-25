@@ -79,6 +79,11 @@ let
       || exec ${wrap-float-window "WINDOWS"
         "${pkgs.ryzst.fzf-sway-windows}/bin/fzf-sway-windows"}
     '';
+    bluetooth = ''
+      swaymsg [title="^BLUETOOTH"] kill \
+      || exec ${wrap-float-window "BLUETOOTH"
+        "${pkgs.bluetui}/bin/bluetui"}
+    '';
     mirror = ''
       kill $(${pkgs.procps}/bin/pidof wl-mirror) \
       || ${pkgs.wl-mirror}/bin/wl-mirror --fullscreen-output ${osConfig.device.mirror.secondary} ${osConfig.device.mirror.main}
@@ -501,7 +506,12 @@ in
         "XF86AudioPrev" = "exec ${commands.media.prev}";
         "XF86MonBrightnessUp" = "exec ${commands.screen.raiseBrightness}";
         "XF86MonBrightnessDown" = "exec ${commands.screen.lowerBrightness}";
-      };
+      } //
+      # TODO: add this in a bluetooth module...
+      (if osConfig.hardware.bluetooth.enable
+      then { "${modifier}+b" = "exec ${commands.bluetooth}"; }
+      else { });
+
     };
   };
 }
