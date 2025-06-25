@@ -1,3 +1,5 @@
+# if i remember correctly,
+# butchered from nixos-hardware:
 { config, pkgs, lib, modulesPath, self, ... }:
 {
   imports = [
