@@ -1,5 +1,7 @@
 {
   description = "subflake";
+  # TODO: make toplevel "subflake" directory
+  # that contains folders for each seperate sublake.
 
   inputs = {
     ryzst.url = "path:../";
