@@ -2,6 +2,7 @@
 {
   imports = [
     ../../modules/hardware/common/display
+    ../../modules/hardware/common/rats
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
