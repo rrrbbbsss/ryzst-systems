@@ -42,9 +42,9 @@ ykman --device "$SERIAL" \
 printf "Set FIDO2 Access Pin:\n"
 ykman --device "$SERIAL" \
   fido access change-pin
-pamu2fcfg --origin pam://mek.ryzst.net --pin-verification
-#ssh-keygen -t ed25519-sk -O resident -O verify-required
-printf "\n"
+#pamu2fcfg --origin pam://mek.ryzst.net --pin-verification
+##ssh-keygen -t ed25519-sk -O resident -O verify-required
+#printf "\n"
 
 ###########
 ### piv ###
@@ -60,12 +60,12 @@ PIV_EXPIRE="3650"
 PIV_SUBJECT="CN=man"
 #PIN   = DEFAULT| NEVER | ONCE | ALWAYS | MATCH_ONCE | MATCH-ALWAYS
 #Touch = DEFAULT| NEVER | ALWAYS | CACHED
-#PIV_AUTH_PIN="DEFAULT"
-#PIV_AUTH_TOUCH="DEFAULT"
-#PIV_SIGN_PIN="DEFAULT"
-#PIV_SIGN_TOUCH="DEFAULT"
-#PIV_ENCR_PIN="DEFAULT"
-#PIV_ENCR_TOUCH="DEFAULT"
+PIV_AUTH_PIN="DEFAULT"
+PIV_AUTH_TOUCH="DEFAULT"
+PIV_SIGN_PIN="DEFAULT"
+PIV_SIGN_TOUCH="DEFAULT"
+PIV_ENCR_PIN="DEFAULT"
+PIV_ENCR_TOUCH="DEFAULT"
 
 ykman --device "$SERIAL" \
   piv reset --force
@@ -83,8 +83,8 @@ ykman --device "$SERIAL" \
   --pin "$PIV_DEFAULT_PIN" \
   --algorithm "$PIV_ALGO" \
   --format PEM \
-  --pin-policy "DEFAULT" \
-  --touch-policy "DEFAULT" \
+  --pin-policy "$PIV_AUTH_PIN" \
+  --touch-policy "$PIV_AUTH_TOUCH" \
   9a piv-auth.pub
 ykman --device "$SERIAL" \
   piv certificates generate \
@@ -99,8 +99,8 @@ ykman --device "$SERIAL" \
   --pin "$PIV_DEFAULT_PIN" \
   --algorithm "$PIV_ALGO" \
   --format PEM \
-  --pin-policy "DEFAULT" \
-  --touch-policy "DEFAULT" \
+  --pin-policy "$PIV_SIGN_PIN" \
+  --touch-policy "$PIV_SIGN_TOUCH" \
   9c piv-sign.pub
 ykman --device "$SERIAL" \
   piv certificates generate \
@@ -115,8 +115,8 @@ ykman --device "$SERIAL" \
   --pin "$PIV_DEFAULT_PIN" \
   --algorithm "$PIV_ALGO" \
   --format PEM \
-  --pin-policy "DEFAULT" \
-  --touch-policy "DEFAULT" \
+  --pin-policy "$PIV_ENCR_PIN" \
+  --touch-policy "$PIV_ENCR_TOUCH" \
   9d piv-encr.pub
 ykman --device "$SERIAL" \
   piv certificates generate \
@@ -164,7 +164,8 @@ ykman --device "$SERIAL" \
 ###########
 gpgsm --learn
 # generate keys from piv
-# gpg --quick-generate-key "id (primary)" card
+#gpg --quick-generate-key "$NAME - $KEYID <$EMAIL>" card
+#gpg --quick-generate-key "test - 1 <test@test.com>" card
 # dump
-# gpg --armor --output man.gpg --export id
+#gpg --armor --output man.gpg --export "test - 1"
 # think about revocation certs...
