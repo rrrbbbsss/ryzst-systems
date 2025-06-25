@@ -23,6 +23,7 @@
     inherit (self.inputs.ryzst)
       lib
       nixosModules
+      hardwareModules
       overlays;
 
     systems = [

@@ -1,4 +1,9 @@
 self:
 {
-  default = "todo";
+  # TODO: think about identification info in json...
+  default = "?";
+  # TODO: maybe hidden...
+  common = import ./common self;
+  # TODO: maybe the only thing consumed...
+  devices = import ./devices self;
 }

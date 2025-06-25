@@ -1,0 +1,2 @@
+self:
+self.lib.getDirs ./.
