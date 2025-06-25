@@ -82,9 +82,6 @@ function GenerateInstanceData() {
   cp --parents -r /var/lib/iwd $STATE_DIR
 
   # TODO: hardware test
-  # once upon a time ago,
-  # had my own ideas.
-  # wanna play with those again.
   #HARDWARE="todo"
 
   VERSION=$(nix flake metadata --json "$FLAKE" | jq -r '.locks.nodes.nixpkgs.original.ref' | cut -f2 -d '-')
