@@ -13,6 +13,13 @@ let
       };
 in
 {
+  # update nix to 2.28.4
+  # (flying a bit blind so not sure if this has fix)
+  inherit (nixpkgs {
+    rev = "5d0aa4675f7a35ec9661325d1dc22dfcbba5d040";
+    sha256 = "sha256-+Opp9j30rNQyuR5QOHSchJHU6pJJELy9+Olg1uMEYZo=";
+  }) nix;
+
   # fix cross-compilation
   boxes = prev.boxes.overrideAttrs (old: {
     postPatch = ''
