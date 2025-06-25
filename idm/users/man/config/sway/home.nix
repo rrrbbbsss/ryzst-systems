@@ -383,6 +383,7 @@ in
       };
       focus.newWindow = "focus";
       window = {
+        titlebar = false;
         border = 2;
         commands = [
           {
