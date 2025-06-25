@@ -86,6 +86,7 @@ function GenerateInstanceData() {
 
   VERSION=$(nix flake metadata --json "$FLAKE" | jq -r '.locks.nodes.nixpkgs.original.ref' | cut -f2 -d '-')
 
+  # TODO: look into systemd-creds (think that is it)
   # generate nix key
   NIX_SECRETS_DIR=$SECRETS_DIR/nix
   mkdir -p $NIX_SECRETS_DIR
