@@ -1,15 +1,16 @@
 final: prev:
 let
-  nixpkgs = { rev, sha256 }:
+  nixpkgs = { rev, hash }:
     import
       (prev.fetchFromGitHub {
         owner = "NixOS";
         repo = "nixpkgs";
-        inherit rev sha256;
+        inherit rev hash;
       })
       {
-        inherit (prev) system;
-        inherit (prev.config) allowUnfree allowUnsupportedSystem;
+        inherit (prev) config;
+        crossSystem = prev.hostPlatform.system;
+        localSystem = prev.buildPlatform.system;
       };
 in
 {
@@ -17,7 +18,7 @@ in
   # (flying a bit blind so not sure if this has fix)
   inherit (nixpkgs {
     rev = "5d0aa4675f7a35ec9661325d1dc22dfcbba5d040";
-    sha256 = "sha256-+Opp9j30rNQyuR5QOHSchJHU6pJJELy9+Olg1uMEYZo=";
+    hash = "sha256-+Opp9j30rNQyuR5QOHSchJHU6pJJELy9+Olg1uMEYZo=";
   }) nix;
 
   # fix cross-compilation
