@@ -150,6 +150,8 @@ in
       bind.dnsutils
       openssl
       iputils
+      pciutils
+      usbutils
     ];
 
     # faster reboot
