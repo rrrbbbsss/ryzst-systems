@@ -1,0 +1,3 @@
+modalias = [
+  "usb:v04D8pFD08d0002.*"
+]
