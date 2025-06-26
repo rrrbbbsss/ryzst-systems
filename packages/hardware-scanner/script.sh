@@ -25,8 +25,7 @@ printf 'modaliases:\n%s\n\n' "$MODALIASES"
 # https://github.com/linuxhw/EDID
 # https://en.wikipedia.org/wiki/Extended_Display_Identification_Data#EDID_1.4_data_format
 EDID=$(find /sys/devices -name edid -print0 \
-               | xargs -0 cat \
-               | xxd -p -s+8 -l 4)
+               | xargs -0 -I '{}' xxd -p -s+8 -l 4 '{}')
 printf 'edid:\n%s\n\n' "$EDID"
 
 # cpu
