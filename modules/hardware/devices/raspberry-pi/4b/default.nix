@@ -1,5 +1,6 @@
-# if i remember correctly,
-# butchered from nixos-hardware:
+# butchered from:
+# https://github.com/NixOS/nixpkgs/blob/701ee4e4f458940a335ae6a8289db75302eb8d79/nixos/modules/installer/sd-card/sd-image-aarch64.nix
+# (wasn't that exact commit)
 { config, pkgs, lib, modulesPath, self, ... }:
 {
   imports = [
