@@ -1,0 +1,3 @@
+modalias = [
+  "cpu:type:x86,ven0002.*"
+]

@@ -1,0 +1,3 @@
+modalias = [
+  "pci:v00008086d.*sv.*sd.*bc03sc.*i.*"
+]
