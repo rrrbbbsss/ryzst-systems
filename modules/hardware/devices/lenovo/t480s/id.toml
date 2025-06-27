@@ -1,0 +1,3 @@
+modalias = [
+  "dmi:.*:pvrThinkPadT480s:.*"
+]
