@@ -1,0 +1,4 @@
+modalias = [
+  # TODO: usb when i get a dongle.
+  "pci:v.*d.*sv.*sd.*bc02sc00i.*"
+]
