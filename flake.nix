@@ -6,7 +6,6 @@
   # TODO: would like to move most of these to subflake
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
-    nixpkgs-stable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-25.05";
 
     impermanence.url = "git+https://github.com/nix-community/impermanence?shallow=1";
 
@@ -21,7 +20,7 @@
 
     emacs-overlay.url = "git+https://github.com/nix-community/emacs-overlay?shallow=1";
     emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
-    emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    emacs-overlay.inputs.nixpkgs-stable.follows = "nixpkgs";
 
     nix-index-database.url = "git+https://github.com/nix-community/nix-index-database?shallow=1";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
