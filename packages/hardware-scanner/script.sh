@@ -28,3 +28,6 @@ printf 'edid:\n%s\n\n' "$EDID"
 MODULES=$(resolve_modules <<<"$MODALIASES" \
             | sort -u)
 printf 'modules:\n%s\n\n' "$MODULES"
+
+# TODO: sanitize output modaliases
+# (specifically DMI modalias)
