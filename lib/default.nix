@@ -80,6 +80,8 @@ let
       inherit (names.host) check;
     };
   };
+
+  logic = import ./logic self;
 in
 {
   inherit mkSystems;
@@ -89,4 +91,5 @@ in
   inherit getFilesList;
   inherit names;
   inherit types;
+  inherit logic;
 }
