@@ -34,7 +34,7 @@ let
     };
 in
 {
-  inherit ryzst tweaks;
+  inherit tweaks inputs ryzst;
   default =
     nixpkgs.lib.composeManyExtensions [
       tweaks
