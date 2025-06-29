@@ -38,6 +38,14 @@ let
         crossSystem = system.cross;
       });
 
+  mkBoxed = prev: overlays:
+    let
+      f = final: prev;
+      g = nixpkgs.lib.extends
+        (nixpkgs.lib.composeManyExtensions overlays)
+        f;
+    in
+    nixpkgs.lib.fix g;
 
   getDirs = dir: with nixpkgs.lib.attrsets;
     foldlAttrs
@@ -74,6 +82,7 @@ in
 {
   inherit mkSystems;
   inherit mkInstances;
+  inherit mkBoxed;
   inherit getDirs;
   inherit getFilesList;
   inherit names;
