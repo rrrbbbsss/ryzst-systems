@@ -124,6 +124,20 @@ let
   lteqo = A: B:
     gteqo B A;
 
+
+  # or you don't have to play the nand game
+  # really need a better conso...
+  gto' = A: B:
+    fresh
+      ({ HA, TA, HB, TB }: [
+        (conso HA TA A)
+        (conso HB TB B)
+        (conde [
+          [ (eqq HA 1) (eqq HB 0) ]
+          [ (gto' TA TB) ]
+        ])
+      ]);
+
   # how many bits for numbers in semvar? (jk)
   versions = facto [
     [ 0 0 0 1 ]
@@ -139,7 +153,10 @@ let
   testo2 = solve "all" ({ X, Y }: [
     (lto X Y)
   ]);
+  testo3 = solve 5 ({ X, Y }: [
+    (gto' X Y)
+  ]);
 in
 {
-  inherit testo testo2;
+  inherit testo testo2 testo3;
 }
