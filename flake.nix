@@ -39,8 +39,8 @@
     # TODO: make this more consumable
     nixosModules = import ./modules self;
 
-    # TODO: make this more consumable
-    homeManagerModules.default = import ./modules/home self;
+    # NOTE: go use homeManager
+    homeManagerModules = import ./modules/home self;
 
     # NOTE: go use nixos-hardware.
     hardwareModules = import ./modules/hardware self;

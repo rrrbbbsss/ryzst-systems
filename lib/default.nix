@@ -54,6 +54,15 @@ let
       { }
       (builtins.readDir dir);
 
+  getFilesNoSuffix = dir: with nixpkgs.lib.attrsets;
+    foldlAttrs
+      (acc: n: v:
+        if v == "regular" then {
+          ${nixpkgs.lib.removeSuffix ".nix" n} = dir + "/${n}";
+        } // acc else acc)
+      { }
+      (builtins.readDir dir);
+
   getFilesList = dir: with nixpkgs.lib.attrsets;
     foldlAttrs
       (acc: n: v:
@@ -84,6 +93,7 @@ in
   inherit mkInstances;
   inherit mkBoxed;
   inherit getDirs;
+  inherit getFilesNoSuffix;
   inherit getFilesList;
   inherit names;
   inherit types;

@@ -1,7 +1,9 @@
 self:
 let
-  programs = self.lib.getFilesList ./programs;
+  # TODO: make nicer later.
+  modulesList = self.lib.getFilesList ./modules;
+  modules = self.lib.getFilesNoSuffix ./modules;
 in
 {
-  imports = programs;
-}
+  default = { imports = modulesList; };
+} // modules
