@@ -1,3 +1,4 @@
+self:
 final: prev:
 let
   nixpkgs = { rev, hash }:

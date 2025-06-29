@@ -5,9 +5,8 @@ let
   # TODO: maybe move this?...
   ryzst = import ../packages self;
 
-  tweaks = import ./tweaks;
+  tweaks = import ./tweaks self;
 
-  # https://www.youtube.com/watch?v=RBtchh_R4XY
   inputs = import ./inputs self;
 in
 {
