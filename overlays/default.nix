@@ -7,28 +7,29 @@ let
 
   tweaks = import ./tweaks;
 
-  # should create a new fixedpoint for each "3rd-party" overlay...
-  # that way they can't change eachother...
-  boxed = final: prev:
+  mkBoxed = prev: overlay:
     let
-      inherit (self.inputs) nixpkgs;
-      instance = final: prev;
-      g = nixpkgs.lib.extends
-        (nixpkgs.lib.composeManyExtensions [
-          self.inputs.emacs-overlay.overlays.default
-          self.inputs.firefox-addons.overlays.default
-          self.inputs.nix-index-database.overlays.nix-index
-        ])
-        instance;
-      boxed-instance = nixpkgs.lib.fix g;
+      f = final: prev;
+      g = nixpkgs.lib.extends overlay f;
+    in
+    nixpkgs.lib.fix g;
+
+  # TODO: maybe allow to tweak each input too?
+  inputs = final: prev:
+    let
+      emacs-overlay = mkBoxed prev
+        self.inputs.emacs-overlay.overlays.default;
+      firefox-addons = mkBoxed prev
+        self.inputs.firefox-addons.overlays.default;
+      nix-index-database = mkBoxed prev
+        self.inputs.nix-index-database.overlays.nix-index;
     in
     {
-      inherit (boxed-instance)
-        #firefox-addons
-        firefox-addons
-        #emacs-overlay
-        emacsWithPackagesFromUsePackage
-        #nix-index-database
+      inherit (emacs-overlay)
+        emacsWithPackagesFromUsePackage;
+      inherit (firefox-addons)
+        firefox-addons;
+      inherit (nix-index-database)
         nix-index-with-db;
     };
 in
@@ -37,7 +38,7 @@ in
   default =
     nixpkgs.lib.composeManyExtensions [
       tweaks
-      boxed
+      inputs
       ryzst
     ];
 }
