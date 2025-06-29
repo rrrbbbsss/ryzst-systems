@@ -45,5 +45,4 @@ in
   pam_p11 = prev.pam_p11.overrideAttrs (old: {
     patches = old.patches or [ ] ++ [ ./pam_p11.patch ];
   });
-
 }
