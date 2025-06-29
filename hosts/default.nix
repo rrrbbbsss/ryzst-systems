@@ -1,8 +1,6 @@
 self:
 let
-  # TODO: remove
-  nixpkgs = self.inputs.nixpkgs or
-    self.inputs.ryzst.inputs.nixpkgs;
+  inherit (self.inputs.ryzst.inputs) nixpkgs;
   mkHosts = dir: with builtins;
     mapAttrs
       (name: path:
