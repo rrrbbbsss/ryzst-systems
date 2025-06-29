@@ -1,4 +1,4 @@
-{ system, self, ... }:
+{ self, ... }:
 let
   name = "iso-installer";
   iso = (self.inputs.nixpkgs.lib.nixosSystem {

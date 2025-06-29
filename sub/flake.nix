@@ -50,7 +50,9 @@
 
     apps = import ../apps self;
 
-    packages = import ../packages self;
+    packages = builtins.mapAttrs
+      (name: value: value.ryzst)
+      self.instances;
 
     nixosConfigurations = import ../hosts self;
 

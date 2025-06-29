@@ -45,6 +45,7 @@ in
           flake = "git+ssh://git@git.int.ryzst.net/domain";
         };
 
+        # TODO: i'd like for there to be just one registry...
         nix.registry = {
           ryzst-systems.flake = self;
         } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);

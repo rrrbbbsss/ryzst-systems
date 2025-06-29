@@ -2,19 +2,13 @@ self:
 let
   inherit (self.inputs) nixpkgs;
 
-  ryzst = final: prev:
-    let
-      # TODO: git rid fo "system..."
-      system =
-        if (final.hostPlatform.system == final.buildPlatform.system)
-        then final.hostPlatform.system
-        else "${final.buildPlatform.system}/${final.hostPlatform.system}";
-    in
-    { ryzst = self.lib.mkPackages ../packages final system; };
+  # TODO: maybe move this?...
+  ryzst = import ../packages self;
 
   tweaks = import ./tweaks.nix;
 
-  # this seems to work?
+  # should create a new fixedpoint for each "3rd-party" overlay...
+  # that way they can't change eachother...
   boxed = final: prev:
     let
       inherit (self.inputs) nixpkgs;
