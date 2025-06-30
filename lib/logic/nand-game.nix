@@ -134,7 +134,7 @@ let
         (conso HB TB B)
         (conde [
           [ (eqq HA 1) (eqq HB 0) ]
-          [ (gto' TA TB) ]
+          [ (eqq HA HB) (gto' TA TB) ]
         ])
       ]);
 
