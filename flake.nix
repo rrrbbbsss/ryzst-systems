@@ -36,14 +36,21 @@
     # TODO: clean this up.
     overlays = import ./overlays self;
 
-    # TODO: make this more consumable
-    nixosModules = import ./modules self;
+    # NOTE: go use nixpkgs.
+    nixosModules = import ./modules/nixos self;
 
-    # NOTE: go use homeManager
+    # NOTE: go use homeManager.
     homeManagerModules = import ./modules/home self;
 
     # NOTE: go use nixos-hardware.
     hardwareModules = import ./modules/hardware self;
+
+    # TODO: clean this up, and maybe not expose
+    # (keep in subflake?)...
+    settingsModules = import ./modules self;
+
+    # TODO: this will be an effort.
+    networkModules = "oof";
 
   };
 }

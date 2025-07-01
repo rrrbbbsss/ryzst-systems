@@ -8,7 +8,7 @@ let
           {
             specialArgs = { inherit self; };
             modules = [
-              self.outputs.nixosModules.default
+              self.outputs.settingsModules.default
               { os.hostname = name; }
               (path + "/default.nix")
               (path + "/hardware.nix")

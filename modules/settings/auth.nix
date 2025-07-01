@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.os.auth;
+  # break this out into it's own motd module?
   boxedMessageFile = name: message:
     pkgs.stdenvNoCC.mkDerivation {
       inherit name;

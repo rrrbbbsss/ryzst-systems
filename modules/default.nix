@@ -5,8 +5,8 @@ let
     #self
     #./hardware
     ./ryzst
-    ./os
-    ./keys
+    self.nixosModules.default
+    ./settings
     #home manager
     self.inputs.home-manager.nixosModules.home-manager
     {

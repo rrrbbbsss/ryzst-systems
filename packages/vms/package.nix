@@ -9,7 +9,7 @@ let
         { os.hostname = name; }
         hostmodulepath
         ./qemu.nix
-        self.outputs.nixosModules.default
+        self.outputs.settingsModules.default
         { nixpkgs.pkgs = pkgs; }
       ];
     }).config.system.build.vm;

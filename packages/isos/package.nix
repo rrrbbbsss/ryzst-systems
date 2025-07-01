@@ -7,7 +7,7 @@ let
     modules = [
       "${self.inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
       ./installer.nix
-      self.outputs.nixosModules.default
+      self.outputs.settingsModules.default
     ];
   }).config.system.build.isoImage;
 in

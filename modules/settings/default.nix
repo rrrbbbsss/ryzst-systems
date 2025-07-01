@@ -8,9 +8,6 @@ in
     ./auth.nix
     ./nix.nix
     ./grafting.nix
-    ./upgrade.nix
-    ./reboot.nix
-    ./misc-gc.nix
   ];
 
   # TODO: redo when remodel.
