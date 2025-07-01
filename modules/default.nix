@@ -5,9 +5,9 @@ let
     #self
     ./ryzst
     self.nixosModules.default
-    ./settings
     # TODO: think about better place for this
     (import ./inputs self).default
+    (import ./settings self).default
   ];
 in
 {
