@@ -93,6 +93,8 @@ in
         MulticastDNS=resolve
       '';
     };
+
+    # TODO: move to hardware
     systemd.network = {
       enable = true;
       wait-online.enable = false;
@@ -114,6 +116,13 @@ in
           };
         };
       };
+    };
+
+    os = {
+      locale = "en_US.UTF-8";
+      timezone = "America/Chicago";
+      domain = "mek.ryzst.net";
+      flake = "git+ssh://git@git.int.ryzst.net/domain";
     };
 
     # boot entries

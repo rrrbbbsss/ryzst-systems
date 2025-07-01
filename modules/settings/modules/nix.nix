@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, self, ... }:
 with lib;
 let
   cfg = config.os.nix;
@@ -15,6 +15,10 @@ in
   config = mkMerge [
     {
       nix = {
+        # TODO: i'd like for there to be just one registry...
+        registry = {
+          ryzst-systems.flake = self;
+        } // (builtins.mapAttrs (n: v: { flake = self.inputs.${n}; }) self.inputs);
         channel.enable = false;
         settings = {
           secret-key-files = "/persist/secrets/nix/nix_key";
