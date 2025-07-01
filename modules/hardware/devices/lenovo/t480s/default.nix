@@ -6,6 +6,7 @@
     ../../../common/wifi
     ../../../common/keyboards
     ../../../common/rats
+    ../../../common/ethernet
     ../../../devices/intel/cpu
     ../../../devices/intel/gpu
   ];

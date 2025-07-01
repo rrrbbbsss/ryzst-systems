@@ -5,6 +5,7 @@
 {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image.nix")
+    ../../../common/ethernet
   ];
 
   documentation.nixos.enable = false; #xsltproc issues

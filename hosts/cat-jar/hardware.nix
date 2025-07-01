@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/hardware/common/display
+    ../../modules/hardware/common/ethernet
     ../../modules/hardware/common/tpm
     ../../modules/hardware/common/wifi
     ../../modules/hardware/devices/amd/cpu

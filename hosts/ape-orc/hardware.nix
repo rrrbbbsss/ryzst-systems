@@ -4,6 +4,7 @@
 
   imports = [
     ../../modules/hardware/common/display
+    ../../modules/hardware/common/ethernet
     ../../modules/hardware/devices/intel/cpu
     ../../modules/hardware/devices/amd/gpu
     ../../modules/hardware/devices/yubico/yubikey5

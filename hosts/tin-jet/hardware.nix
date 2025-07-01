@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/hardware/devices/intel/cpu
+    ../../modules/hardware/common/ethernet
     ../../modules/hardware/devices/yubico/yubikey5
   ];
 
