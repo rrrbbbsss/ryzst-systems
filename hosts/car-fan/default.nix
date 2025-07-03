@@ -1,6 +1,0 @@
-{ ... }:
-{
-  imports = [
-    ../../idm/users/man
-  ];
-}
