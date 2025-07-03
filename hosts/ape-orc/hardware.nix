@@ -1,18 +1,18 @@
-{ ... }:
+{ self, ... }:
 
 {
 
   imports = [
-    ../../modules/hardware/common/display
-    ../../modules/hardware/common/ethernet
-    ../../modules/hardware/devices/intel/cpu
-    ../../modules/hardware/devices/amd/gpu
-    ../../modules/hardware/devices/yubico/yubikey5
-    ../../modules/hardware/devices/kensington/expert-trackball
-    ../../modules/hardware/devices/tex/shinobi
-    ../../modules/hardware/devices/nullbits/tidbit
-    ../../modules/hardware/devices/microchip/ir-transceiver
-    ../../modules/hardware/devices/sceptre/u550cv-u
+    self.hardwareModules.common.display
+    self.hardwareModules.common.ethernet
+    self.hardwareModules.devices.intel.cpu
+    self.hardwareModules.devices.amd.gpu
+    self.hardwareModules.devices.kensington.expert-trackball
+    self.hardwareModules.devices.tex.shinobi
+    self.hardwareModules.devices.nullbits.tidbit
+    self.hardwareModules.devices.microchip.ir-transceiver
+    self.hardwareModules.devices.sceptre.u550cv-u
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

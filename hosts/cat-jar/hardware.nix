@@ -1,16 +1,16 @@
-{ lib, ... }:
+{ self, lib, ... }:
 
 {
   imports = [
-    ../../modules/hardware/common/display
-    ../../modules/hardware/common/ethernet
-    ../../modules/hardware/common/tpm
-    ../../modules/hardware/common/wifi
-    ../../modules/hardware/devices/amd/cpu
-    ../../modules/hardware/devices/amd/gpu
-    ../../modules/hardware/devices/kensington/expert-trackball-wireless
-    ../../modules/hardware/devices/lenovo/trackpoint
-    ../../modules/hardware/devices/yubico/yubikey5
+    self.hardwareModules.common.display
+    self.hardwareModules.common.ethernet
+    self.hardwareModules.common.tpm
+    self.hardwareModules.common.wifi
+    self.hardwareModules.devices.amd.cpu
+    self.hardwareModules.devices.amd.gpu
+    self.hardwareModules.devices.kensington.expert-trackball-wireless
+    self.hardwareModules.devices.lenovo.trackpoint
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 
   device.monitors = {

@@ -1,17 +1,17 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = [
-    ../../modules/hardware/common/display
-    ../../modules/hardware/common/ethernet
-    ../../modules/hardware/common/tpm
-    ../../modules/hardware/common/wifi
-    ../../modules/hardware/devices/intel/cpu
-    ../../modules/hardware/devices/intel/gpu
-    ../../modules/hardware/devices/yubico/yubikey5
-    ../../modules/hardware/devices/vontar/d8
-    ../../modules/hardware/devices/funai/lf320fx4f
-    ../../modules/hardware/devices/denon/dra-800h
+    self.hardwareModules.common.display
+    self.hardwareModules.common.ethernet
+    self.hardwareModules.common.tpm
+    self.hardwareModules.common.wifi
+    self.hardwareModules.devices.intel.cpu
+    self.hardwareModules.devices.intel.gpu
+    self.hardwareModules.devices.vontar.d8
+    self.hardwareModules.devices.funai.lf320fx4f
+    self.hardwareModules.devices.denon.dra-800h
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 
   device.monitors = {

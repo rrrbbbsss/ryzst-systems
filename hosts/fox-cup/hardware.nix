@@ -1,8 +1,7 @@
-{ ... }:
-
+{ self, ... }:
 {
   imports = [
-    ../../modules/hardware/devices/lenovo/t480s
-    ../../modules/hardware/devices/yubico/yubikey5
+    self.hardwareModules.devices.lenovo.t480s
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 }

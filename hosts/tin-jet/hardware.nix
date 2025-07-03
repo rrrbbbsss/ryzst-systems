@@ -1,10 +1,10 @@
-{ ... }:
+{ self, ... }:
 
 {
   imports = [
-    ../../modules/hardware/devices/intel/cpu
-    ../../modules/hardware/common/ethernet
-    ../../modules/hardware/devices/yubico/yubikey5
+    self.hardwareModules.common.ethernet
+    self.hardwareModules.devices.intel.cpu
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
