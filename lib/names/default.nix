@@ -6,10 +6,12 @@ let
     if expt == 0 then 1
     else base * (power base (expt - 1));
 
-  # Preallocate names:
+  # Preallocate names (rethink when remodel):
   # <username> ::= <byte-word>
   # <hostname> ::= <byte-word>-<byte-word>
-  # (there are proper byte wordlists out there, but this will do for me)
+  # <sectoken> ::= <username>-<dibit-word> # or tribit...
+  # proper wordlist example:
+  # https://en.wikipedia.org/wiki/PGP_word_list
   wordlist = with builtins; fromJSON (readFile ./wordlist.json);
 
   bytewords = num: rec {
