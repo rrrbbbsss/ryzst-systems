@@ -33,7 +33,7 @@
       {
         local = "x86_64-linux";
         cross = "aarch64-linux";
-        native = pkgs: { inherit (pkgs) linuxKernel; };
+        native = pkgs: { inherit (pkgs) linuxKernel perl; };
       }
     ];
 
