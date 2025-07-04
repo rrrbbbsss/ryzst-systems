@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, self, ... }:
 let
   username = config.networking.hostName;
   font = "DejaVu Sans Mono";
@@ -131,8 +131,8 @@ in
 {
   # TODO: figure out how to handle vm...
   imports = [
-    ../../../modules/hardware/devices/funai/lf320fx4f
-    ../../../modules/hardware/devices/denon/dra-800h
+    self.hardwareModules.devices.funai.lf320fx4f
+    self.hardwareModules.devices.denon.dra-800h
   ];
   users.users.${username} = {
     isNormalUser = true;
