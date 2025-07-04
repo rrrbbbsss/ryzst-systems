@@ -1,7 +1,8 @@
-{ ... }:
+# TODO: remove self
+{ self, ... }:
 {
   imports = [
-    ../../../common/rats
+    self.hardwareModules.common.rats
   ];
 
   device.rats = {

@@ -1,8 +1,9 @@
-{ ... }:
+# TODO: remove self
+{ self, ... }:
 {
   imports = [
-    ../../../common/keyboards
-    ../../../common/rats
+    self.hardwareModules.common.keyboards
+    self.hardwareModules.common.rats
   ];
 
   device.rats = {

@@ -1,17 +1,18 @@
 # butchered from:
 # https://github.com/NixOS/nixpkgs/blob/701ee4e4f458940a335ae6a8289db75302eb8d79/nixos/modules/installer/sd-card/sd-image-aarch64.nix
 # (wasn't that exact commit)
+# TODO: remove self
 { config, pkgs, lib, modulesPath, self, ... }:
 {
   imports = [
     (modulesPath + "/installer/sd-card/sd-image.nix")
-    ../../../common/ethernet
+    self.hardwareModules.common.ethernet
   ];
 
   documentation.nixos.enable = false; #xsltproc issues
   nixpkgs.hostPlatform.system = "aarch64-linux";
   hardware.enableRedistributableFirmware = lib.mkDefault true;
-  # cross-compiling everything sucks for this...
+  # think about better place for this:
   nixpkgs.pkgs = lib.mkForce self.instances."x86_64-linux/aarch64-linux";
 
   boot.loader.grub.enable = false;

@@ -1,9 +1,9 @@
-{ ... }:
+{ self, ... }:
 {
   imports = [
-    ../../modules/hardware/common/display
-    ../../modules/hardware/common/rats
-    ../../modules/hardware/devices/yubico/yubikey5
+    self.hardwareModules.common.display
+    self.hardwareModules.common.rats
+    self.hardwareModules.devices.yubico.yubikey5
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";

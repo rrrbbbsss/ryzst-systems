@@ -1,14 +1,15 @@
-{ ... }:
+# TODO: remove self
+{ self, ... }:
 {
   imports = [
-    ../../../common/display
-    ../../../common/tpm
-    ../../../common/wifi
-    ../../../common/keyboards
-    ../../../common/rats
-    ../../../common/ethernet
-    ../../../devices/intel/cpu
-    ../../../devices/intel/gpu
+    self.hardwareModules.common.display
+    self.hardwareModules.common.tpm
+    self.hardwareModules.common.wifi
+    self.hardwareModules.common.keyboards
+    self.hardwareModules.common.rats
+    self.hardwareModules.common.ethernet
+    self.hardwareModules.devices.intel.cpu
+    self.hardwareModules.devices.intel.gpu
   ];
 
   services.throttled.enable = true;

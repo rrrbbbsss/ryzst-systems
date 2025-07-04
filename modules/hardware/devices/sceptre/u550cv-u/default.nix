@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
+# TODO: remove self
+{ config, pkgs, self, ... }:
 let
   inherit (config.device) user;
   inherit (config.home-manager.users.${user}.wayland.windowManager.sway.config) modifier;
 in
 {
   imports = [
-    ../../../common/ir
+    self.hardwareModules.common.ir
   ];
 
   device.ir.code.tv = {

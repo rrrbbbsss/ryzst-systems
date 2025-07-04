@@ -1,8 +1,9 @@
-{ ... }:
+# TODO: remove self
+{ self, ... }:
 # never connecting this to network.
 {
   imports = [
-    ../../../common/ir
+    self.hardwareModules.common.ir
   ];
 
   device.ir.code.receiver = {
