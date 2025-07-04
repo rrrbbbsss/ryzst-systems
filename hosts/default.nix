@@ -6,6 +6,9 @@ let
       (name: path:
         nixpkgs.lib.nixosSystem
           {
+            # TODO: like to remove self as special arg
+            # it is easy for consuming,
+            # but not good for sharing.
             specialArgs = { inherit self; };
             modules = [
               self.outputs.settingsModules.default

@@ -3,6 +3,7 @@ let
   inherit (self.inputs) nixpkgs;
   mkVm = name: hostmodulepath:
     (nixpkgs.lib.nixosSystem {
+      # TODO: remove self as special arg
       specialArgs = { inherit self; };
       modules = [
         "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
