@@ -38,6 +38,9 @@ let
         crossSystem = system.cross;
       });
 
+  # this should be fine if an overlay only needs to add surface stuff,
+  # but if a 3rd party overlay needs to tweak deep pkgs,
+  # then might need to use new instance of nixpkgs...
   mkBoxed = prev: overlays:
     let
       f = final: prev;
