@@ -22,12 +22,21 @@ EDID=$(find /sys/devices -name edid -print0 \
                | xargs -0 -I '{}' xxd -p -s+8 -l 4 '{}')
 printf 'edid:\n%s\n\n' "$EDID"
 
-# storage
-#STORAGE=TODO
-
 MODULES=$(resolve_modules <<<"$MODALIASES" \
             | sort -u)
 printf 'modules:\n%s\n\n' "$MODULES"
 
-# TODO: sanitize output modaliases
-# (specifically DMI modalias)
+# NOTE: was wanting to generate the info for conditional imports,
+# but think generating an initial hardware file
+# that imports nixos modules based off modalias regex's
+# (also edid/devicetree too)
+# that can be micromanaged by hand when needed afterwards
+# will be the easiest for my home-lab usage.
+# (home-lab is too pet'y).
+
+# TODO: use hardware catalag to grep for nixos module matches
+# TODO: need to figure out initialramdisk stuff
+#       (ie: initrd.availableKernelModules)
+#       (peek at script in nixpkgs for nixos)
+# TODO: figure out how to handle disk stuff
+# TODO: generate hardware.nix
