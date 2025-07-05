@@ -24,7 +24,7 @@
     secondary = "null";
   };
 
-  #boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   # BootLoader
   boot.loader.systemd-boot.enable = true;
