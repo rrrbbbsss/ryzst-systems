@@ -5,5 +5,7 @@ let
   nand-game = import ./nand-game.nix microkanren;
 in
 {
-  inherit microkanren nand-game;
+  logic = {
+    inherit microkanren nand-game;
+  };
 }

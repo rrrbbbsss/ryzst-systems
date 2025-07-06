@@ -1,4 +1,4 @@
-{ self }:
+self:
 let
   inherit (self.inputs.nixpkgs) lib;
 
@@ -122,8 +122,27 @@ let
         in
         hostname.fromHex hex;
     };
+
+  types = {
+    username = lib.types.mkOptionType {
+      name = "username";
+      description = "byteword username";
+      inherit (user) check;
+    };
+
+    hostname = lib.types.mkOptionType {
+      name = "hostname";
+      description = "byteword hostname";
+      inherit (host) check;
+    };
+  };
+
 in
 {
-  inherit user;
-  inherit host;
+  # TODO: move
+  inherit types;
+  names = {
+    inherit user;
+    inherit host;
+  };
 }
