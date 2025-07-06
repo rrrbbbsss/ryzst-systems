@@ -1,25 +1,12 @@
 self:
+# TODO: at some point want to mess around with souffle
 let
-  inherit (self.inputs) pre-commit-hooks;
-  #hostnames-check = import ./hostnames-check.nix { inherit self system; };
-  #usernames-check = import ./usernames-check.nix { inherit self system; };
+  inherit (self.inputs.ryzst.inputs) nixpkgs;
+  mkChecks = dir:
+    nixpkgs.lib.foldlAttrs
+      (acc: name: path:
+        acc // (import path self))
+      { }
+      (self.lib.getDirs dir);
 in
-self.lib.mkSystems self (system:
-{
-  pre-commit-check = pre-commit-hooks.lib.${system.string}.run {
-    src = ../.;
-    hooks = {
-      # TODO: re-enable
-      #inherit hostnames-check usernames-check;
-      #format
-      nixpkgs-fmt.enable = true;
-      shfmt.enable = true;
-      #lint
-      statix.enable = true;
-      shellcheck = {
-        enable = true;
-        types_or = [ "shell" ];
-      };
-    };
-  };
-})
+mkChecks ./.
