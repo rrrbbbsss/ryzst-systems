@@ -9,6 +9,7 @@ in
     # TODO: clean this up
     ../../idm/users/man/config/zsh
     ../../modules/hardware/common/wifi
+    ../../modules/hardware/common/display
   ];
 
   os = {
@@ -18,9 +19,8 @@ in
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  ryzst.mek.zoo-zoo.version = "";
+  ryzst.mek.zoo-zoo.version = "25.05"; # TODO: try not to hardcode
 
-  #nixpkgs.hostPlatform.system = "x86_64-linux";
 
   # ISO naming.
   isoImage = lib.mkForce {

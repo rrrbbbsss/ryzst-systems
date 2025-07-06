@@ -1,2 +1,2 @@
 { self, pkgs, ... }:
-import ./package.nix { inherit self; }
+import ./package.nix { inherit self pkgs; }
