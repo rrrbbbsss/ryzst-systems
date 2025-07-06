@@ -11,8 +11,8 @@ SPECIALS=("$PREFIX"/*)
 SPECIALS=("${SPECIALS[@]#"$PREFIX"/}")
 SPECIALS+=(default)
 
-SPECIAL=$(printf '%s\n' "${SPECIALS[@]}" |
-  fzf --reverse --prompt='specials > ')
+SPECIAL=$(printf '%s\n' "${SPECIALS[@]}" \
+            | fzf --reverse --prompt='specials > ')
 
 [[ -n $SPECIAL ]] || exit
 

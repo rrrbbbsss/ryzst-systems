@@ -25,7 +25,7 @@ cp -r "$templates/$selection" "$project"
 chmod -R u+w "$project" # eww...
 git -C "$project" init
 git -C "$project" add -A
-git -C "$project" grep -Frl "$text" |
-  xargs -I '{}' sed -i "s/$text/$project/g" "$project"/'{}'
+git -C "$project" grep -Frl "$text" \
+  | xargs -I '{}' sed -i "s/$text/$project/g" "$project"/'{}'
 
 # TODO: bird law...

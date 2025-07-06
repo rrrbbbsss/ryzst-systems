@@ -17,6 +17,6 @@ SCRIPT='
 { print $1 }
 '
 
-stat --format='%N %Y' "$ROOT_DIR"/* |
-  awk -v X="$EXPIRED" "$SCRIPT" |
-  xargs -I '{}' unlink '{}'
+stat --format='%N %Y' "$ROOT_DIR"/* \
+  | awk -v X="$EXPIRED" "$SCRIPT" \
+  | xargs -I '{}' unlink '{}'

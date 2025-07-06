@@ -1,14 +1,14 @@
 # shellcheck shell=bash
 
 function cleanup() {
-  tail -n +5 |
-    head -n -1 |
-    sed -e "s:\[1;90m>::g" |
-    sed -e "s:\[1;30m::g" |
-    sed -e "s:\[0m::g" |
-    sed -e "s:\*\x1b.*:\*:g" |
-    sed -e "s:\x1b::g" |
-    sed 's/[ ]*//'
+  tail -n +5 \
+    | head -n -1 \
+    | sed -e "s:\[1;90m>::g" \
+    | sed -e "s:\[1;30m::g" \
+    | sed -e "s:\[0m::g" \
+    | sed -e "s:\*\x1b.*:\*:g" \
+    | sed -e "s:\x1b::g" \
+    | sed 's/[ ]*//'
 }
 
 function selector() {

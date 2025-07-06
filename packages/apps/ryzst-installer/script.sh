@@ -36,8 +36,8 @@ function PreChecks() {
 }
 
 function SetupNetwork() {
-  LINKS=$(cat /sys/class/net/*/carrier |
-    awk '/1/{a++}END{ print (a>1)?"up":"down" }')
+  LINKS=$(cat /sys/class/net/*/carrier \
+            | awk '/1/{a++}END{ print (a>1)?"up":"down" }')
   while ls /sys/class/ieee80211/*/device/net &>/dev/null && [[ $LINKS == "down" ]]; do
     printf "Connect to wifi:\n"
     fzf-wifi
@@ -105,9 +105,9 @@ function GenerateInstanceData() {
   # generate wireguard keys
   WG_SECRETS_DIR=$SECRETS_DIR/wireguard
   mkdir $WG_SECRETS_DIR
-  wg genkey |
-    (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) |
-    (umask 0033 && wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
+  wg genkey \
+    | (umask 0077 && tee $WG_SECRETS_DIR/wg0_key) \
+    | (umask 0033 && wg pubkey >$WG_SECRETS_DIR/wg0_key.pub)
   WGPUB=$(cat $WG_SECRETS_DIR/wg0_key.pub)
 
   # generate syncthing keys
@@ -154,8 +154,8 @@ function RegisterInstanceData() {
   GPG_CARD=$(gpg --card-status)
   ADMIN_NAME=$(sed -n -e 's/Name of cardholder: \(.*\)/\1/p' <<<"$GPG_CARD")
   ADMIN_EMAIL=$(sed -n -e 's/Login data.*: \(.*\)/\1/p' <<<"$GPG_CARD")
-  ADMIN_KEY=$(gpg --locate-keys --auto-key-locate clear,wkd --with-colons "$ADMIN_EMAIL" |
-    awk -F: '$1 == "fpr" {print $10;exit}')
+  ADMIN_KEY=$(gpg --locate-keys --auto-key-locate clear,wkd --with-colons "$ADMIN_EMAIL" \
+                | awk -F: '$1 == "fpr" {print $10;exit}')
   LOCAL_REPO=/tmp/repo
   rm -rf "$LOCAL_REPO"
   git clone --depth 1 "$FLAKE_REPO" "$LOCAL_REPO"
