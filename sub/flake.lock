@@ -156,22 +156,6 @@
         "url": "https://github.com/StevenBlack/hosts"
       }
     },
-    "impermanence": {
-      "locked": {
-        "lastModified": 1737831083,
-        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
-        "ref": "refs/heads/master",
-        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/impermanence"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/nix-community/impermanence"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -254,7 +238,6 @@
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "hosts": "hosts",
-        "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs"
       },
