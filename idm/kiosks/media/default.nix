@@ -147,6 +147,11 @@ in
 
 
   nix.settings.allowed-users = [ username ];
+  # TODO: do this better.
+  os.misc-gc.ignoreDirs = [
+    "/home/${username}/.local/state/nix/profiles/"
+    "/home/${username}/.local/state/home-manager/gcroots/"
+  ];
 
   # bar disappears when monitor powers on/off
   services.udev.extraRules = ''

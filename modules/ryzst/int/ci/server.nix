@@ -230,6 +230,7 @@ in
         Persistent = true;
       };
     };
+    os.misc-gc.ignoreDirs = [ "/var/lib/laminar/roots/" ];
 
 
     #rpc
