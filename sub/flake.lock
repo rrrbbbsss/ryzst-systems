@@ -8,10 +8,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1750903843,
-        "narHash": "sha256-Ng9+f0H5/dW+mq/XOKvB9uwvGbsuiiO6HrPdAcVglCs=",
+        "lastModified": 1752113600,
+        "narHash": "sha256-7LYDxKxZgBQ8LZUuolAQ8UkIB+jb4A2UmiR+kzY9CLI=",
         "ref": "refs/heads/master",
-        "rev": "83c4da299c1d7d300f8c6fd3a72ac46cb0d59aae",
+        "rev": "79264292b7e3482e5702932949de9cbb69fedf6d",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/disko"
@@ -34,10 +34,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1751127789,
-        "narHash": "sha256-Z0s5KRmigd6doImx6Kh4GRP/hlY8jMtT8KC1mqcPHv4=",
+        "lastModified": 1752374057,
+        "narHash": "sha256-naxrfzNidJM9wKbc+qj4+2rosbgncv/QlWS9HMKg7Qg=",
         "ref": "refs/heads/master",
-        "rev": "c5cc6bc833e686b5477e1a7054c5a0ee3039d413",
+        "rev": "73aafa5b5340b54120688c9ad01bebfb0631107e",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/emacs-overlay"
@@ -57,10 +57,10 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1751083400,
-        "narHash": "sha256-0hZWDzX7/C0NcsiOW+WBvdb+aGDnydw1xku3UUXzm/4=",
+        "lastModified": 1752379414,
+        "narHash": "sha256-0R3slhrjrnzyxR/fAYy5UliZvSgaVS38YCESBdH5RJw=",
         "ref": "refs/heads/master",
-        "rev": "e805fa9d7c2968712896f71684540dac21449744",
+        "rev": "51e77bb95540b7dd6c60f8fd65a0c472a2c9c3b7",
         "shallow": true,
         "type": "git",
         "url": "https://gitlab.com/rycee/nur-expressions"
@@ -119,10 +119,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1750792728,
-        "narHash": "sha256-Lh3dopA8DdY+ZoaAJPrtkZOZaFEJGSYjOdAYYgOPgE4=",
+        "lastModified": 1752391422,
+        "narHash": "sha256-ReX0NG6nIAEtQQjLqeu1vUU2jjZuMlpymNtb4VQYeus=",
         "ref": "release-25.05",
-        "rev": "366f00797b1efb70f2882d3da485e3c10fd3d557",
+        "rev": "c26266790678863cce8e7460fdbf0d80991b1906",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/home-manager/"
@@ -142,10 +142,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1750903025,
-        "narHash": "sha256-r59Ixz+i1PmJg4529UCp9XqSDlMS8aMRr0PKvery7Ds=",
+        "lastModified": 1752375768,
+        "narHash": "sha256-PZCeRrbCWwfftd0tsgLD2rLUvkUUxiYQEdJ+QekceEw=",
         "ref": "refs/heads/master",
-        "rev": "3ba25afdbea34239c4925285a2ac3379c760b181",
+        "rev": "175f5cbef57135795a08e342e43a6a6e82e9fd2e",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/StevenBlack/hosts"
@@ -180,10 +180,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751479989,
-        "narHash": "sha256-M5KgdpVBVcW4HRVq9/OSRbrxlwsQ1ogEKqnvzsClDqU=",
+        "lastModified": 1752162966,
+        "narHash": "sha256-3MxxkU8ZXMHXcbFz7UE4M6qnIPTYGcE/7EMqlZNnVDE=",
         "ref": "nixos-25.05",
-        "rev": "34627c90f062da515ea358360f448da57769236e",
+        "rev": "10e687235226880ed5e9f33f1ffa71fe60f2638a",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
