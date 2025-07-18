@@ -66,11 +66,6 @@ in
       };
     };
 
-
-    programs.obs-studio = {
-      enable = true;
-    };
-
     programs.swappy = {
       enable = true;
       settings = {
@@ -126,8 +121,6 @@ in
       p7zip
       zstd
       jq
-      ripgrep
-      fd
       bat
       pavucontrol
       qpwgraph
