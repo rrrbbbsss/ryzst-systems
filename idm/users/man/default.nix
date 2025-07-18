@@ -1,4 +1,5 @@
 { config, self, ... }:
+# TODO: start cleaning this up a little...
 let
   username = config.device.user;
   version = config.system.stateVersion;
