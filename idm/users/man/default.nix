@@ -159,7 +159,6 @@ in
 
       #3d-printing
       freecad-wayland
-      orca-slicer
     ];
   };
 }

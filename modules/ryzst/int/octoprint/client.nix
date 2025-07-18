@@ -28,6 +28,8 @@ in
   };
 
   config = mkIf enable {
-    environment.systemPackages = desktopItems;
+    environment.systemPackages = desktopItems ++ [
+      pkgs.orca-slicer
+    ];
   };
 }
