@@ -91,10 +91,6 @@ in
 
     home.stateVersion = version;
     home.packages = with pkgs; [
-      #fzf scripts
-      ryzst.fzf-wifi
-      ryzst.fzf-pass
-
       #browsers 
       chromium
       ryzst.tails
