@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.ryzst.int.sane.client;
@@ -22,5 +22,9 @@ in
       enable = true;
       netConf = scanners;
     };
+
+    environment.systemPackages = with pkgs; [
+      simple-scan
+    ];
   };
 }
