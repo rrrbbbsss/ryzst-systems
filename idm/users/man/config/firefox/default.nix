@@ -24,6 +24,7 @@
           "https://reddit.com/*"
           "https://www.reddit.com/*"
           "https://github.com/rrrbbbsss/ryzst-systems/graphs/traffic"
+          "https://www.youtube.com/*"
         ];
       };
     };
