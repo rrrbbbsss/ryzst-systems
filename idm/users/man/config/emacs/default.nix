@@ -90,6 +90,7 @@ in
   };
 
   home.packages = with pkgs; [
+    rg
     #treemacs
     python3
     #formatters
