@@ -9,6 +9,13 @@ in
     ./config/wireshark
     ./config/zsh
     ./config/ncspot
+    ./config/alacritty
+    ./config/emacs
+    ./config/firefox
+    ./config/gpg
+    ./config/mpv
+    ./config/waybar
+    ./config/zathura
   ];
 
   device.user = baseNameOf (toString ./.);
@@ -25,17 +32,7 @@ in
   # this is required for home-manager-<user>.service
   nix.settings.allowed-users = [ username ];
 
-
   home-manager.users.${username} = { pkgs, ... }: {
-    imports = [
-      ./config/alacritty
-      ./config/emacs
-      ./config/firefox
-      ./config/gpg
-      ./config/mpv
-      ./config/waybar
-      ./config/zathura
-    ];
 
     programs.password-store = {
       enable = true;
