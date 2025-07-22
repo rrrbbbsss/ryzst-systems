@@ -16,6 +16,8 @@ in
     ./config/mpv
     ./config/waybar
     ./config/zathura
+    ./config/pass
+    ./config/git
   ];
 
   device.user = baseNameOf (toString ./.);
@@ -34,54 +36,17 @@ in
 
   home-manager.users.${username} = { pkgs, ... }: {
 
-    programs.password-store = {
-      enable = true;
-    };
-    home.sessionVariables = {
-      PASSWORD_STORE_CLIP_TIME = "20";
-    };
-
-    programs.git = {
-      enable = true;
-      userName = "Royce Strange";
-      userEmail = "rrrbbbsss@ryzst.net";
-      signing = {
-        key = "6DB578354383FF64797A2D7E985AC6F0827B273C";
-        signByDefault = true;
-      };
-      extraConfig = {
-        init = {
-          defaultBranch = "main";
-        };
-      };
-    };
-
-    programs.direnv = {
-      enable = true;
-      nix-direnv = {
-        enable = true;
-      };
-    };
-
-    programs.swappy = {
-      enable = true;
-      settings = {
-        save_dir = "$HOME/Pictures/screenshots";
-        show_panel = true;
-        early_exit = true;
-      };
-    };
-
-    programs.bottom = {
-      enable = true;
-    };
+    home.stateVersion = version;
 
     systemd.user.tmpfiles.rules = [
       "e /home/${username}/.local/share/Trash - - - 3w"
       "e /home/${username}/.cache             - - - 3w"
     ];
 
-    home.stateVersion = version;
+    programs.bottom = {
+      enable = true;
+    };
+
     home.packages = with pkgs; [
       #browsers 
       chromium

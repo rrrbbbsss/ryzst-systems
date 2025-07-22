@@ -292,6 +292,15 @@ in
     };
   };
 
+  programs.swappy = {
+    enable = true;
+    settings = {
+      save_dir = "$HOME/Pictures/screenshots";
+      show_panel = true;
+      early_exit = true;
+    };
+  };
+
   services.reboot-nag.enable = true;
 
   wayland.windowManager.sway = {
