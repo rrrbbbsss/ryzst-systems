@@ -18,6 +18,8 @@ in
     ./config/zathura
     ./config/pass
     ./config/git
+    ./config/packages
+    ./config/trash
   ];
 
   device.user = baseNameOf (toString ./.);
@@ -34,82 +36,7 @@ in
   # this is required for home-manager-<user>.service
   nix.settings.allowed-users = [ username ];
 
-  home-manager.users.${username} = { pkgs, ... }: {
-
+  home-manager.users.${username} = {
     home.stateVersion = version;
-
-    systemd.user.tmpfiles.rules = [
-      "e /home/${username}/.local/share/Trash - - - 3w"
-      "e /home/${username}/.cache             - - - 3w"
-    ];
-
-    programs.bottom = {
-      enable = true;
-    };
-
-    home.packages = with pkgs; [
-      #browsers 
-      chromium
-      ryzst.tails
-
-      #spelling
-      (aspellWithDicts (dicts: with dicts; [ en ]))
-
-      #utils
-      nix-index-with-db
-      nix-tree
-      git
-      strace
-      ltrace
-      yubikey-manager
-      usbutils
-      ncdu
-      age
-      openssh
-      openssl
-      curl
-      nmap
-      netcat
-      nettools
-      tcpdump
-      bind.dnsutils
-      ethtool
-      socat
-      nftables
-      tree
-      file
-      zip
-      unzip
-      p7zip
-      zstd
-      jq
-      bat
-      pavucontrol
-      qpwgraph
-      oniux
-      poop
-
-      #video
-      yt-dlp
-
-      #images
-      gimp
-      drawio
-
-      #games
-      steam
-      katago
-      ryzst.katrain
-      ryzst.sabaki
-      ryzst.weiqihub
-      ryzst.minifoxwq
-      ryzst.foxwq-gym
-      ryzst.adom
-      ryzst.adom-gui
-      ryzst.cho-ren-sha-68k
-
-      #3d-printing
-      freecad-wayland
-    ];
   };
 }
