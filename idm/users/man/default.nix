@@ -1,7 +1,6 @@
 { config, self, ... }:
 let
   username = config.device.user;
-  version = config.system.stateVersion;
 in
 {
   imports = [
@@ -32,11 +31,5 @@ in
     hashedPassword = null;
     # TODO: don't do this here
     extraGroups = [ "wheel" ];
-  };
-  # this is required for home-manager-<user>.service
-  nix.settings.allowed-users = [ username ];
-
-  home-manager.users.${username} = {
-    home.stateVersion = version;
   };
 }

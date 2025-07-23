@@ -1,4 +1,5 @@
 { lib, pkgs, config, ... }:
+# TODO: see what happens with rl-2511
 #for now: explicitly delete home-manager generations for gc
 #https://github.com/nix-community/home-manager/issues/4204
 with lib;
