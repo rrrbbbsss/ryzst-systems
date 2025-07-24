@@ -198,7 +198,7 @@ let
 
   # helper goals
   facto = vals: X: disj (map (x: eqq x X) vals);
-  # [ H | T ] would be ideal (and tco/trampoline)
+  # idk, brain broken...
   conso = H: T: P: (eqq [ H T ] P);
   fail = state: mzero;
   succeed = unit;
