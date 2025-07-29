@@ -282,6 +282,11 @@ in
     ];
   };
 
+  dconf = {
+    enable = true;
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
+
   services.wlsunset = {
     enable = true;
     sunrise = "08:00";
