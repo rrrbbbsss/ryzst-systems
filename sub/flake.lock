@@ -34,10 +34,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1753636057,
-        "narHash": "sha256-JvPCxlERHVuqXg+ekcTumbe8gCL4rB0vpHF/+G7Nwmc=",
+        "lastModified": 1754240942,
+        "narHash": "sha256-d/ADJhgx5poFnpvPCYiFS/SRSwSmNJV+d7K0luZFTgs=",
         "ref": "refs/heads/master",
-        "rev": "06e3e3be8aff792547dfd0825c7e5dc0c65bd4db",
+        "rev": "2df87ae7b3909cd4c3e0c8269989599f100a0f30",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/emacs-overlay"
@@ -57,10 +57,10 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1753589020,
-        "narHash": "sha256-rFZWFBjYRXNli1rZvRLOJVKLznk3Fj/eHJJdcWB0zWE=",
+        "lastModified": 1754138575,
+        "narHash": "sha256-6foT7Sflve4XuLnBKkgN9b9IP4FvdoBA2XQ2IyXmbog=",
         "ref": "refs/heads/master",
-        "rev": "2988587ae70864239861389dbd84efdbfa9fa2c5",
+        "rev": "27c945a6450d42c62f7e41019d7931b426bb786f",
         "shallow": true,
         "type": "git",
         "url": "https://gitlab.com/rycee/nur-expressions"
@@ -142,10 +142,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1753544047,
-        "narHash": "sha256-ta2lhekOOmUEM1OAh1pUGGDVjPkABjWG4vFEKL2mGUo=",
+        "lastModified": 1754239761,
+        "narHash": "sha256-TFg8luQxsrVV/PAnCw3fplBCVDgYH9NUilspbYnGYgQ=",
         "ref": "refs/heads/master",
-        "rev": "08ebdd4bb52e87752084d34403abeafae109ffa1",
+        "rev": "b093dd1ef0ea19544ac5eb31bcb30be1b95891d5",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/StevenBlack/hosts"
@@ -164,10 +164,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1753589988,
-        "narHash": "sha256-y1JlcMB2dKFkrr6g+Ucmj8L//IY09BtSKTH/A7OU7mU=",
+        "lastModified": 1754195341,
+        "narHash": "sha256-YL71IEf2OugH3gmAsxQox6BJI0KOcHKtW2QqT/+s2SA=",
         "ref": "refs/heads/main",
-        "rev": "f0736b09c43028fd726fb70c3eb3d1f0795454cf",
+        "rev": "b7fcd4e26d67fca48e77de9b0d0f954b18ae9562",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/nix-index-database"
@@ -180,10 +180,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1753345091,
-        "narHash": "sha256-CdX2Rtvp5I8HGu9swBmYuq+ILwRxpXdJwlpg8jvN4tU=",
+        "lastModified": 1754028485,
+        "narHash": "sha256-IiiXB3BDTi6UqzAZcf2S797hWEPCRZOwyNThJIYhUfk=",
         "ref": "nixos-25.05",
-        "rev": "3ff0e34b1383648053bba8ed03f201d3466f90c9",
+        "rev": "59e69648d345d6e8fef86158c555730fa12af9de",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
