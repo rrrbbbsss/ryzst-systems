@@ -169,6 +169,6 @@ in
     # iwlwifi plague
     # you might have to disable wifi in BIOS,
     # then reboot, then re-enable wifi in BIOS.
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_14;
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
   };
 }
