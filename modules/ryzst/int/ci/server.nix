@@ -105,6 +105,7 @@ in
       title = "Laminar";
       #TODO: unix socket
       webInterface = "127.0.0.1:10000";
+      #TODO: fix weakness
       #rpcInterface = "unix:/run/laminar/rpc.sock";
       contexts = {
         hosts-job = {
