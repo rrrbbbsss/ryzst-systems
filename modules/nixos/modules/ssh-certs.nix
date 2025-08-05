@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 with lib;
-# can't say what i want to say publicly
-# without resurfacing the past.
-# comment redacted.
 
 let
   cfg = config.keys.ssh-certs;
