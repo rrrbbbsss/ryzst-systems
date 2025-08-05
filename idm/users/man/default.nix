@@ -3,23 +3,7 @@ let
   username = config.device.user;
 in
 {
-  imports = [
-    ./config/sway
-    ./config/wireshark
-    ./config/zsh
-    ./config/ncspot
-    ./config/alacritty
-    ./config/emacs
-    ./config/firefox
-    ./config/gpg
-    ./config/mpv
-    ./config/waybar
-    ./config/zathura
-    ./config/pass
-    ./config/git
-    ./config/packages
-    ./config/trash
-  ];
+  imports = self.lib.getDirsList ./config;
 
   device.user = baseNameOf (toString ./.);
 
