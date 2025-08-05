@@ -57,6 +57,13 @@ let
       { }
       (builtins.readDir dir);
 
+  getDirsList = dir: with nixpkgs.lib.attrsets;
+    foldlAttrs
+      (acc: n: v:
+        if v == "directory" then [ (dir + "/${n}") ] ++ acc else acc)
+      [ ]
+      (builtins.readDir dir);
+
   getFilesNoSuffix = dir: with nixpkgs.lib.attrsets;
     foldlAttrs
       (acc: n: v:
@@ -80,6 +87,7 @@ in
     mkInstances
     mkBoxed
     getDirs
+    getDirsList
     getFilesNoSuffix
     getFilesList;
 }
