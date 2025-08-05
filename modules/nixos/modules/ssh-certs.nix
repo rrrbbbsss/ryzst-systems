@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 with lib;
-# TODO: in hindsight,
-# should work towards spiffe or something.
+# can't say what i want to say publicly
+# without resurfacing the past.
+# comment redacted.
+
 let
   cfg = config.keys.ssh-certs;
 
