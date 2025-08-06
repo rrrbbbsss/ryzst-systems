@@ -50,5 +50,7 @@
     # TODO: this will be an effort.
     networkModules = "oof";
 
+    # testing 123 testing 123...
+    idm = import ./idm self;
   };
 }

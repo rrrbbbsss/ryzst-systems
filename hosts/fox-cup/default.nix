@@ -1,7 +1,7 @@
-{ lib, ... }:
+{ self, lib, ... }:
 {
   imports = [
-    ../../idm/users/man
+    self.idm.users.man.module
   ];
 
   # TODO: remove eventually...

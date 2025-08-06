@@ -22,6 +22,12 @@ let
   };
 in
 {
+
+  # TODO: nasty nasty...
+  imports = [
+    ../../../idm/groups/admins
+  ];
+
   options.ryzst.idm = {
     users = mkOption {
       description = "Users information";

@@ -9,11 +9,8 @@ in
 
   users.users.${username} = {
     isNormalUser = true;
-    uid = self.outputs.lib.names.user.toUID username;
-    # TODO: full name
-    description = username;
+    inherit (self.idm.users.${username}) uid;
+    description = "${self.idm.users.${username}.first} ${self.idm.users.${username}.last}";
     hashedPassword = null;
-    # TODO: don't do this here
-    extraGroups = [ "wheel" ];
   };
 }

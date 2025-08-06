@@ -1,6 +1,6 @@
-{ ... }:
+{ self, ... }:
 {
   imports = [
-    ../../idm/kiosks/media
+    self.idm.kiosks.media.module
   ];
 }

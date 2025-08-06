@@ -25,7 +25,9 @@
       nixosModules
       hardwareModules
       settingsModules
-      overlays;
+      overlays
+      idm
+      ;
 
     systems = [
       { local = "x86_64-linux"; cross = null; }

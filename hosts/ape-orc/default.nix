@@ -1,6 +1,6 @@
-{ ... }:
+{ self, ... }:
 {
   imports = [
-    ../../idm/users/man
+    self.idm.users.man.module
   ];
 }
