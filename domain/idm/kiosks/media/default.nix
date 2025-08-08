@@ -131,8 +131,8 @@ in
 {
   # TODO: figure out how to handle vm...
   imports = [
-    self.hardwareModules.devices.funai.lf320fx4f
-    self.hardwareModules.devices.denon.dra-800h
+    self.domain.hdw.devices.funai.lf320fx4f
+    self.domain.hdw.devices.denon.dra-800h
   ];
   users.users.${username} = {
     isNormalUser = true;

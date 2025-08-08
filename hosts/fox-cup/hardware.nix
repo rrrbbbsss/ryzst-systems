@@ -1,7 +1,7 @@
 { self, ... }:
 {
   imports = [
-    self.hardwareModules.devices.lenovo.t480s
-    self.hardwareModules.devices.yubico.yubikey5
+    self.domain.hdw.devices.lenovo.t480s
+    self.domain.hdw.devices.yubico.yubikey5
   ];
 }

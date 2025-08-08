@@ -1,0 +1,6 @@
+# maybe this should be called storage
+modalias = [
+  "pci:v.*d.*sv.*sd.*bc01.*"
+  "usb:v.*p.*d.*dc.*sc.*dp.*ic08.*"
+  #TODO: scisi
+]

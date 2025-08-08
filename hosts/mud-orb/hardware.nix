@@ -2,16 +2,16 @@
 
 {
   imports = [
-    self.hardwareModules.common.display
-    self.hardwareModules.common.ethernet
-    self.hardwareModules.common.tpm
-    self.hardwareModules.common.wifi
-    self.hardwareModules.devices.intel.cpu
-    self.hardwareModules.devices.intel.gpu
-    self.hardwareModules.devices.vontar.d8
-    self.hardwareModules.devices.funai.lf320fx4f
-    self.hardwareModules.devices.denon.dra-800h
-    self.hardwareModules.devices.yubico.yubikey5
+    self.domain.hdw.common.display
+    self.domain.hdw.common.ethernet
+    self.domain.hdw.common.tpm
+    self.domain.hdw.common.wifi
+    self.domain.hdw.devices.intel.cpu
+    self.domain.hdw.devices.intel.gpu
+    self.domain.hdw.devices.vontar.d8
+    self.domain.hdw.devices.funai.lf320fx4f
+    self.domain.hdw.devices.denon.dra-800h
+    self.domain.hdw.devices.yubico.yubikey5
   ];
 
   device.monitors = {

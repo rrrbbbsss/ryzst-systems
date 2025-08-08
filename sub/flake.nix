@@ -23,7 +23,6 @@
     inherit (self.inputs.ryzst)
       lib
       nixosModules
-      hardwareModules
       settingsModules
       overlays
       domain

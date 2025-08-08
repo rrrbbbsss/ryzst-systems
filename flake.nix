@@ -40,9 +40,6 @@
     # NOTE: go use homeManager.
     homeManagerModules = import ./modules/home self;
 
-    # NOTE: go use nixos-hardware.
-    hardwareModules = import ./modules/hardware self;
-
     # TODO: clean this up, and maybe not expose
     # (keep in subflake?)...
     settingsModules = import ./modules self;

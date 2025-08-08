@@ -3,16 +3,16 @@
 {
 
   imports = [
-    self.hardwareModules.common.display
-    self.hardwareModules.common.ethernet
-    self.hardwareModules.devices.intel.cpu
-    self.hardwareModules.devices.amd.gpu
-    self.hardwareModules.devices.kensington.expert-trackball
-    self.hardwareModules.devices.tex.shinobi
-    self.hardwareModules.devices.nullbits.tidbit
-    self.hardwareModules.devices.microchip.ir-transceiver
-    self.hardwareModules.devices.sceptre.u550cv-u
-    self.hardwareModules.devices.yubico.yubikey5
+    self.domain.hdw.common.display
+    self.domain.hdw.common.ethernet
+    self.domain.hdw.devices.intel.cpu
+    self.domain.hdw.devices.amd.gpu
+    self.domain.hdw.devices.kensington.expert-trackball
+    self.domain.hdw.devices.tex.shinobi
+    self.domain.hdw.devices.nullbits.tidbit
+    self.domain.hdw.devices.microchip.ir-transceiver
+    self.domain.hdw.devices.sceptre.u550cv-u
+    self.domain.hdw.devices.yubico.yubikey5
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

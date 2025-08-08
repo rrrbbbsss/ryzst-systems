@@ -1,10 +1,10 @@
 { self, ... }:
 {
   imports = [
-    self.hardwareModules.devices.raspberry-pi."4b"
-    self.hardwareModules.devices.brother.hl-l2300d
-    self.hardwareModules.devices.canon.canoscan-lide-300
-    self.hardwareModules.devices.creality.ender3-v3-se
-    self.hardwareModules.devices.yubico.yubikey5
+    self.domain.hdw.devices.raspberry-pi."4b"
+    self.domain.hdw.devices.brother.hl-l2300d
+    self.domain.hdw.devices.canon.canoscan-lide-300
+    self.domain.hdw.devices.creality.ender3-v3-se
+    self.domain.hdw.devices.yubico.yubikey5
   ];
 }

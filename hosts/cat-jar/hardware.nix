@@ -2,15 +2,15 @@
 
 {
   imports = [
-    self.hardwareModules.common.display
-    self.hardwareModules.common.ethernet
-    self.hardwareModules.common.tpm
-    self.hardwareModules.common.wifi
-    self.hardwareModules.devices.amd.cpu
-    self.hardwareModules.devices.amd.gpu
-    self.hardwareModules.devices.kensington.expert-trackball-wireless
-    self.hardwareModules.devices.lenovo.trackpoint
-    self.hardwareModules.devices.yubico.yubikey5
+    self.domain.hdw.common.display
+    self.domain.hdw.common.ethernet
+    self.domain.hdw.common.tpm
+    self.domain.hdw.common.wifi
+    self.domain.hdw.devices.amd.cpu
+    self.domain.hdw.devices.amd.gpu
+    self.domain.hdw.devices.kensington.expert-trackball-wireless
+    self.domain.hdw.devices.lenovo.trackpoint
+    self.domain.hdw.devices.yubico.yubikey5
   ];
 
   device.monitors = {
