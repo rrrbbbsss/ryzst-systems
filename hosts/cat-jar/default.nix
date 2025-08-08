@@ -1,6 +1,6 @@
 { self, ... }:
 {
   imports = [
-    self.idm.users.man.module
+    self.domain.idm.users.man.module
   ];
 }

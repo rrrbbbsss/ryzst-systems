@@ -9,8 +9,8 @@ in
 
   users.users.${username} = {
     isNormalUser = true;
-    inherit (self.idm.users.${username}) uid;
-    description = "${self.idm.users.${username}.first} ${self.idm.users.${username}.last}";
+    inherit (self.domain.idm.users.${username}) uid;
+    description = "${self.domain.idm.users.${username}.first} ${self.domain.idm.users.${username}.last}";
     hashedPassword = null;
   };
 }

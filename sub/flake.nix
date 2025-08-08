@@ -26,7 +26,7 @@
       hardwareModules
       settingsModules
       overlays
-      idm
+      domain
       ;
 
     systems = [

@@ -11,7 +11,7 @@ let
       ];
       text = ''
         WORDLIST=${lib.removeSuffix "/sub" self}/lib/names/wordlist.json
-        USERS=$(find ./idm/users -maxdepth 1 -mindepth 1 -type d -printf '%f\n')
+        USERS=$(find ./domain/idm/users -maxdepth 1 -mindepth 1 -type d -printf '%f\n')
 
         # shellcheck disable=SC2016
         xargs -I {} jq --exit-status --arg WORD {} '. | index($WORD)' "$WORDLIST" <<<"$USERS"

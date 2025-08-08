@@ -9,8 +9,8 @@ then feel free to snag it.
 ryzst-systems
 ├── apps      # flake apps
 ├── checks    # gradually check things
+├── domain    # wip
 ├── hosts     # machine configurations
-├── idm       # user/group management
 ├── lib       # misc helper functions
 ├── modules   # nixos modules
 ├── overlays  # various package tweaks

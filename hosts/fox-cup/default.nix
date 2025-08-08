@@ -1,7 +1,7 @@
 { self, lib, ... }:
 {
   imports = [
-    self.idm.users.man.module
+    self.domain.idm.users.man.module
   ];
 
   # TODO: remove eventually...

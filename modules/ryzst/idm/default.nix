@@ -25,14 +25,14 @@ in
 
   # TODO: nasty nasty...
   imports = [
-    ../../../idm/groups/admins
+    ../../../domain/idm/groups/admins
   ];
 
   options.ryzst.idm = {
     users = mkOption {
       description = "Users information";
       type = types.attrs;
-      default = mkUsers ../../../idm/users;
+      default = mkUsers ../../../domain/idm/users;
     };
     groups = mkOption {
       description = "Groups are sets of users";
