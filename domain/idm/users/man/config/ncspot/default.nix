@@ -1,5 +1,10 @@
 { config, ... }:
 {
+  # https://github.com/librespot-org/librespot/issues/1527#issuecomment-3167094158
+  networking.hosts = {
+    "0.0.0.0" = [ "apresolve.spotify.com" ];
+  };
+
   home-manager.users.${config.device.user} = { pkgs, ... }: {
     programs.ncspot = {
       enable = true;
