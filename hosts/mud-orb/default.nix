@@ -1,6 +1,6 @@
 { self, ... }:
 {
   imports = [
-    self.idm.kiosks.media.module
+    self.domain.idm.kiosks.media.module
   ];
 }
