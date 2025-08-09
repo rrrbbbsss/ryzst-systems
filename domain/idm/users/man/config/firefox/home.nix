@@ -25,6 +25,9 @@
           "https://www.reddit.com/*"
           "https://github.com/rrrbbbsss/ryzst-systems/graphs/traffic"
         ];
+        Exceptions = [
+          "https://www.reddit.com/r/3Dprinting/*"
+        ];
       };
     };
     profiles.default = {
