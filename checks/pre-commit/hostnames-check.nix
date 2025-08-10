@@ -11,7 +11,7 @@ let
       ];
       text = ''
         WORDLIST=${lib.removeSuffix "/sub" self}/lib/names/wordlist.json
-        HOSTS=$(find ./hosts -maxdepth 1 -mindepth 1 -type d -printf '%f\n')
+        HOSTS=$(find ./domain/mek/hosts -maxdepth 1 -mindepth 1 -type d -printf '%f\n')
         WORD1=$(cut -d '-' -f 1 <<<"$HOSTS")
         WORD2=$(cut -d '-' -f 2 <<<"$HOSTS")
 

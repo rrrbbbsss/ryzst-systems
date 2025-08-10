@@ -2,13 +2,14 @@
 with lib;
 let
   hosts = with builtins;
-    let dir = ../../../hosts; in
     mapAttrs
       (n: v: {
+        # TODO remove this?
         name = n;
+        # TODO: move this
         ip = self.lib.names.host.toIP n config.os.subnet;
-      } // fromJSON (readFile (dir + "/${n}/registration.json")))
-      (self.lib.getDirs dir);
+      } // v)
+      self.domain.mek.hosts;
 in
 {
   options.ryzst = {

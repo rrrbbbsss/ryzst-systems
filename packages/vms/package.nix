@@ -1,17 +1,17 @@
 { pkgs, self }:
+# TODO: remove vms from packages...
 let
   inherit (self.inputs) nixpkgs;
-  mkVm = name: hostmodulepath:
+  mkVm = name: value:
     (nixpkgs.lib.nixosSystem {
-      # TODO: remove self as special arg
       specialArgs = { inherit self; };
       modules = [
         "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
-        { os.hostname = name; }
-        hostmodulepath
-        ./qemu.nix
         self.outputs.settingsModules.default
+        value.module
+        { os.hostname = name; }
         { nixpkgs.pkgs = pkgs; }
+        ./qemu.nix
       ];
     }).config.system.build.vm;
   mkVmScript = name: path:
@@ -28,4 +28,4 @@ in
 pkgs.lib.attrsets.foldlAttrs
   (acc: n: v: { "vm-${n}" = mkVmScript n v; } // acc)
 { }
-  (self.lib.getDirs ../../hosts)
+  self.domain.mek.hosts

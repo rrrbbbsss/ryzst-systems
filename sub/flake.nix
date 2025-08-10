@@ -56,7 +56,22 @@
       (name: value: value.ryzst)
       self.instances;
 
-    nixosConfigurations = import ../hosts self;
+    nixosConfigurations = builtins.mapAttrs
+      # TODO: uh...
+      (n: v: self.inputs.ryzst.inputs.nixpkgs.lib.nixosSystem
+        {
+          # TODO: think about self...
+          specialArgs = { inherit self; };
+          modules = [
+            self.settingsModules.default
+            { os.hostname = n; }
+            v.module
+            v.hardware
+            # TODO: remove
+            ({ config, ... }: { nixpkgs.pkgs = self.instances.${config.nixpkgs.hostPlatform.system}; })
+          ];
+        })
+      self.domain.mek.hosts;
 
     hosts = builtins.mapAttrs
       (n: v: v.config.system.build.toplevel)
