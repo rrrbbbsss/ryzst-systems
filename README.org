@@ -10,7 +10,6 @@ ryzst-systems
 ├── apps      # flake apps
 ├── checks    # gradually check things
 ├── domain    # wip
-├── hosts     # machine configurations
 ├── lib       # misc helper functions
 ├── modules   # nixos modules
 ├── overlays  # various package tweaks
