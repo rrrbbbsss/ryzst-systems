@@ -50,8 +50,6 @@
 
     checks = import ./checks self;
 
-    apps = import ./apps self;
-
     packages = builtins.mapAttrs
       (name: value: value.ryzst)
       self.instances;

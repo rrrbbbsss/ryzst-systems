@@ -7,8 +7,6 @@ then feel free to snag it.
 ** Structure
 #+BEGIN_SRC
 ryzst-systems
-├── apps      # flake apps
-├── checks    # gradually check things
 ├── domain    # wip
 ├── lib       # misc helper functions
 ├── modules   # nixos modules
