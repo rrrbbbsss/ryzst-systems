@@ -1,19 +1,15 @@
 self:
 let
   inherit (self.inputs) nixpkgs;
-
-  # TODO: maybe move this?...
-  ryzst = import ../packages self;
-
   tweaks = import ./tweaks self;
-
   inputs = import ./inputs self;
+  packages = import ./packages self;
 in
 {
-  inherit tweaks inputs ryzst;
+  inherit tweaks inputs packages;
   default = nixpkgs.lib.composeManyExtensions [
     tweaks
     inputs
-    ryzst
+    packages
   ];
 }

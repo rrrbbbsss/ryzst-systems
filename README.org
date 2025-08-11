@@ -12,7 +12,6 @@ ryzst-systems
 ├── domain    # wip
 ├── lib       # misc helper functions
 ├── modules   # nixos modules
-├── overlays  # various package tweaks
-├── packages  # personal packages
+├── overlays  # personal packages and tweaks
 └── sub       # subflake
 #+END_SRC
