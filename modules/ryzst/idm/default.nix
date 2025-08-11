@@ -23,15 +23,16 @@ let
 in
 {
 
-  # TODO: nasty nasty...
+  # TODO: do better...
   imports = [
-    ../../../domain/idm/groups/admins
+    self.domain.idm.groups.admins.module
   ];
 
   options.ryzst.idm = {
     users = mkOption {
       description = "Users information";
       type = types.attrs;
+      # TODO: fix
       default = mkUsers ../../../domain/idm/users;
     };
     groups = mkOption {
