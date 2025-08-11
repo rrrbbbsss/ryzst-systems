@@ -31,7 +31,7 @@
 
     lib = import ./lib self;
 
-    # TODO: clean this up.
+    # NOTE: go use nixpkgs.
     overlays = import ./overlays self;
 
     # NOTE: go use nixpkgs.
@@ -43,9 +43,6 @@
     # TODO: clean this up, and maybe not expose
     # (keep in subflake?)...
     settingsModules = import ./modules self;
-
-    # TODO: this will be an effort.
-    networkModules = "oof";
 
     # TODO: might move to subflake...
     domain = import ./domain self;

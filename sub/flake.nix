@@ -43,14 +43,14 @@
       allowUnsupportedSystem = true;
     };
 
-    devShells = import ../shell.nix self;
+    devShells = import ./shell.nix self;
 
     formatter = self.lib.mkSystems self (system:
       self.instances.${system.string}.nixpkgs-fmt);
 
-    checks = import ../checks self;
+    checks = import ./checks self;
 
-    apps = import ../apps self;
+    apps = import ./apps self;
 
     packages = builtins.mapAttrs
       (name: value: value.ryzst)
