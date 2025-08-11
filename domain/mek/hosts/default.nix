@@ -2,7 +2,7 @@ self:
 let
   inherit (self.inputs.nixpkgs.lib) substring;
   # TODO: clean up
-  hash = builtins.hashString "sha256" "ryzst.net";
+  hash = builtins.hashString "sha256" "mek.ryzst.net";
   subnet = "fd${substring 0 2 hash}:${substring 2 4 hash}:${substring 4 4 hash}::/48";
 
   mkHosts = dir: with builtins;
