@@ -55,8 +55,6 @@ in
 
   config = {
 
-    #nixpkgs.pkgs = self.instances.${config.nixpkgs.hostPlatform.system};
-
     i18n = {
       defaultLocale = cfg.locale;
       extraLocaleSettings = {

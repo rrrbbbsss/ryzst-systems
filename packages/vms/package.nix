@@ -1,5 +1,4 @@
 { pkgs, self }:
-# TODO: remove vms from packages...
 let
   inherit (self.inputs) nixpkgs;
   mkVm = name: value:
