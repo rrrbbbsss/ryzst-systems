@@ -27,6 +27,7 @@
         ];
         Exceptions = [
           "https://www.reddit.com/r/3Dprinting/*"
+          "https://www.reddit.com/r/DiWHY/*" # i need this
         ];
       };
     };
