@@ -1,19 +1,7 @@
 { config, lib, self, ... }:
 with lib;
 let
-  mkUsers = dir: with builtins;
-    mapAttrs
-      (n: v: {
-        uid = self.outputs.lib.names.user.toUID n;
-        keys = {
-          gpg = dir + "/${n}/pubkeys/gpg.pub";
-          ssh = dir + "/${n}/pubkeys/ssh.pub";
-          x509 = dir + "/${n}/pubkeys/x509.crt";
-        };
-        module = dir + "/${n}/default.nix";
-      })
-      (self.lib.getDirs dir);
-
+  # TODO: move this out...
   groups = {
     admins = {
       inherit (config.ryzst.idm.users)
@@ -22,7 +10,6 @@ let
   };
 in
 {
-
   # TODO: do better...
   imports = [
     self.domain.idm.groups.admins.module
@@ -32,8 +19,7 @@ in
     users = mkOption {
       description = "Users information";
       type = types.attrs;
-      # TODO: fix
-      default = mkUsers ../../../domain/idm/users;
+      default = self.domain.idm.users;
     };
     groups = mkOption {
       description = "Groups are sets of users";
