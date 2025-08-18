@@ -15,19 +15,12 @@
       DisablePocket = true;
       DisableTelemetry = true;
       SearchSuggestEnabled = false;
-      # stop doom-scrolling.
-      # focus.
       WebsiteFilter = {
         Block = [
           "https://bsky.app/*"
           "https://mastodon.social/*"
-          "https://reddit.com/*"
-          "https://www.reddit.com/*"
+          "https://www.reddit.com/r/NixOS/*"
           "https://github.com/rrrbbbsss/ryzst-systems/graphs/traffic"
-        ];
-        Exceptions = [
-          "https://www.reddit.com/r/3Dprinting/*"
-          "https://www.reddit.com/r/DiWHY/*" # i need this
         ];
       };
     };
