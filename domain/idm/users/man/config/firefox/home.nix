@@ -17,7 +17,9 @@
       SearchSuggestEnabled = false;
       WebsiteFilter = {
         Block = [
-          "https://bsky.app/*"
+          # created account to exist...
+          # but probs gonna keep to self/stay quiet.
+          # "https://bsky.app/still/ignoring/nixos/*"
           "https://mastodon.social/*"
           "https://www.reddit.com/r/NixOS/*"
           "https://github.com/rrrbbbsss/ryzst-systems/graphs/traffic"
