@@ -17,6 +17,7 @@
       SearchSuggestEnabled = false;
       WebsiteFilter = {
         Block = [
+          "https://discourse.nixos.org/*"
           "https://mastodon.social/*"
           "https://www.reddit.com/r/NixOS/*"
           "https://github.com/rrrbbbsss/ryzst-systems/graphs/traffic"
